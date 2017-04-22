@@ -1,0 +1,145 @@
+{ config, lib, pkgs, ... }:
+
+{
+  imports = [
+    ./base.nix
+  ];
+
+  hardware = {
+
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+    };
+
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+      extraPackages32 = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+    };
+
+  };
+
+
+  environment.systemPackages = with pkgs; [
+    #Browsers
+    firefox
+    chromium
+
+    #Media
+    spotify
+    vlc
+    pavucontrol
+    pasystray
+    audacity
+    gimp
+    playerctl
+
+    #Programming
+    atom
+    eclipses.eclipse-platform
+
+    #Interface
+    rxvt_unicode
+    synapse
+    feh
+
+    #Ricing
+    paper-icon-theme
+    gtk3
+    gtk-engine-murrine
+    lxappearance
+
+    #Graphical System tools
+    gnome3.gedit
+    gnome3.nautilus
+    gnome3.sushi
+    gnome3.file-roller
+    gparted
+    file
+    keepass
+
+    #Office
+    libreoffice
+
+    #Communication
+    pidgin
+    skype
+
+    #Games
+    steam
+
+    #Graphical network tools
+    wireshark
+
+  ];
+
+  systemd.user.services."urxvtd" = {
+      enable = true;
+      description = "rxvt unicode daemon";
+      wantedBy = [ "default.target" ];
+      path = [ pkgs.rxvt_unicode ];
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 2;
+      serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
+    };
+
+    # GTK3 global theme (widget and icon theme)
+  environment.etc."gtk-3.0/settings.ini" = {
+    text = ''
+      gtk-theme-name=Adapta-Nokto
+      gtk-icon-theme-name=Paper
+      gtk-font-name=Sans 10
+      gtk-cursor-theme-size=0
+      gtk-toolbar-style=GTK_TOOLBAR_BOTH
+      gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+      gtk-button-images=1
+      gtk-menu-images=1
+      gtk-enable-event-sounds=1
+      gtk-enable-input-feedback-sounds=1
+      gtk-xft-antialias=1
+      gtk-xft-hinting=1
+      gtk-xft-hintstyle=hintfull
+      gtk-xft-rgba=rgb
+      '';
+    mode = "444";
+  };
+
+  environment.etc."gtk-2.0/gtkrc" = {
+    text = ''
+      gtk-theme-name="Adapta-Nokto"
+      gtk-icon-theme-name="Paper"
+      gtk-font-name="Sans 10"
+      gtk-cursor-theme-size=0
+      gtk-toolbar-style=GTK_TOOLBAR_BOTH
+      gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+      gtk-button-images=1
+      gtk-menu-images=1
+      gtk-enable-event-sounds=1
+      gtk-enable-input-feedback-sounds=1
+      gtk-xft-antialias=1
+      gtk-xft-hinting=1
+      gtk-xft-hintstyle="hintfull"
+      gtk-xft-rgba="rgb"
+      '';
+    mode = "444";
+  };
+
+  environment.variables = {
+    GTK_DATA_PREFIX = "/run/current-system/sw";
+
+  };
+
+  fonts = {
+     enableFontDir = true;
+     enableGhostscriptFonts = true;
+     fonts = with pkgs; [
+       corefonts  # Micrsoft free fonts
+       google-fonts
+       hack-font
+       font-awesome-ttf
+     ];
+   };
+
+}
