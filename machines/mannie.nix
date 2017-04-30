@@ -24,7 +24,7 @@
  services = {
    postgresql = {
      enable = true;
-     package = "pkgs.postgresql95";
+     package = pkgs.postgresql96;
    };
 
  };
