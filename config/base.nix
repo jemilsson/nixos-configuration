@@ -13,6 +13,7 @@ i18n.consoleKeyMap = "sv";
 system = {
   autoUpgrade = {
     enable = true;
+    channel = https://nixos.org/channels/nixos-17.03;
   };
   stateVersion = "17.03";
 };
