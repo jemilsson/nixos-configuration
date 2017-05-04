@@ -6,7 +6,13 @@
   ];
   networking.hostName = "battlestation";
 
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/sda";
+    };
+
+    
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

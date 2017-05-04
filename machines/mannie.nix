@@ -6,7 +6,11 @@
   ];
   networking.hostName = "mannie";
 
-  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub = {
+      enable = true;
+      version = 2;
+      device = "/dev/vda";
+    };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
  users.extraUsers.user = {
