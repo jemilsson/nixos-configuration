@@ -6,12 +6,9 @@
 
 ];
 
-boot.loader.grub = {
-    enable = true;
-    version = 2;
-  };
-
 time.timeZone = "Europe/Stockholm";
+
+i18n.consoleKeyMap = "sv";
 
 system = {
   autoUpgrade = {

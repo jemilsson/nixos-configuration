@@ -77,9 +77,9 @@
 
   ];
 
-  services = {
-    autofs.enable = true;
-  };
+  #services = {
+  #    autofs.enable = true;
+  #};
 
   systemd.user.services."urxvtd" = {
       enable = true;
