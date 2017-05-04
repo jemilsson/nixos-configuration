@@ -7,7 +7,7 @@
   networking.hostName = "lazarus";
 
   boot.loader = {
-    systemd-booot.enable = true;
+    systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
 
