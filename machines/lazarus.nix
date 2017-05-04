@@ -11,6 +11,8 @@
     efi.canTouchEfiVariables = true;
   };
 
+  services.tlp.enable = true;
+
   #boot.loader.grub.device = "/dev/sda";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
