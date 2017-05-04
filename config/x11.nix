@@ -6,7 +6,7 @@
       layout = "se";
       xkbOptions = "eurosign:e";
       windowManager.i3.enable = true;
-      
+
       displayManager.lightdm = {
         enable = true;
 
@@ -31,5 +31,6 @@
     xorg.xev
   ];
 
+  i18n.consoleUseXkbConfig = true;
 
 }
