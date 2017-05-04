@@ -75,6 +75,10 @@
 
   ];
 
+  services = {
+    autofs.enable = true;
+  };
+
   systemd.user.services."urxvtd" = {
       enable = true;
       description = "rxvt unicode daemon";
