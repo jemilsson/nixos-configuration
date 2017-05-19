@@ -38,6 +38,12 @@ environment.systemPackages = with pkgs; [
   tcpdump
   whois
 
+  #
+  neovim
+  python35Packages.neovim
+  vimPlugins.deoplete-nvim
+
+
 ];
 
 networking = {
