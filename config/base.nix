@@ -42,6 +42,7 @@ environment.systemPackages = with pkgs; [
   neovim
   python35Packages.neovim
   vimPlugins.deoplete-nvim
+  vimPlugins.deoplete-jedi
 
 
 ];
