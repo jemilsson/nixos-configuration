@@ -41,7 +41,7 @@
     pavucontrol
     pasystray
     audacity
-    gimp
+    gimppair
     playerctl
 
     #Programming
@@ -80,6 +80,9 @@
 
     #Graphical network tools
     wireshark
+
+    #Security
+    libu2f-host
 
   ];
 

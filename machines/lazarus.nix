@@ -39,6 +39,8 @@
  services.xserver.desktopManager.gnome3.enable = true;
 
  environment.systemPackages = with pkgs; [
+
+    # On screen keyboard
     gnome3.caribou
     atk
  ];
