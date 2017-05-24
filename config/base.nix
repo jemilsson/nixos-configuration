@@ -44,6 +44,10 @@ environment.systemPackages = with pkgs; [
   vimPlugins.deoplete-nvim
   vimPlugins.deoplete-jedi
 
+  # Security
+  gnupg
+  pinentry_ncurses
+
 
 ];
 

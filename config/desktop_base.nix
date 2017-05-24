@@ -83,6 +83,10 @@
 
     #Security
     libu2f-host
+    gnupg
+    pinentry_ncurses
+
+
 
   ];
 
@@ -157,6 +161,9 @@
      ];
    };
    services = {
+
+     pcscd.enable = true;
+
      udev.extraRules = ''
         # this udev file should be used with udev 188 and newer
         ACTION!="add|change", GOTO="u2f_end"
