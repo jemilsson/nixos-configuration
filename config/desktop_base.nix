@@ -41,7 +41,7 @@
     pavucontrol
     pasystray
     audacity
-    gimppair
+    gimp
     playerctl
 
     #Programming
