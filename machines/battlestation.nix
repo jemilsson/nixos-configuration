@@ -12,7 +12,7 @@
       device = "/dev/sda";
     };
 
-    
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -28,5 +28,7 @@
   i3pystatus
   python3
  ];
+
+ 
 
 }

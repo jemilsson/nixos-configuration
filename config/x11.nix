@@ -7,15 +7,25 @@
       xkbOptions = "eurosign:e";
       windowManager.i3.enable = true;
 
-      displayManager.lightdm = {
-        enable = true;
-
-        greeters.gtk = {
+      displayManager = {
+        ssdm = {
           enable = true;
-          theme.name = "Adapta";
+
+        };
+
+
+        lightdm = {
+          enable = false;
+
+          greeters.gtk = {
+            enable = true;
+            theme.name = "Adapta";
+          };
         };
       };
+
     };
+
 
     compton = {
       enable = true;
