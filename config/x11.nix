@@ -8,7 +8,7 @@
       windowManager.i3.enable = true;
 
       displayManager = {
-        ssdm = {
+        sddm = {
           enable = true;
 
         };
