@@ -12,7 +12,7 @@
       device = "/dev/sda";
     };
 
-    
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -27,6 +27,8 @@
  environment.systemPackages = with pkgs; [
   i3pystatus
   python3
+  sway
+  way-cooler
  ];
 
 
