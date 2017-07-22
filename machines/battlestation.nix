@@ -13,6 +13,15 @@
     };
 
 
+  system = {
+    autoUpgrade = {
+      enable = true;
+      channel = https://nixos.org/channels/nixos-unstable;
+    };
+    stateVersion = "17.03";
+  };
+
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -29,6 +38,6 @@
   python3
  ];
 
- 
+
 
 }
