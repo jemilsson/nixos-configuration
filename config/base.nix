@@ -13,7 +13,7 @@ time.timeZone = "Europe/Stockholm";
 system = {
   autoUpgrade = {
     enable = true;
-    channel = https://nixos.org/channels/nixos-17.03;
+    channel = https://nixos.org/channels/nixos-unstable;
   };
   stateVersion = "17.03";
 };
@@ -43,10 +43,6 @@ environment.systemPackages = with pkgs; [
   python35Packages.neovim
   vimPlugins.deoplete-nvim
   vimPlugins.deoplete-jedi
-
-  # Security
-  gnupg
-  pinentry_ncurses
 
 
 ];
