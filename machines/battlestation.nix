@@ -29,6 +29,8 @@
   python3
   sway
   way-cooler
+  wayland
+  weston
  ];
 
 
