@@ -9,13 +9,11 @@
 
       displayManager = {
         sddm = {
-          enable = true;
+          enable = false;
 
         };
-
-
         lightdm = {
-          enable = false;
+          enable = true;
 
           greeters.gtk = {
             enable = true;
