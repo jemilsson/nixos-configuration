@@ -34,6 +34,7 @@
     #Browsers
     firefox
     chromium
+    google-chrome
 
     #Media
     spotify
@@ -89,8 +90,6 @@
 
   ];
 
-  #nixpkgs.config.firefox.enableAdobeFlash = true; # for Firefox
-  #nixpkgs.config.chromium.enableAdobeFlash = true; # for Chromium
   nixpkgs.config = {
     chromium = {
       enableAdobeFlash = true;
@@ -170,7 +169,6 @@
      enableFontDir = true;
      enableGhostscriptFonts = true;
      fonts = with pkgs; [
-       corefonts  # Micrsoft free fonts
        google-fonts
        hack-font
        font-awesome-ttf

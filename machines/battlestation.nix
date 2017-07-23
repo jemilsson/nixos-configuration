@@ -27,7 +27,6 @@
  environment.systemPackages = with pkgs; [
   i3pystatus
   python3
-  google-chrome
   #sway
   #way-cooler
   #wayland

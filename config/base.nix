@@ -8,8 +8,6 @@
 
 time.timeZone = "Europe/Stockholm";
 
-#i18n.consoleKeyMap = "sv";
-
 system = {
   autoUpgrade = {
     enable = true;
