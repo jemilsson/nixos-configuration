@@ -31,6 +31,7 @@ environment.systemPackages = with pkgs; [
   htop
   git
   wget
+  python3
 
   #Network tools
   tcpdump
