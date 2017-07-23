@@ -87,8 +87,10 @@
     pinentry_ncurses
 
 
-
   ];
+
+  nixpkgs.config.firefox.enableAdobeFlash = true; # for Firefox
+  nixpkgs.config.chromium.enableAdobeFlash = true; # for Chromium
 
   #services = {
   #    autofs.enable = true;
