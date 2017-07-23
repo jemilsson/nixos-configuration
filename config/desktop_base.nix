@@ -89,13 +89,16 @@
 
   ];
 
-  nixpkgs.config.firefox.enableAdobeFlash = true; # for Firefox
+  #nixpkgs.config.firefox.enableAdobeFlash = true; # for Firefox
   #nixpkgs.config.chromium.enableAdobeFlash = true; # for Chromium
   nixpkgs.config = {
     chromium = {
       enableAdobeFlash = true;
       enablePepperPDF = true;
       enableWideVine = true;
+    };
+    firefox = {
+      enableAdobeFlash = true;
     };
   };
 
