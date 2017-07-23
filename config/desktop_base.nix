@@ -93,7 +93,7 @@
   #nixpkgs.config.chromium.enableAdobeFlash = true; # for Chromium
   nixpkgs.config = {
     chromium = {
-      enablePepperFlash = true;
+      enableAdobeFlash = true;
       enablePepperPDF = true;
       enableWideVine = true;
     };
