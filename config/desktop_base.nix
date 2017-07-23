@@ -99,6 +99,7 @@
     };
     firefox = {
       enableAdobeFlash = true;
+      enableWideVine = true;
     };
   };
 
@@ -186,5 +187,11 @@
 
         LABEL="u2f_end"
       '';
+    gnome3 = {
+      gnome-keyring.enable = true;
     };
+
+    };
+
+
 }
