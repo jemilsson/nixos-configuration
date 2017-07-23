@@ -31,6 +31,7 @@ environment.systemPackages = with pkgs; [
   htop
   git
   wget
+  curl
   python3
 
   #Network tools
