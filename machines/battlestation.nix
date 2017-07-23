@@ -27,10 +27,10 @@
  environment.systemPackages = with pkgs; [
   i3pystatus
   python3
-  sway
-  way-cooler
-  wayland
-  weston
+  #sway
+  #way-cooler
+  #wayland
+  #weston
  ];
 
 
