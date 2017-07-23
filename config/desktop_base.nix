@@ -95,7 +95,7 @@
     chromium = {
       enableAdobeFlash = true;
       enablePepperPDF = true;
-      enableWideVine = true;
+      #enableWideVine = true;
     };
     firefox = {
       enableAdobeFlash = true;
