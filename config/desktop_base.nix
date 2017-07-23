@@ -96,6 +96,8 @@
       enableAdobeFlash = true;
       enablePepperPDF = true;
       #enableWideVine = true;
+      gnomeKeyringSupport = true;
+      pulseSupport = true;
     };
     firefox = {
       enableAdobeFlash = true;
