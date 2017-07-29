@@ -21,6 +21,14 @@
     shell = "/run/current-system/sw/bin/fish";
  };
 
+ users.extraUsers.johan = {
+    isNormalUser = true;
+    uid = 1001;
+    home = "/home/johan/";
+    extraGroups = [ "wheel" ];
+    shell = "/run/current-system/sw/bin/fish";
+ };
+
  environment.systemPackages = with pkgs; [
 
  ];
