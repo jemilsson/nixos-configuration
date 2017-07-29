@@ -39,7 +39,7 @@ environment.systemPackages = with pkgs; [
   whois
   telnet
 
-  #
+  #Neovim
   neovim
   python35Packages.neovim
   vimPlugins.deoplete-nvim

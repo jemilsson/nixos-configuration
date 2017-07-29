@@ -52,6 +52,11 @@
      #package = pkgs.postgresql96;
   #};
 
+  radicale = {
+    enable = true;
+    config = pkgs.lib.readFile ../config/service_configs/radicale.cfg;
+  };
+
    influxdb = {
      enable = true;
    };
