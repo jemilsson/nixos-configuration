@@ -51,10 +51,23 @@
     database = {
       type = "sqlite3";
     };
-
-
-
    };
+
+   nginx = {
+      enable = true;
+      recommendedOptimisation=true;
+      recommendedProxySettings=true;
+      virtualHosts = {
+        "jonasem.com" = {
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:3000";
+            };
+          };
+        };
+      };
+   };
+
 
  };
 
