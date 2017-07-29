@@ -68,6 +68,7 @@
       enable = true;
       recommendedOptimisation=true;
       recommendedProxySettings=true;
+      appendHttpConfig="server_names_hash_bucket_size 128;";
       virtualHosts = {
         "grafana.jonasem.com" = {
           locations = {
