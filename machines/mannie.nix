@@ -35,11 +35,10 @@
 
   services = {
 
-    postgresql = {
-     enable = true;
-     package = pkgs.postgresql96;
-
-  };
+    #postgresql = {
+     #enable = true;
+     #package = pkgs.postgresql96;
+  #};
 
    influxdb = {
      enable = true;
@@ -50,10 +49,7 @@
     addr = "127.0.0.1";
 
     database = {
-      host = "127.0.0.1:5432";
-      type = "postgresql";
-      user = "grafana";
-
+      type = "sqlite3";
     };
 
 
