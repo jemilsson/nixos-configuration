@@ -31,6 +31,10 @@
      package = pkgs.postgresql96;
    };
 
+   influxdb = {
+     enable = true;
+   };
+
  };
 
 }
