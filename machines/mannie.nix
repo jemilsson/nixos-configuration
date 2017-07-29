@@ -43,6 +43,20 @@
      enable = true;
    };
 
+   grafana = {
+    addr = "127.0.0.1";
+
+    database = {
+      host = "127.0.0.1:5432";
+      type = "postgresql";
+      user = "grafana";
+
+    };
+
+
+
+   };
+
  };
 
 }
