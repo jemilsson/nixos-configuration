@@ -37,6 +37,7 @@ environment.systemPackages = with pkgs; [
   #Network tools
   tcpdump
   whois
+  telnet
 
   #
   neovim
