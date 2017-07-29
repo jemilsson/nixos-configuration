@@ -12,7 +12,6 @@
       enable = true;
       allowedTCPPorts = [ 22 80 ];
       allowedUDPPorts = [ ];
-
     };
 
   };
@@ -70,7 +69,7 @@
       recommendedOptimisation=true;
       recommendedProxySettings=true;
       virtualHosts = {
-        "jonasem.com" = {
+        "grafana.jonasem.com" = {
           locations = {
             "/" = {
               proxyPass = "http://localhost:3000";
