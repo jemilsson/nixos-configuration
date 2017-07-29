@@ -5,14 +5,15 @@
     ./base.nix
   ];
 
-  networking = {
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 22 ];
-      allowedUDPPorts = [ ];
 
-    };
+  #networking = {
+  #  firewall = {
+  #    enable = true;
+  #    allowedTCPPorts = [ 22 ];
+  #    allowedUDPPorts = [ ];
+  #
+  #    };
 
-  };
+  #};
 
 }
