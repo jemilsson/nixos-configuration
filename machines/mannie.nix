@@ -33,7 +33,7 @@
 
  ];
 
-  #services = {
+  services = {
   #  postgresql = {
   #   enable = true;
   #   package = pkgs.postgresql96;
