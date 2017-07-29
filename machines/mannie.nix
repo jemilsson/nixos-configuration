@@ -76,7 +76,7 @@
             };
           };
         };
-        "influxdb.jonasem.com" = {
+        "fusionpbx.jonasem.com" = {
           locations = {
             "/" = {
               proxyPass = "http://localhost:8086";
