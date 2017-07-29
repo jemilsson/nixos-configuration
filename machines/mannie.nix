@@ -34,11 +34,12 @@
  ];
 
   services = {
-  #  postgresql = {
-  #   enable = true;
-  #   package = pkgs.postgresql96;
-  #
-  #};
+
+    postgresql = {
+     enable = true;
+     package = pkgs.postgresql96;
+
+  };
 
    influxdb = {
      enable = true;
