@@ -4,7 +4,19 @@
   imports = [
     ../config/server_base.nix
   ];
-  networking.hostName = "mannie";
+
+  networking = {
+    hostName = "mannie";
+
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 ];
+      allowedUDPPorts = [ ];
+
+    };
+
+  };
+
 
   boot.loader.grub = {
       enable = true;
@@ -67,16 +79,6 @@
         };
       };
    };
- };
-
- networking = {
-   firewall = {
-     enable = true;
-     allowedTCPPorts = [ 22 80 ];
-     allowedUDPPorts = [ ];
-
-   };
-
  };
 
 }
