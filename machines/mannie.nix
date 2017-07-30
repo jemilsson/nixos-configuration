@@ -78,8 +78,8 @@
       recommendedGzipSettings = true;
       appendHttpConfig="server_names_hash_bucket_size 128;";
       virtualHosts = {
-        forceSSL = true;
         "grafana.jonasem.com" = {
+          forceSSL = true;
           locations = {
             "/" = {
               proxyPass = "http://localhost:3000";
