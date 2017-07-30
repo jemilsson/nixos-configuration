@@ -99,6 +99,16 @@
             };
           };
         };
+        "gollum.jonasem.com" = {
+          enableSSL = true;
+          forceSSL = true;
+          enableACME = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:4567";
+            };
+          };
+        };
       };
    };
  };
