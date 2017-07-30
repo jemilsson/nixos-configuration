@@ -80,6 +80,7 @@
       virtualHosts = {
         "grafana.jonasem.com" = {
           forceSSL = true;
+          enableACME = true;
           locations = {
             "/" = {
               proxyPass = "http://localhost:3000";
