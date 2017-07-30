@@ -74,8 +74,11 @@
       enable = true;
       recommendedOptimisation=true;
       recommendedProxySettings=true;
+      recommendedTlsSettings = true;
+      recommendedGzipSettings = true;
       appendHttpConfig="server_names_hash_bucket_size 128;";
       virtualHosts = {
+        forceSSL = true;
         "grafana.jonasem.com" = {
           locations = {
             "/" = {
