@@ -43,7 +43,6 @@
  environment.systemPackages = with pkgs; [
     python35Packages.websocket_client
     python35Packages.influxdb
-    gollum
  ];
 
   services = {
@@ -99,16 +98,7 @@
             };
           };
         };
-        "gollum.jonasem.com" = {
-          enableSSL = true;
-          forceSSL = true;
-          enableACME = true;
-          locations = {
-            "/" = {
-              proxyPass = "http://localhost:4567";
-            };
-          };
-        };
+
       };
    };
  };
