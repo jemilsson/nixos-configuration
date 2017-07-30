@@ -43,6 +43,7 @@
  environment.systemPackages = with pkgs; [
     python35Packages.websocket_client
     python35Packages.influxdb
+    gollum
  ];
 
   services = {
