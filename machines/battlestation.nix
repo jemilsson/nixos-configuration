@@ -13,7 +13,7 @@
     };
 
 
-  services.xserver.videoDrivers = [ "nouveau" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
  users.extraUsers.user = {
