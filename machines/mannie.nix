@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+ix{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -10,7 +10,7 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 ];
+      allowedTCPPorts = [ 22 80 443];
       allowedUDPPorts = [ ];
     };
 
