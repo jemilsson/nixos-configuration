@@ -88,6 +88,8 @@
           };
         };
         "influxdb.jonasem.com" = {
+          forceSSL = false;
+          enableACME = true;
           locations = {
             "/" = {
               proxyPass = "http://localhost:8086";
