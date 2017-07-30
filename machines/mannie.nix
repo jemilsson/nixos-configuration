@@ -79,6 +79,7 @@
       appendHttpConfig="server_names_hash_bucket_size 128;";
       virtualHosts = {
         "grafana.jonasem.com" = {
+          enableSSL = true;
           forceSSL = true;
           enableACME = true;
           locations = {
@@ -88,6 +89,7 @@
           };
         };
         "influxdb.jonasem.com" = {
+          enableSSL = true;
           forceSSL = false;
           enableACME = true;
           locations = {
