@@ -90,7 +90,7 @@
         };
         "influxdb.jonasem.com" = {
           enableSSL = true;
-          forceSSL = false;
+          forceSSL = true;
           enableACME = true;
           locations = {
             "/" = {
