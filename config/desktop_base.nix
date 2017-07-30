@@ -71,6 +71,7 @@
 
     #Office
     libreoffice
+    adobe-reader
 
     #Communication
     pidgin
