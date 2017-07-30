@@ -7,7 +7,7 @@ ix{ config, lib, pkgs, ... }:
 
   networking = {
     hostName = "mannie";
-    
+
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 80 443 ];
