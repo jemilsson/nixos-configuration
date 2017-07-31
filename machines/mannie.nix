@@ -70,8 +70,19 @@
       type = "sqlite3";
     };
    };
-   
+
    nginx.virtualHosts = {
+        "jonasem.com" = {
+          enableSSL = true;
+          forceSSL = true;
+          enableACME = true;
+          default = true;
+          locations = {
+            root = "/var/www/default";
+            index = "index.html";
+          };
+        };
+
         "grafana.jonasem.com" = {
           enableSSL = true;
           forceSSL = true;
