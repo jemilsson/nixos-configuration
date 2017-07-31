@@ -48,4 +48,5 @@
           enabled  = true
         '';
     };
+  };
 }
