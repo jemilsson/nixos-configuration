@@ -70,14 +70,6 @@
     };
    };
 
-   security = {
-      dhparams = {
-        params = {
-          nginx = 3072;
-        };
-      };
-   };
-
    nginx = {
       enable = true;
       recommendedOptimisation=true;
@@ -110,6 +102,14 @@
 
       };
    };
+ };
+
+ security = {
+    dhparams = {
+      params = {
+        nginx = 3072;
+      };
+    };
  };
 
 }
