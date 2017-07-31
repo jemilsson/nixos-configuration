@@ -78,8 +78,10 @@
           enableACME = true;
           default = true;
           locations = {
+            "/" = {
             root = "/var/www/default";
             index = "index.html";
+          };
           };
         };
 
