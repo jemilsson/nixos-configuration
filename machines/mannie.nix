@@ -70,6 +70,14 @@
     };
    };
 
+   security = {
+      dhparams = {
+        params = {
+          nginx = 3072;
+        };
+      };
+   };
+
    nginx = {
       enable = true;
       recommendedOptimisation=true;
@@ -77,6 +85,7 @@
       recommendedTlsSettings = true;
       recommendedGzipSettings = true;
       appendHttpConfig="server_names_hash_bucket_size 128;";
+      sslDhparam = "/var/lib/dhparams/nginx.pem";
       virtualHosts = {
         "grafana.jonasem.com" = {
           enableSSL = true;
