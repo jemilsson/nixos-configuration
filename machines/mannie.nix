@@ -108,7 +108,7 @@
     dhparams = {
       enable = true;
       params = {
-        nginx = 2048;
+        nginx = 4096;
       };
     };
  };
