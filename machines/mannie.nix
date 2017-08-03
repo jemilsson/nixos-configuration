@@ -72,6 +72,32 @@
    };
 
    nginx.virtualHosts = {
+         "emilsson.cloud" = {
+           enableSSL = true;
+           forceSSL = true;
+           enableACME = true;
+           default = true;
+           locations = {
+             "/" = {
+             root = "/var/www/default";
+             index = "index.html";
+           };
+           };
+         };
+
+         "emilsson.cloud" = {
+           enableSSL = true;
+           forceSSL = true;
+           enableACME = true;
+           default = true;
+           locations = {
+             "/" = {
+             root = "/var/www/default";
+             index = "index.html";
+           };
+           };
+         };
+
         "jonasem.com" = {
           enableSSL = true;
           forceSSL = true;

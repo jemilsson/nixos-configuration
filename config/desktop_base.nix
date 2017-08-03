@@ -44,6 +44,7 @@
     audacity
     gimp
     playerctl
+    deluge
 
     #Programming
     atom
