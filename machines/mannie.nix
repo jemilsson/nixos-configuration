@@ -80,7 +80,6 @@ in
            enableSSL = true;
            forceSSL = true;
            enableACME = true;
-           default = true;
            locations = {
              "/" = {
              root = "/var/www/default";
