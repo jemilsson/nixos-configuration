@@ -86,6 +86,15 @@ in
 
    nginx.virtualHosts = {
 
+         "default.jonasem.com" = {
+           enableSSL = false;
+           forceSSL = false;
+           enableACME = false;
+           default = true;
+           globalRedirect = "https://jonasem.com";
+         };
+
+
          "emilsson.cloud" = {
            enableSSL = true;
            forceSSL = true;
@@ -102,7 +111,6 @@ in
           enableSSL = true;
           forceSSL = true;
           enableACME = true;
-          default = true;
           locations = {
             "/" = {
             root = "/var/www/default";
