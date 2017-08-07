@@ -74,6 +74,16 @@ in
     };
    };
 
+   gogs = {
+     enable = true;
+     rootUrl = "git.jonasem.com";
+     httpPort = 3001;
+     database = {
+       type = "postgres";
+       port = services.postgresql.port;
+     };
+   };
+
    nginx.virtualHosts = {
 
          "emilsson.cloud" = {
@@ -111,6 +121,18 @@ in
             };
           };
         };
+
+        "git.jonasem.com" = {
+          enableSSL = true;
+          forceSSL = true;
+          enableACME = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:3001";
+            };
+          };
+        };
+
         "influxdb.jonasem.com" = {
           enableSSL = true;
           forceSSL = true;
