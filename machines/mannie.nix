@@ -5,7 +5,7 @@ in
 {
   imports = [
     ../config/server_base.nix
-    ../config/services/nginx.nix
+    ../config/services/nginx/nginx.nix
   ];
 
   networking = {
