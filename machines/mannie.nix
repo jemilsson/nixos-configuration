@@ -80,7 +80,7 @@ in
      httpPort = 3001;
      database = {
        type = "postgres";
-       port = services.postgresql.port;
+       port = 5432;
      };
    };
 
