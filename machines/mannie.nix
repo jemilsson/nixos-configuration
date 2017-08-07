@@ -78,10 +78,10 @@ in
      enable = true;
      rootUrl = "git.jonasem.com";
      httpPort = 3001;
-     database = {
-      type = "postgres";
-      port = 5432;
-     };
+     #database = {
+     #  type = "postgres";
+     #  port = 5432;
+     #};
    };
 
    nginx.virtualHosts = {
