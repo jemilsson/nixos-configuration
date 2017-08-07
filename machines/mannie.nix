@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ../config/server_base.nix
@@ -44,6 +46,10 @@
  environment.systemPackages = with pkgs; [
     python35Packages.websocket_client
     python35Packages.influxdb
+ ];
+
+ environment.systemPackages = with unstable; [
+    gogs
  ];
 
   services = {
