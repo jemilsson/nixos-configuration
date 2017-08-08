@@ -82,7 +82,7 @@ in
      database_type = "psycopg2";
      database_args = {
         user = "synapse";
-        password = "";
+        password = "mBgLGniz7i0maQDR";
         database = "synapse";
         host = "127.0.0.1";
         cp_min = "5";
