@@ -85,8 +85,8 @@ in
         password = "";
         database = "synapse";
         host = "127.0.0.1:5432";
-        cp_min = 5;
-        cp_max = 10;
+        cp_min = "5";
+        cp_max = "10";
      };
      listeners = [
       {
