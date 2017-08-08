@@ -142,6 +142,17 @@ in
           };
         };
 
+        "emilsson.chat" = {
+          enableSSL = true;
+          forceSSL = true;
+          enableACME = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:8448";
+            };
+          };
+        };
+
         "grafana.jonasem.com" = {
           enableSSL = true;
           forceSSL = true;
