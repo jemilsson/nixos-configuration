@@ -91,7 +91,7 @@ in
      listeners = [
       {
         bind_address = "127.0.0.1";
-        port = 8448;
+        port = "8448";
         tls = false;
         type = "http";
         x_forwarded = true;
