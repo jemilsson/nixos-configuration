@@ -84,7 +84,7 @@ in
         user = "synapse";
         password = "";
         database = "synapse";
-        host = "127.0.0.1:5432";
+        host = "127.0.0.1";
         cp_min = "5";
         cp_max = "10";
      };
