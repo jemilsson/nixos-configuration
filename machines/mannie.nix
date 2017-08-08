@@ -77,6 +77,7 @@ in
    matrix-synapse = {
      enable = true;
      no_tls = true;
+     webclient = true;
      public_baseurl = "https://emilsson.chat/";
      server_name = "emilsson.chat";
      database_type = "psycopg2";
