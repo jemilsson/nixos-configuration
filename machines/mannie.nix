@@ -96,7 +96,7 @@ in
         port = 8448;
         tls = false;
         type = "http";
-        x_forwarded = false;
+        x_forwarded = true;
         resources = [
           { compress = false;
             names = [ "client" "webclient"];
