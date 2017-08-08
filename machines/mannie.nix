@@ -74,6 +74,37 @@ in
     };
    };
 
+   matrix-synapse = {
+     enable = true;
+     no_tls = true;
+     public_baseurl = "https://emilsson.chat/";
+     server_name = "emilsson.chat";
+     database_type = "psycopg2";
+     database_args = {
+        user = "synapse";
+        password = "";
+        database = "synapse";
+        host = "127.0.0.1:5432";
+        cp_min = 5;
+        cp_max = 10;
+     };
+     listeners = [
+      {
+        bind_address = "127.0.0.1";
+        tls = false;
+        type = "http";
+        x_forwarded = true;
+        resources = [
+          { compress = false;
+            names = [ "client" "wenclient"];
+          }
+        ];
+      }
+     ];
+
+
+   };
+
    gogs = {
      enable = true;
      rootUrl = "git.jonasem.com";
