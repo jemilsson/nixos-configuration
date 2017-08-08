@@ -76,7 +76,7 @@ in
 
    gogs = {
      enable = true;
-     rootUrl = "git.jonasem.com";
+     rootUrl = "https://git.jonasem.com";
      httpPort = 3001;
      database = {
        type = "postgres";
