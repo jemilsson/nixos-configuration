@@ -107,7 +107,7 @@ in
 
    gogs = {
      enable = true;
-     rootUrl = "git.jonasem.com";
+     rootUrl = "https://git.jonasem.com";
      httpPort = 3001;
      database = {
        type = "postgres";
@@ -116,6 +116,12 @@ in
    };
 
    nginx.virtualHosts = {
+
+         "default.jonasem.com" = {
+           default = true;
+           extraConfig = "return 444;";
+         };
+
 
          "emilsson.cloud" = {
            enableSSL = true;
@@ -133,7 +139,6 @@ in
           enableSSL = true;
           forceSSL = true;
           enableACME = true;
-          default = true;
           locations = {
             "/" = {
             root = "/var/www/default";
