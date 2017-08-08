@@ -76,7 +76,7 @@ in
 
    matrix-synapse = {
      enable = true;
-     enable_registration = true;
+     enable_registration = false;
      no_tls = true;
      web_client = true;
      public_baseurl = "https://emilsson.chat/";
