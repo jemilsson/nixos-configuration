@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ../config/x_desktop.nix
@@ -27,7 +29,7 @@
  environment.systemPackages = with pkgs; [
   i3pystatus
   python3
-  teamspeak-client
+  unstable.teamspeak-client
   #sway
   #way-cooler
   #wayland
