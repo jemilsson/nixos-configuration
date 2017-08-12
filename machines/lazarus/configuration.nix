@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../config/x_desktop.nix
+    ../../config/x_desktop.nix
   ];
   networking.hostName = "lazarus";
 

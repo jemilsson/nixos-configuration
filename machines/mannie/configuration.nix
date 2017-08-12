@@ -4,8 +4,8 @@ let
 in
 {
   imports = [
-    ../config/server_base.nix
-    ../config/services/nginx/nginx.nix
+    ../../config/server_base.nix
+    ../../config/services/nginx/nginx.nix
   ];
 
   networking = {
