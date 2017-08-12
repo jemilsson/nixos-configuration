@@ -6,6 +6,8 @@ in
   imports = [
     ../../config/server_base.nix
     ../../config/services/nginx/nginx.nix
+
+    services/gogs.nix
   ];
 
   networking = {
@@ -108,16 +110,6 @@ in
 
    };
 
-   gogs = {
-     enable = true;
-     rootUrl = "https://git.jonasem.com";
-     httpPort = 3001;
-     database = {
-       type = "postgres";
-      port = 5432;
-     };
-   };
-
    nginx.virtualHosts = {
 
          "default.jonasem.com" = {
@@ -168,17 +160,6 @@ in
           locations = {
             "/" = {
               proxyPass = "http://localhost:3000";
-            };
-          };
-        };
-
-        "git.jonasem.com" = {
-          enableSSL = true;
-          forceSSL = true;
-          enableACME = true;
-          locations = {
-            "/" = {
-              proxyPass = "http://localhost:3001";
             };
           };
         };
