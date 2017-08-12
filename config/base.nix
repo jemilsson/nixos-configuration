@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ../../hardware-configuration.nix
@@ -20,6 +22,7 @@ services = {
   openssh.enable = true;
 };
 
+unstable.config.allowUnfree = true;
 nixpkgs.config.allowUnfree = true;
 
 programs = {
