@@ -58,7 +58,7 @@ in
 
   radicale = {
     enable = true;
-    config = pkgs.lib.readFile ../config/service_configs/radicale.cfg;
+    config = pkgs.lib.readFile ../../config/service_configs/radicale.cfg;
   };
 
    influxdb = {
