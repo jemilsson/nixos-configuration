@@ -10,7 +10,9 @@ in
     services/gogs.nix
     services/synapse.nix
     services/grafana.nix
-    services/openvpn.nix
+    services/influxdb.nix
+    #services/openvpn.nix
+    services/radicale.nix
   ];
 
   networking = {
@@ -61,17 +63,6 @@ in
      package = pkgs.postgresql;
   };
 
-  radicale = {
-    enable = true;
-    config = pkgs.lib.readFile ../../config/service_configs/radicale.cfg;
-  };
-
-   influxdb = {
-     enable = true;
-   };
-
-
-
    nginx.virtualHosts = {
 
          "default.jonasem.com" = {
@@ -101,17 +92,6 @@ in
             root = "/var/www/default";
             index = "index.html";
           };
-          };
-        };
-
-        "influxdb.jonasem.com" = {
-          enableSSL = true;
-          forceSSL = true;
-          enableACME = true;
-          locations = {
-            "/" = {
-              proxyPass = "http://localhost:8086";
-            };
           };
         };
     };
