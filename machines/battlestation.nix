@@ -27,6 +27,7 @@
  environment.systemPackages = with pkgs; [
   i3pystatus
   python3
+  teamspeak
   #sway
   #way-cooler
   #wayland
