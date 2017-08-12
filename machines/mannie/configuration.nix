@@ -10,6 +10,7 @@ in
     services/gogs.nix
     services/synapse.nix
     services/grafana.nix
+    services/openvpn.nix
   ];
 
   networking = {
