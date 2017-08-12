@@ -14,8 +14,6 @@ in
 {
   security.dhparams.params.openvpn = 4096;
 
-  networking.firewall.allowedUDPPorts = [ 1194 ];
-
   services = {
 
     openvpn = {
