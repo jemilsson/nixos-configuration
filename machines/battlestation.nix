@@ -26,7 +26,7 @@
  environment.systemPackages = with pkgs; [
   i3pystatus
   python3
-  unstable.teamspeak_client
+  teamspeak_client
   #sway
   #way-cooler
   #wayland
