@@ -10,7 +10,7 @@
 
           #Unit
           description = "GnuPG cryptographic agent and passphrase cache";
-          documentation = "man:gpg-agent(1)";
+          documentation = [ "man:gpg-agent(1)" ];
           requires = [ "gpg-agent.socket" ];
 
           #Service
