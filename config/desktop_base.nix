@@ -118,15 +118,37 @@
   #    autofs.enable = true;
   #};
 
-  systemd.user.services."urxvtd" = {
-      enable = true;
-      description = "rxvt unicode daemon";
-      wantedBy = [ "default.target" ];
-      path = [ pkgs.rxvt_unicode ];
-      serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 2;
-      serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
+  systemd = {
+    user = {
+
+      services = {
+
+        "urxvtd" = {
+            enable = true;
+            description = "rxvt unicode daemon";
+            wantedBy = [ "default.target" ];
+            path = [ pkgs.rxvt_unicode ];
+            serviceConfig.Restart = "always";
+            serviceConfig.RestartSec = 2;
+            serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
+          };
+
+        "gpg-agent" = {
+          "enable" = true;
+          description = "gpg agent";
+          wantedBy = [ "default.target" ];
+          path = [ pkgs.gnupg ];
+          serviceConfig = {
+            Type = "forking";
+            ExecStart = "${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --use-standard-socket";
+          };
+        };
+
+
+
+      };
     };
+  };
 
     # GTK3 global theme (widget and icon theme)
   environment.etc."gtk-3.0/settings.ini" = {
