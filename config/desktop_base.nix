@@ -3,6 +3,7 @@
 {
   imports = [
     ./base.nix
+    ./systemd_user/gpg-agent.nix
   ];
 
   hardware = {
@@ -132,20 +133,6 @@
             serviceConfig.RestartSec = 2;
             serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
           };
-
-        "gpg-agent" = {
-          "enable" = true;
-          description = "gpg agent";
-          wantedBy = [ "default.target" ];
-          path = [ pkgs.gnupg ];
-          serviceConfig = {
-            Type = "forking";
-            ExecStart = "${pkgs.gnupg}/bin/gpg-agent --daemon --enable-ssh-support --use-standard-socket";
-          };
-        };
-
-
-
       };
     };
   };
