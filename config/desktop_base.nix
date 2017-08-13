@@ -87,6 +87,7 @@
     #Security
     libu2f-host
     gnupg
+    gnupg1
     pinentry_ncurses
 
 
