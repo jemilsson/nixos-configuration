@@ -28,7 +28,7 @@
 
           #Unit
           description = "GnuPG cryptographic agent and passphrase cache";
-          documentation = "man:gpg-agent(1)";
+          documentation = [ "man:gpg-agent(1)" ];
 
           #Socket
           socketConfig = {
@@ -47,7 +47,7 @@
 
           #Unit
           description = "GnuPG cryptographic agent (ssh-agent emulation)";
-          documentation = "man:gpg-agent(1) man:ssh-add(1) man:ssh-agent(1) man:ssh(1)";
+          documentation = [ "man:gpg-agent(1)" "man:ssh-add(1)" "man:ssh-agent(1)" "man:ssh(1)" ];
 
           #Socket
           socketConfig = {
@@ -67,7 +67,7 @@
 
           #Unit
           description = "GnuPG cryptographic agent and passphrase cache (access for web browsers)";
-          documentation = "man:gpg-agent(1)";
+          documentation = [ "man:gpg-agent(1)" ];
 
           #Socket
           socketConfig = {
@@ -87,7 +87,7 @@
 
           #Unit
           description = "GnuPG cryptographic agent and passphrase cache (restricted)";
-          documentation = "man:gpg-agent(1)";
+          documentation = [ "man:gpg-agent(1)" ];
 
           #Socket
           socketConfig = {
