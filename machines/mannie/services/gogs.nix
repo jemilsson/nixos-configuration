@@ -6,6 +6,7 @@
       enable = true;
       rootUrl = "https://git.jonasem.com";
       httpPort = 3001;
+      domain = "git.jonasem.com";
       database = {
         type = "postgres";
        port = 5432;
