@@ -12,7 +12,7 @@ in
     services/grafana.nix
     services/influxdb.nix
     #services/openvpn.nix
-    services/radicale/radicale.nix
+    #services/radicale/radicale.nix
   ];
 
   networking = {
