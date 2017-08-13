@@ -92,6 +92,12 @@
 
   ];
 
+  programs = {
+    ssh = {
+      startAgent = false;
+    };
+  };
+
   nixpkgs.config = {
     chromium = {
       enableAdobeFlash = true;
