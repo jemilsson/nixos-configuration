@@ -5,7 +5,7 @@
     user = {
       services = {
         "gpg-agent" = {
-          enable = false;
+          enable = true;
           path = [ pkgs.gnupg ];
 
           #Unit
