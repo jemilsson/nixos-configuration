@@ -93,6 +93,7 @@
 
     pass
     qtpass
+    pwgen
 
 
   ];
