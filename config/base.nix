@@ -26,27 +26,36 @@ programs = {
   fish.enable = true;
 };
 
-environment.systemPackages = with pkgs; [
-  #System tools
-  htop
-  git
-  wget
-  curl
-  python3
-
-  #Network tools
-  tcpdump
-  whois
-  telnet
-
-  #Neovim
-  neovim
-  python35Packages.neovim
-  vimPlugins.deoplete-nvim
-  vimPlugins.deoplete-jedi
+environment = {
 
 
-];
+
+  systemPackages = with pkgs; [
+    #System tools
+    htop
+    git
+    wget
+    curl
+    python3
+
+    #Network tools
+    tcpdump
+    whois
+    telnet
+
+    #Neovim
+    neovim
+    python35Packages.neovim
+    vimPlugins.deoplete-nvim
+    vimPlugins.deoplete-jedi
+  ];
+  
+  shellAliases = {
+    "vi" = "nvim";
+    "vim" = "nvim";
+  };
+
+};
 
 networking = {
   timeServers = [
