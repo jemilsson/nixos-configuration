@@ -11,6 +11,16 @@
         type = "postgres";
        port = 5432;
       };
+
+      extraConfig =
+        ''
+        [service]
+        DISABLE_REGISTRATION = true
+        REQUIRE_SIGNIN_VIEW = true
+
+        '';
+
+
     };
 
     nginx.virtualHosts = {
