@@ -91,6 +91,9 @@
     gnupg1
     pinentry_ncurses
 
+    pass
+    qtpass
+
 
   ];
 
