@@ -3,7 +3,7 @@
 {
   imports = [
     ./base.nix
-    ./systemd_user/gpg-agent.nix
+    #./systemd_user/gpg-agent.nix
   ];
 
   hardware = {
