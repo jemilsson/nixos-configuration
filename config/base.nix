@@ -48,8 +48,11 @@ environment = {
     python35Packages.neovim
     vimPlugins.deoplete-nvim
     vimPlugins.deoplete-jedi
+
+    #remote
+    rxvt_unicode.terminfo
   ];
-  
+
   shellAliases = {
     "vi" = "nvim";
     "vim" = "nvim";
