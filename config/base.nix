@@ -80,7 +80,7 @@ nix = {
   };
   optimise = {
     automatic = true;
-    dates = "03:30";
+    dates = ["03:30"];
 
   };
 };
