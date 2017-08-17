@@ -25,6 +25,7 @@ nixpkgs.config.allowUnfree = true;
 
 programs = {
   fish.enable = true;
+  mosh.enable = true;
 };
 
 environment = {
@@ -76,6 +77,11 @@ nix = {
   gc = {
     automatic = true;
     dates = "04:00";
+  };
+  optimise = {
+    automatic = true;
+    dates = "03:30";
+
   };
 };
 
