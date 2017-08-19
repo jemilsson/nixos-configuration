@@ -5,7 +5,7 @@ in
 {
     environment.systemPackages = [
       pkgs.python35Packages.gunicorn
-      pkgs.python35Packages.flask  
+      pkgs.python35Packages.flask
 
     ];
 
@@ -31,7 +31,7 @@ in
         enableACME = true;
         locations = {
           "/" = {
-            proxyPass = "http://localhost:3001";
+            proxyPass = "http://localhost:8000";
           };
         };
       };
