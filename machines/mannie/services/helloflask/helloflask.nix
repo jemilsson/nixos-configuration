@@ -17,7 +17,7 @@ in
         PYTHONPATH = "${app}/lib/python3.5/site-packages";
       };
       serviceConfig = {
-        ExecStart = "gunicorn helloflask.wsgi";
+        ExecStart = "${pythonPackages.gunicorn}/bin/gunicorn helloflask.wsgi";
         User = "helloflask";
       };
     };
