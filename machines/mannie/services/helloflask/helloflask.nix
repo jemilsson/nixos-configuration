@@ -3,7 +3,11 @@ let
     app = import ./default.nix { pkgs = pkgs; };
 in
 {
-    environment.systemPackages = [ pkgs.python35Packages.gunicorn ];
+    environment.systemPackages = [
+      pkgs.python35Packages.gunicorn
+      pkgs.python35Packages.flask  
+
+    ];
 
     systemd.services.helloflask = {
       description = "Hello flask!";

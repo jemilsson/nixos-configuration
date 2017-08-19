@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 { pkgs ? import <nixpkgs> {} }:
 
-pythonPackages.buildPythonPackage {
+python35Packages.buildPythonPackage {
     name = "helloflask";
 
     propagatedBuildInputs = [
