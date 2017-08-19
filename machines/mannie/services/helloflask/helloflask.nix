@@ -1,7 +1,7 @@
 { config, resources, pkgs, ... }:
 let
     app = import ./default.nix { pkgs = pkgs; };
-    pythonPackages = python35Packages;
+    pythonPackages = pkgs.python35Packages;
 in
 {
     environment.systemPackages = [
