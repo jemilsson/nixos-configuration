@@ -18,7 +18,7 @@ in
           };
       };
 
-      uwsgi.vassals.helloflask = {
+      uwsgi.instance.vassals.helloflask = {
               pythonPackages = self: with self; [ app ];
               type = "normal";
               socket = "${config.services.uwsgi.runDir}/flaskhello.sock";
