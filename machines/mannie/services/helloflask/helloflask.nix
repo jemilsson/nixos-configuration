@@ -6,7 +6,6 @@ in
 {
     environment.systemPackages = [
       pythonPackages.gunicorn
-      pythonPackages.flask
 
     ];
 
@@ -19,7 +18,6 @@ in
       };
       serviceConfig = {
         ExecStart = "${app}/bin/gunicorn helloflask.wsgi";
-        Restart = "always";
         User = "helloflask";
       };
     };
