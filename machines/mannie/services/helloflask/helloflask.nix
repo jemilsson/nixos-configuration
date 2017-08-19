@@ -9,35 +9,45 @@ in
 
     ];
 
-    systemd.services.helloflask = {
-      description = "Hello flask!";
-      after = [ "network.target" ];
-      environment = {
-        PYTHONUSERBASE = "${app}";
-        PYTHONPATH = "${app}/lib/python3.5/site-packages";
-      };
-      serviceConfig = {
-        ExecStart = "${pythonPackages.gunicorn}/bin/gunicorn helloflask.wsgi";
-        User = "helloflask";
-      };
-    };
+    #users.extraUsers = {
+  #    helloflask = { };
+  #  };
 
-    users.extraUsers = {
-      helloflask = { };
-    };
 
-    services.nginx.virtualHosts = {
-      "helloflask.jonasem.com" = {
-        enableSSL = true;
-        forceSSL = true;
-        enableACME = true;
-        locations = {
-          "/" = {
-            proxyPass = "http://localhost:8000";
+    services = {
+      nginx.virtualHosts = {
+        "helloflask.jonasem.com" = {
+          enableSSL = true;
+          forceSSL = true;
+          enableACME = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:8000";
+            };
           };
         };
       };
+
+
+      uwsgi = {
+        enable = true;
+        instance = {
+          type = "emperor";
+          vassals = {
+            helloflask = {
+              type = "normal";
+              socket = "${config.services.uwsgi.runDir}/flaskhello.sock";
+              wsgi-file = "${app}/lib/python3.5/site-packages/helloflask/wsgi.py";
+            };
+          };
+
+        };
+
+
+      };
+
+
+
     };
 
-    services.openssh.enable = true;
 }

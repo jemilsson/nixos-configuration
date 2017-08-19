@@ -9,7 +9,6 @@ in
 
     propagatedBuildInputs = [
         pythonPackages.flask
-        pythonPackages.gunicorn
     ];
 
     src = ./.;
