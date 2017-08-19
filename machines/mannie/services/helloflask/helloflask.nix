@@ -13,7 +13,10 @@ in
     systemd.services.helloflask = {
       description = "Hello flask!";
       after = [ "network.target" ];
-      environment = { PYTHONUSERBASE = "${app}"; };
+      environment = {
+        PYTHONUSERBASE = "${app}";
+        PYTHONPATH = "${app}/lib/python3.5/site-packages";
+      };
       serviceConfig = {
         ExecStart = "${app}/bin/gunicorn helloflask.wsgi";
         Restart = "always";
