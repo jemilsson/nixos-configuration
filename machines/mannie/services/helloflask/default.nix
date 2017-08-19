@@ -9,9 +9,13 @@ python35Packages.buildPythonPackage {
         pkgs.python35Packages.gunicorn
     ];
 
+
+
+
     #preBuild = ''
     #    ${python}/bin/python voting/manage.py collectstatic --noinput;
     #'';
 
     src = ./.;
+
 }
