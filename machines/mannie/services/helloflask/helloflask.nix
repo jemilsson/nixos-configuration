@@ -49,6 +49,7 @@ in
         };
 
 
+      plugins = [ "python3" ];
       };
 
 
