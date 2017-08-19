@@ -9,6 +9,9 @@ in
           forceSSL = true;
           enableACME = true;
           locations = {
+            "/static/" = {
+              alias = "${app}/lib/python3.5/site-packages/helloflask/static/";
+            };
             "/" = {
               extraConfig = ''
                 uwsgi_pass unix://${config.services.uwsgi.instance.vassals.helloflask.socket};
