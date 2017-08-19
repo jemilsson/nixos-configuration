@@ -1,11 +1,12 @@
 { config, resources, pkgs, ... }:
 let
     app = import ./default.nix { pkgs = pkgs; };
+    pythonPackages = python35Packages;
 in
 {
     environment.systemPackages = [
-      pkgs.python35Packages.gunicorn
-      pkgs.python35Packages.flask
+      pythonPackages.gunicorn
+      pythonPackages.flask
 
     ];
 

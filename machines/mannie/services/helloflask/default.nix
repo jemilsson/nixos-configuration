@@ -1,20 +1,16 @@
 with import <nixpkgs> {};
 { pkgs ? import <nixpkgs> {} }:
 
-python35Packages.buildPythonPackage {
+let
+    pythonPackages = python35Packages;
+in
+  pythonPackages.buildPythonPackage {
     name = "helloflask";
 
     propagatedBuildInputs = [
-        pkgs.python35Packages.flask
-        pkgs.python35Packages.gunicorn
+        pythonPackages.flask
+        pythonPackages.gunicorn
     ];
-
-
-
-
-    #preBuild = ''
-    #    ${python}/bin/python voting/manage.py collectstatic --noinput;
-    #'';
 
     src = ./.;
 
