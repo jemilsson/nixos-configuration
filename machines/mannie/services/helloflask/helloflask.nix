@@ -22,7 +22,10 @@ in
           enableACME = true;
           locations = {
             "/" = {
-              proxyPass = "http://localhost:8000";
+              extraConfig = ''
+                uwsgi_pass unix://${config.services.uwsgi.instance.vassals.helloflask.socket};
+                include ${pkgs.nginx}/conf/uwsgi_params;
+                '';
             };
           };
         };
