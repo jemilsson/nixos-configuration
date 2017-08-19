@@ -38,6 +38,7 @@ in
           type = "emperor";
           vassals = {
             helloflask = {
+              pythonPackages = self: with self; [ app ];
               type = "normal";
               socket = "${config.services.uwsgi.runDir}/flaskhello.sock";
               wsgi-file = "${app}/lib/python3.5/site-packages/helloflask/wsgi.py";
