@@ -14,7 +14,7 @@ in
       after = [ "network.target" ];
       environment = { PYTHONUSERBASE = "${app}"; };
       serviceConfig = {
-        ExecStart = "${pkgs.python35Packages.gunicorn}/bin/gunicorn helloflask.wsgi";
+        ExecStart = "${app}/bin/gunicorn helloflask.wsgi";
         Restart = "always";
         User = "helloflask";
       };
