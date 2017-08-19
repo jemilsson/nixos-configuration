@@ -3,7 +3,7 @@ application = Flask(__name__)
 
 @application.route("/", methods = ['POST', 'GET'])
 def hello():
-    print(request)
+    print(request.headers)
     return "Hello Flask!"
 
 if __name__ == "__main__":
