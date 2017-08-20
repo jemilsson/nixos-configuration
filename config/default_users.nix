@@ -3,10 +3,9 @@ let
   sshKeys = import ./ssh-keys.nix;
 in
 {
-  users.extraUsers.jonas = {
+  users.users.jonas = {
      createHome = true;
      isNormalUser = true;
-     uid = 1000;
      home = "/home/jonas/";
      group = "users";
      isSystemUser = false;

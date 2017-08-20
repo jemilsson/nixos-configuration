@@ -24,7 +24,10 @@ security = {
 };
 
 services = {
-  openssh.enable = true;
+  openssh = {
+    enable = true;
+    permitRootLogin = false;
+  };
 };
 
 nixpkgs.config.allowUnfree = true;
