@@ -90,6 +90,7 @@
     yubikey-personalization
     yubico-piv-tool
     pcsctools
+    opensc
 
 
     gnupg
@@ -210,6 +211,7 @@
           pkgs.yubikey-personalization
           pkgs.yubico-piv-tool
           pkgs.pcsctools
+          pkgs.opensc
 
        ];
 
