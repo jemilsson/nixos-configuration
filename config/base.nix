@@ -43,6 +43,7 @@ programs = {
       enable = true;
     };
     ohMyZsh = {
+      enable =true;
       theme = "agnoster";
     };
   };
