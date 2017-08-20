@@ -203,8 +203,8 @@
      udev = {
 
        packages = [
-          libu2f-host
-          yubikey-personalization
+          pkgs.libu2f-host
+          pkgs.yubikey-personalization
 
        ];
 
