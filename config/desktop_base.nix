@@ -89,6 +89,8 @@
     libu2f-host
     yubikey-personalization
     yubico-piv-tool
+    pcsctools
+
 
     gnupg
     gnupg1
@@ -207,6 +209,7 @@
           pkgs.libu2f-host
           pkgs.yubikey-personalization
           pkgs.yubico-piv-tool
+          pkgs.pcsctools
 
        ];
 
