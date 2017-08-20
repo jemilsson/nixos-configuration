@@ -85,6 +85,9 @@ environment = {
 
     #remote
     rxvt_unicode.terminfo
+
+    #fun
+    fortune
   ];
 
   shellAliases = {
