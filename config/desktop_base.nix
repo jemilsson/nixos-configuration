@@ -108,7 +108,7 @@
 
       extraConfig = ''
         Host *.jonas.systems
-          ForwardAgent
+          ForwardAgent yes
         '';
     };
   };
