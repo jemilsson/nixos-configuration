@@ -89,7 +89,7 @@ environment = {
     #fun
     fortune
     cowsay
-    toilet
+    figlet
   ];
 
   shellAliases = {
