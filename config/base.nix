@@ -35,6 +35,7 @@ nixpkgs.config.allowUnfree = true;
 programs = {
   mosh.enable = true;
   zsh = {
+    loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
     enable = true;
     enableAutosuggestions = true;
     syntaxHighlighting = {
