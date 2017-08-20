@@ -105,6 +105,11 @@
   programs = {
     ssh = {
       startAgent = false;
+
+      extraConfig = ""
+        Host *.jonas.systems
+          ForwardAgent
+        "";
     };
   };
 
