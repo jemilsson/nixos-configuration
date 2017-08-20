@@ -3,7 +3,7 @@
   imports = [
     ../../hardware-configuration.nix
     ./default_users.nix
-
+    ./known_hosts.nix
 ];
 
 time.timeZone = "Europe/Stockholm";
