@@ -88,6 +88,7 @@ environment = {
 
     #fun
     fortune
+    cowsay
   ];
 
   shellAliases = {
