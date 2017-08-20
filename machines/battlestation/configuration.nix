@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ../../config/x_desktop.nix
@@ -31,6 +34,7 @@
   #way-cooler
   #wayland
   #weston
+  unstable.alacritty
  ];
 
 
