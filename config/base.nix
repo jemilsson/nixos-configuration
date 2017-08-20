@@ -34,8 +34,6 @@ nixpkgs.config.allowUnfree = true;
 
 programs = {
   mosh.enable = true;
-
-  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
   zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -58,6 +56,8 @@ programs = {
     };
   };
 };
+
+users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
 environment = {
 
