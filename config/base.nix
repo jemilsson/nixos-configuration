@@ -35,6 +35,13 @@ nixpkgs.config.allowUnfree = true;
 programs = {
   fish.enable = true;
   mosh.enable = true;
+
+  zsh = {
+    enableAutosuggestions = true;
+    syntaxHighlighting = {
+      enable = true;
+    };
+  };
 };
 
 environment = {
