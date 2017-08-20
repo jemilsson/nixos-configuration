@@ -22,8 +22,8 @@
     uid = 1000;
     home = "/home/jonas/";
     extraGroups = [ "wheel" "networkmanager" ];
-    shell = "/run/current-system/sw/bin/fish";
     createHome = true;
+    useDefaultShell = true;
     };
 
     wanida = {
@@ -31,8 +31,8 @@
       uid = 1001;
       home = "/home/wanida/";
       extraGroups = [ "networkmanager" ];
-      shell = "/run/current-system/sw/bin/fish";
       createHome = true;
+      useDefaultShell = true;
     };
   };
 

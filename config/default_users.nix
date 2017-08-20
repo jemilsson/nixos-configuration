@@ -10,7 +10,7 @@ in
      group = "users";
      isSystemUser = false;
      extraGroups = [ "wheel" "networkmanager" ];
-     shell = "/run/current-system/sw/bin/fish";
+     shell = "/run/current-system/sw/bin/zsh";
      openssh.authorizedKeys.keys = [ sshKeys.jonas ];
   };
 

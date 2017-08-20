@@ -43,7 +43,6 @@ in
     uid = 1002;
     home = "/home/user/";
     extraGroups = [ "wheel" ];
-    shell = "/run/current-system/sw/bin/fish";
  };
 
  users.extraUsers.johan = {
@@ -51,7 +50,6 @@ in
     uid = 1001;
     home = "/home/johan/";
     extraGroups = [ "wheel" ];
-    shell = "/run/current-system/sw/bin/fish";
  };
 
  environment.systemPackages = with pkgs; [

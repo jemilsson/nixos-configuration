@@ -23,7 +23,7 @@ in
     uid = 1003;
     home = "/home/user/";
     extraGroups = [ "wheel" "networkmanager" ];
-    shell = "/run/current-system/sw/bin/fish";
+    useDefaultShell = true;
  };
 
  environment.systemPackages = with pkgs; [

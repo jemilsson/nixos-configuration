@@ -33,9 +33,9 @@ services = {
 nixpkgs.config.allowUnfree = true;
 
 programs = {
-  fish.enable = true;
   mosh.enable = true;
 
+  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
   zsh = {
     enable = true;
     enableAutosuggestions = true;
