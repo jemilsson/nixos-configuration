@@ -45,6 +45,17 @@ programs = {
     ohMyZsh = {
       enable =true;
       theme = "agnoster";
+      plugins = [
+        "pass"
+        "sudo"
+        "systemd"
+        "web-search"
+        "chucknorris"
+        "jsontools"
+        "mosh"
+        "python"
+        "wd"
+      ];
     };
   };
 };
