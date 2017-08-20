@@ -206,6 +206,7 @@
        packages = [
           pkgs.libu2f-host
           pkgs.yubikey-personalization
+          pkgs.yubico-piv-tool
 
        ];
 
