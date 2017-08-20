@@ -17,6 +17,12 @@ system = {
   stateVersion = "17.03";
 };
 
+security = {
+  pam = {
+    enableSSHAgentAuth = true;
+  };
+};
+
 services = {
   openssh.enable = true;
 };
