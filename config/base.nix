@@ -42,6 +42,9 @@ programs = {
     syntaxHighlighting = {
       enable = true;
     };
+    ohMyZsh = {
+      theme = "agnoster";
+    };
   };
 };
 
