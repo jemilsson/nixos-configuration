@@ -106,10 +106,10 @@
     ssh = {
       startAgent = false;
 
-      extraConfig = ""
+      extraConfig = ''
         Host *.jonas.systems
           ForwardAgent
-        "";
+        '';
     };
   };
 
