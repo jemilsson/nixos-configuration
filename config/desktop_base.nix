@@ -125,6 +125,7 @@
       enableAdobeFlash = true;
       enableWideVine = true;
     };
+
   };
 
 
@@ -203,6 +204,7 @@
        google-fonts
        hack-font
        font-awesome-ttf
+       powerline-fonts
      ];
    };
    services = {
