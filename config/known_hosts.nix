@@ -10,6 +10,7 @@
     {
       "hostNames" = [
         "mannie.jonas.systems"
+        "git.jonasem.com"
       ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAAyGdMwX5EqluNr/PZKV4d13cymcrnleDf10bmzGBi3";
     }
