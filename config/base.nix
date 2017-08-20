@@ -85,11 +85,11 @@ nix = {
   autoOptimiseStore = true;
   gc = {
     automatic = true;
-    dates = "04:00";
+    dates = "03:30";
   };
   optimise = {
     automatic = true;
-    dates = ["03:30"];
+    dates = ["04:00"];
 
   };
 };
