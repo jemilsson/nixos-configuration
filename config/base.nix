@@ -50,7 +50,6 @@ programs = {
         "sudo"
         "systemd"
         "web-search"
-        "chucknorris"
         "jsontools"
         "mosh"
         "python"
