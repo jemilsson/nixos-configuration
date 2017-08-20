@@ -88,6 +88,7 @@
     #Security
     libu2f-host
     yubikey-personalization
+    yubico-piv-tool
 
     gnupg
     gnupg1
