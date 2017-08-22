@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ./base.nix
@@ -35,7 +37,7 @@
     #Browsers
     firefox
     chromium
-    google-chrome
+    unstable.google-chrome
 
     #Media
     spotify
