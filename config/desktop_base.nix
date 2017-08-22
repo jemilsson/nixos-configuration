@@ -1,14 +1,9 @@
 { config, lib, pkgs, ... }:
-let
-  unstable = import <nixos-unstable> {};
-in
 {
   imports = [
     ./base.nix
     #./systemd_user/gpg-agent.nix
   ];
-
-  unstable.config.allowUnfree = true;
 
   hardware = {
 
@@ -39,7 +34,7 @@ in
     #Browsers
     firefox
     chromium
-    unstable.google-chrome
+    #google-chrome
 
     #Media
     spotify
