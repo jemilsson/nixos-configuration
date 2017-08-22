@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   unstable = import <nixos-unstable> {};
+  unstable.config.allowUnfree = true;
 in
 {
   imports = [
