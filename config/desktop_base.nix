@@ -1,13 +1,14 @@
 { config, lib, pkgs, ... }:
 let
   unstable = import <nixos-unstable> {};
-  unstable.config.allowUnfree = true;
 in
 {
   imports = [
     ./base.nix
     #./systemd_user/gpg-agent.nix
   ];
+
+  unstable.config.allowUnfree = true;
 
   hardware = {
 
