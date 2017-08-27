@@ -95,6 +95,8 @@ environment = {
   shellAliases = {
     "vi" = "nvim";
     "vim" = "nvim";
+    "please" = "sudo";
+    "plz" = "sudo";
   };
 
 };
