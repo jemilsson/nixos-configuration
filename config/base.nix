@@ -35,7 +35,6 @@ nixpkgs.config.allowUnfree = true;
 programs = {
   mosh.enable = true;
   zsh = {
-    loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
     enable = true;
     enableAutosuggestions = true;
     syntaxHighlighting = {
@@ -61,8 +60,7 @@ programs = {
 users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
 environment = {
-  loginShellInit = "Environment | figlet -f big; fortune -a -s | cowsay";
-
+  loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
 
   systemPackages = with pkgs; [
     #System tools
