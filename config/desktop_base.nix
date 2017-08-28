@@ -204,6 +204,7 @@
        hack-font
        font-awesome-ttf
        powerline-fonts
+       dejavu_fonts
      ];
    };
    services = {

@@ -61,7 +61,7 @@ programs = {
 users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
 environment = {
-
+  loginShellInit = "Environment | figlet -f big; fortune -a -s | cowsay";
 
 
   systemPackages = with pkgs; [
