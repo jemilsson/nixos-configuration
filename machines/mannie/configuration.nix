@@ -7,6 +7,8 @@ in
     ../../config/server_base.nix
     ../../config/services/nginx/nginx.nix
 
+    ../../config/services/prometheus/prometheus.nix
+
     services/gogs.nix
     services/synapse.nix
     services/grafana.nix
