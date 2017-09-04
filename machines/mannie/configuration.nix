@@ -8,6 +8,7 @@ in
     ../../config/services/nginx/nginx.nix
 
     ../../config/services/prometheus/prometheus.nix
+    ../../config/services/prometheus/nginx_exporter.nix
 
     services/gogs.nix
     services/synapse.nix

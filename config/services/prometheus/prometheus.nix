@@ -14,6 +14,7 @@
             {
               targets = [
                 "localhost:9100"
+                "localhost:9113"
               ];
               labels = {
                 alias = "${config.networking.hostName}";
