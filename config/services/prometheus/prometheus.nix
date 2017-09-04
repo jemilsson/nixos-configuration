@@ -16,7 +16,7 @@
                 "localhost:9100"
               ];
               labels = {
-                alias = "${networking.hostName}";
+                alias = "${config.networking.hostName}";
               };
             }
           ];
