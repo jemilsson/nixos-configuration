@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
+let
+unstable = import <nixos-unstable> {
+  config = config.nixpkgs.config;
+};
+in
 {
-  nixpkgs.config.packageOverrides.gogs = pkgs.unstable.gogs;
+  nixpkgs.config.packageOverrides.gogs = unstable.gogs;
 
   services = {
 
