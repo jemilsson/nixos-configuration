@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  unstable = import <nixos-unstable> {};
+  unstable = import <nixos-unstable> {config = config.nixpkgs.config;};
 in
 {
   imports = [
@@ -37,10 +37,7 @@ nixpkgs = {
   config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-    unstable = unstable {
-      config = config.nixpkgs.config;
-      };
-    grafana = unstable.grafana;
+    unstable = unstable;
     };
   };
 };
