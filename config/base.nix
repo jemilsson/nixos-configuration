@@ -36,6 +36,7 @@ nixpkgs = {
     packageOverrides = pkgs: {
     unstable = import <nixos-unstable> {
       config = config.nixpkgs.config;
+      };
     };
   };
 };
