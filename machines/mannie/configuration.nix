@@ -1,7 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  unstable = import <nixos-unstable> {};
-in
 {
   imports = [
     ../../config/server_base.nix
