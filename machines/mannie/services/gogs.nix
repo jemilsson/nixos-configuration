@@ -5,7 +5,9 @@ unstable = import <nixos-unstable> {
 };
 in
 {
-  nixpkgs.config.packageOverrides.pkgs.gogs = unstable.gogs;
+  nixpkgs.config.packageOverrides = pkgs: with pkgs; {
+      gogs = unstable.gogs;
+    };
 
   services = {
 
