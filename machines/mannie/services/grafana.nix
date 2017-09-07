@@ -8,7 +8,7 @@ in
     grafana = {
      enable = true;
      addr = "127.0.0.1";
-     package = unstable.grafanas;
+     package = unstable.grafana;
 
      database = {
        type = "sqlite3";
