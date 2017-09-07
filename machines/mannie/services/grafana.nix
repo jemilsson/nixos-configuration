@@ -1,10 +1,14 @@
 { config, lib, pkgs, ... }:
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   services = {
 
     grafana = {
      enable = true;
      addr = "127.0.0.1";
+     package = unstable.grafana;
 
      database = {
        type = "sqlite3";
