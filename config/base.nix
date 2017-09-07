@@ -1,7 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  unstable = import <nixos-unstable> {config = config.nixpkgs.config;};
-in
 {
   imports = [
     ../../hardware-configuration.nix
@@ -37,7 +34,10 @@ nixpkgs = {
   config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
-    unstable = unstable;
+      unstable = import <nixos-unstable> {
+        config = config.nixpkgs.config;
+      };
+      gogs = unstable.gogs;
     };
   };
 };
