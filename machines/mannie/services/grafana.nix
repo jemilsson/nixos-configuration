@@ -5,7 +5,7 @@
     grafana = {
      enable = true;
      addr = "127.0.0.1";
-     package = unstable.grafana;
+     package = pkgs.unstable.grafana;
 
      database = {
        type = "sqlite3";
