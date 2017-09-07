@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 {
+  nixpkgs.config.packageOverrides.gogs = pkgs.unstable.gogs;
+
   services = {
 
     gogs = {
