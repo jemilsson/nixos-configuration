@@ -38,7 +38,6 @@ nixpkgs = {
     allowUnfree = true;
     packageOverrides = pkgs: {
     unstable = unstable;
-    grafana = unstable.grafana;
     };
   };
 };
