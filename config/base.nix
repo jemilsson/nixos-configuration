@@ -30,7 +30,15 @@ services = {
   };
 };
 
-nixpkgs.config.allowUnfree = true;
+nixpkgs = {
+  config = {
+    allowUnfree = true;
+    packageOverrides = pkgs: {
+    unstable = import <nixos-unstable> {
+      config = config.nixpkgs.config;
+    };
+  };
+};
 
 programs = {
   mosh.enable = true;
