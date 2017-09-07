@@ -37,7 +37,6 @@ nixpkgs = {
       unstable = import <nixos-unstable> {
         config = config.nixpkgs.config;
       };
-      gogs = pkgs.unstable.gogs;
     };
   };
 };
