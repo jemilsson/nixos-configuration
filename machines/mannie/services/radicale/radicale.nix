@@ -23,7 +23,6 @@
       };
     };
 };
-
 nixpkgs.overlays = [
     (self: super: {
       radicale = pkgs.unstable.radicale2;
