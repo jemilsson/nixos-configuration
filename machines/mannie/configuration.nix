@@ -79,6 +79,10 @@
            enableACME = true;
            locations = {
              "/" = {
+             extraConfig = ''
+                auth_basic "Restricted";
+                auth_basic_user_file /var/db/htpasswd/users;
+                '';
              root = "/var/www/default";
              index = "index.html";
            };
