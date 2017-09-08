@@ -13,7 +13,7 @@
     services/influxdb.nix
     services/uwsgi.nix
     #services/openvpn.nix
-    #services/radicale/radicale.nix
+    services/radicale/radicale.nix
     services/helloflask/helloflask.nix
 
     #test default signed commit
