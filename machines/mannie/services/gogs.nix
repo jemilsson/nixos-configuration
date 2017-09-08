@@ -38,11 +38,11 @@
     };
 };
 
-#nixpkgs.overlays = [
-#    (self: super: {
-#      gogs = pkgs.unstable.gogs;
-#    }
-#    )
-#  ];
+nixpkgs.overlays = [
+    (self: super: {
+      gogs = pkgs.unstable.gogs;
+    }
+    )
+  ];
 
 }
