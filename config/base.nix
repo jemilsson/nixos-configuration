@@ -69,7 +69,8 @@ programs = {
 users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
 environment = {
-  loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
+  #disrupts git
+  #loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
 
   systemPackages = with pkgs; [
     #System tools
