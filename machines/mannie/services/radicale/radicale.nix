@@ -13,7 +13,7 @@
         enableACME = true;
         locations = {
           "/" = {
-            proxyPass = "http://localhost:3000";
+            proxyPass = "http://localhost:5232";
             extraConfig = ''
                auth_basic "Restricted";
                auth_basic_user_file /var/db/htpasswd/users;
