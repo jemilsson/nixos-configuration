@@ -15,6 +15,9 @@
           "/" = {
             proxyPass = "http://localhost:5232";
             extraConfig = ''
+               proxy_set_header     X-Script-Name /radicale;
+               proxy_set_header     X-Forwarded-For $proxy_add_x_forwarded_for;
+               proxy_set_header     X-Remote-User $remote_user;
                auth_basic "Restricted";
                auth_basic_user_file /var/db/htpasswd/users;
                '';
