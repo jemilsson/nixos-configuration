@@ -34,7 +34,7 @@
     #Browsers
     firefox
     chromium
-    #google-chrome
+    google-chrome
 
     #Media
     spotify
