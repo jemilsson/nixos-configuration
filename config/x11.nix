@@ -42,7 +42,7 @@
       fadeSteps = ["0.25" "0.25"];
       vSync = "opengl";
       extraOptions = ''
-        vsync = "opengl";
+        unredir-if-possible = true;
       '';
     };
 
