@@ -42,20 +42,14 @@
       fadeSteps = ["0.25" "0.25"];
       vSync = "opengl-swc";
       extraOptions = ''
-        sw-opti = false;
-        paint-on-overlay = true;
-        unredir-if-possible = true;
         glx-no-stencil = true;
         glx-no-rebind-pixmap = true;
-        glx-swap-method = 3
-        glx-copy-from-front = true;
-        xrender-sync = true;
-        xrender-sync-fence = true;
+        glx-swap-method = "-1";
+        paint-on-overlay = true;
+        sw-opti = true;
+        detect-transient = true;
+        detect-client-leader = true;
 
-        # transparancy settings for i3
-        opacity-rule = [
-          "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
-        ];
       '';
     };
 
