@@ -30,8 +30,8 @@ in
   i3pystatus
   python3
   teamspeak_client
-  #sway
-  #way-cooler
+  sway
+  way-cooler
   #wayland
   #weston
   unstable.alacritty
