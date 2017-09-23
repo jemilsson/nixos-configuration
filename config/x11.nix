@@ -51,6 +51,11 @@
         glx-copy-from-front = true;
         xrender-sync = true;
         xrender-sync-fence = true;
+
+        # transparancy settings for i3
+        opacity-rule = [
+          "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+        ];
       '';
     };
 
