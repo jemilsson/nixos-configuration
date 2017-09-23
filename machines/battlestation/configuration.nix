@@ -15,7 +15,7 @@ in
     };
 
 
-  services.xserver.videoDrivers = [ "amdgpu-pro" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
  users.extraUsers.user = {
