@@ -40,9 +40,15 @@
       fade = true;
       fadeDelta = 3;
       fadeSteps = ["0.25" "0.25"];
-      vSync = "opengl";
+      vSync = "opengl-mswc";
       extraOptions = ''
+        sw-opti = false;
+        paint-on-overlay = true;
         unredir-if-possible = true;
+        glx-no-stencil = true;
+        glx-use-copysubbuffermesa = true;
+        glx-no-rebind-pixmap = true;
+        #glx-swap-method = 3
       '';
     };
 
