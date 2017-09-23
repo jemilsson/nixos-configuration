@@ -79,7 +79,7 @@
     skype
 
     #Games
-    steam
+    (steam.override { newStdcpp = true; })
 
     #Graphical network tools
     wireshark
