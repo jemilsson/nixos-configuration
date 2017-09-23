@@ -40,6 +40,7 @@
       fade = true;
       fadeDelta = 3;
       fadeSteps = ["0.25" "0.25"];
+      vSync = "opengl";
       extraOptions = ''
         vsync = "opengl";
       '';
