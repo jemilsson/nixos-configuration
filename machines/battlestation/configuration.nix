@@ -32,7 +32,7 @@ in
   teamspeak_client
   sway
   unstable.way-cooler
-  #wayland
+  wayland
   #weston
   unstable.alacritty
  ];
