@@ -8,7 +8,11 @@
      package = pkgs.unstable.grafana;
 
      database = {
-       type = "sqlite3";
+       type = "postgresql";
+       host = "127.0.0.1:5432";
+       name = "grafana";
+       password = "ayAV5apytnYzgUsywHpqfsDSLKEAXW7a";
+       user = "grafana";
      };
     };
 
