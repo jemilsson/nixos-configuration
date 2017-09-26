@@ -8,7 +8,7 @@
      package = pkgs.unstable.grafana;
 
      database = {
-       type = "postgresql";
+       type = "postgres";
        host = "127.0.0.1:5432";
        name = "grafana";
        password = "ayAV5apytnYzgUsywHpqfsDSLKEAXW7a";
