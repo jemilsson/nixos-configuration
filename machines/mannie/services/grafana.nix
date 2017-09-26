@@ -8,12 +8,16 @@
      package = pkgs.unstable.grafana;
 
      database = {
-       type = "postgres";
        host = "127.0.0.1:5432";
        name = "grafana";
        password = "ayAV5apytnYzgUsywHpqfsDSLKEAXW7a";
        user = "grafana";
      };
+
+    extraOptions = {
+      DATABASE_TYPE = "postgres";
+    };
+
     };
 
     nginx.virtualHosts = {
