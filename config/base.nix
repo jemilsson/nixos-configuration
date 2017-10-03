@@ -66,6 +66,8 @@ programs = {
   };
 };
 
+boot.extraModulePackages = [ cfg.boot.kernelPackages.wireguard ];
+
 users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
 environment = {
@@ -93,6 +95,9 @@ environment = {
 
     #remote
     rxvt_unicode.terminfo
+
+    #Tunneling
+    wireguard
 
     #fun
     fortune

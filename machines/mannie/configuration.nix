@@ -49,7 +49,7 @@
     isNormalUser = true;
     uid = 1001;
     home = "/home/johan/";
-    extraGroups = [ ];
+    extraGroups = [ "wheel" ];
  };
 
  environment.systemPackages = with pkgs; [
