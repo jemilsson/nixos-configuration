@@ -2,7 +2,7 @@ with import <nixpkgs> {};
 { pkgs ? import <nixpkgs> {} }:
 
 let
-    pythonPackages = python35Packages;
+    pythonPackages = python36Packages;
 in
   pythonPackages.buildPythonPackage {
     name = "helloflask";
