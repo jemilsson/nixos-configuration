@@ -59,7 +59,7 @@
 
     postgresql = {
      enable = true;
-     package = pkgs.postgresql;
+     package = pkgs.postgresql95;
   };
 
    nginx.virtualHosts = {
