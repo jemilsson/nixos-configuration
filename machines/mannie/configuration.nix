@@ -71,7 +71,6 @@
 
 
          "emilsson.cloud" = {
-           enableSSL = true;
            forceSSL = true;
            enableACME = true;
            locations = {
@@ -87,7 +86,6 @@
          };
 
         "jonasem.com" = {
-          enableSSL = true;
           forceSSL = true;
           enableACME = true;
           locations = {

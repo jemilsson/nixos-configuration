@@ -22,7 +22,6 @@
 
     nginx.virtualHosts = {
       "grafana.jonasem.com" = {
-        enableSSL = true;
         forceSSL = true;
         enableACME = true;
         locations = {

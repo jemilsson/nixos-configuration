@@ -26,7 +26,6 @@
 
     nginx.virtualHosts = {
       "git.jonasem.com" = {
-        enableSSL = true;
         forceSSL = true;
         enableACME = true;
         locations = {

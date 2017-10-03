@@ -8,7 +8,6 @@
 
     nginx.virtualHosts = {
       "influxdb.jonasem.com" = {
-        enableSSL = true;
         forceSSL = true;
         enableACME = true;
         locations = {

@@ -36,7 +36,6 @@
 
     nginx.virtualHosts = {
       "emilsson.chat" = {
-        enableSSL = true;
         forceSSL = true;
         enableACME = true;
         locations = {

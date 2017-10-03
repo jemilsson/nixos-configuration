@@ -5,7 +5,6 @@ in
 {
     services = {
       nginx.virtualHosts."helloflask.jonasem.com" = {
-          enableSSL = true;
           forceSSL = true;
           enableACME = true;
           locations = {
