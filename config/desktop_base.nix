@@ -1,12 +1,10 @@
-o{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ./base.nix
     #./systemd_user/gpg-agent.nix
   ];
-
   hardware = {
-
     pulseaudio = {
       enable = true;
       support32Bit = true;
