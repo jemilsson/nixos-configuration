@@ -66,7 +66,7 @@ programs = {
   };
 };
 
-boot.extraModulePackages = [ cfg.boot.kernelPackages.wireguard ];
+boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
 users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
