@@ -11,6 +11,8 @@
       database = {
         type = "postgres";
         password = "wpA9h83ozkCLE0Peiq98O9uPxmkK6jCG";
+        user = "gogs";
+        name = "gogs";
        port = 5432;
       };
 
