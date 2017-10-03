@@ -10,6 +10,7 @@
       domain = "git.jonasem.com";
       database = {
         type = "postgres";
+        password = "wpA9h83ozkCLE0Peiq98O9uPxmkK6jCG";
        port = 5432;
       };
 
