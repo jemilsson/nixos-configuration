@@ -38,5 +38,16 @@ in
  ];
 
 
+ nixpkgs.overlays = [
+     (self: super: {
+       mesa = pkgs.unstable.mesa;
+       mesa_glu = pkgs.unstable.mesa_glu;
+       mesa_noglu = pkgs.unstable.mesa_noglu;
+       mesa_drivers = pkgs.unstable.mesa_drivers;
+     }
+     )
+   ];
+
+
 
 }
