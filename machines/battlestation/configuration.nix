@@ -40,9 +40,9 @@ in
 
  nixpkgs.overlays = [
      (self: super: {
-       #mesa = pkgs.unstable.mesa;
-       #mesa_glu = pkgs.unstable.mesa_glu;
-       #mesa_noglu = pkgs.unstable.mesa_noglu;
+       mesa = pkgs.unstable.mesa;
+       mesa_glu = pkgs.unstable.mesa_glu;
+       mesa_noglu = pkgs.unstable.mesa_noglu;
        mesa_drivers = pkgs.unstable.mesa_drivers;
        #xorg.xf86videoamdgpu = pkgs.unstable.xorg.xf86videoamdgpu;
      }
