@@ -95,6 +95,17 @@
           };
           };
         };
+
+        "ipv6-only.se" = {
+          forceSSL = true;
+          enableACME = true;
+          locations = {
+            "/" = {
+            root = "/var/www/default";
+            index = "index.html";
+          };
+          };
+        };
     };
  };
 }
