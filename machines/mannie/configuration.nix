@@ -133,6 +133,7 @@
           }
 
           location @handle_redirect {
+              resolver 8.8.8.8;
               set $saved_redirect_location '$upstream_http_location';
               proxy_pass $saved_redirect_location;
           }
