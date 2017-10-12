@@ -126,16 +126,15 @@
           location / {
               resolver 8.8.8.8;
               proxy_pass https://www.ip-only.se;
-              # You may need to uncomment the following line if your redirects are relative, e.g. /foo/bar
-              #proxy_redirect / /;
               proxy_intercept_errors on;
               error_page 301 302 307 = @handle_redirect;
           }
 
           location @handle_redirect {
               resolver 8.8.8.8;
-              set $saved_redirect_location '$upstream_http_location';
-              proxy_pass $saved_redirect_location;
+              set $original_uri $uri;
+              set $orig_loc $upstream_http_location;
+              proxy_pass $orig_loc;
           }
           '';
         };
