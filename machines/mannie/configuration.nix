@@ -123,7 +123,7 @@
           enableACME = true;
           locations = {
             "/" = {
-              proxyPass = "https://www.ip-only.se:443";
+              proxyPass = "https://www.ip-only.se";
             };
           };
         };
