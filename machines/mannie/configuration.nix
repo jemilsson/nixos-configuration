@@ -123,9 +123,8 @@
           enableACME = true;
           locations = {
             "/" = {
-            root = "/var/www/default";
-            index = "index.html";
-          };
+              proxyPass = "https://www.ip-only.se/";
+            };
           };
         };
     };
