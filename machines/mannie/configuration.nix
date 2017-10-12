@@ -112,18 +112,18 @@
           };
         };
 
-        "www.ipv6-only.se" = {
+        "ipv6-only.se" = {
           forceSSL = true;
           enableACME = true;
-          globalRedirect = "ipv6-only.se";
+          globalRedirect = "www.ipv6-only.se";
         };
 
-        "ipv6-only.se" = {
+        "www.ipv6-only.se" = {
           forceSSL = true;
           enableACME = true;
           locations = {
             "/" = {
-              proxyPass = "https://www.ip-only.se/";
+              proxyPass = "https://www.ip-only.se:443";
             };
           };
         };
