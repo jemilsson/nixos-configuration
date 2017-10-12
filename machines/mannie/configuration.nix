@@ -124,6 +124,11 @@
 
           extraConfig = ''
           location / {
+
+              if ($remote_addr ~* "^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$") {
+               return 302 https://www.ip-only.se;
+             }
+
               resolver 8.8.8.8;
               proxy_set_header HOST www.ip-only.se;
               proxy_pass https://www.ip-only.se;
