@@ -135,6 +135,8 @@
               set $original_uri $uri;
               set $orig_loc $upstream_http_location;
               proxy_pass $orig_loc;
+              proxy_intercept_errors on;
+              error_page 301 302 307 = @handle_redirect;
           }
           '';
         };
