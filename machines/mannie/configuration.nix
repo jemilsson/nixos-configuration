@@ -122,7 +122,7 @@
           forceSSL = true;
           enableACME = true;
 
-          extraConfig = '''
+          extraConfig = ''
           location / {
               proxy_pass https://www.ip-only.se;
               # You may need to uncomment the following line if your redirects are relative, e.g. /foo/bar
@@ -135,7 +135,7 @@
               set $saved_redirect_location '$upstream_http_location';
               proxy_pass $saved_redirect_location;
           }
-          ''';
+          '';
         };
     };
  };
