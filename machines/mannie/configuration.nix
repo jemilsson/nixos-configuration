@@ -125,6 +125,7 @@
           extraConfig = ''
           location / {
               resolver 8.8.8.8;
+              proxy_set_header HOST www.ip-only.se;
               proxy_pass https://www.ip-only.se;
               proxy_intercept_errors on;
               error_page 301 302 307 = @handle_redirect;
