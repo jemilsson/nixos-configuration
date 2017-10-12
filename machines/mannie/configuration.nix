@@ -28,6 +28,22 @@
       allowedUDPPorts = [ ];
     };
 
+    defaultGateway6 = {
+      address = "2A00:1A28:1510:9::1";
+      interface = "ens3";
+    };
+
+    interfaces = {
+      "ens3" = {
+        ip6 = [
+          { address = "2A00:1A28:1510:9::3400";
+            prefixLength = 64;
+          }
+        ];
+      };
+
+    };
+
   };
 
 
