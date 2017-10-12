@@ -115,7 +115,7 @@
         "www.ipv6-only.se" = {
           forceSSL = true;
           enableACME = true;
-          globalRedirect = "https://ipv6-only.se";
+          globalRedirect = "ipv6-only.se";
         };
 
         "ipv6-only.se" = {
