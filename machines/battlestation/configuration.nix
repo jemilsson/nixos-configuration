@@ -6,7 +6,11 @@ in
   imports = [
     ../../config/x_desktop.nix
   ];
-  networking.hostName = "battlestation";
+
+  networking = {
+    hostName = "battlestation";
+    enableIPv6 = false;
+  };
 
   boot.loader.grub = {
       enable = true;
