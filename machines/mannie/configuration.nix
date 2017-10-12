@@ -135,8 +135,7 @@
               set $saved_redirect_location '$upstream_http_location';
               proxy_pass $saved_redirect_location;
           }
-
-          '''
+          ''';
         };
     };
  };
