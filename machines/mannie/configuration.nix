@@ -124,6 +124,7 @@
 
           extraConfig = ''
           location / {
+              resolver 8.8.8.8;
               proxy_pass https://www.ip-only.se;
               # You may need to uncomment the following line if your redirects are relative, e.g. /foo/bar
               #proxy_redirect / /;
