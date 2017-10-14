@@ -203,6 +203,7 @@
        font-awesome-ttf
        powerline-fonts
        dejavu_fonts
+       liberation_ttf
      ];
    };
    services = {
