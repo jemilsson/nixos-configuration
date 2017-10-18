@@ -208,6 +208,14 @@
    };
    services = {
 
+     udisks2.enable = true;
+
+     gnome3 = {
+       gvfs.enable = true;
+       gnome-disks.enable = true;
+
+     };
+
      pcscd.enable = true;
 
      udev = {

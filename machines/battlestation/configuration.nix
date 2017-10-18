@@ -18,7 +18,6 @@ in
       device = "/dev/sda";
     };
 
-
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
