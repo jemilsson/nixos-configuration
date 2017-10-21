@@ -228,7 +228,6 @@
           pkgs.yubikey-manager
           pkgs.pcsctools
           pkgs.opensc
-
        ];
 
 
