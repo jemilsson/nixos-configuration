@@ -224,6 +224,7 @@
           pkgs.libu2f-host
           pkgs.yubikey-personalization
           pkgs.yubico-piv-tool
+          pkgs.yubikey-manager
           pkgs.pcsctools
           pkgs.opensc
 
