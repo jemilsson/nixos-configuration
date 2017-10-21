@@ -88,6 +88,7 @@
     yubico-piv-tool
     pcsctools
     opensc
+    yubikey-manager
 
 
     gnupg
