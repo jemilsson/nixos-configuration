@@ -213,6 +213,7 @@
      gnome3 = {
        gvfs.enable = true;
        gnome-disks.enable = true;
+       gnome-keyring.enable = true;
 
      };
 
@@ -242,11 +243,8 @@
         '';
 
     };
-    gnome3 = {
-      gnome-keyring.enable = true;
-    };
 
-    };
+  };
 
 
 }
