@@ -11,7 +11,7 @@ in
      isSystemUser = false;
      extraGroups = [ "wheel" "networkmanager" ];
      shell = "/run/current-system/sw/bin/zsh";
-     #openssh.authorizedKeys.keys = [ sshKeys.jonas ];
+     openssh.authorizedKeys.keys = [ sshKeys.jonas ];
   };
 
 }
