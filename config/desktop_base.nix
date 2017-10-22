@@ -215,6 +215,7 @@
        gvfs.enable = true;
        gnome-disks.enable = true;
        gnome-keyring.enable = true;
+       seahorse.enable = true;
 
      };
 
