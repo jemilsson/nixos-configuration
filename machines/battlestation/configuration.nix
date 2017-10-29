@@ -37,7 +37,8 @@ in
   #unstable.way-cooler
   wayland
   #weston
-  unstable.alacritty
+  #unstable.alacritty
+  alacritty
  ];
 
 
