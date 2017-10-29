@@ -34,7 +34,7 @@ in
   python3
   teamspeak_client
   sway
-  unstable.way-cooler
+  #unstable.way-cooler
   wayland
   #weston
   unstable.alacritty
