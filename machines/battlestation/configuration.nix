@@ -39,6 +39,7 @@ in
   #weston
   #unstable.alacritty
   alacritty
+  pptp
  ];
 
 
