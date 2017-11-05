@@ -86,6 +86,7 @@ environment = {
     tcpdump
     whois
     telnet
+    traceroute
 
     #Neovim
     neovim
