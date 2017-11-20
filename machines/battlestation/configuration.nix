@@ -52,6 +52,8 @@ in
        #mesa_drivers = pkgs.unstable.mesa_drivers;
        #xorg.xf86videoamdgpu = pkgs.unstable.xorg.xf86videoamdgpu;
        steam = pkgs.unstable.steam;
+       steam-runtime = pkgs.unstable.steam-runtime;
+       steam-runtime-wrapped = pkgs.unstable.steam-runtime-wrapped;
      }
      )
    ];

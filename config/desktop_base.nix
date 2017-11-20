@@ -77,7 +77,7 @@
     skype
 
     #Games
-    steam
+    unstable.steam
 
     #Graphical network tools
     wireshark
