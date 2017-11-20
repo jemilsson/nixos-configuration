@@ -49,20 +49,7 @@ programs = {
     syntaxHighlighting = {
       enable = true;
     };
-    ohMyZsh = {
-      enable =true;
-      theme = "agnoster";
-      plugins = [
-        "pass"
-        "sudo"
-        "systemd"
-        "web-search"
-        "jsontools"
-        "mosh"
-        "python"
-        "wd"
-      ];
-    };
+    promptInit = "source ${unstable.pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
   };
 };
 
