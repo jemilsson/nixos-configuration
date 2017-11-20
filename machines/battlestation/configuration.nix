@@ -40,7 +40,8 @@ in
   #unstable.alacritty
   alacritty
   pptp
-  vulkan-loader
+  unstable.vulkan-loader
+
  ];
 
 
