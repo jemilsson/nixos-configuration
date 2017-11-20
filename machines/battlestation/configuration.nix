@@ -56,6 +56,7 @@
        steam-fonts = pkgs.unstable.steam-fonts;
        steam-chrootenv = pkgs.unstable.steam-chrootenv;
        vulkan-loader = pkgs.unstable.vulkan-loader;
+       zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
      }
      )
    ];
