@@ -49,7 +49,7 @@ in
      (self: super: {
        #mesa = pkgs.unstable.mesa;
        #mesa_glu = pkgs.unstable.mesa_glu;
-       #mesa_noglu = pkgs.unstable.mesa_noglu;
+       mesa_noglu = pkgs.unstable.mesa_noglu;
        #mesa_drivers = pkgs.unstable.mesa_drivers;
        #xorg.xf86videoamdgpu = pkgs.unstable.xorg.xf86videoamdgpu;
        steam-run = pkgs.unstable.steam-run;
@@ -58,6 +58,7 @@ in
        steam-runtime-wrapped = pkgs.unstable.steam-runtime-wrapped;
        steam-fonts = pkgs.unstable.steam-fonts;
        steam-chrootenv = pkgs.unstable.steam-chrootenv;
+       vulkan-loader = pkgs.unstable.vulkan-loader;
      }
      )
    ];
