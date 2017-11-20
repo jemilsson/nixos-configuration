@@ -54,6 +54,8 @@ in
        steam = pkgs.unstable.steam;
        steam-runtime = pkgs.unstable.steam-runtime;
        steam-runtime-wrapped = pkgs.unstable.steam-runtime-wrapped;
+       steam-fonts = pkgs.unstable.steam-fonts;
+       steam-chrootenv = pkgs.unstable.steam-chrootenv;
      }
      )
    ];
