@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let
+  unstable = import <nixos-unstable> {};
+in
 {
   imports = [
     ../../hardware-configuration.nix
