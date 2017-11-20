@@ -1,7 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  unstable = import <nixos-unstable> {};
-in
 {
   imports = [
     ../../hardware-configuration.nix
@@ -52,7 +49,7 @@ programs = {
     syntaxHighlighting = {
       enable = true;
     };
-    promptInit = "source ${unstable.pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
+    promptInit = "source ${pkgs.unstable.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
   };
 };
 
