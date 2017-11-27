@@ -69,6 +69,7 @@
  };
 
  environment.systemPackages = with pkgs; [
+  freeradius
  ];
 
   services = {
