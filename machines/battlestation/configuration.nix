@@ -38,6 +38,7 @@
   alacritty
   pptp
   unstable.vulkan-loader
+  vscode
 
  ];
 
