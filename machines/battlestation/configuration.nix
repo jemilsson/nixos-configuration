@@ -39,6 +39,7 @@
   pptp
   unstable.vulkan-loader
   vscode
+  virtmanager
 
  ];
 
