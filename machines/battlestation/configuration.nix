@@ -15,6 +15,9 @@
       device = "/dev/sda";
     };
 
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  virtualisation.libvirtd.enable = true;
+
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
