@@ -113,8 +113,8 @@
 
   nixpkgs.config = {
     chromium = {
-      enableAdobeFlash = true;
-      enablePepperPDF = true;
+      #enableAdobeFlash = true;
+      #enablePepperPDF = true;
       #enableWideVine = true;
       gnomeKeyringSupport = true;
       pulseSupport = true;
