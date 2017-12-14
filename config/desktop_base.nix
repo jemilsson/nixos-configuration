@@ -120,7 +120,7 @@
       pulseSupport = true;
     };
     firefox = {
-      enableAdobeFlash = true;
+      #enableAdobeFlash = true;
       enableWideVine = true;
     };
 
