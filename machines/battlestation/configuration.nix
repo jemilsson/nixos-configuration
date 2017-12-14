@@ -11,7 +11,7 @@
 
   boot.loader.grub = {
       enable = true;
-      versi1on = 2;
+      version = 2;
       device = "/dev/sda";
     };
 
