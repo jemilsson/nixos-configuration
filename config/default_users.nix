@@ -9,7 +9,7 @@ in
      home = "/home/jonas/";
      group = "users";
      isSystemUser = false;
-     extraGroups = [ "wheel" "networkmanager" ];
+     extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
      shell = "/run/current-system/sw/bin/zsh";
      openssh.authorizedKeys.keys = [ sshKeys.jonas ];
   };

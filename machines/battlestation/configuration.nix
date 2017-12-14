@@ -11,7 +11,7 @@
 
   boot.loader.grub = {
       enable = true;
-      version = 2;
+      versi1on = 2;
       device = "/dev/sda";
     };
 
@@ -45,6 +45,11 @@
   virtmanager
 
  ];
+
+ programs.java = {
+   enable = true;
+   package = pkgs.jre;
+ };
 
 
  nixpkgs.overlays = [
