@@ -116,11 +116,13 @@
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
       #enableWideVine = true;
+      jre = true;
       gnomeKeyringSupport = true;
       pulseSupport = true;
     };
     firefox = {
       #enableAdobeFlash = true;
+      jre = true;
       enableWideVine = true;
     };
 
