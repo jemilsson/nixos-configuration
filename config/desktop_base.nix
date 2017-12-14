@@ -74,7 +74,7 @@
 
     #Communication
     pidgin
-    skype
+    #skype
 
     #Games
     unstable.steam
