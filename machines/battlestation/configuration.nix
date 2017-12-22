@@ -45,6 +45,7 @@
   virtmanager
 
   unstable.elmPackages.elm
+  unstable.elmPackages.elm-reactor
 
  ];
 
