@@ -44,6 +44,8 @@
   vscode
   virtmanager
 
+  unstable.elmPackages.elm
+
  ];
 
  programs.java = {
