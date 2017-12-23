@@ -46,7 +46,6 @@
 
   unstable.elmPackages.elm
   unstable.elmPackages.elm-reactor
-
  ];
 
  nixpkgs.overlays = [
