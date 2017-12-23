@@ -35,7 +35,7 @@
     google-chrome
 
     #Media
-    spotify
+    #spotify
     vlc
     pavucontrol
     pasystray
