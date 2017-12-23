@@ -49,12 +49,6 @@
 
  ];
 
- programs.java = {
-   enable = true;
-   package = pkgs.jre;
- };
-
-
  nixpkgs.overlays = [
      (self: super: {
        #mesa = pkgs.unstable.mesa;
