@@ -65,7 +65,7 @@
        steam-chrootenv = pkgs.unstable.steam-chrootenv;
        vulkan-loader = pkgs.unstable.vulkan-loader;
        zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
-       handbrake = pkgs.handbrake.override { useGtk = true;};
+       handbrake = super.handbrake.override { useGtk = true;};
      }
      )
    ];
