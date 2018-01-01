@@ -44,6 +44,8 @@
   vscode
   virtmanager
 
+  handbrake
+
   unstable.elmPackages.elm
   unstable.elmPackages.elm-reactor
  ];
