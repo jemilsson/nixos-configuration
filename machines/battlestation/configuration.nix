@@ -69,6 +69,10 @@
      )
    ];
 
+  packageOverrides = pkgs: {
+    handbrake = pkgs.handbrake.override { useGtk = true;};
+  };
+
 
 
 }
