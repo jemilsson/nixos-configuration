@@ -5,7 +5,21 @@
       enable = true;
       layout = "se";
       xkbOptions = "eurosign:e";
-      windowManager.i3.enable = true;
+
+      windowManager = {
+        i3 = {
+          enable = true;
+        };
+        xmonad = {
+          enable = true;
+          extraPackages = haskellPackages: [
+            haskellPackages.xmonad-contrib
+            haskellPackages.xmonad-extras
+          ];
+        };
+
+
+      };
 
       displayManager = {
         sddm = {
