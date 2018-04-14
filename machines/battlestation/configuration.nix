@@ -46,8 +46,8 @@
 
   handbrake
 
-  unstable.elmPackages.elm
-  unstable.elmPackages.elm-reactor
+  elmPackages.elm
+  elmPackages.elm-reactor
  ];
 
  nixpkgs.overlays = [
