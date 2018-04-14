@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   #networking.firewall.allowedTCPPorts = [ 9100 ];
-  services.prometheus.nodeExporter = {
+  services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [
       "conntrack"
