@@ -113,6 +113,8 @@
     browserpass = {
       enable = true;
     };
+
+
   };
 
   nixpkgs.config = {
@@ -251,6 +253,8 @@
     };
 
   };
+
+  sound.mediaKeys.enable = true;
 
 
 }
