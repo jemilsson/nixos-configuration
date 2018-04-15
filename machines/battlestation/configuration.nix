@@ -18,7 +18,18 @@
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
   virtualisation.libvirtd.enable = true;
 
-  services.xserver.videoDrivers = [ "amdgpu-pro" ];
+
+
+  services = {
+    xserver = {
+      videoDrivers = [ "amdgpu-pro" ];
+
+      deviceSection = ''
+      Option "DRI3" "1"
+      Option "TearFree" "on"
+      '';
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
  users.extraUsers.user = {
