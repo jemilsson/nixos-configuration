@@ -90,7 +90,6 @@
     opensc
     yubikey-manager
 
-
     gnupg
     gnupg1
 
@@ -131,7 +130,6 @@
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
       #enableWideVine = true;
-      gnomeKeyringSupport = true;
       pulseSupport = true;
     };
     firefox = {
@@ -227,13 +225,12 @@
      #udisks2.enable = true;
      devmon.enable = true;
 
-     gnome3 = {
-       gvfs.enable = true;
-       gnome-disks.enable = true;
-       gnome-keyring.enable = true;
-       seahorse.enable = true;
-
-     };
+     #gnome3 = {
+    #   gvfs.enable = true;
+    #   gnome-disks.enable = true;
+    #   gnome-keyring.enable = true;
+    #   seahorse.enable = true;
+     #};
 
      pcscd.enable = true;
 
