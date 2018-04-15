@@ -109,6 +109,10 @@
           ForwardAgent yes
         '';
     };
+
+    browserpass = {
+      enable = true;
+    };
   };
 
   nixpkgs.config = {
