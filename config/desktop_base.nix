@@ -122,7 +122,7 @@
     gnupg = {
       agent = {
         enable = true;
-        enableBrowserSocket = true;
+        #enableBrowserSocket = true;
         enableExtraSocket = true;
         enableSSHSupport = true;
       };
@@ -141,6 +141,7 @@
     firefox = {
       #enableAdobeFlash = true;
       enableWideVine = true;
+      enableVLC = true;
     };
 
   };
