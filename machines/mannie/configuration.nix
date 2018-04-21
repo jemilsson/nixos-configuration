@@ -61,15 +61,9 @@
     extraGroups = [ "wheel" ];
  };
 
- users.extraUsers.johan = {
-    isNormalUser = true;
-    uid = 1001;
-    home = "/home/johan/";
-    extraGroups = [ "wheel" ];
- };
-
  environment.systemPackages = with pkgs; [
   freeradius
+  irssi
  ];
 
   services = {
