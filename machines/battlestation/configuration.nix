@@ -61,6 +61,9 @@
 
   elmPackages.elm
   elmPackages.elm-reactor
+
+  jre
+  insomnia
  ];
 
  nixpkgs.overlays = [
