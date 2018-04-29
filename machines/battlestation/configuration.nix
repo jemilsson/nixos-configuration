@@ -62,7 +62,7 @@
   elmPackages.elm
   elmPackages.elm-reactor
 
-  jre
+  oraclejdk
   insomnia
  ];
 
