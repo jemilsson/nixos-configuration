@@ -65,7 +65,7 @@
   oraclejdk
   insomnia
 
-  sqlite3
+  sqlite
  ];
 
  nixpkgs.overlays = [
