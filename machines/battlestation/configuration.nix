@@ -31,7 +31,7 @@
     };
     xrdp = {
       enable = true;
-      defaultWindowManager = true;
+      defaultWindowManager = "i3";
     };
   };
 
