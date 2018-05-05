@@ -70,6 +70,8 @@
   insomnia
 
   sqlite
+
+  freerdp
  ];
 
  nixpkgs.overlays = [
