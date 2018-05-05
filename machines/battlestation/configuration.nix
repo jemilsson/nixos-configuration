@@ -29,6 +29,10 @@
       Option "TearFree" "on"
       '';
     };
+    xrdp = {
+      enable = true;
+      defaultWindowManager = true;
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
