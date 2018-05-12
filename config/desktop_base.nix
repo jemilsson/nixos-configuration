@@ -97,6 +97,8 @@
     qtpass
     pwgen
 
+    unetbootin
+
   ];
 
   programs = {
