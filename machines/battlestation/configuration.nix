@@ -9,6 +9,16 @@
   networking = {
     hostName = "battlestation";
     enableIPv6 = false;
+
+    interfaces = {
+
+    };
+    vlans = {
+      "lan" = {
+        id = 3;
+        interface = "enp6s0";
+      };
+    };
   };
 
   boot.loader.grub = {
