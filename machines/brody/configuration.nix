@@ -35,6 +35,7 @@
     nat = {
       enable = true;
       externalInterface = "enp0s20f0";
+      internalIPs = [ "10.0.0.1/24" ];
       internalInterfaces = [ "lan" ];
     };
   };
