@@ -40,6 +40,19 @@
  ];
 
   services = {
-
+    dhcpd4 = {
+      enable = true;
+      interfaces = [ "lan" ];
+      extraConfig = ''
+        option subnet-mask 255.255.255.0;
+        option broadcast-address 10.0.0.255;
+        option routers 10.0.0.1;
+        option domain-name-servers 1.1.1.1;
+        option domain-name "jonas.systems";
+        subnet 10.0.0.0 netmask 255.255.255.0 {
+          range 10.0.0.100 10.0.0.200;
+        }
+      '';
+    };
  };
 }
