@@ -16,7 +16,7 @@
     };
 
     interfaces = {
-      "lan@enp0s20f0" = {
+      "lan" = {
         ipv4 = {
           addresses = [
             { address = "10.0.0.1"; prefixLength = 24;}
