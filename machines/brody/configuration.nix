@@ -31,6 +31,12 @@
         interface = "enp0s20f0";
       };
     };
+
+    nat = {
+      enable = true;
+      externalInterface = "enp0s20f0";
+      internalInterfaces = [ "lan" ];
+    };
   };
 
   boot.loader.systemd-boot.enable = true;
