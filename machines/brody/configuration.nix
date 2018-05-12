@@ -4,6 +4,8 @@
     ../../config/server_base.nix
   ];
 
+  system.stateVersion = "18.03";
+
   networking = {
     hostName = "brody";
 

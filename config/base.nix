@@ -103,6 +103,9 @@ environment = {
     fortune
     cowsay
     figlet
+
+    #DNS
+    stubby
   ];
 
   shellAliases = {
