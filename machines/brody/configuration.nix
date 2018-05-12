@@ -16,12 +16,8 @@
     };
   };
 
-
-  boot.loader.grub = {
-      enable = true;
-      version = 2;
-      device = "/dev/vda";
-    };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
  environment.systemPackages = with pkgs; [
  ];
