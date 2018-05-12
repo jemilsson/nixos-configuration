@@ -16,12 +16,12 @@
     };
 
     interfaces = {
-      "enp0s20f0.3" = {
-        ipv4 = {
-          addresses = [
-            { address = "10.0.0.1"; prefixLength = 24; }
-          ];
-        };
+
+    };
+    vlans = {
+      "lan" = {
+        id = 3;
+        interface = "enp0s20f0";
       };
     };
   };
