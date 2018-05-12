@@ -66,7 +66,7 @@
   elmPackages.elm
   elmPackages.elm-reactor
 
-  oraclejdk
+  #oraclejdk
   insomnia
 
   sqlite
