@@ -14,7 +14,6 @@ system = {
     channel = https://nixos.org/channels/nixos-18.03;
     dates = "03:00";
   };
-  stateVersion = "17.03";
 };
 
 security = {

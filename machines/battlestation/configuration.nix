@@ -4,6 +4,8 @@
     ../../config/x_desktop.nix
   ];
 
+  system.stateVersion = "17.03";
+
   networking = {
     hostName = "battlestation";
     enableIPv6 = false;
