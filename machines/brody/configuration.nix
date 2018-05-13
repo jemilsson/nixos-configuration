@@ -31,9 +31,9 @@
           ];
         };
       };
-      "wan-2" = {
-        useDHCP = true;
-      };
+      #"wan-2" = {
+      #  useDHCP = true;
+      #};
       "management" = {
         ipv4 = {
           addresses = [
@@ -58,17 +58,25 @@
       };
     };
 
-    macvlans = {
-      "wan-2" = {
-        interface = "enp0s20f0";
-      };
-    };
+    #macvlans = {
+    #  "wan-2" = {
+    #    interface = "enp0s20f0";
+    #  };
+    #};
 
     nat = {
       enable = true;
       externalInterface = "enp0s20f0";
       internalInterfaces = [ "lan-1" "lan-2" ];
     };
+  };
+
+  containers = {
+    "wlan-1-container" = {
+      macvlans = [ "enp0s20f0" ];
+    };
+
+
   };
 
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
