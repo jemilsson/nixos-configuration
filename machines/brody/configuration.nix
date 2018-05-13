@@ -19,8 +19,11 @@ in
     };
 
     vswitches = {
-      "wan" = {
+      "wan-switch" = {
         interfaces = [ "wan-1" ];
+      };
+      "lan-switch-1" = {
+        interfaces = [ "lan-1" ];
       };
     };
 

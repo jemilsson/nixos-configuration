@@ -4,7 +4,14 @@ let
 in
 {
   "router1" = {
-    macvlans = [ "enp0s20f0" "lan-1" ];
+    extraVeths = {
+      "lan" = {
+        hostBridge = "lan-switch-1";
+      };
+      "wan" = {
+        hostBridge = "wan-switch";
+      };
+    };
     config = router1;
     autoStart = true;
   };

@@ -7,14 +7,14 @@
 networking = {
 
   interfaces = {
-    "mv-lan-1" = {
+    "lan" = {
       ipv4 = {
         addresses = [
-          { address = "10.0.0.2"; prefixLength = 24;}
+          { address = "10.0.0.1"; prefixLength = 24;}
         ];
       };
     };
-    "mv-enp0s20f0".useDHCP = true;
+    "wan".useDHCP = true;
   };
 
   firewall = {
@@ -25,8 +25,8 @@ networking = {
 
   nat = {
     enable = true;
-    externalInterface = "mv-enp0s20f0";
-    internalInterfaces = [ "mv-lan-1" ];
+    externalInterface = "wan";
+    internalInterfaces = [ "lan" ];
   };
 };
 
