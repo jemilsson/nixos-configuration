@@ -11,9 +11,6 @@
     enableIPv6 = false;
 
     interfaces = {
-      "lan-1" = {
-        useDHCP = true;
-      };
       "lan-2" = {
         useDHCP = true;
       };
@@ -23,10 +20,6 @@
 
     };
     vlans = {
-      "lan-1" = {
-        id = 3;
-        interface = "enp6s0";
-      };
       "lan-2" = {
         id = 4;
         interface = "enp6s0";
