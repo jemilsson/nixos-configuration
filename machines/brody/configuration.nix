@@ -18,6 +18,12 @@ in
       allowedUDPPorts = [ ];
     };
 
+    vswitches = {
+      "wan" = {
+        interfaces = [ "wan-1" ];
+      };
+    };
+
     interfaces = {
       "lan-1" = {
         ipv4 = {
@@ -57,6 +63,11 @@ in
 
       "lan-2" = {
         id = 4;
+        interface = "enp0s20f0";
+      };
+
+      "wan-1" = {
+        id = 2;
         interface = "enp0s20f0";
       };
     };
