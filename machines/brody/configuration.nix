@@ -36,16 +36,6 @@ in
     };
 
     interfaces = {
-      "test" = {
-        virtual = true;
-
-        ipv4 = {
-            addresses = [
-                { address = "10.0.0.3"; prefixLength = 24;}
-              ];
-        };
-
-      };
 
 
 
