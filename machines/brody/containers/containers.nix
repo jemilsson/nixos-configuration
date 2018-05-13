@@ -7,14 +7,14 @@ in
   "router1" = {
     hostBridge = "br0";
     localAddress = "10.0.0.1/24";
-    hostAddress = "10.0.0.4/24";
+    #hostAddress = "10.0.0.4/24";
     config = router1;
     autoStart = true;
     privateNetwork = true;
   };
   "dhcp" = {
     hostBridge = "br0";
-    hostAddress = "10.0.0.3/24";
+    #hostAddress = "10.0.0.3/24";
     localAddress = "10.0.0.2/24";
     config = dhcp;
     autoStart = true;
