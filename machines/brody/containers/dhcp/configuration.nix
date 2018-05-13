@@ -8,7 +8,7 @@ networking = {};
 
 services = {
   dhcpd4 = {
-    enable = false;
+    enable = true;
     interfaces = [ "eth0" ];
     extraConfig = ''
 
