@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let
+    containers = import ./containers/containers.nix { pkgs = pkgs; config=config; };
+in
 {
   imports = [
     ../../config/server_base.nix
@@ -71,18 +74,7 @@
     };
   };
 
-  containers = {
-    "wlan-1-container" = {
-      macvlans = [ "enp0s20f0" ];
-      config = { config, pkgs, ... }:
-      {
-
-        networking.interfaces."mv-enp0s20f0".useDHCP = true;
-      };
-    };
-
-
-  };
+  containers = containers;
 
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
   boot.loader.systemd-boot.enable = true;
