@@ -74,7 +74,7 @@ in
     };
   };
 
-  containers = containers;
+  #containers = containers;
 
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
   boot.loader.systemd-boot.enable = true;
