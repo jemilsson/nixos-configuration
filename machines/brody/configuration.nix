@@ -18,11 +18,19 @@ in
       allowedUDPPorts = [ ];
     };
 
-    vswitches = {
-      "wan-switch" = {
+    #vswitches = {
+    #  "wan-switch" = {
+    #    interfaces = [ "wan-1" ];
+    #  };
+    #  "lan-switch-1" = {
+    ##  };
+    #};
+
+    bridges = {
+      "wan-bridge" = {
         interfaces = [ "wan-1" ];
       };
-      "lan-switch-1" = {
+      "lan-bridge-1" = {
         interfaces = [ "lan-1" ];
       };
     };

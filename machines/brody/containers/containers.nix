@@ -6,10 +6,10 @@ in
   "router1" = {
     extraVeths = {
       "lan" = {
-        hostBridge = "lan-switch-1";
+        hostBridge = "lan-bridge-1";
       };
       "wan" = {
-        hostBridge = "wan-switch";
+        hostBridge = "wan-bridge";
       };
     };
     config = router1;
