@@ -7,5 +7,6 @@ in
     macvlans = [ "enp0s20f0" ];
     config = router1;
     autoStart = true;
+    interfaces = [ "lan-1" ];
   };
 }
