@@ -19,5 +19,10 @@ in
     config = dhcp;
     autoStart = true;
     privateNetwork = true;
+
+    bindMounts."/var/lib/dhcp" = {
+      isReadOnly = false;
+      hostPath = "/var/lib/dhcp";
+    };
   };
 }
