@@ -74,8 +74,9 @@
   containers = {
     "wlan-1-container" = {
       macvlans = [ "enp0s20f0" ];
-      config = {
-
+      config = { config, pkgs, ... }:
+      {
+        
       };
     };
 
