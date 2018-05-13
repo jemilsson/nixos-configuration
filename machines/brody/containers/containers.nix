@@ -6,10 +6,10 @@ in
 {
   "router1" = {
     extraVeths = {
-      "lan" = {
+      "lan-router1" = {
         hostBridge = "lan-bridge-1";
       };
-      "wan" = {
+      "wan-router1" = {
         hostBridge = "wan-bridge";
       };
     };
@@ -18,7 +18,7 @@ in
   };
   "dhcp" = {
     extraVeths = {
-      "lan" = {
+      "lan-dhcp" = {
         hostBridge = "lan-bridge-1";
       };
     };
