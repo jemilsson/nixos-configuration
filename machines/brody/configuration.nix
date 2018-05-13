@@ -36,13 +36,13 @@ in
       #  };
       #};
 
-      "lan-2" = {
-        ipv4 = {
-          addresses = [
-            { address = "10.0.1.1"; prefixLength = 24;}
-          ];
-        };
-      };
+      #"lan-2" = {
+      #  ipv4 = {
+      #    addresses = [
+      #      { address = "10.0.1.1"; prefixLength = 24;}
+      #    ];
+      #  };
+      #};
       #"wan-2" = {
       #  useDHCP = true;
       #};
@@ -64,10 +64,10 @@ in
         interface = "enp0s20f0";
       };
 
-      "lan-2" = {
-        id = 4;
-        interface = "enp0s20f0";
-      };
+      #"lan-2" = {
+      #  id = 4;
+      #  interface = "enp0s20f0";
+      #};
 
       "wan-1" = {
         id = 2;
@@ -81,11 +81,11 @@ in
     #  };
     #};
 
-    nat = {
-      enable = true;
-      externalInterface = "enp0s20f0";
-      internalInterfaces = [ "lan-2" ];
-    };
+    #nat = {
+    #  enable = true;
+    #  externalInterface = "enp0s20f0";
+    #  internalInterfaces = [ "lan-2" ];
+    #};
   };
 
   containers = containers;
@@ -99,7 +99,7 @@ in
 
   services = {
     dhcpd4 = {
-      enable = true;
+      enable = false;
       interfaces = [ "lan-1" "lan-2" "management"];
       extraConfig = ''
 
