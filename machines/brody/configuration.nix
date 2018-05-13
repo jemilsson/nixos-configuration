@@ -31,7 +31,7 @@ in
         interfaces = [ "wan-1" ];
       };
       "br0" = {
-        interfaces = [ "lan-1" "test" ];
+        interfaces = [ "lan-1" ];
       };
     };
 
