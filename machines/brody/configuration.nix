@@ -81,7 +81,7 @@
   services = {
     dhcpd4 = {
       enable = true;
-      interfaces = [ "lan-1" "lan-2" ];
+      interfaces = [ "lan-1" "lan-2" "management"];
       extraConfig = ''
 
         option domain-name-servers 1.1.1.1;
