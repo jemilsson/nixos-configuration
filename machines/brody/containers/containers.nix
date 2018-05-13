@@ -8,6 +8,7 @@ in
     extraVeths = {
       "lan-router1" = {
         hostBridge = "lan-bridge-1";
+        localAddress = "10.0.0.1/24";
       };
       "wan-router1" = {
         hostBridge = "wan-bridge";
@@ -20,6 +21,7 @@ in
     extraVeths = {
       "lan-dhcp" = {
         hostBridge = "lan-bridge-1";
+        localAddress = "10.0.0.2/24";
       };
     };
     config = dhcp;
