@@ -38,9 +38,9 @@
         ipv4 = {
           addresses = [
             { address = "10.0.5.1"; prefixLength = 24;}
-          ];
-      };
-
+            ];
+          };
+        };
     };
     vlans = {
       "management" = {
