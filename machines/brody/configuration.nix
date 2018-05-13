@@ -28,13 +28,13 @@ in
     };
 
     interfaces = {
-      "lan-1" = {
-        ipv4 = {
-          addresses = [
-            { address = "10.0.0.2"; prefixLength = 24;}
-          ];
-        };
-      };
+      #"lan-1" = {
+      #  ipv4 = {
+      #    addresses = [
+      #      { address = "10.0.0.2"; prefixLength = 24;}
+      #    ];
+      #  };
+      #};
 
       "lan-2" = {
         ipv4 = {
