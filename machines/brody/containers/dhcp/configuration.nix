@@ -9,7 +9,7 @@ networking = {};
 services = {
   dhcpd4 = {
     enable = false;
-    interfaces = [ "lan-1" ];
+    interfaces = [ "eth0" ];
     extraConfig = ''
 
       option domain-name-servers 1.1.1.1;
