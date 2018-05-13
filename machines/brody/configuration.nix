@@ -22,7 +22,7 @@ in
       "lan-1" = {
         ipv4 = {
           addresses = [
-            { address = "10.0.0.1"; prefixLength = 24;}
+            { address = "10.0.0.2"; prefixLength = 24;}
           ];
         };
       };
@@ -70,7 +70,7 @@ in
     nat = {
       enable = true;
       externalInterface = "enp0s20f0";
-      internalInterfaces = [ "lan-1" "lan-2" ];
+      internalInterfaces = [ "lan-2" ];
     };
   };
 
