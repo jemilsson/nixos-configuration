@@ -44,7 +44,7 @@
       device = "/dev/sda";
     };
 
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" ];
   virtualisation.libvirtd.enable = true;
 
 
