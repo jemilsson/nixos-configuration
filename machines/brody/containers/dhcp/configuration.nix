@@ -4,18 +4,7 @@
     ../../../../config/minimum.nix
 ];
 
-networking = {
-
-  interfaces = {
-    "lan" = {
-      ipv4 = {
-        addresses = [
-          { address = "10.0.0.2"; prefixLength = 24;}
-        ];
-      };
-    };
-  };
-};
+networking = {};
 
 services = {
   dhcpd4 = {
