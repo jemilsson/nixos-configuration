@@ -11,14 +11,28 @@
     enableIPv6 = false;
 
     interfaces = {
-      "lan" = {
+      "lan-1" = {
+        useDHCP = true;
+      };
+      "lan-2" = {
+        useDHCP = true;
+      };
+      "old-lan" = {
         useDHCP = true;
       };
 
     };
     vlans = {
-      "lan" = {
+      "lan-1" = {
         id = 3;
+        interface = "enp6s0";
+      };
+      "lan-2" = {
+        id = 4;
+        interface = "enp6s0";
+      };
+      "old-lan" = {
+        id = 1;
         interface = "enp6s0";
       };
     };
