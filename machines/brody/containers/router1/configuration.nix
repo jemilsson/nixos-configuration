@@ -7,7 +7,7 @@
 networking = {
 
   interfaces = {
-    "lan-1" = {
+    "mv-lan-1" = {
       ipv4 = {
         addresses = [
           { address = "10.0.0.2"; prefixLength = 24;}
