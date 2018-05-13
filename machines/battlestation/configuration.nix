@@ -17,9 +17,16 @@
       "old-lan" = {
         useDHCP = true;
       };
+      "management" = {
+        useDHCP = true;
+      };
 
     };
     vlans = {
+      "management" = {
+        id = 5;
+        interface = "enp6s0";
+      };
       "lan-2" = {
         id = 4;
         interface = "enp6s0";
