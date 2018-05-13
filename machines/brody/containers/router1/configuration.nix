@@ -16,7 +16,7 @@ networking = {
   nat = {
     enable = true;
     externalInterface = "mv-enp0s20f0";
-    internalInterfaces = [ "lan-1" ];
+    internalInterfaces = [ "mv-lan-1" ];
   };
 };
 

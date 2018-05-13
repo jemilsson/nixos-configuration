@@ -4,9 +4,8 @@ let
 in
 {
   "router1" = {
-    macvlans = [ "enp0s20f0" ];
+    macvlans = [ "enp0s20f0" "lan-1" ];
     config = router1;
     autoStart = true;
-    interfaces = [ "lan-1" ];
   };
 }
