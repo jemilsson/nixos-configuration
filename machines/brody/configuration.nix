@@ -36,13 +36,12 @@ in
     };
 
     interfaces = {
-      "lan-1" = {
-        ipv4 = {
-          addresses = [
-            { address = "10.0.0.2"; prefixLength = 24;}
-          ];
-        };
-      };
+    #  "lan-1" = {
+    #    ipv4 = {
+    #      addresses = [
+    #        { address = "10.0.0.2"; prefixLength = 24;}
+    ##    };
+    #  };
 
       #"lan-2" = {
       #  ipv4 = {
@@ -108,7 +107,7 @@ in
   services = {
     dhcpd4 = {
       enable = false;
-      interfaces = [ "lan-1" "lan-2" "management"];
+      interfaces = [ "lan-2" "management" ];
       extraConfig = ''
 
         option domain-name-servers 1.1.1.1;
