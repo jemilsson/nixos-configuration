@@ -45,14 +45,7 @@ nixpkgs = {
 programs = {
   mosh.enable = true;
   zsh = {
-    enable = true;
-    enableAutosuggestions = true;
-    syntaxHighlighting = {
-      enable = true;
-    };
     ohMyZsh = {
-      enable =true;
-      theme = "agnoster";
       plugins = [
         "pass"
         "sudo"
