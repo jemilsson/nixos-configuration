@@ -31,11 +31,24 @@ in
         interfaces = [ "wan-1" ];
       };
       "lan-bridge-1" = {
-        interfaces = [ "lan-1" ];
+        interfaces = [ "lan-1" "test" ];
       };
     };
 
     interfaces = {
+      "test" = {
+        virtual = true;
+
+        ipv4 = {
+            addresses = [
+                { address = "10.0.0.3"; prefixLength = 24;}
+              ];
+        };
+
+      };
+
+
+
     #  "lan-1" = {
     #    ipv4 = {
     #      addresses = [
