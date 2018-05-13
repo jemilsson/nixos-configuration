@@ -69,8 +69,6 @@ programs = {
 
 boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
-users.defaultUserShell = "/run/current-system/sw/bin/zsh";
-
 environment = {
   #disrupts git
   #loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
