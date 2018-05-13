@@ -46,6 +46,10 @@
         useDHCP = true;
       };
 
+      "wan-bridge" = {
+        useDHCP = false;
+      };
+
     };
     vlans = {
       "lan-1" = {
