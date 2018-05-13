@@ -15,15 +15,6 @@
       allowedUDPPorts = [ ];
     };
 
-    bridges = {
-      "wan-bridge" = {
-        interfaces = [
-          "enp0s20f0"
-          "wan-2"
-        ];
-      };
-    };
-
     interfaces = {
       "lan-1" = {
         ipv4 = {
@@ -42,12 +33,7 @@
       };
 
       "wan-2" = {
-        virtual = true;
         useDHCP = true;
-      };
-
-      "wan-bridge" = {
-        useDHCP = false;
       };
 
     };
@@ -59,6 +45,12 @@
 
       "lan-2" = {
         id = 4;
+        interface = "enp0s20f0";
+      };
+    };
+
+    macvlans = {
+      "wan-2" = {
         interface = "enp0s20f0";
       };
     };
