@@ -2,8 +2,10 @@
 {
   imports = [
     ../../hardware-configuration.nix
+    ./minimum.nix
     ./default_users.nix
     ./known_hosts.nix
+
 ];
 
 time.timeZone = "Europe/Stockholm";
