@@ -6,4 +6,5 @@ in
   "router1" = {
     macvlans = [ "enp0s20f0" ];
     config = router1;
+  };
 }
