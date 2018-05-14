@@ -53,9 +53,14 @@ in
       #    ];
       #  };
       #};
-      #"wan-2" = {
-      #  useDHCP = true;
-      #};
+      "br1" = {
+        useDHCP = true;
+      };
+
+      "wan-1" = {
+        useDHCP = false;
+      };
+
       "management" = {
         ipv4 = {
           addresses = [
