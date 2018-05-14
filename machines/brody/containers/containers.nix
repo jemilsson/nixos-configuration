@@ -14,7 +14,6 @@ in
     extraVeths = {
       "ve-wan" = {
         hostBridge = "br1";
-        localAddress = "0.0.0.0/0";
       };
 
     };
