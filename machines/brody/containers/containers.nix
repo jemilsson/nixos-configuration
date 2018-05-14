@@ -10,7 +10,7 @@ in
     config = router1;
     autoStart = true;
     privateNetwork = true;
-    #interfaces = [ "wan-2" ];
+    interfaces = [ "wan-2" ];
   };
   "dhcp" = {
     hostBridge = "br0";
