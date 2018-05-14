@@ -50,6 +50,9 @@ in
       "br0" = {
         useDHCP = true;
       };
+      "br1" = {
+        useDHCP = false;
+      };
       "lan-1" = {
         useDHCP = false;
       };
