@@ -46,8 +46,15 @@ in
 
     interfaces = {
 
+
       "br0" = {
         useDHCP = true;
+      };
+      "lan-1" = {
+        useDHCP = false;
+      };
+      "wan-1" = {
+        useDHCP = false;
       };
 
       "management" = {
