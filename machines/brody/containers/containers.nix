@@ -12,7 +12,7 @@ in
     privateNetwork = true;
 
     extraVeths = {
-      "ve-wan" = {
+      "wan" = {
         hostBridge = "br1";
       };
 
