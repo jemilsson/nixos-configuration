@@ -7,10 +7,10 @@ in
   "router1" = {
     hostBridge = "br0";
     localAddress = "10.0.0.1/24";
-    #hostAddress = "10.0.0.4/24";
     config = router1;
     autoStart = true;
     privateNetwork = true;
+    interfaces = [ "wan-2" ];
   };
   "dhcp" = {
     hostBridge = "br0";

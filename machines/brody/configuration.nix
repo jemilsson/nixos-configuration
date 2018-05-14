@@ -85,11 +85,11 @@ in
       };
     };
 
-    #macvlans = {
-    #  "wan-2" = {
-    #    interface = "enp0s20f0";
-    #  };
-    #};
+    macvlans = {
+      "wan-2" = {
+        interface = "enp0s20f0";
+      };
+    };
 
     #nat = {
     #  enable = true;
