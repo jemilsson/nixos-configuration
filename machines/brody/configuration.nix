@@ -87,7 +87,7 @@ in
 
     macvlans = {
       "wan-2" = {
-        interface = "enp0s20f0";
+        interface = "wan-1";
       };
     };
 
