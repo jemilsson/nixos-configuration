@@ -10,7 +10,14 @@ in
     config = router1;
     autoStart = true;
     privateNetwork = true;
-    interfaces = [ "wan-2" ];
+
+    extraVeths = {
+      "ve-wan" = {
+        hostBridge = "br1";
+        localAddress = "0.0.0.0/0";
+      };
+
+    };
   };
   "dhcp" = {
     hostBridge = "br0";

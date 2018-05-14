@@ -27,9 +27,9 @@ in
     #};
 
     bridges = {
-      #"br1" = {
-      #  interfaces = [ "wan-1" ];
-      #};
+      "br1" = {
+        interfaces = [ "wan-1" ];
+      };
       "br0" = {
         interfaces = [ "lan-1" ];
       };
@@ -85,12 +85,12 @@ in
       };
     };
 
-    macvlans = {
-      "wan-2" = {
-        interface = "wan-1";
-        mode = "bridge";
-      };
-    };
+    #macvlans = {
+    #  "wan-2" = {
+    #    interface = "wan-1";
+    #    mode = "bridge";
+    #  };
+    #};
 
     #nat = {
     #  enable = true;
