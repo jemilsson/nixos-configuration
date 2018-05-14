@@ -5,7 +5,13 @@
 ];
 
 networking = {
-  
+
+  interfaces = {
+    "wan" = {
+      useDHCP = true;
+    };
+  };
+
   firewall = {
     enable = true;
     allowedTCPPorts = [ 22 ];
