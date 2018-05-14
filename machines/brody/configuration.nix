@@ -88,7 +88,6 @@ in
     macvlans = {
       "wan-2" = {
         interface = "wan-1";
-        mode = "bridge";
       };
     };
 
