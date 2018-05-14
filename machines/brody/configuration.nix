@@ -27,9 +27,9 @@ in
     #};
 
     bridges = {
-      "br1" = {
-        interfaces = [ "wan-1" ];
-      };
+      #"br1" = {
+      #  interfaces = [ "wan-1" ];
+      #};
       "br0" = {
         interfaces = [ "lan-1" ];
       };
