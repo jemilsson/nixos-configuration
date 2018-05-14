@@ -61,6 +61,11 @@ in
         useDHCP = false;
       };
 
+      "lan-1" = {
+        useDHCP = false;
+      };
+
+
       "management" = {
         ipv4 = {
           addresses = [
