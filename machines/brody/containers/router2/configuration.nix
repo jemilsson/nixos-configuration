@@ -32,10 +32,9 @@ services = {
       "router_vrrp" = {
         interface = "vrrp2";
         priority = 100;
-        unicastPeers = [ "10.250.250.0" ];
+        unicastPeers = [ "10.250.250.1" ];
         virtualIps = [
           { addr = "10.0.0.1/24";
-            brd = "10.0.0.255";
             dev = "eth0";
          }
         ];

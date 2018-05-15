@@ -18,7 +18,7 @@ in
       };
       "vrrp1" = {
         hostBridge = "br2";
-        localAddress = "10.255.255.0/24";
+        localAddress = "10.250.250.1/24";
       };
 
     };
@@ -36,7 +36,7 @@ in
       };
       "vrrp2" = {
         hostBridge = "br2";
-        localAddress = "10.250.250.1/24";
+        localAddress = "10.250.250.2/24";
       };
 
     };
