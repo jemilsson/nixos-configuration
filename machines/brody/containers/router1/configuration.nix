@@ -39,7 +39,7 @@ services = {
             dev = "eth0";
          }
         ];
-        virtualRouterId = 0;
+        virtualRouterId = 1;
       };
     };
 
