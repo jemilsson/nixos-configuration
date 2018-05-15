@@ -4,7 +4,7 @@
     ../../../../config/minimum.nix
 ];
 
-networking = {};
+networking.defaultGateway.interface = "eth0";
 
 environment.systemPackages = with pkgs; [
   stubby
