@@ -16,7 +16,7 @@ upstream_recursive_servers:
   tls_auth_name: "cloudflare-dns.com"
 
 listen_addresses:
-- 0.0.0.0@53
+- 10.0.0.5@53
 '';
 in
 {
