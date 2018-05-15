@@ -30,6 +30,7 @@ services = {
     enable = true;
     vrrpInstances = {
       "router_vrrp" = {
+        state = "BACKUP";
         interface = "vrrp2";
         priority = 100;
         unicastPeers = [ "10.250.250.1" ];
