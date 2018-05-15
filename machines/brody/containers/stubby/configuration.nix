@@ -8,6 +8,7 @@ networking = {};
 
 environment.systemPackages = with pkgs; [
   stubby
+  dnsutils
 ];
 
 systemd.services."stubby" = {
