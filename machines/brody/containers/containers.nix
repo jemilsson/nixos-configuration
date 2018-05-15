@@ -3,6 +3,7 @@ let
     router1 = import ./router1/configuration.nix { pkgs = pkgs; config=config; };
     router2 = import ./router2/configuration.nix { pkgs = pkgs; config=config; };
     dhcp = import ./dhcp/configuration.nix { pkgs = pkgs; config=config; };
+    stubby = import ./stubby/configuration.nix { pkgs = pkgs; config=config; };
 in
 {
   "router1" = {
@@ -53,5 +54,12 @@ in
       isReadOnly = false;
       hostPath = "/var/lib/dhcp";
     };
+  };
+  "stubby" = {
+    hostBridge = "br0";
+    localAddress = "10.0.0.5/24";
+    config = stubby;
+    autoStart = true;
+    privateNetwork = true;
   };
 }
