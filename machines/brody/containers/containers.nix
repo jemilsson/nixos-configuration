@@ -1,12 +1,13 @@
 { config, pkgs, ... }:
 let
     router1 = import ./router1/configuration.nix { pkgs = pkgs; config=config; };
+    router2 = import ./router2/configuration.nix { pkgs = pkgs; config=config; };
     dhcp = import ./dhcp/configuration.nix { pkgs = pkgs; config=config; };
 in
 {
   "router1" = {
     hostBridge = "br0";
-    localAddress = "10.0.0.1/24";
+    localAddress = "10.0.0.2/24";
     config = router1;
     autoStart = true;
     privateNetwork = true;
@@ -15,13 +16,35 @@ in
       "wan" = {
         hostBridge = "br1";
       };
+      "vrrp" = {
+        hostBridge = "br2";
+        localAddress = "10.255.255.0/24";
+      };
+
+    };
+  };
+  "router2" = {
+    hostBridge = "br0";
+    localAddress = "10.0.0.3/24";
+    config = router1;
+    autoStart = true;
+    privateNetwork = true;
+
+    extraVeths = {
+      "wan" = {
+        hostBridge = "br1";
+      };
+      "vrrp" = {
+        hostBridge = "br2";
+        localAddress = "10.255.255.1/24";
+      };
 
     };
   };
   "dhcp" = {
     hostBridge = "br0";
     #hostAddress = "10.0.0.3/24";
-    localAddress = "10.0.0.2/24";
+    localAddress = "10.0.0.4/24";
     config = dhcp;
     autoStart = true;
     privateNetwork = true;

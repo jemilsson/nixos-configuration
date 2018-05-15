@@ -31,8 +31,8 @@ services = {
     vrrpInstances = {
       "router_vrrp" = {
         interface = "vrrp";
-        priority = 150;
-        unicastPeers = [ "10.255.255.1" ];
+        priority = 100;
+        unicastPeers = [ "10.255.255.0" ];
         virtualIps = [
           { addr = "10.0.0.1/24";
             brd = "10.0.0.255";
@@ -41,7 +41,7 @@ services = {
         ];
       };
     };
-    virtualRouterId = 0;
+    virtualRouterId = 1;
 
   };
 

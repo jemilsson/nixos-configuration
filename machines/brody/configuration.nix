@@ -20,6 +20,9 @@ in
     };
 
     bridges = {
+      "br2" = {
+        interfaces = [ ];
+      };
       "br1" = {
         interfaces = [ "wan-1" ];
       };
@@ -45,7 +48,6 @@ in
     };
 
     interfaces = {
-
 
       "br0" = {
         useDHCP = true;
