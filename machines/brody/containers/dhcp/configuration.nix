@@ -35,7 +35,6 @@ services = {
         option subnet-mask 255.255.255.0;
       }
 
-
     '';
   };
 };
