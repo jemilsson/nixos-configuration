@@ -13,10 +13,10 @@ in
     privateNetwork = true;
 
     extraVeths = {
-      "wan" = {
+      "wan1" = {
         hostBridge = "br1";
       };
-      "vrrp" = {
+      "vrrp1" = {
         hostBridge = "br2";
         localAddress = "10.255.255.0/24";
       };
@@ -26,17 +26,17 @@ in
   "router2" = {
     hostBridge = "br0";
     localAddress = "10.0.0.3/24";
-    config = router1;
+    config = router2;
     autoStart = true;
     privateNetwork = true;
 
     extraVeths = {
-      "wan" = {
+      "wan2" = {
         hostBridge = "br1";
       };
-      "vrrp" = {
+      "vrrp2" = {
         hostBridge = "br2";
-        localAddress = "10.255.255.1/24";
+        localAddress = "10.250.250.1/24";
       };
 
     };

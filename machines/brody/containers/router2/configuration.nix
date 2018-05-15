@@ -7,7 +7,7 @@
 networking = {
 
   interfaces = {
-    "wan" = {
+    "wan2" = {
       useDHCP = true;
     };
   };
@@ -20,7 +20,7 @@ networking = {
 
   nat = {
     enable = true;
-    externalInterface = "wan";
+    externalInterface = "wan2";
     internalInterfaces = [ "eth0" ];
   };
 };
@@ -30,9 +30,9 @@ services = {
     enable = true;
     vrrpInstances = {
       "router_vrrp" = {
-        interface = "vrrp";
+        interface = "vrrp2";
         priority = 100;
-        unicastPeers = [ "10.255.255.0" ];
+        unicastPeers = [ "10.250.250.0" ];
         virtualIps = [
           { addr = "10.0.0.1/24";
             brd = "10.0.0.255";
