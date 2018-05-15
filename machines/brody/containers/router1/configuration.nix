@@ -36,7 +36,6 @@ services = {
         unicastPeers = [ "10.250.250.2" ];
         virtualIps = [
           { addr = "10.0.0.1/24";
-            brd = "10.0.0.255";
             dev = "eth0";
          }
         ];
