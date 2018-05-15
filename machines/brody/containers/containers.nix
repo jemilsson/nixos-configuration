@@ -61,5 +61,8 @@ in
     config = stubby;
     autoStart = true;
     privateNetwork = true;
+    forwardPorts = [
+      { hostPort = 53; protocol = "udp"; }
+    ];
   };
 }
