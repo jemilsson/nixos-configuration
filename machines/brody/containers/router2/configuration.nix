@@ -40,6 +40,9 @@ services = {
          }
         ];
         virtualRouterId = 2;
+        extraConfig = ''
+          advert_int 1
+        '';
       };
     };
 
