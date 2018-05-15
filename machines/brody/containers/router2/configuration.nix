@@ -39,7 +39,7 @@ services = {
             dev = "eth0";
          }
         ];
-        virtualRouterId = 2;
+        virtualRouterId = 1;
         extraConfig = ''
           advert_int 1
         '';
