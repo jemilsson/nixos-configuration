@@ -41,7 +41,7 @@ services = {
         ];
         virtualRouterId = 1;
         extraConfig = ''
-          advert_int 1
+          advert_int 0.5
         '';
       };
     };
