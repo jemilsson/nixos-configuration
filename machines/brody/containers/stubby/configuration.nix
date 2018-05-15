@@ -27,6 +27,9 @@ configFile = pkgs.writeText "stubby.yaml" ''
     - address_data: 1.1.1.1
       tls_port: 853
       tls_auth_name: "cloudflare-dns.com"
+
+    listen_addresses:
+    - 0.0.0.0@53
     '';
 
 systemd.services.stubby = {

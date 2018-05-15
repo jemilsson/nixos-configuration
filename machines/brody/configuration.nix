@@ -80,5 +80,6 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
  environment.systemPackages = with pkgs; [
+  dnsutils
  ];
 }
