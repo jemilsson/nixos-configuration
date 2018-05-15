@@ -4,8 +4,10 @@
     ../../../../config/minimum.nix
 ];
 
-networking.defaultGateway.interface = "eth0";
-
+networking.defaultGateway = {
+  address = "10.0.0.1";
+  interface = "eth0";
+};
 environment.systemPackages = with pkgs; [
   stubby
   dnsutils
