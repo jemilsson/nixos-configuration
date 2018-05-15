@@ -13,10 +13,20 @@ environment.systemPackages = with pkgs; [
   dnsutils
 ];
 
-systemd.services."stubby" = {
-  enable = true;
-  script = "stubby";
-};
+systemd.services.stubby = {
+      enable = true;
+      description = "stubby";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      stopIfChanged = false;
+      serviceConfig = {
+        ExecStart = "${pkgs.stubby}/bin/stubby";
+        ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+        Restart = "always";
+        RestartSec = "10s";
+        StartLimitInterval = "1min";
+      };
+    };
 
 
 }
