@@ -23,6 +23,8 @@ services.dnsmasq = {
     domain-needed
     bogus-priv
 
+    port = 53000
+
     domain=ynglingagatan.local
     expand-hosts
     local=/ynglingagatan.local/

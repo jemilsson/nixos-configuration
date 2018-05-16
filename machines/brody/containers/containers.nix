@@ -62,7 +62,7 @@ in
     autoStart = true;
     privateNetwork = true;
     forwardPorts = [
-      { containerPort = 53; hostPort = 53; protocol = "udp"; }
+      { containerPort = 53000; hostPort = 53; protocol = "udp"; }
     ];
   };
 }
