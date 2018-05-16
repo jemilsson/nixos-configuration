@@ -5,7 +5,7 @@
 ];
 
 networking.firewall = {
-  allowedUDPPorts = [ 53 ];
+  allowedUDPPorts = [ 53 53000 ];
 };
 
 networking.defaultGateway = {
