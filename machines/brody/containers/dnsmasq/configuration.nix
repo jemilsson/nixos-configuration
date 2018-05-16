@@ -4,7 +4,9 @@
     ../../../../config/minimum.nix
 ];
 
-networking.firewall.enable = false;
+networking.firewall = {
+  allowedUDPPorts = [ 53 ];
+};
 
 networking.defaultGateway = {
   address = "10.0.0.1";
