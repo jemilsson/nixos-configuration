@@ -24,6 +24,10 @@ in
     ../../../../config/minimum.nix
 ];
 
+networking.firewall = {
+  allowedUDPPorts = [ 53 ];
+};
+
 networking.defaultGateway = {
   address = "10.0.0.1";
   interface = "eth0";
