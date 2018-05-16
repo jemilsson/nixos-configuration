@@ -58,7 +58,7 @@ in
   "dnsmasq" = {
     hostBridge = "br0";
     localAddress = "10.0.0.5/24";
-    config = stubby;
+    config = dnsmasq;
     autoStart = true;
     privateNetwork = true;
     forwardPorts = [
