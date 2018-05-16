@@ -4,14 +4,22 @@
     ../../../../config/minimum.nix
 ];
 
-networking.firewall = {
-  allowedUDPPorts = [ 53 53000 ];
+networking = {
+  firewall = {
+    allowedUDPPorts = [ 53 53000 ];
+  };
+
+  defaultGateway = {
+    address = "10.0.0.1";
+    interface = "eth0";
+  };
+  nat = {
+    forwardPorts = [
+      { destination = "10.0.0.5:53000"; proto = "udp"; sourcePort = 53; }
+    ];
+  };
 };
 
-networking.defaultGateway = {
-  address = "10.0.0.1";
-  interface = "eth0";
-};
 environment.systemPackages = with pkgs; [
   stubby
   dnsutils
