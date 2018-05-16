@@ -2,8 +2,8 @@
 let
     router1 = import ./router1/configuration.nix { pkgs = pkgs; config=config; };
     router2 = import ./router2/configuration.nix { pkgs = pkgs; config=config; };
-    dhcp = import ./dhcp/configuration.nix { pkgs = pkgs; config=config; };
-    stubby = import ./stubby/configuration.nix { pkgs = pkgs; config=config; };
+    #dhcp = import ./dhcp/configuration.nix { pkgs = pkgs; config=config; };
+    dnsmasq = import ./dnsmasq/configuration.nix { pkgs = pkgs; config=config; };
 in
 {
   "router1" = {
@@ -42,20 +42,20 @@ in
 
     };
   };
-  "dhcp" = {
-    hostBridge = "br0";
-    #hostAddress = "10.0.0.3/24";
-    localAddress = "10.0.0.4/24";
-    config = dhcp;
-    autoStart = true;
-    privateNetwork = true;
-
-    bindMounts."/var/lib/dhcp" = {
-      isReadOnly = false;
-      hostPath = "/var/lib/dhcp";
-    };
-  };
-  "stubby" = {
+  #"dhcp" = {
+  #  hostBridge = "br0";
+  #  #hostAddress = "10.0.0.3/24";
+  #  localAddress = "10.0.0.4/24";
+  #  config = dhcp;
+  #  autoStart = true;
+  #  privateNetwork = true;
+  #
+  #    bindMounts."/var/lib/dhcp" = {
+  #    isReadOnly = false;
+  #    hostPath = "/var/lib/dhcp";
+  #  };
+  #};
+  "dnsmasq" = {
     hostBridge = "br0";
     localAddress = "10.0.0.5/24";
     config = stubby;

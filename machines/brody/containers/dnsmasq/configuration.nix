@@ -23,6 +23,26 @@ environment.systemPackages = with pkgs; [
   dnsutils
 ];
 
+services.dnsmasq = {
+  enable = true;
+  extraConfig = ''
+    domain-needed
+    bogus-priv
+
+    domain=ynglingagatan.local
+    expand-hosts
+    local=/ynglingagatan.local/
+
+    listen-address=10.0.0.5
+
+    dhcp-range=lan,10.0.0.100,10.0.0.200
+    dhcp-option=lan,3,10.0.0.1
+    dhcp-option=lan,6,10.0.0.5
+
+    server=127.0.0.1
+
+    '';
+};
 
 
 systemd.services.stubby = {
