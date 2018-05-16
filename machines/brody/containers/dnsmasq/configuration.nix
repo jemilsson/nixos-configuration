@@ -29,7 +29,7 @@ services.dnsmasq = {
     expand-hosts
     local=/ynglingagatan.local/
 
-    listen-address=0.0.0.0
+    listen-address=10.0.0.5
 
     dhcp-range=lan,10.0.0.100,10.0.0.200
     dhcp-option=lan,3,10.0.0.1
