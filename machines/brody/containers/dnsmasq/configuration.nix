@@ -14,7 +14,6 @@ networking.defaultGateway = {
 };
 environment.systemPackages = with pkgs; [
   stubby
-  dnsutils
 ];
 
 services.dnsmasq = {
