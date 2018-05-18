@@ -6,7 +6,7 @@
 
 networking = {
   firewall = {
-    allowedUDPPorts = [ 53 ];
+    allowedUDPPorts = [ 53 67 68 ];
   };
 
   defaultGateway = {
@@ -36,6 +36,7 @@ services.dnsmasq = {
     dhcp-range=lan,10.0.0.100,10.0.0.200
     dhcp-option=lan,3,10.0.0.1
     dhcp-option=lan,6,10.0.0.5
+    dhcp-lease-max=50
 
     server=10.0.0.6
 
