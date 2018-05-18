@@ -73,6 +73,12 @@ in
 
   };
 
+  services = {
+    lldpd = {
+      enable = true;
+    };
+  };
+
   containers = containers;
 
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
