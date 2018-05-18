@@ -6,22 +6,16 @@
 
 networking = {
   firewall = {
-    allowedUDPPorts = [ 53 53000 ];
+    allowedUDPPorts = [ 53 ];
   };
 
   defaultGateway = {
     address = "10.0.0.1";
     interface = "eth0";
   };
-  nat = {
-    forwardPorts = [
-      { destination = "10.0.0.5:53000"; proto = "udp"; sourcePort = 53; }
-    ];
-  };
 };
 
 environment.systemPackages = with pkgs; [
-  stubby
   dnsutils
 ];
 
@@ -43,26 +37,10 @@ services.dnsmasq = {
     dhcp-option=lan,3,10.0.0.1
     dhcp-option=lan,6,10.0.0.5
 
-    server=127.0.0.1
+    server=10.0.0.6
 
     '';
 };
-
-
-systemd.services.stubby = {
-      enable = true;
-      description = "stubby";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      stopIfChanged = false;
-      serviceConfig = {
-        ExecStart = "${pkgs.stubby}/bin/stubby -l";
-        ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-        Restart = "always";
-        RestartSec = "10s";
-        StartLimitInterval = "1min";
-      };
-    };
 
 
 }
