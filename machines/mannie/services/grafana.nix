@@ -37,7 +37,7 @@
 nixpkgs.overlays = [
     (self: super: {
       #grafana = pkgs.unstable.grafana;
-      grafana = pkgs.grafana;
+      #grafana = pkgs.grafana;
     }
     )
   ];
