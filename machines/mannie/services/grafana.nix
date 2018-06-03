@@ -3,7 +3,7 @@
   services = {
 
     grafana = {
-     enable = true;
+     enable = false;
      addr = "127.0.0.1";
      package = pkgs.unstable.grafana;
 
