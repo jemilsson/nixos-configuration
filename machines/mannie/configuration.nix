@@ -19,7 +19,7 @@
     #test default signed commit
   ];
 
-  system.stateVersion = "18.03";
+  system.stateVersion = "17.03";
 
   networking = {
     hostName = "mannie";
