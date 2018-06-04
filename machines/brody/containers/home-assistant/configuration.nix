@@ -19,7 +19,17 @@ environment.systemPackages = with pkgs; [
 
 ];
 
-services.home-assistant.enable = true;
+services.home-assistant ={
+   enable = true;
+   config = {
+     discovery = {
+       enable = [
+        "google_cast"
+       ];
+     };
+
+   };
+ };
 
 
 }

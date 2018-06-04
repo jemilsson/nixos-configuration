@@ -5,7 +5,7 @@
   localAddress = "10.0.0.7/24";
   autoStart = true;
   privateNetwork = true;
-  forwardPorts = [
-    { containerPort = 8123; hostPort = 80; protocol = "tcp"; }
-  ];
+  #forwardPorts = [
+    #{ containerPort = 8123; hostPort = 80; protocol = "tcp"; }
+  #];
 }
