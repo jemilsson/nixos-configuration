@@ -22,13 +22,14 @@ environment.systemPackages = with pkgs; [
 services.home-assistant ={
    enable = true;
    config = {
-     discovery = {
-       enable = [
-        #"google_cast"
-       ];
-     };
-
-   };
+      homeassistant = {
+        name = "Home";
+        time_zone = "UTC";
+      };
+      frontend = { };
+      http = { };
+      feedreader.urls = [ "https://nixos.org/blogs.xml" ];
+  };
  };
 
 
