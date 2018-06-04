@@ -6,6 +6,6 @@
   autoStart = true;
   privateNetwork = true;
   forwardPorts = [
-    { containerPort = 80; hostPort = 8123; protocol = "udp"; }
+    { containerPort = 80; hostPort = 8123; protocol = "tcp"; }
   ];
 }
