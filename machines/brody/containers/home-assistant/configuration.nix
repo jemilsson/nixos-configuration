@@ -6,7 +6,7 @@
 
 networking = {
   firewall = {
-    allowedUDPPorts = [ ];
+    enable = false;
   };
 
   defaultGateway = {
@@ -16,7 +16,7 @@ networking = {
 };
 
 environment.systemPackages = with pkgs; [
-  
+
 ];
 
 services.home-assistant.enable = true;
