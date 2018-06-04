@@ -6,6 +6,6 @@
   autoStart = true;
   privateNetwork = true;
   forwardPorts = [
-    { }
+    
   ];
 }
