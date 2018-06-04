@@ -24,7 +24,7 @@ services.home-assistant ={
    config = {
      discovery = {
        enable = [
-        "google_cast"
+        #"google_cast"
        ];
      };
 
