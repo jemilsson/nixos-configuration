@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  adblockConfig = builtins.readFile ./adblock.conf;
+  adblockConfig = pkgs.writeText builtins.readFile ./adblock.conf;
 in
 {
   imports = [
