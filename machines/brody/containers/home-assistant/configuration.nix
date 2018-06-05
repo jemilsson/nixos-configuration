@@ -27,7 +27,9 @@ services.home-assistant ={
         time_zone = "UTC";
       };
       frontend = { };
-      http = { };
+      http = {
+        server_port = 80;
+      };
       feedreader.urls = [ "https://nixos.org/blogs.xml" ];
       media_player = [
         {
