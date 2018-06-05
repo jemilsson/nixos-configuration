@@ -5,4 +5,5 @@
   "dnsmasq" = import ./dnsmasq/container.nix { pkgs = pkgs; config=config; };
   "stubby" = import ./stubby/container.nix { pkgs = pkgs; config=config; };
   "home-assistant" = import ./home-assistant/container.nix { pkgs = pkgs; config=config; };
+  "adserver" = import ./adserver/container.nix { pkgs = pkgs; config=config; };
 }
