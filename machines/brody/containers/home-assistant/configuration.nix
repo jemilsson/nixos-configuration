@@ -35,6 +35,13 @@ services.home-assistant ={
             host = "10.0.0.166";
         }
       ];
+      notify = [
+        {
+          platform = nfandroidtv;
+          name = AndroidTV;
+          host = "10.0.0.166";
+        }
+      ];
   };
  };
 
