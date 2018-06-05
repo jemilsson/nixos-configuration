@@ -29,6 +29,12 @@ services.home-assistant ={
       frontend = { };
       http = { };
       feedreader.urls = [ "https://nixos.org/blogs.xml" ];
+      media_player = [
+        {
+            platform = "cast";
+            host = "10.0.0.166";
+        }
+      ];
   };
  };
 
