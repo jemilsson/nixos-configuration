@@ -37,8 +37,8 @@ services.home-assistant ={
       ];
       notify = [
         {
-          platform = nfandroidtv;
-          name = AndroidTV;
+          platform = "nfandroidtv";
+          name = "AndroidTV";
           host = "10.0.0.166";
         }
       ];
