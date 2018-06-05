@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
-  adblockConfig = builtins.toFile "adblock.conf"  builtins.readFile ./adblock.conf;
+  adblockConfig =  builtins.readFile ./adblock.conf;
+  adblockConfigFile = builtins.toFile adblockConfig;
 in
 {
   imports = [
@@ -43,7 +44,7 @@ services.dnsmasq = {
 
     server=10.0.0.6
 
-    conf-file=${adblockConfig}
+    conf-file=${adblockConfigFile}
 
     '';
 };
