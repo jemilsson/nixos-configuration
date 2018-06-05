@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  adblockConfig = builtins.readFile ./adblock.conf;
+in
 {
   imports = [
     ../../../../config/minimum.nix
@@ -39,6 +42,8 @@ services.dnsmasq = {
     dhcp-lease-max=50
 
     server=10.0.0.6
+
+    conf-file=${adblockConfig}
 
     '';
 };
