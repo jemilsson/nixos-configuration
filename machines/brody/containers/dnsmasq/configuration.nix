@@ -2,6 +2,8 @@
 let
   adblockConfig =  builtins.readFile ./adblock.conf;
   adblockConfigFile = builtins.toFile "adblock.conf" adblockConfig;
+
+  dnsServerAddress = "10.0.0.5";
 in
 {
   imports = [
@@ -35,12 +37,18 @@ services.dnsmasq = {
     expand-hosts
     local=/ynglingagatan.local/
 
-    listen-address=10.0.0.5
+    listen-address=${dnsServerAddress}
 
     dhcp-range=lan,10.0.0.100,10.0.0.200
     dhcp-option=lan,3,10.0.0.1
-    dhcp-option=lan,6,10.0.0.5
+    dhcp-option=lan,6,${dnsServerAddress}
     dhcp-lease-max=50
+
+    dhcp-range=lan2,10.5.1.100,10.5.1.200
+    dhcp-option=lan2,3,10.5.1.1
+    dhcp-option=lan2,6,${dnsServerAddress}
+    dhcp-lease-max=50
+
 
     server=10.0.0.6
 
