@@ -27,7 +27,7 @@ networking = {
   nat = {
     enable = true;
     externalInterface = "wan2";
-    internalInterfaces = [ "eth0" "eth1001" ];
+    internalInterfaces = [ "eth0" "eth1001-2" ];
   };
 };
 
@@ -44,6 +44,10 @@ services = {
           { addr = "10.0.0.1/24";
             dev = "eth0";
          }
+         {
+           addr = "10.5.1.1/24";
+           dev = "eth1001-2";
+        }
         ];
         virtualRouterId = 1;
         extraConfig = ''
