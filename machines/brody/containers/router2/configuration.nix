@@ -48,6 +48,10 @@ services = {
            addr = "10.5.1.1/24";
            dev = "eth1001-2";
         }
+        {
+          addr = "10.5.0.1/24";
+          dev = "eth1000-3";
+       }
         ];
         virtualRouterId = 1;
         extraConfig = ''
