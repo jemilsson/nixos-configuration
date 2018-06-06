@@ -24,7 +24,7 @@ services.nginx ={
 
    virtualHosts."adserver" = {
      default = true;
-     enableSSL = true;
+     addSSL = true;
    };
 
  };
