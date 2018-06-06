@@ -27,7 +27,7 @@ networking = {
   nat = {
     enable = true;
     externalInterface = "wan1";
-    internalInterfaces = [ "eth0" ];
+    internalInterfaces = [ "eth0" "eth1001" ];
   };
 };
 
@@ -41,9 +41,14 @@ services = {
         priority = 150;
         unicastPeers = [ "10.250.250.2" ];
         virtualIps = [
-          { addr = "10.0.0.1/24";
+          {
+            addr = "10.0.0.1/24";
             dev = "eth0";
          }
+         {
+           addr = "10.5.1.1/24";
+           dev = "eth1001";
+        }
         ];
         virtualRouterId = 1;
         extraConfig = ''
