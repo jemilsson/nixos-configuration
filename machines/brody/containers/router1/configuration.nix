@@ -16,6 +16,7 @@ networking = {
     enable = true;
     allowedTCPPorts = [ ];
     allowedUDPPorts = [ ];
+    checkReversePath = false;
   };
 
   nat = {
