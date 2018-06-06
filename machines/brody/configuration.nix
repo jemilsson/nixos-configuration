@@ -62,10 +62,10 @@ in
         useDHCP = false;
       };
 
-      "management" = {
+      "br1005" = {
         ipv4 = {
           addresses = [
-            { address = "10.0.5.1"; prefixLength = 24;}
+            { address = "10.0.5.2"; prefixLength = 24;}
             ];
           };
         };
