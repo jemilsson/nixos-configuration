@@ -26,7 +26,7 @@ services.nginx ={
      default = true;
      addSSL = true;
      sslCertificate = "/var/certificates/jonasem.com/fullchain.pem";
-     sslKey = "/var/certificates/jonasem.com/fullchain.pem";
+     sslCertificateKey = "/var/certificates/jonasem.com/key.pem";
    };
 
  };
