@@ -63,14 +63,6 @@ in
       "wan-1" = {
         useDHCP = false;
       };
-
-      "br1005" = {
-        ipv4 = {
-          addresses = [
-            { address = "10.0.5.2"; prefixLength = 24;}
-            ];
-          };
-        };
     };
 
   };
