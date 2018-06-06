@@ -5,6 +5,8 @@ in
 {
   imports = [
     ../../config/server_base.nix
+
+    networks.nix
   ];
 
   system.stateVersion = "18.03";
