@@ -5,6 +5,7 @@
     ./base.nix
   ];
 
+  security.sudo.wheelNeedsPassword = false;
 
   networking = {
     firewall = {
