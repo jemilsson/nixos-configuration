@@ -44,12 +44,6 @@ services.dnsmasq = {
     dhcp-option=lan,6,${dnsServerAddress}
     dhcp-lease-max=50
 
-    dhcp-range=lan2,10.5.1.100,10.5.1.200
-    dhcp-option=lan2,3,10.5.1.1
-    dhcp-option=lan2,6,${dnsServerAddress}
-    dhcp-lease-max=50
-
-
     server=10.0.0.6
 
     conf-file=${adblockConfigFile}
