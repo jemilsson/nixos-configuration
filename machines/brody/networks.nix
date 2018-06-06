@@ -8,10 +8,10 @@ in
 networking = {
 
   #Routers 10.5.0.0/24
-  #vlans."vlan1000".interface = uplink;
-  #vlans."vlan1000".id = 1000;
-  #bridges."br1000".interfaces = [ "vlan1000" ];
-  #interfaces."br1000".useDHCP = false;
+  vlans."vlan1000".interface = uplink;
+  vlans."vlan1000".id = 1000;
+  bridges."br1000".interfaces = [ "vlan1000" ];
+  interfaces."br1000".useDHCP = false;
 
   #LAN 10.5.1.0/24
   vlans."vlan1001".interface = uplink;
