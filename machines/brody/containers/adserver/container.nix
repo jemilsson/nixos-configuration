@@ -6,7 +6,7 @@
   autoStart = true;
   privateNetwork = true;
   bindMounts = {
-    "/var/certificates" = { hostPath = "/var/certificates"; isReadOnly = true; };
+    "/var/certificates/" = { hostPath = "/var/certificates/"; isReadOnly = true; };
   };
   #forwardPorts = [
     #{ containerPort = 8123; hostPort = 80; protocol = "tcp"; }
