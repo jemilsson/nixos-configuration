@@ -43,11 +43,18 @@ networking = {
   #bridges."br1005".interfaces = [ "vlan1005" ];
   #interfaces."br1005".useDHCP = false;
 
-  #private_servers 10.5.6.0/24
-  #vlans."vlan1006".interface = uplink;
-  #vlans."vlan1006".id = 1006;
-  #bridges."br1006".interfaces = [ "vlan1006" ];
-  #interfaces."br1006".useDHCP = false;
+
+  #offline_servers 10.5.6.0/24
+  vlans."vlan1006".interface = uplink;
+  vlans."vlan1006".id = 1006;
+  bridges."br1006".interfaces = [ "vlan1006" ];
+  interfaces."br1006".useDHCP = false;
+
+  #private_servers 10.5.7.0/24
+  #vlans."vlan1007".interface = uplink;
+  #vlans."vlan1007".id = 1006;
+  #bridges."br1007".interfaces = [ "vlan1007" ];
+  #interfaces."br1007".useDHCP = false;
 
 };
 

@@ -6,4 +6,5 @@
   "stubby" = import ./stubby/container.nix { pkgs = pkgs; config=config; };
   "home-assistant" = import ./home-assistant/container.nix { pkgs = pkgs; config=config; };
   "adserver" = import ./adserver/container.nix { pkgs = pkgs; config=config; };
+  "dhcp" = import ./dhcp/container.nix { pkgs = pkgs; config=config; };
 }
