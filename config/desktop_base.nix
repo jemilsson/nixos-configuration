@@ -74,6 +74,7 @@
 
     #Communication
     pidgin
+    signal-desktop
     #skype
 
     #Games
