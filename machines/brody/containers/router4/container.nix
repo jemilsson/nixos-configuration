@@ -16,7 +16,7 @@
     };
     "eth1000-4" = {
       hostBridge = "br1000";
-      localAddress = "10.5.1.4/24";
+      localAddress = "10.5.0.4/24";
     };
 
   };
