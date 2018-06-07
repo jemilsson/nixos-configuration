@@ -79,7 +79,7 @@ services = {
 
 };
 
-systemd.services.dhcprelay = {
+systemd.services.dhcrelay = {
       enable = true;
       description = "dhcrelay";
       after = [ "network.target" ];
@@ -91,6 +91,7 @@ systemd.services.dhcprelay = {
         Restart = "always";
         RestartSec = "10s";
         StartLimitInterval = "1min";
+        Type = "forking";
       };
     };
 
