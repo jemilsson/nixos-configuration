@@ -40,6 +40,13 @@ services = {
         option routers 10.5.1.1;
         option subnet-mask 255.255.255.0;
       }
+
+      subnet 10.5.2.0 netmask 255.255.255.0 {
+        range 10.5.2.100 10.5.2.200;
+        option broadcast-address 10.5.1.255;
+        option routers 10.5.2.1;
+        option subnet-mask 255.255.255.0;
+      }
     '';
   };
 };
