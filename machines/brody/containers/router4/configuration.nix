@@ -11,7 +11,7 @@ networking = {
       useDHCP = true;
     };
 
-    "eth1000-2" = {
+    "eth0" = {
       ipv4 = {
         routes = [
           { address = "10.0.0.0"; prefixLength = 24; via = "10.5.0.1"; }
