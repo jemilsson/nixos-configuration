@@ -31,7 +31,7 @@ networking = {
   #bridges."br1003".interfaces = [ "vlan1003" ];
   #interfaces."br1003".useDHCP = false;
 
-  #NetworkEquipment 10.5.4.0/24
+  #Media 10.5.4.0/24
   #vlans."vlan1004".interface = uplink;
   #vlans."vlan1004".id = 1004;
   #bridges."br1004".interfaces = [ "vlan1004" ];
