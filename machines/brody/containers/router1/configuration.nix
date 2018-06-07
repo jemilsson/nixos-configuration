@@ -79,6 +79,21 @@ services = {
 
 };
 
+systemd.services.dhcprelay = {
+      enable = true;
+      description = "dhcrelay";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      stopIfChanged = false;
+      serviceConfig = {
+        ExecStart = "${pkgs.dhcp}/bin/dhcrelay -4 -a -i eth1001-1 10.5.6.4";
+        ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+        Restart = "always";
+        RestartSec = "10s";
+        StartLimitInterval = "1min";
+      };
+    };
+
 
 
 }
