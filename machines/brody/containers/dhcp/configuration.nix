@@ -23,6 +23,10 @@ services = {
 
       option domain-name-servers 10.0.0.5;
 
+      subnet 10.5.6.0 netmask 255.255.255.0 {
+
+      };
+
       subnet 10.0.0.0 netmask 255.255.255.0 {
         range 10.0.0.100 10.0.0.200;
         option broadcast-address 10.0.0.255;
