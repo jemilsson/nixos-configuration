@@ -10,6 +10,14 @@ networking = {
     "wan1" = {
       useDHCP = true;
     };
+
+    "eth1000-2" = {
+      ipv4 = {
+        routes = [
+          { address = "10.5.6.0"; prefixLength = 24; via = "10.5.0.4"; }
+        ];
+      };
+    };
   };
 
   firewall = {
