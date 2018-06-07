@@ -38,7 +38,7 @@ networking = {
 
     iptables -I FORWARD -i eth1000-2 -o eth1002-2 -s 10.5.6.0/24 -d 10.5.2.0/24 -j ACCEPT
 
-
+    iptables -A nixos-fw -i eth1000-2 -p udp -m udp --dport 67:68 -j nixos-fw-accept
     '';
   };
 
