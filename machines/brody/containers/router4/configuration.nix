@@ -24,8 +24,8 @@ networking = {
     #'';
 
     extraCommands = ''
-    iptables -I FORWARD -i eth1000-4 -o eth1006-1 -s 10.5.0.0/24 -d 10.5.6.0/24 -j ACCEPT
-    iptables -I FORWARD -i eth1006-1 -o eth1000-4 -s 10.5.6.0/24 -d 10.5.0.0/24 -j ACCEPT
+    iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.0.0/24 -d 10.5.6.0/24 -j ACCEPT
+    iptables -I FORWARD -i eth1006-1 -o eth0 -s 10.5.6.0/24 -d 10.5.0.0/24 -j ACCEPT
     '';
 
   };
