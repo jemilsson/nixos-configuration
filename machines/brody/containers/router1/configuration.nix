@@ -34,6 +34,9 @@ networking = {
 
     iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.0.0/24 -d 10.0.0.0/24 -j ACCEPT
     iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.0.0.0/24 -j ACCEPT
+    iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.5.1.0/24 -j ACCEPT
+    iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.5.2.0/24 -j ACCEPT
+
     '';
   };
 
@@ -66,6 +69,10 @@ services = {
           addr = "10.5.0.1/24";
           dev = "eth1000-2";
        }
+       {
+         addr = "10.5.2.1/24";
+         dev = "eth1002-2";
+      }
         ];
         virtualRouterId = 1;
         extraConfig = ''

@@ -22,6 +22,10 @@
       hostBridge = "br1000";
       localAddress = "10.5.0.3/24";
     };
-    
+    "eth1002-3" = {
+      hostBridge = "br1002";
+      localAddress = "10.5.2.3/24";
+    };
+
   };
 }

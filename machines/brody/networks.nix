@@ -20,10 +20,10 @@ networking = {
   interfaces."br1001".useDHCP = false;
 
   #Wifi 10.5.2.0/24
-  #vlans."vlan1002".interface = uplink;
-  #vlans."vlan1002".id = 1002;
-  #bridges."br1002".interfaces = [ "vlan1002" ];
-  #interfaces."br1002".useDHCP = false;
+  vlans."vlan1002".interface = uplink;
+  vlans."vlan1002".id = 1002;
+  bridges."br1002".interfaces = [ "vlan1002" ];
+  interfaces."br1002".useDHCP = false;
 
   #GuestWifi 10.5.3.0/24
   #vlans."vlan1003".interface = uplink;
