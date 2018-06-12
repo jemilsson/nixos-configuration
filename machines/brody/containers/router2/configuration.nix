@@ -7,7 +7,7 @@
 networking = {
 
   interfaces = {
-    "wan2" = {
+    "mv-wan" = {
       useDHCP = true;
     };
   };
@@ -26,7 +26,7 @@ networking = {
 
   nat = {
     enable = true;
-    externalInterface = "wan2";
+    externalInterface = "mv-wan";
     internalInterfaces = [ "eth0" "eth1001-2" ];
   };
 };

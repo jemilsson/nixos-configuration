@@ -6,10 +6,12 @@
   autoStart = true;
   privateNetwork = true;
 
+  macvlans = [ "wan" ];
+
   extraVeths = {
-    "wan2" = {
-      hostBridge = "br1";
-    };
+    #"wan2" = {
+    #    hostBridge = "br1";
+    #};
     "vrrp2" = {
       hostBridge = "br2";
       localAddress = "10.250.250.2/24";

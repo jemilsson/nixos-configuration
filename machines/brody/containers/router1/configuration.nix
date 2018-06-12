@@ -7,7 +7,7 @@
 networking = {
 
   interfaces = {
-    "wan1" = {
+    "mv-wan" = {
       useDHCP = true;
     };
 

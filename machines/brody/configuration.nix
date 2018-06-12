@@ -43,7 +43,7 @@ in
         interface = "enp0s20f0";
       };
 
-      "wan-1" = {
+      "wan" = {
         id = 2;
         interface = "enp0s20f0";
       };

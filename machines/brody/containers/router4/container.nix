@@ -6,7 +6,7 @@
   autoStart = true;
   privateNetwork = true;
 
-  macvlans = [ "wan-1" ];
+  macvlans = [ "wan" ];
   extraVeths = {
     #"wan4" = {
     #  hostBridge = "br1";
