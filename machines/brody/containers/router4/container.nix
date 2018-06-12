@@ -6,10 +6,11 @@
   autoStart = true;
   privateNetwork = true;
 
+  macvlans = [ "wan-1" ];
   extraVeths = {
-    "wan4" = {
-      hostBridge = "br1";
-    };
+    #"wan4" = {
+    #  hostBridge = "br1";
+    #};
     "eth1006-1" = {
       hostBridge = "br1006";
       localAddress = "10.5.6.1/24";
