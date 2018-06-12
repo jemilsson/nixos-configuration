@@ -25,9 +25,6 @@ in
       "br2" = {
         interfaces = [ ];
       };
-      "br1" = {
-        interfaces = [ ];#"wan-1" ];
-      };
       "br0" = {
         interfaces = [ "lan-1" ];
       };
@@ -60,7 +57,7 @@ in
       "lan-1" = {
         useDHCP = false;
       };
-      "wan-1" = {
+      "wan" = {
         useDHCP = false;
       };
     };
