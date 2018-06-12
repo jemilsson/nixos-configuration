@@ -44,7 +44,7 @@ networking = {
 
   nat = {
     enable = true;
-    externalInterface = "wan1";
+    externalInterface = "mv-wan";
     internalInterfaces = [ "eth0" "eth1001-1" "eth1002-2" ];
   };
 };
