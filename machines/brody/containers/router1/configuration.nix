@@ -26,8 +26,8 @@ networking = {
     allowedUDPPorts = [ ];
 
     extraCommands = ''
-    iptables -t nat -A nixos-nat-pre -i eth0 -p udp --dport 53 ! -d 10.0.0.5 -j MARK --set-xmark 0x1/0xffffffff
-    iptables -t nat -A nixos-nat-pre -i eth0 -p udp --dport 53 ! -d 10.0.0.5 -j DNAT --to 10.0.0.5
+    iptables -t nat -A nixos-nat-pre -i eth0 -p udp --dport 53 ! -d 10.5.6.4 -j MARK --set-xmark 0x1/0xffffffff
+    iptables -t nat -A nixos-nat-pre -i eth0 -p udp --dport 53 ! -d 10.5.6.4 -j DNAT --to 10.5.6.4
     iptables -t nat -A nixos-nat-post -o eth0 -p udp --dport 53 -m mark --mark 0x1 -j MASQUERADE
 
     iptables -I FORWARD -i eth0 -o eth1000-2 -j ACCEPT
