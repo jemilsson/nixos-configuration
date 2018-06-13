@@ -3,7 +3,7 @@ let
   adblockConfig =  builtins.readFile ./adblock.conf;
   adblockConfigFile = builtins.toFile "adblock.conf" adblockConfig;
 
-  dnsServerAddress = "10.0.0.5";
+  dnsServerAddress = "10.5.6.4";
 in
 {
   imports = [
@@ -16,7 +16,7 @@ networking = {
   };
 
   defaultGateway = {
-    address = "10.0.0.1";
+    address = "10.5.6.1";
     interface = "eth0";
   };
 };
