@@ -30,11 +30,11 @@ services.dnsmasq = {
   extraConfig = ''
     domain-needed
     bogus-priv
+    expand-hosts
 
     port = 53
 
     domain=ynglingagatan.local
-    expand-hosts
 
     listen-address=${dnsServerAddress}
 
@@ -42,32 +42,28 @@ services.dnsmasq = {
 
     conf-file=${adblockConfigFile}
 
+    dhcp-lease-max=50
+
     dhcp-range=lan,10.0.0.100,10.0.0.200
     dhcp-option=lan,3,10.0.0.1
     dhcp-option=lan,6,${dnsServerAddress}
-    dhcp-lease-max=50
+
 
     dhcp-range=lan,10.5.1.100,10.5.1.200
     dhcp-option=lan,3,10.5.1.1
     dhcp-option=lan,6,${dnsServerAddress}
-    dhcp-lease-max=50
 
     dhcp-range=lan,10.5.2.100,10.5.2.200
     dhcp-option=lan,3,10.5.2.1
     dhcp-option=lan,6,${dnsServerAddress}
-    dhcp-lease-max=50
 
     dhcp-range=lan,10.5.3.100,10.5.3.200
     dhcp-option=lan,3,10.5.3.1
     dhcp-option=lan,6,${dnsServerAddress}
-    dhcp-lease-max=50
 
     dhcp-range=lan,10.5.4.100,10.5.4.200
     dhcp-option=lan,3,10.5.4.1
     dhcp-option=lan,6,${dnsServerAddress}
-    dhcp-lease-max=50
-
-
 
     '';
 };
