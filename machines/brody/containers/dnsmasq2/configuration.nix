@@ -40,7 +40,7 @@ services.dnsmasq = {
 
     server=10.0.0.6
 
-    conf-file=${adblockConfigFile}
+    #conf-file=${adblockConfigFile}
 
     dhcp-lease-max=50
 
