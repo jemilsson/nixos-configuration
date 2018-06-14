@@ -25,47 +25,51 @@ environment.systemPackages = with pkgs; [
   dnsutils
 ];
 
-services.dnsmasq = {
-  enable = true;
-  extraConfig = ''
-    domain-needed
-    bogus-priv
-    expand-hosts
+services = {
 
-    port = 53
+  dnsmasq = {
+    enable = true;
+    extraConfig = ''
+      domain-needed
+      bogus-priv
+      expand-hosts
 
-    domain=ynglingagatan.local
+      port = 53
 
-    listen-address=${dnsServerAddress}
+      domain=ynglingagatan.local
 
-    server=10.5.1.4
+      listen-address=${dnsServerAddress}
 
-    #conf-file=${adblockConfigFile}
+      server=10.5.1.4
 
-    dhcp-lease-max=50
+      #conf-file=${adblockConfigFile}
 
-    dhcp-range=oldlan,10.0.0.100,10.0.0.200,255.255.255.0
-    dhcp-option=oldlan,3,10.0.0.1
-    dhcp-option=oldlan,6,${dnsServerAddress}
+      dhcp-lease-max=50
 
-    dhcp-range=lan,10.5.1.100,10.5.1.200,255.255.255.0
-    dhcp-option=lan,3,10.5.1.1
-    dhcp-option=lan,6,${dnsServerAddress}
+      dhcp-range=oldlan,10.0.0.100,10.0.0.200,255.255.255.0
+      dhcp-option=oldlan,3,10.0.0.1
+      dhcp-option=oldlan,6,${dnsServerAddress}
 
-    dhcp-range=wlan,10.5.2.100,10.5.2.200,255.255.255.0
-    dhcp-option=wlan,3,10.5.2.1
-    dhcp-option=wlan,6,${dnsServerAddress}
+      dhcp-range=lan,10.5.1.100,10.5.1.200,255.255.255.0
+      dhcp-option=lan,3,10.5.1.1
+      dhcp-option=lan,6,${dnsServerAddress}
 
-    dhcp-range=guestlan,10.5.3.100,10.5.3.200,255.255.255.0
-    dhcp-option=guestlan,3,10.5.3.1
-    dhcp-option=guestlan,6,${dnsServerAddress}
+      dhcp-range=wlan,10.5.2.100,10.5.2.200,255.255.255.0
+      dhcp-option=wlan,3,10.5.2.1
+      dhcp-option=wlan,6,${dnsServerAddress}
 
-    dhcp-range=medialan,10.5.4.100,10.5.4.200,255.255.255.0
-    dhcp-option=medialan,3,10.5.4.1
-    dhcp-option=medialan,6,${dnsServerAddress}
+      dhcp-range=guestlan,10.5.3.100,10.5.3.200,255.255.255.0
+      dhcp-option=guestlan,3,10.5.3.1
+      dhcp-option=guestlan,6,${dnsServerAddress}
 
-    '';
-};
-
-
+      dhcp-range=medialan,10.5.4.100,10.5.4.200,255.255.255.0
+      dhcp-option=medialan,3,10.5.4.1
+      dhcp-option=medialan,6,${dnsServerAddress}
+      '';
+    };
+    avahi = {
+      enable = true;
+      interfaces = [ "eth1002-2" "eth104-2" ];
+    };
+  };
 }
