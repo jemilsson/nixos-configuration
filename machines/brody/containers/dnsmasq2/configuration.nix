@@ -67,10 +67,5 @@ services = {
       dhcp-option=medialan,6,${dnsServerAddress}
       '';
     };
-    avahi = {
-      enable = true;
-      reflector = true;
-      interfaces = [ "eth1002-2" "eth1004-2" ];
-    };
   };
 }
