@@ -38,10 +38,10 @@ networking = {
   #interfaces."br1004".useDHCP = false;
 
   #public_servers 10.5.5.0/24
-  #vlans."vlan1005".interface = uplink;
-  #vlans."vlan1005".id = 1005;
-  #bridges."br1005".interfaces = [ "vlan1005" ];
-  #interfaces."br1005".useDHCP = false;
+  vlans."vlan1005".interface = uplink;
+  vlans."vlan1005".id = 1005;
+  bridges."br1005".interfaces = [ "vlan1005" ];
+  interfaces."br1005".useDHCP = false;
 
 
   #offline_servers 10.5.6.0/24

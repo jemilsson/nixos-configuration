@@ -35,19 +35,23 @@ networking = {
 
     extraCommands = ''
     iptables -I FORWARD -i eth1006-1 -o eth0 -j ACCEPT
+    iptables -I FORWARD -i eth1005-1 -o eth0 -j ACCEPT
 
-    iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.0.0/24 -d 10.5.6.0/24 -j ACCEPT
-    iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.0.0.0/24 -d 10.5.6.0/24 -j ACCEPT
-    iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.1.0/24 -d 10.5.6.0/24 -j ACCEPT
-    iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.2.0/24 -d 10.5.6.0/24 -j ACCEPT
+    iptables -I FORWARD -i eth0 -j ACCEPT
+
     '';
+    #iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.0.0/24 -d 10.5.6.0/24 -j ACCEPT
+    #iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.0.0.0/24 -d 10.5.6.0/24 -j ACCEPT
+    #iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.1.0/24 -d 10.5.6.0/24 -j ACCEPT
+    #iptables -I FORWARD -i eth0 -o eth1006-1 -s 10.5.2.0/24 -d 10.5.6.0/24 -j ACCEPT
+    #'';
 
   };
 
   nat = {
     enable = true;
     externalInterface = "mv-wan";
-    internalInterfaces = [ ];
+    internalInterfaces = [ "eth1005-1" ];
   };
 };
 

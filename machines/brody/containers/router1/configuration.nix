@@ -15,6 +15,7 @@ networking = {
       ipv4 = {
         routes = [
           { address = "10.5.6.0"; prefixLength = 24; via = "10.5.0.4"; }
+          { address = "10.5.5.0"; prefixLength = 24; via = "10.5.0.4"; }
         ];
       };
     };
@@ -32,14 +33,17 @@ networking = {
 
     iptables -I FORWARD -i eth0 -o eth1000-2 -j ACCEPT
 
-    iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.0.0/24 -d 10.0.0.0/24 -j ACCEPT
-    iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.0.0.0/24 -j ACCEPT
-    iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.5.1.0/24 -j ACCEPT
-
-    iptables -I FORWARD -i eth1000-2 -o eth1002-2 -s 10.5.6.0/24 -d 10.5.2.0/24 -j ACCEPT
+    iptables -I FORWARD -i eth1000-2 -j ACCEPT
 
     iptables -A nixos-fw -i eth1000-2 -p udp -m udp --dport 67:68 -j nixos-fw-accept
+
     '';
+    #iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.0.0/24 -d 10.0.0.0/24 -j ACCEPT
+    #iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.0.0.0/24 -j ACCEPT
+    #iptables -I FORWARD -i eth1000-2 -o eth0 -s 10.5.6.0/24 -d 10.5.1.0/24 -j ACCEPT
+
+    #iptables -I FORWARD -i eth1000-2 -o eth1002-2 -s 10.5.6.0/24 -d 10.5.2.0/24 -j ACCEPT
+    #'';
   };
 
   nat = {
