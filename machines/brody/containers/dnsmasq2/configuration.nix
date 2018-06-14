@@ -69,7 +69,7 @@ services = {
     };
     avahi = {
       enable = true;
-      interfaces = [ "eth1002-2" "eth104-2" ];
+      interfaces = [ "eth1002-2" "eth1004-2" ];
     };
   };
 }
