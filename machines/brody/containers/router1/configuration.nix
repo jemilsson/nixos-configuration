@@ -98,7 +98,7 @@ services = {
     enable = true;
     reflector = true;
     nssmdns = true;
-    interfaces = [ "eth1002-2" "eth1004-2" ];
+    interfaces = [ "eth0" "eth1001-1" "eth1002-2" "eth1004-2" ];
   };
 
 };
