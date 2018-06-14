@@ -28,6 +28,7 @@ services.home-assistant ={
       };
       frontend = { };
       http = {
+        server_port = 80;
       };
       feedreader.urls = [ "https://nixos.org/blogs.xml" ];
       media_player = [
