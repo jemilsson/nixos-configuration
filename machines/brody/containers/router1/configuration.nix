@@ -97,6 +97,7 @@ services = {
   avahi = {
     enable = true;
     reflector = true;
+    nssmdns = true;
     interfaces = [ "eth1002-2" "eth1004-2" ];
   };
 
