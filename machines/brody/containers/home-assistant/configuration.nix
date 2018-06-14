@@ -34,14 +34,14 @@ services.home-assistant ={
       media_player = [
         {
             platform = "cast";
-            host = "10.0.0.166";
+            host = "10.5.4.4";
         }
       ];
       notify = [
         {
           platform = "nfandroidtv";
           name = "AndroidTV";
-          host = "10.0.0.166";
+          host = "10.5.4.4";
         }
       ];
   };
