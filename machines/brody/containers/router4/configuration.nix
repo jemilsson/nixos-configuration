@@ -17,6 +17,8 @@ networking = {
           { address = "10.0.0.0"; prefixLength = 24; via = "10.5.0.1"; }
           { address = "10.5.1.0"; prefixLength = 24; via = "10.5.0.1"; }
           { address = "10.5.2.0"; prefixLength = 24; via = "10.5.0.1"; }
+          { address = "10.5.3.0"; prefixLength = 24; via = "10.5.0.1"; }
+          { address = "10.5.4.0"; prefixLength = 24; via = "10.5.0.1"; }
         ];
       };
     };
