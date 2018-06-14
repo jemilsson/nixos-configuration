@@ -32,10 +32,10 @@ networking = {
   #interfaces."br1003".useDHCP = false;
 
   #Media 10.5.4.0/24
-  #vlans."vlan1004".interface = uplink;
-  #vlans."vlan1004".id = 1004;
-  #bridges."br1004".interfaces = [ "vlan1004" ];
-  #interfaces."br1004".useDHCP = false;
+  vlans."vlan1004".interface = uplink;
+  vlans."vlan1004".id = 1004;
+  bridges."br1004".interfaces = [ "vlan1004" ];
+  interfaces."br1004".useDHCP = false;
 
   #public_servers 10.5.5.0/24
   vlans."vlan1005".interface = uplink;
