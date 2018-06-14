@@ -49,7 +49,7 @@ networking = {
   nat = {
     enable = true;
     externalInterface = "mv-wan";
-    internalInterfaces = [ "eth0" "eth1001-1" "eth1002-2" ];
+    internalInterfaces = [ "eth0" "eth1001-1" "eth1002-2" "eth1004-2" ];
   };
 };
 
