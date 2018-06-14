@@ -132,7 +132,7 @@ in
 
 networking = {
   defaultGateway = {
-    address = "10.0.0.1";
+    address = "10.5.1.1";
     interface = "eth0";
   };
   firewall = {

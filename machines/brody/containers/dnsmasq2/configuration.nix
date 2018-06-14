@@ -38,7 +38,7 @@ services.dnsmasq = {
 
     listen-address=${dnsServerAddress}
 
-    server=10.0.0.6
+    server=10.5.1.4
 
     #conf-file=${adblockConfigFile}
 
