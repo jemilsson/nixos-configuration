@@ -42,7 +42,7 @@ services = {
 
       server=10.5.1.4
 
-      #conf-file=${adblockConfigFile}
+      conf-file=${adblockConfigFile}
 
       dhcp-lease-max=50
 
