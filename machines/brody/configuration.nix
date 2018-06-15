@@ -17,7 +17,7 @@ in
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 ];
+      allowedTCPPorts = [ 22 8080 ];
       allowedUDPPorts = [ ];
     };
 
@@ -63,9 +63,6 @@ in
 
   services = {
     lldpd = {
-      enable = true;
-    };
-    cadvisor = {
       enable = true;
     };
   };
