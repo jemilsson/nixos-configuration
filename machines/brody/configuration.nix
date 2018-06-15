@@ -65,6 +65,9 @@ in
     lldpd = {
       enable = true;
     };
+    cadvisor = {
+      enable = true;
+    };
   };
 
   containers = containers;
