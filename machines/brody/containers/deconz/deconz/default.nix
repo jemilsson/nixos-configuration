@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
     ${patchelf}/bin/patchelf \
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath "${lib.makeLibraryPath [ qt5.qtbase stdenv.cc.cc.lib stdenv.cc.cc.lib ]}:$out/usr/lib" \
+      --set-rpath "${lib.makeLibraryPath [ qt5.qtbase qt5.qtserialport.out stdenv.cc.cc.lib ]}:$out/usr/lib" \
       $out/bin/deCONZ
   '';
 
