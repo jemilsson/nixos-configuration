@@ -1,4 +1,4 @@
-{ pkgs, config, stdenv, fetchurl, dpkg ... }:
+{ pkgs, config, stdenv, fetchurl, dpkg, ... }:
 #with import <nixpkgs> {};
 
 stdenv.mkDerivation rec {
