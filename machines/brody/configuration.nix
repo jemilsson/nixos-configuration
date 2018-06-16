@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, stdenv, ... }:
 let
-    containers = import ./containers/containers.nix { pkgs = pkgs; config=config; };
+    containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
 in
 {
   imports = [
