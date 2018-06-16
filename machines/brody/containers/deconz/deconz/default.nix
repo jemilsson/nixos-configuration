@@ -1,4 +1,4 @@
-{ pkgs, config, stdenv, fetchurl, dpkg, patchelf, lib, qt5, libX11, ... }:
+{ pkgs, config, stdenv, fetchurl, dpkg, patchelf, lib, qt5, libxcb, ... }:
 #with import <nixpkgs> {};
 
 stdenv.mkDerivation rec {
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
 
     ${patchelf}/bin/patchelf \
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath "${lib.makeLibraryPath [ qt5.qtbase qt5.qtserialport.out stdenv.cc.cc.lib libX11 ]}:$out/usr/lib" \
+      --set-rpath "${lib.makeLibraryPath [ qt5.qtbase qt5.qtserialport.out stdenv.cc.cc.lib libxcb ]}:$out/usr/lib" \
       $out/bin/deCONZ
   '';
 
