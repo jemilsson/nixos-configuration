@@ -1,4 +1,4 @@
-{ pkgs, config, stdenv, fetchurl, dpkg, autoPatchelfHook, lib, qt5, ... }:
+{ pkgs, config, stdenv, fetchurl, dpkg, autoPatchelfHook, lib, qt5, sqlite, ... }:
 #with import <nixpkgs> {};
 
 stdenv.mkDerivation rec {
