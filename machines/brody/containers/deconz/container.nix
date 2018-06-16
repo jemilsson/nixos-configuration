@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, stdenv, ... }:
 {
   config = import ./configuration.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   hostBridge = "br1006";
