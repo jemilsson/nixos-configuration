@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.dresden-elektronik.de/deconz/ubuntu/beta/${name}-qt5.deb";
-    sha256 = "1hjw3mq2kjbl7k9vccxl7f2alglxg0y1c4d1znvq1a4m478af57j";
+    sha256 = "00s9g1hwpgpw4j94g9kc1v3d1naml1mnwcv6l8hdr6k7w7vla1xv";
   };
 
   buildInputs = [ dpkg ];
