@@ -1,4 +1,4 @@
-{ pkgs, config, stdenv, fetchurl, dpkg, patchelf, lib, qt5, libXext, libX11, libXdmcp, libXau, libxcb, glibc, sane-backends, qtsvg, ... }:
+{ pkgs, config, stdenv, fetchurl, dpkg, autoPatchelfHook, patchelf, lib, qt5, libXext, libX11, libXdmcp, libXau, libxcb, glibc, sane-backends, qtsvg, ... }:
 #with import <nixpkgs> {};
 
 stdenv.mkDerivation rec {
@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "00s9g1hwpgpw4j94g9kc1v3d1naml1mnwcv6l8hdr6k7w7vla1xv";
   };
 
+  nativeBuildInputs = [ autoPatchelfHook ];
   buildInputs = [ dpkg ];
 
   dontConfigure = true;
