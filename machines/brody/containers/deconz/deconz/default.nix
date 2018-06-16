@@ -1,5 +1,5 @@
-with import <nixpkgs> {};
-#{ stdenv, fetchurl, perl, dpkg }:
+#with import <nixpkgs> {};
+{ stdenv, fetchurl, perl, dpkg }:
 
 stdenv.mkDerivation rec {
   name = "deconz-${version}";
