@@ -1,4 +1,4 @@
-{ pkgs, config, stdenv, fetchurl, dpkg, autoPatchelfHook, patchelf, lib, qt5, libXext, libX11, libXdmcp, libXau, libxcb, glibc, sane-backends, ... }:
+{ pkgs, config, stdenv, fetchurl, dpkg, autoPatchelfHook, lib, qt5, ... }:
 #with import <nixpkgs> {};
 
 stdenv.mkDerivation rec {
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];
-  buildInputs = [ dpkg ];
+  buildInputs = [ dpkg qt5 sqlite ];
 
   dontConfigure = true;
   dontBuild = true;
@@ -21,11 +21,6 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mv usr/bin .
     cp -r . $out
-
-    ${patchelf}/bin/patchelf \
-      --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath "${lib.makeLibraryPath [ qt5.qtbase qt5.qtserialport.out stdenv.cc.cc.lib libXext libX11 libXdmcp libXau libxcb glibc sane-backends ]}:$out/usr/lib" \
-      $out/bin/deCONZ
   '';
 
   meta = with stdenv.lib; {
