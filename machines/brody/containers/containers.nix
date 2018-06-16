@@ -9,4 +9,6 @@
   "adserver" = import ./adserver/container.nix { pkgs = pkgs; config=config; };
   #"dhcp" = import ./dhcp/container.nix { pkgs = pkgs; config=config; };
   "dnsmasq2" = import ./dnsmasq2/container.nix { pkgs = pkgs; config=config; };
+  "deconz" = import ./deconz/container.nix { pkgs = pkgs; config=config; };
+
 }
