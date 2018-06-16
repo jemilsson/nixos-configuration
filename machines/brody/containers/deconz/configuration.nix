@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  app = import ./deconz/default.nix { pkgs = pkgs; stdenv = stdenv; };
+  app = import ./deconz/default.nix { pkgs = pkgs; config = config; };
 in
 {
   imports = [
