@@ -1,4 +1,4 @@
-{ config, pkgs, stdenv, ... }:
+{ config, pkgs, ... }:
 let
   app = pkgs.callPackage ./deconz/default.nix {};
 in
