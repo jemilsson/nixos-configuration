@@ -14,6 +14,7 @@ stdenv.mkDerivation rec {
 
   dontConfigure = true;
   dontBuild = true;
+  dontStrip = true;
 
   unpackPhase = "dpkg-deb -x $src .";
   installPhase = ''
