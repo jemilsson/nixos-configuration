@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
 
     ${patchelf}/bin/patchelf \
       --interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath "${lib.makeLibraryPath [  ]}" \
       $out/bin/deCONZ
   '';
 
