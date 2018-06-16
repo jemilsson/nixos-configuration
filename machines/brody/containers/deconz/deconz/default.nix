@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];
-  buildInputs = [ dpkg qt5 sqlite ];
+  buildInputs = [ dpkg qt5.qtbase qt5.qtserialport qt5.qtwebsockets ];
 
   dontConfigure = true;
   dontBuild = true;
