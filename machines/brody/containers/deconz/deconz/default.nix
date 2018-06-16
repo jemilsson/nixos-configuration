@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
   unpackPhase = "dpkg-deb -x $src .";
   installPhase = ''
-    mv usr/bin .
+    mv usr .
     cp -r . $out
 
     ${patchelf}/bin/patchelf \
