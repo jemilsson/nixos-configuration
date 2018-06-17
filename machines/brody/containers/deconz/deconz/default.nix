@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, buildFHSUserEnv, fetchurl,  ... }:
 #ith import <nixpkgs> {};
 let
 version = "2.05.30";
