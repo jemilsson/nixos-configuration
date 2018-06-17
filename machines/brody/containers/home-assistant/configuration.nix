@@ -56,7 +56,7 @@ services.home-assistant ={
       deconz = {
         host = "10.0.0.180";
         port = 8080;
-        api_key = "C27234693A";
+        api_key = "4FC0D086AF";
       };
       logger = {
         default= "info";
