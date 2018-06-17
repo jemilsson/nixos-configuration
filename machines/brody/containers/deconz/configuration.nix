@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
-  app = pkgs.callPackage ./deconz/default.nix {};
+  app-full = pkgs.callPackage ./deconz/default.nix {};
+  app = app-full.deCONZ;
 in
 {
   imports = [
