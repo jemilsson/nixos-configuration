@@ -13,5 +13,6 @@
   ];
   bindMounts = {
     "/dev/ttyUSB0" = {hostPath = "/dev/ttyUSB0"; isReadOnly = false;};
+    "/dev/bus/usb/001" = {hostPath = "/dev/bus/usb/001"; isReadOnly = false;};
   };
 }
