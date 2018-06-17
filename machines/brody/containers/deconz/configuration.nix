@@ -20,6 +20,7 @@ networking = {
 
 environment.systemPackages = with pkgs; [
 sqlite
+picocom
 
 ];
 
