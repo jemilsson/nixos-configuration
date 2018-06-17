@@ -1,28 +1,47 @@
-{ pkgs, config, stdenv, fetchurl, dpkg, autoPatchelfHook, lib, qt5, sqlite, ... }:
-#with import <nixpkgs> {};
+with import <nixpkgs> {};
+let
+version = "2.05.30";
+name = "deconz-${version}";
+in
+rec {
+  deconz-deb = stdenv.mkDerivation {
+    #builder = ./builder.sh;
+    inherit name;
+    dpkg = dpkg;
+    src = fetchurl {
+      url = "https://www.dresden-elektronik.de/deconz/ubuntu/beta/${name}-qt5.deb";
+      sha256 = "00s9g1hwpgpw4j94g9kc1v3d1naml1mnwcv6l8hdr6k7w7vla1xv";
+    };
 
-stdenv.mkDerivation rec {
-  name = "deconz-${version}";
-  version = "2.05.30";
+    dontConfigure = true;
+    dontBuild = true;
+    dontStrip = true;
 
-  src = fetchurl {
-    url = "https://www.dresden-elektronik.de/deconz/ubuntu/beta/${name}-qt5.deb";
-    sha256 = "00s9g1hwpgpw4j94g9kc1v3d1naml1mnwcv6l8hdr6k7w7vla1xv";
+    buildInputs = [ dpkg qt5.qtbase qt5.qtserialport qt5.qtwebsockets sqlite hicolor_icon_theme libcap libpng ];
+
+    unpackPhase = "dpkg-deb -x $src .";
+    installPhase = ''
+      mv usr/* .
+      cp share/deCONZ/plugins/* lib/
+      cp -r . $out
+    '';
+
   };
-
-  nativeBuildInputs = [ autoPatchelfHook ];
-  buildInputs = [ dpkg qt5.qtbase qt5.qtserialport qt5.qtwebsockets ];
-
-  dontConfigure = true;
-  dontBuild = true;
-  dontStrip = true;
-
-  unpackPhase = "dpkg-deb -x $src .";
-  installPhase = ''
-    mv usr/bin .
-    cp -r . $out
-  '';
-
-  meta = with stdenv.lib; {
+  deconz = buildFHSUserEnv {
+    name = "deCONZ";
+    targetPkgs = pkgs: [
+      deconz-deb
+    ];
+    multiPkgs = pkgs: [
+      dpkg
+      qt5.qtbase
+      qt5.qtserialport
+      qt5.qtwebsockets
+      sqlite
+      hicolor_icon_theme
+      libcap
+      libpng
+    ];
+    runScript = "deCONZ";
   };
 }
