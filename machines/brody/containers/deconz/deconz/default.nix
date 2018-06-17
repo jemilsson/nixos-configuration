@@ -5,7 +5,7 @@ version = "2.05.30";
 name = "deconz-${version}";
 in
 rec {
-  deconz-deb = stdenv.mkDerivation {
+  deCONZ-deb = stdenv.mkDerivation {
     #builder = ./builder.sh;
     inherit name;
     dpkg = dpkg;
@@ -28,10 +28,10 @@ rec {
     '';
 
   };
-  deconz = buildFHSUserEnv {
+  deCONZ = buildFHSUserEnv {
     name = "deCONZ";
     targetPkgs = pkgs: [
-      deconz-deb
+      deCONZ-deb
     ];
     multiPkgs = pkgs: [
       dpkg
