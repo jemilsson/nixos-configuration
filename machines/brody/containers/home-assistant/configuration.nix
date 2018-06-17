@@ -49,6 +49,13 @@ services.home-assistant ={
         port = 8080;
         api_key = "C27234693A";
       };
+      logger = {
+        default= "info";
+        logs = {
+          pydeconz = "debug";
+          homeassistant.components.deconz = "debug";
+        };
+      };
   };
  };
 
