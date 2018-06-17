@@ -53,7 +53,7 @@ services.home-assistant ={
         default= "info";
         logs = {
           pydeconz = "debug";
-          homeassistant.components.deconz = "debug";
+          "homeassistant.components.deconz" = "debug";
         };
       };
   };
