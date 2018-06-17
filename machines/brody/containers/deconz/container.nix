@@ -6,7 +6,7 @@
   autoStart = true;
   privateNetwork = true;
   #additionalCapabilities = ["CAP_NET_BIND_SERVICE" "CAP_KILL" "CAP_SYS_BOOT" "CAP_SYS_TIME"];
-  additionalCapabilities = ["CAP_MKNOD" "CAP_SYS_RAWIO"];
+  additionalCapabilities = ["CAP_MKNOD" "CAP_SYS_RAWIO" "CAP_SYS_TTY_CONFIG"];
   allowedDevices = [
     { modifier = "rwm"; node = "char-ttyUSB"; }
     { modifier = "rwm"; node = "char-usb_device"; }
