@@ -23,6 +23,9 @@ environment = {
     htop
     wget
     curl
+    
+    file
+    lsusb
 
     #Network tools
     tcpdump
