@@ -23,7 +23,7 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz ];
+      extraPackages = ps: with ps; [ "pydeconz" ];
     };
    config = {
       homeassistant = {
