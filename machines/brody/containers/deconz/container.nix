@@ -5,4 +5,5 @@
   localAddress = "10.5.6.5/24";
   autoStart = true;
   privateNetwork = true;
+  additionalCapabilities = ["CAP_NET_BIND_SERVICE" "CAP_KILL" "CAP_SYS_BOOT" "CAP_SYS_TIME"];
 }
