@@ -6,7 +6,7 @@ python36.pkgs.buildPythonPackage rec {
   pname = "pydeconz";
   version = "38";
 
-  disabled = !python36.pkgs.python3Packages.isPy3k;
+  disabled = !python36.pkgs.isPy3k;
 
   src = python36.pkgs.fetchPypi {
     inherit pname version;
