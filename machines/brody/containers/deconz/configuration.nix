@@ -14,7 +14,7 @@ networking = {
     interface = "eth0";
   };
   firewall = {
-    allowedUDPPorts = [ ];
+    enable = false;
   };
 };
 
