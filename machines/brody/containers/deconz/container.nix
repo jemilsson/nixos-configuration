@@ -8,7 +8,7 @@
   #additionalCapabilities = ["CAP_NET_BIND_SERVICE" "CAP_KILL" "CAP_SYS_BOOT" "CAP_SYS_TIME"];
   additionalCapabilities = ["all"];
   allowedDevices = [
-    { modifier = "rwm"; node = "/dev/ttyUSB0"; }
+    { modifier = "rwm"; node = "char-usb_device"; }
   ];
   bindMounts = {
     "/dev/ttyUSB0" = {hostPath = "/dev/ttyUSB0"; isReadOnly = false;};
