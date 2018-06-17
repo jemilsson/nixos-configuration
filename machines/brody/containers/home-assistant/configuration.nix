@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-pydeconz = pkgs.callPackage ../../packages/pydeconz/default.nix {};
+pydeconz = pkgs.callPackage ../../../../packages/pydeconz/default.nix {};
 in
 {
   imports = [
