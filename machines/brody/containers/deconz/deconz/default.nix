@@ -1,4 +1,4 @@
-{ config, pkgs, buildFHSUserEnv, fetchurl,  ... }:
+{ config, pkgs, buildFHSUserEnv, fetchurl, dpkg, qt5, sqlite, hicolor_icon_theme, libcap, libpng,   ... }:
 #ith import <nixpkgs> {};
 let
 version = "2.05.30";
