@@ -21,6 +21,7 @@ environment.systemPackages = with pkgs; [
 
 services.home-assistant ={
    enable = true;
+   autoExtraComponents = true;
    config = {
       homeassistant = {
         name = "Home";
