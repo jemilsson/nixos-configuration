@@ -13,6 +13,6 @@ python36.pkgs.buildPythonPackage rec {
     sha256 = "1gq13z54k9w4r6nygm2hsfl4yj0gl27hndnlxj0h91g90m2ggs14";
   };
 
-  propagatedBuildInputs = [ python36Packages.aiohttp ];
+  buildInputs = [ python36Packages.aiohttp ];
   doCheck = false;
 }
