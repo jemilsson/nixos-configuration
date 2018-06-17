@@ -10,7 +10,7 @@
   allowedDevices = [
     { modifier = "rwm"; node = "char-ttyUSB"; }
     { modifier = "rwm"; node = "char-usb_device"; }
-    { modifier = "rwm"; node = "/dev/ttyUSB0"; }
+    #{ modifier = "rwm"; node = "/dev/ttyUSB0"; }
   ];
   bindMounts = {
     "/dev/ttyUSB0" = {hostPath = "/dev/ttyUSB0"; isReadOnly = false;};
