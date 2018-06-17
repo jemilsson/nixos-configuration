@@ -1,3 +1,4 @@
+{ config, pkgs, ... }:
 with import <nixpkgs> {};
 let
 version = "2.05.30";
