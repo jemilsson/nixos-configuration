@@ -35,6 +35,7 @@ systemd.services.deconz = {
         Restart = "always";
         RestartSec = "10s";
         StartLimitInterval = "1min";
+        DeviceAllow = "/dev/ttyUSB0 rwm";
         #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
       };
     };
