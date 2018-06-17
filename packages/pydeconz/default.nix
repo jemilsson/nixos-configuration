@@ -1,18 +1,18 @@
-{ buildPythonPackage, isPy3k, fetchPypi, aiohttp  }:
+{ python36, python3Packages  }:
 
 #with import <nixpkgs> {};
 
-buildPythonPackage rec {
+python36.pkgs.buildPythonPackage rec {
   pname = "pydeconz";
   version = "38";
 
-  disabled = !isPy3k;
+  disabled = !python36.pkgs.python3Packages.isPy3k;
 
-  src = fetchPypi {
+  src = python36.pkgs.fetchPypi {
     inherit pname version;
     sha256 = "1gq13z54k9w4r6nygm2hsfl4yj0gl27hndnlxj0h91g90m2ggs14";
   };
 
-  propagatedBuildInputs = [ aiohttp ];
+  propagatedBuildInputs = [ python3Packages.aiohttp ];
   doCheck = false;
 }
