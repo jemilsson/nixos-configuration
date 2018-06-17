@@ -45,8 +45,8 @@ services.home-assistant ={
         }
       ];
       deconz = {
-        host = "10.0.0.151";
-        port = 80;
+        host = "10.0.0.180";
+        port = 8080;
       };
   };
  };
