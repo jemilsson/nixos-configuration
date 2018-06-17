@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+pydeconz = pkgs.callPackage ../../packages/pydeconz/default.nix {};
+in
 {
   imports = [
     ../../../../config/minimum.nix
@@ -23,9 +26,9 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.home-assistant.override {
-      extraPackages = ps: with ps; [ ];
-      extraComponents = ps: with ps; [ "pip" "pydeconz" ];
-      skipPip = false;
+      extraPackages = ps: with ps; [ pydeconz ];
+      #extraComponents = ps: with ps; [ "pip" "pydeconz" ];
+      #skipPip = false;
     };
    config = {
       homeassistant = {
