@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-with import <nixpkgs> {};
+#ith import <nixpkgs> {};
 let
 version = "2.05.30";
 name = "deconz-${version}";
