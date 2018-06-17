@@ -47,6 +47,7 @@ services.home-assistant ={
       deconz = {
         host = "10.0.0.180";
         port = 8080;
+        api_key = "2DD7300899";
       };
   };
  };
