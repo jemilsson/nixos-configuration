@@ -23,9 +23,9 @@ environment = {
     htop
     wget
     curl
-    
+
     file
-    lsusb
+    usbutils
 
     #Network tools
     tcpdump
