@@ -53,9 +53,7 @@ services.home-assistant ={
         {
           platform = "webostv";
           host = "10.5.4.5";
-          turn_on_action = {
-
-          };
+          #turn_on_action = {};
         }
       ];
       notify = [
