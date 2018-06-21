@@ -78,6 +78,24 @@ services.home-assistant ={
           unit_of_measurement = "°C";
           value_template = "{{ value_json[0].temp/1000.0 }}";
         }
+        { platform = "mqtt";
+          state_topic = "device/2708576E636058C0/sensor/push";
+          name = "CO2";
+          unit_of_measurement = "ppm";
+          value_template = "{{ value_json[0].co2 }}";
+        }
+        { platform = "mqtt";
+          state_topic = "device/2708576E636058C0/sensor/push";
+          name = "VOC";
+          unit_of_measurement = "ppm";
+          value_template = "{{ value_json[0].voc }}";
+        }
+        { platform = "mqtt";
+          state_topic = "device/2708576E636058C0/sensor/push";
+          name = "Humidity";
+          unit_of_measurement = "%";
+          value_template = "{{ value_json[0].hum/1000.0 }}";
+        }
       ];
     };
  };
