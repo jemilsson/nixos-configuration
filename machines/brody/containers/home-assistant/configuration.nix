@@ -126,6 +126,8 @@ services.home-assistant ={
         brightness_scale = 4;
         on_command_type = "brightness";
         qos = 1;
+        payload_on = "4";
+        payload_off = "0";
       }
 
     ];
