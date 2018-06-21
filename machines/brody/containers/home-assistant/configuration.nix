@@ -103,6 +103,14 @@ services.home-assistant ={
           value_template = "{{ value_json[0].pm/1000.0 }}";
         }
       ];
+    fan = [
+      { platform = "mqtt";
+        command_topic = "device/2708576E636058C0/attribute/fan_speed";
+        payload_low_speed = "1";
+        payload_medium_speed = "2";
+        payload_high_speed = "3";
+      }
+    ];
     };
  };
 }
