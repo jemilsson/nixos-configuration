@@ -104,7 +104,9 @@ services.home-assistant ={
         }
       ];
     fan = [
-      { platform = "mqtt";
+      {
+        name = "Air cleaner";
+        platform = "mqtt";
         command_topic = "device/2708576E636058C0/attribute/fan_speed";
         payload_low_speed = "1";
         payload_medium_speed = "2";
