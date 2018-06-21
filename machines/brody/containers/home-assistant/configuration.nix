@@ -76,7 +76,7 @@ services.home-assistant ={
           state_topic = "device/2708576E636058C0/sensor/push";
           name = "Temperature";
           unit_of_measurement = "°C";
-          value_template = "{{ value_json.temp/1000.0 }}";
+          value_template = "{{ value_json[0].temp/1000.0 }}";
         }
       ];
     };
