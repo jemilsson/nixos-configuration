@@ -50,6 +50,13 @@ services.home-assistant ={
             platform = "cast";
             host = "10.5.4.4";
         }
+        {
+          platform = "webostv";
+          host = "10.5.4.5";
+          turn_on_action = {
+
+          };
+        }
       ];
       notify = [
         {
@@ -118,6 +125,22 @@ services.home-assistant ={
           ];
         }
       ];
+
+    binary_sensor = [
+      { name = "tv_is_on";
+        platform = "ping";
+        host = "10.5.4.5";
+        count = 1;
+        scan_interval = 5;
+      }
+      { name = "android_tv_is_on";
+        platform = "ping";
+        host = "10.5.4.4";
+        count = 1;
+        scan_interval = 5;
+      }
+    ];
+
     fan = [
       {
         name = "Air cleaner";
