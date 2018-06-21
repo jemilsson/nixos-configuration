@@ -114,6 +114,7 @@ services.home-assistant ={
         payload_low_speed = "1";
         payload_medium_speed = "2";
         payload_high_speed = "3";
+        qos = 1;
       }
     ];
     };
