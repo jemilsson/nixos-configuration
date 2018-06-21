@@ -102,6 +102,17 @@ services.home-assistant ={
           unit_of_measurement = "ug/m3";
           value_template = "{{ value_json[0].pm/1000.0 }}";
         }
+        {
+          platform = "yr";
+          name = "Current weather";
+          forecast = 0;
+          monitored_conditions = [
+            "temperature"
+            "humidity"
+            "precipitation"
+            "symbol"
+          ];
+        }
       ];
     fan = [
       {
