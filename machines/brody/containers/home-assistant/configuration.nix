@@ -38,7 +38,7 @@ services.home-assistant ={
         latitude = 59.35;
         longitude = 18.05;
         unit_system = "metric";
-        
+
       };
       frontend = { };
       http = {
@@ -149,9 +149,11 @@ services.home-assistant ={
         name = "Temperature";
         entities = [
           "sensor.temperature"
+          "sensor.current_weather_temperature"
         ];
       };
     };
+    logbook = {};
     };
  };
 }
