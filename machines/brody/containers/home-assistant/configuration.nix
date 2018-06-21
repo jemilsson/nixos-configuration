@@ -72,7 +72,9 @@ services.home-assistant ={
       };
 
       sensor = [
-        { platform = "mqtt"; state_topic = "device/2708576E636058C0/sensor/push"; }
+        { platform = "mqtt";
+          state_topic = "device/2708576E636058C0/sensor/push";
+          json_attributes = ["co2" "voc" "voc_raw" "temp" "hum" "pm" "VOC_err" "VOC_busy" "temp_raw" "hum_raw" "raw5" "raw4"];}
       ];
     };
  };
