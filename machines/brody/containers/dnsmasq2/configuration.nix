@@ -3,6 +3,9 @@ let
   adblockConfig =  builtins.readFile ./adblock.conf;
   adblockConfigFile = builtins.toFile "adblock.conf" adblockConfig;
 
+  localHostsConfig =  builtins.readFile ./adblock.conf;
+  localHostsConfigFile = builtins.toFile "adblock.conf" adblockConfig;
+
   dnsServerAddress = "10.5.6.4";
 in
 {
@@ -43,6 +46,7 @@ services = {
       server=10.5.1.4
 
       conf-file=${adblockConfigFile}
+      conf-file${localHostsConfigFile}
 
       dhcp-lease-max=50
 
