@@ -123,8 +123,9 @@ services.home-assistant ={
         platform = "mqtt";
         command_topic = "device/2708576E636058C0/attribute/brightness";
         brightness_topic = "device/2708576E636058C0/attribute/brightness";
-        brightness_scale = 5;
+        brightness_scale = 4;
         on_command_type = "brightness";
+        qos = 1;
       }
 
     ];
