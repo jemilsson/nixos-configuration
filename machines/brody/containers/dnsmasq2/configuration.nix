@@ -3,8 +3,8 @@ let
   adblockConfig =  builtins.readFile ./adblock.conf;
   adblockConfigFile = builtins.toFile "adblock.conf" adblockConfig;
 
-  localHostsConfig =  builtins.readFile ./adblock.conf;
-  localHostsConfigFile = builtins.toFile "adblock.conf" adblockConfig;
+  localHostsConfig =  builtins.readFile ./local_hosts.conf;
+  localHostsConfigFile = builtins.toFile "local_hosts.conf" localHostsConfig;
 
   dnsServerAddress = "10.5.6.4";
 in
