@@ -177,5 +177,9 @@ services.home-assistant ={
     };
     logbook = {};
     };
+    wake_on_lan = {
+      mac = "14:C9:13:02:02:A6";
+      broadcast_address = "10.5.4.5";
+    };
  };
 }
