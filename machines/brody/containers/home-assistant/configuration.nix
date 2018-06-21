@@ -128,6 +128,15 @@ services.home-assistant ={
       }
 
     ];
+    history = {};
+    history_graph = {
+      gr1 = {
+        name = "Temperature";
+        entities = [
+          "sensor.temperature"
+        ];
+      };
+    };
     };
  };
 }
