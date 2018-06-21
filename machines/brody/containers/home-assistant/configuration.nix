@@ -126,13 +126,13 @@ services.home-assistant ={
       ];
 
     binary_sensor = [
-      { name = "tv_is_on";
+      { name = "monitor1";
         platform = "ping";
         host = "10.5.4.5";
         count = 1;
         scan_interval = 5;
       }
-      { name = "android_tv_is_on";
+      { name = "android_tv";
         platform = "ping";
         host = "10.5.4.4";
         count = 1;
