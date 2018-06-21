@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-
+  rabbitmqConfig = builtins.readFile ./rabbitmq.conf;
 in
 {
   imports = [
@@ -26,6 +26,7 @@ services = {
   rabbitmq = {
     enable = true;
     plugins = [ "rabbitmq_mqtt" "rabbitmq_management" ];
+    config = rabbitmqConfig;
     };
   };
 }
