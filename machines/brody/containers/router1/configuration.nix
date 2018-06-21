@@ -118,6 +118,10 @@ systemd.services.dhcrelay = {
       };
     };
 
+    environment.systemPackages = with pkgs; [
+      wol
+    ];
+
 
 
 }
