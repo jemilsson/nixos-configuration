@@ -96,6 +96,12 @@ services.home-assistant ={
           unit_of_measurement = "%";
           value_template = "{{ value_json[0].hum/1000.0 }}";
         }
+        { platform = "mqtt";
+          state_topic = "device/2708576E636058C0/sensor/push";
+          name = "PM2.5";
+          unit_of_measurement = "ug/m3";
+          value_template = "{{ value_json[0].pm/1000.0 }}";
+        }
       ];
     };
  };
