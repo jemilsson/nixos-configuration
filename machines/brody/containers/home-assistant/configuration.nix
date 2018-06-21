@@ -37,6 +37,8 @@ services.home-assistant ={
         time_zone = "UTC";
         latitude = 59.35;
         longitude = 18.05;
+        unit_system = "metric";
+        
       };
       frontend = { };
       http = {
