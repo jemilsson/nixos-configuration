@@ -72,7 +72,7 @@ services.home-assistant ={
       };
 
       sensor = [
-        { platform = "mqtt"; state_topic = "device.2708576E636058C0.sensor.push"; }
+        { platform = "mqtt"; state_topic = "device/2708576E636058C0/sensor/push"; }
       ];
     };
  };
