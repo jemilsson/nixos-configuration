@@ -25,7 +25,7 @@ services = {
 
   rabbitmq = {
     enable = true;
-    plugins = [ "rabbitmq_mqtt" "rabbitmq_management" ];
+    plugins = [ "rabbitmq_mqtt" "rabbitmq_management" "rabbitmq_web_mqtt" ];
     config = rabbitmqConfig;
     };
   };
