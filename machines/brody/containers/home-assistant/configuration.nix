@@ -70,8 +70,10 @@ services.home-assistant ={
           "homeassistant.components.deconz" = "debug";
         };
       };
-  };
+
+      sensor = [
+        { platform = "mqtt"; state_topic = "device.2708576E636058C0.sensor.push"; }
+      ];
+    };
  };
-
-
 }
