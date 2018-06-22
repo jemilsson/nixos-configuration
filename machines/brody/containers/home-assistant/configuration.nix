@@ -190,6 +190,11 @@ services.home-assistant ={
 
     cloud = {
       google_actions = {
+        filter = {
+          include_entities = [
+            "fan.air_cleaner"
+          ];
+        };
       };
     };
 
