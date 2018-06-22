@@ -12,6 +12,6 @@
   #"deconz" = import ./deconz/container.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   "rabbitmq" = import ./rabbitmq/container.nix { pkgs = pkgs; config=config; };
   "woltest" = import ./woltest/container.nix { pkgs = pkgs; config=config; };
-  "faucet" = import ./woltest/container.nix { pkgs = pkgs; config=config; };
+  "faucet" = import ./faucet/container.nix { pkgs = pkgs; config=config; };
 
 }
