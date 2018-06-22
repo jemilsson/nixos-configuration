@@ -11,5 +11,6 @@
   "dnsmasq2" = import ./dnsmasq2/container.nix { pkgs = pkgs; config=config; };
   #"deconz" = import ./deconz/container.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   "rabbitmq" = import ./rabbitmq/container.nix { pkgs = pkgs; config=config; };
+  "woltest" = import ./woltest/container.nix { pkgs = pkgs; config=config; };
 
 }
