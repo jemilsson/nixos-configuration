@@ -127,6 +127,7 @@ nix = {
   gc = {
     automatic = true;
     dates = "03:30";
+    options = "--delete-older-than 90d";
   };
   optimise = {
     automatic = true;
