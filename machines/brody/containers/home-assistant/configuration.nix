@@ -2,6 +2,7 @@
 let
 pydeconz = pkgs.callPackage ../../../../packages/pydeconz/default.nix {};
 pylgtv = pkgs.callPackage ../../../../packages/pylgtv/default.nix {};
+secrets = import ../../secrets.nix;
 in
 {
   imports = [
@@ -55,6 +56,11 @@ services.home-assistant ={
           platform = "webostv";
           host = "10.5.4.5";
           #turn_on_action = {};
+        }
+        {
+          platform = "spotify";
+          client_id = secrets.spotifyClientID;
+          client_secret = secrets.spotifyClientSecret;
         }
       ];
       notify = [
