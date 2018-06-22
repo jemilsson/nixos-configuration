@@ -61,6 +61,19 @@ in
       };
     };
 
+    vswitches = {
+      "vs-wan" = {
+
+      };
+    };
+
+  };
+
+  virtualisation = {
+    vswitch = {
+      enable = true;
+      resetOnStart = true;
+    };
   };
 
   services = {
