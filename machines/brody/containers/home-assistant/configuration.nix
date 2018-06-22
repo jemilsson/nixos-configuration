@@ -29,7 +29,7 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz pylgtv ];
+      extraPackages = ps: with ps; [ pydeconz pylgtv pkgs.python36Packages.spotipy	 ];
       #extraComponents = ps: with ps; [ "pip" "pydeconz" ];
       #skipPip = false;
     };
