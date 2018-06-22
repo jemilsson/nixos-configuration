@@ -1,1 +1,2 @@
 config/secrets.nix
+machines/brody/secrets.nix
