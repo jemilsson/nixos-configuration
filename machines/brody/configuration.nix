@@ -80,6 +80,7 @@ in
 
  environment.systemPackages = with pkgs; [
   dnsutils
+  python2nix
 
  ];
 
