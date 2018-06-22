@@ -2,6 +2,7 @@
 let
 pydeconz = pkgs.callPackage ../../../../packages/pydeconz/default.nix {};
 pylgtv = pkgs.callPackage ../../../../packages/pylgtv/default.nix {};
+spotipy = pkgs.callPackage ../../../../packages/spotipy/default.nix {};
 secrets = import ../../secrets.nix;
 in
 {
@@ -29,7 +30,7 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz pylgtv pkgs.python36Packages.spotipy	 ];
+      extraPackages = ps: with ps; [ pydeconz pylgtv spotipy ];
       #extraComponents = ps: with ps; [ "pip" "pydeconz" ];
       #skipPip = false;
     };
