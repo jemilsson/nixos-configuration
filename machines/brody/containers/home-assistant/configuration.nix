@@ -187,6 +187,12 @@ services.home-assistant ={
       mac = "14:C9:13:02:02:A6";
       broadcast_address = "10.5.4.5";
     };
+
+    cloud = {
+      google_actions = {
+      };
+    };
+
   };
  };
 }
