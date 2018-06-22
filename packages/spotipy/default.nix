@@ -10,7 +10,7 @@ python36.pkgs.buildPythonPackage rec {
 
   src = python36.pkgs.fetchPypi {
     inherit pname version;
-    sha256 = "1k457x07xkbzibny1rpfq19wnk56frs0jbr3r2q7saxi94hqi05x";
+    sha256 = "1l8ya0cln936x0mx2j5ngl1xwpc0r89hs3wcvb8x8paw3d4dl1ab";
   };
 
   buildInputs = [ python36Packages.requests python36Packages.requests ];
