@@ -74,7 +74,7 @@ services.home-assistant ={
       deconz = {
         host = "10.0.0.180";
         port = 8080;
-        api_key = "8C715E3351";
+        api_key = "A6C3A8DB60";
       };
       mqtt = {
         broker = "rabbitmq.ynglingagatan.local";
