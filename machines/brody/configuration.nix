@@ -102,7 +102,7 @@ in
 
  ];
 
- users.users.deconz = {
+ users.users."deconz" = {
   createHome = true;
   isSystemUser = true;
   group = "dialout";
