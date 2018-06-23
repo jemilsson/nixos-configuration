@@ -106,6 +106,7 @@ in
   createHome = true;
   isSystemUser = true;
   group = "dialout";
+  home = "/home/deconz";
  };
 
  systemd.services.deconz = {
