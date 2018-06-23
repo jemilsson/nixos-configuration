@@ -43,8 +43,6 @@ rec {
       libcap
       libpng
     ];
-    runScript = ''
-    ls /home/deconz
-    deCONZ'';
+    runScript = "deCONZ";
   };
 }
