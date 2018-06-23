@@ -78,7 +78,7 @@ in
     #
     #      '';
   #  };
-  #};
+  };
 
   services = {
     lldpd = {
