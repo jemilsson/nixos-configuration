@@ -115,7 +115,8 @@ in
          Restart = "always";
          RestartSec = "10s";
          StartLimitInterval = "1min";
-         WorkingDirectory = "/var/db/deconz";
+         #WorkingDirectory = "/var/db/deconz";
+         DynamicUser = "yes";
          #DeviceAllow = "char-ttyUSB rwm";
          #DeviceAllow = "char-usb_device rwm";
          #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
