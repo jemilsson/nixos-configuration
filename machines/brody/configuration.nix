@@ -105,6 +105,7 @@ in
  users.users.deconz = {
   createHome = true;
   isSystemUser = true;
+  group = "dialout";
  };
 
  systemd.services.deconz = {
