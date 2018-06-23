@@ -88,7 +88,7 @@
   #unstable.alacritty
   alacritty
   pptp
-  unstable.vulkan-loader
+  #unstable.vulkan-loader
   vscode
   virtmanager
 
