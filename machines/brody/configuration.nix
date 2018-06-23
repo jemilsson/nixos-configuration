@@ -115,7 +115,7 @@ in
          Restart = "always";
          RestartSec = "10s";
          StartLimitInterval = "1min";
-         #WorkingDirectory = "/var/db/deconz";
+         StateDirectory = "/var/lib/deconz";
          DynamicUser = "yes";
          #DeviceAllow = "char-ttyUSB rwm";
          #DeviceAllow = "char-usb_device rwm";
