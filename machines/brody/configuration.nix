@@ -61,25 +61,24 @@ in
       };
     };
 
-    vswitches = {
-      "vs-wan" = {
+  #  vswitches = {
+  #    "vs-wan" = {
+#
+#      };
+#    };
+#  };
 
-      };
-    };
-
-  };
-
-  virtualisation = {
-    vswitch = {
-      enable = true;
-      resetOnStart = true;
-      extraOvsctlCmds = ''
-      set-fail-mode &lt;switch_name&gt; secure
-      set Bridge <switch_name> stp_enable=true
-
-      '';
-    };
-  };
+  #virtualisation = {
+    #vswitch = {
+    #  enable = true;
+    #  resetOnStart = true;
+    #  extraOvsctlCmds = ''
+    #  set-fail-mode &lt;switch_name&gt; secure
+    #  set Bridge <switch_name> stp_enable=true
+    #
+    #      '';
+  #  };
+  #};
 
   services = {
     lldpd = {
