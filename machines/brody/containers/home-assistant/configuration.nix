@@ -223,6 +223,56 @@ services.home-assistant ={
             }
           ];
       }
+
+      {
+        alias = "Increase brightness from dimmer";
+        initial_state = "on";
+        trigger = {
+          platform = "event";
+          event_type = "deconz_event";
+          event_data = {
+            id = "dimmer_switch";
+            event = 2002;
+            };
+          };
+        action = [
+            {
+              service = "light.turn_on";
+              data_template = {
+                entity_id = "light.kitchen";
+                brightness = ''
+                  {% set brightness = states.light.kitchen.attributes.brightness | int %}
+                  {{ [brightness+30, 255] | min }}
+                '';
+              };
+            }
+          ];
+      }
+
+      {
+        alias = "Decrease brightness from dimmer";
+        initial_state = "on";
+        trigger = {
+          platform = "event";
+          event_type = "deconz_event";
+          event_data = {
+            id = "dimmer_switch";
+            event = 3002;
+            };
+          };
+        action = [
+            {
+              service = "light.turn_on";
+              data_template = {
+                entity_id = "light.kitchen";
+                brightness = ''
+                  {% set brightness = states.light.kitchen.attributes.brightness | int %}
+                  {{ [brightness-30, 0] | max }}
+                '';
+              };
+            }
+          ];
+      }
     ];
     mqtt_eventstream = {
       publish_topic = "homeassistant/eventstream";
