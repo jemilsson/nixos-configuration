@@ -204,7 +204,7 @@ services.home-assistant ={
         action = [
             {
               entity_id = "light.kitchen";
-              service = "light.turn_off";
+              service = "light.turn_on";
             }
           ];
       }
