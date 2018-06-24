@@ -188,15 +188,43 @@ services.home-assistant ={
       broadcast_address = "10.5.4.5";
     };
 
-    cloud = {
-      google_actions = {
-        filter = {
-          include_entities = [
-            "fan.air_cleaner"
-          ];
+    automation = [
+
+      {
+        alias = "Turn on lights from dimmer";
+        initial_state = "on";
+        trigger = {
+          platform = "event";
+          event_type = "deconz_event";
+          event_data = {
+            id = "dimmer_switch";
+            event = 1002;
+          };
+          action = {
+            entity_id = "light.kitchen";
+            service = "light.turn_on";
+          };
         };
-      };
-    };
+      }
+
+      {
+        alias = "Turn off lights from dimmer";
+        initial_state = "on";
+        trigger = {
+          platform = "event";
+          event_type = "deconz_event";
+          event_data = {
+            id = "dimmer_switch";
+            event = 4002;
+          };
+          action = {
+            entity_id = "light.kitchen";
+            service = "light.turn_off";
+          };
+        };
+      }
+
+    ];
 
   };
  };
