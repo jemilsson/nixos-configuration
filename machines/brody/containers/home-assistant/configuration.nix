@@ -232,7 +232,7 @@ services.home-assistant ={
           event_type = "deconz_event";
           event_data = {
             id = "dimmer_switch";
-            event = 2001;
+            event = 2002;
             };
           };
         action = [
@@ -257,7 +257,7 @@ services.home-assistant ={
           event_type = "deconz_event";
           event_data = {
             id = "dimmer_switch";
-            event = 3001;
+            event = 3002;
             };
           };
         action = [
