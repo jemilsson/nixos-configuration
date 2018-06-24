@@ -50,15 +50,15 @@ services.home-assistant ={
       };
       feedreader.urls = [ "https://nixos.org/blogs.xml" ];
       media_player = [
-        {
-            platform = "cast";
-            host = "10.5.4.4";
-        }
-        {
-          platform = "webostv";
-          host = "10.5.4.5";
-          #turn_on_action = {};
-        }
+        #{
+        #    platform = "cast";
+        #    host = "10.5.4.4";
+        #}
+        #{
+      #  platform = "webostv";
+      #    host = "10.5.4.5";
+      #    #turn_on_action = {};
+      #  }
       ];
       notify = [
         {
