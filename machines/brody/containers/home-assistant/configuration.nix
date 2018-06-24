@@ -201,10 +201,12 @@ services.home-assistant ={
             event = 1002;
             };
           };
-        action = {
-          entity_id = "light.kitchen";
-          service = "light.turn_on";
-          };
+        action = [
+            {
+              entity_id = "light.kitchen";
+              service = "light.turn_off";
+            }
+          ];
       }
 
       {
@@ -218,10 +220,12 @@ services.home-assistant ={
             event = 4002;
             };
           };
-        action = {
-          entity_id = "light.kitchen";
-          service = "light.turn_off";
-          };
+        action = [
+            {
+              entity_id = "light.kitchen";
+              service = "light.turn_off";
+            }
+          ];
       }
 
     ];
