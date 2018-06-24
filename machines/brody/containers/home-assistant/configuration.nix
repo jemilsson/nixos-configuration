@@ -223,8 +223,11 @@ services.home-assistant ={
             }
           ];
       }
-
     ];
+    mqtt_eventstream = {
+      publish_topic = "homeassistant/eventstream";
+    };
+
 
   };
  };
