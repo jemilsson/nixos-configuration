@@ -41,6 +41,7 @@ services.home-assistant ={
         latitude = "59.35";
         longitude = "18.05";
         unit_system = "metric";
+        elevation = 25;
 
       };
       frontend = { };
