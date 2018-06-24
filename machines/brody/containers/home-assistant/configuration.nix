@@ -199,12 +199,12 @@ services.home-assistant ={
           event_data = {
             id = "dimmer_switch";
             event = 1002;
+            };
           };
-          action = {
-            entity_id = "light.kitchen";
-            service = "light.turn_on";
+        action = {
+          entity_id = "light.kitchen";
+          service = "light.turn_on";
           };
-        };
       }
 
       {
@@ -216,12 +216,12 @@ services.home-assistant ={
           event_data = {
             id = "dimmer_switch";
             event = 4002;
+            };
           };
-          action = {
-            entity_id = "light.kitchen";
-            service = "light.turn_off";
+        action = {
+          entity_id = "light.kitchen";
+          service = "light.turn_off";
           };
-        };
       }
 
     ];
