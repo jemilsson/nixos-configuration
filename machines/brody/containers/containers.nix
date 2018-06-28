@@ -15,5 +15,6 @@
   #"faucet" = import ./faucet/container.nix { pkgs = pkgs; config=config; };
   "vxlan_a" = import ./vxlan_a/container.nix { pkgs = pkgs; config=config; };
   "vxlan_b" = import ./vxlan_b/container.nix { pkgs = pkgs; config=config; };
+  "wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
 
 }
