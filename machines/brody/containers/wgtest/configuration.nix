@@ -24,7 +24,12 @@ networking = {
         ips = [ "172.16.3.1" ];
         privateKey = "yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk=";
 
-        peers = [];
+        peers = [
+          {
+            allowedIPs = [ "54.93.48.21/32" ];
+
+          }
+        ];
       };
 
 
