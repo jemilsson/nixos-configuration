@@ -22,7 +22,8 @@ networking = {
     interfaces = {
       wg0 = {
         ips = [ "172.16.3.1" ];
-        privateKey = "yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk=";
+        # publicKey = "P+VSSgH7+QIvdZBg3l7dDh7o0oZo8Fe5qE7Gk8AwZgI="
+        privateKey = "yOtaVE6g93WeMTNhSf/RTACr6rUGkowc/EuxYPvZX2M=";
 
         peers = [
           {
