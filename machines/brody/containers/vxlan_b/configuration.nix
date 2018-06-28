@@ -18,7 +18,7 @@ networking = {
   };
 };
 
-systemd.network.netdevs.vx01.vxlanConfig = {
+systemd.network.netdevs.vx02.vxlanConfig = {
   Id = 1;
   Remote = "10.5.6.8";
   Local = "172.16.1.2";
