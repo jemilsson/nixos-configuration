@@ -28,7 +28,7 @@ networking = {
           {
             endpoint = "54.93.48.21:12913";
             allowedIPs = [ "54.93.48.21/32" ];
-            publicKey = [ "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg" ];
+            publicKey = "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg";
 
           }
         ];
