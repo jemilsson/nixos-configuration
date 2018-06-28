@@ -44,4 +44,9 @@ environment.systemPackages = with pkgs; [
   wireguard
 ];
 
+boot.extraModulePackages = [
+  config.boot.kernelPackages.wireguard
+];
+
+
 }
