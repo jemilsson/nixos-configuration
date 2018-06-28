@@ -32,8 +32,6 @@ systemd.network = {
         Remote = "10.5.6.9";
         Local = "172.16.1.2";
     };
-
-    Net
   };
 };
 
