@@ -20,7 +20,7 @@ networking = {
 
 systemd.network = {
   netdevs.vx01 = {
-    enabel = true;
+    enable = true;
 
     netdevConfig = {
       Kind = "vxlan";
