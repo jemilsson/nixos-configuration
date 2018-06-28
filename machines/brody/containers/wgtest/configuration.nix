@@ -29,7 +29,7 @@ networking = {
           {
             endpoint = "${peer}:12913";
             allowedIPs = [ "${peer}/32" ];
-            publicKey = "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=";
+            publicKey = "D8AjjmpKa5P703URKB7LuUVEzHfK+QnkjhjFhNpO/mM=";
           }
         ];
       };
