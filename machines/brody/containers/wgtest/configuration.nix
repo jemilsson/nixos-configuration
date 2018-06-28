@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-a = "asd";
+peer = "52.59.206.106";
 in
 {
   imports = [
@@ -27,10 +27,9 @@ networking = {
 
         peers = [
           {
-            endpoint = "54.93.48.21:12913";
-            allowedIPs = [ "54.93.48.21/32" ];
+            endpoint = "${peer}:12913";
+            allowedIPs = [ "${peer}/32" ];
             publicKey = "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=";
-
           }
         ];
       };
@@ -39,8 +38,6 @@ networking = {
     };
   };
 };
-
-
 
 environment.systemPackages = with pkgs; [
   wireguard
