@@ -28,7 +28,7 @@ networking = {
         peers = [
           {
             endpoint = "${peer}:12913";
-            allowedIPs = [ "${peer}/32" ];
+            allowedIPs = [ "172.16.3.2/32" ];
             publicKey = "D8AjjmpKa5P703URKB7LuUVEzHfK+QnkjhjFhNpO/mM=";
           }
         ];
