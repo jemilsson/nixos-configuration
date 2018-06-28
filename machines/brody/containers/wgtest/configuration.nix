@@ -30,6 +30,7 @@ networking = {
             endpoint = "${peer}:12913";
             allowedIPs = [ "172.16.3.0/24" ];
             publicKey = "D8AjjmpKa5P703URKB7LuUVEzHfK+QnkjhjFhNpO/mM=";
+            persistentKeepalive = 10;
           }
         ];
       };
