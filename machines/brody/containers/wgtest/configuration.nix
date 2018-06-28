@@ -27,6 +27,7 @@ networking = {
         peers = [
           {
             allowedIPs = [ "54.93.48.21/32" ];
+            publicKey = [ "xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg" ];
 
           }
         ];
@@ -40,7 +41,7 @@ networking = {
 
 
 environment.systemPackages = with pkgs; [
-
+  wireguard
 ];
 
 }
