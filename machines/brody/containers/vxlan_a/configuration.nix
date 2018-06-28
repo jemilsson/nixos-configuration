@@ -19,10 +19,11 @@ networking = {
 };
 
 systemd.network = {
-  netdevs.vx01 = {
+  netdevs."vx01" = {
     enable = true;
 
     netdevConfig = {
+      Name = "vx01";
       Kind = "vxlan";
     };
 
@@ -31,6 +32,8 @@ systemd.network = {
         Remote = "10.5.6.9";
         Local = "172.16.1.2";
     };
+
+    Net
   };
 };
 
