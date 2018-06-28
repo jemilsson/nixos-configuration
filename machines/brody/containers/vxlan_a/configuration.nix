@@ -19,14 +19,19 @@ networking = {
 };
 
 systemd.network = {
-  netdevs.vx01.vxlanConfig = {
-    Id = 1;
-    Remote = "10.5.6.9";
-    Local = "172.16.1.2";
+  netdevs.vx01 = {
+    enabel = true;
+
+    netdevConfig = {
+      Kind = "vxlan";
+    };
+
+    vxlanConfig = {
+        Id = 1;
+        Remote = "10.5.6.9";
+        Local = "172.16.1.2";
+    };
   };
-
-  networks = [ "vx01" ];
-
 };
 
 environment.systemPackages = with pkgs; [
