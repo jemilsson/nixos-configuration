@@ -35,8 +35,8 @@ systemd.network = {
 
     vxlanConfig = {
         Id = "1";
-        Remote = "10.5.6.9";
-        Local = "172.16.1.2";
+        #Remote = "10.5.6.9";
+        #Local = "172.16.1.2";
     };
   };
 };
