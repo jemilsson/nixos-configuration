@@ -7,7 +7,12 @@ in
     ../../../../config/minimum.nix
 ];
 
+
+
 networking = {
+
+  useNetworkd = true;
+
   firewall = {
     allowedUDPPorts = [ 4789 ];
   };
@@ -19,6 +24,7 @@ networking = {
 };
 
 systemd.network = {
+  enable = true;
   netdevs."vx01" = {
     enable = true;
 
