@@ -17,10 +17,10 @@ networking = {
     allowedUDPPorts = [ 4789 ];
   };
 
-  defaultGateway = {
-    address = "10.5.6.1";
-    interface = "eth0";
-  };
+  #defaultGateway = {
+  #  address = "10.5.6.1";
+  #  interface = "eth0";
+  #};
 };
 
 systemd.network = {
