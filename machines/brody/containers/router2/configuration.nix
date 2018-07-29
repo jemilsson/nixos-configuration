@@ -28,6 +28,9 @@ networking = {
     enable = true;
     externalInterface = "mv-wan";
     internalInterfaces = [ "eth0" "eth1001-2" "eth1002-3" "eth1004-3" ];
+    forwardPorts = [
+      { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
+    ];
   };
 };
 
