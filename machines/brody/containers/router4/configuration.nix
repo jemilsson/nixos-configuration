@@ -54,6 +54,9 @@ networking = {
     enable = true;
     externalInterface = "mv-wan";
     internalInterfaces = [ "eth1005-1" ];
+    forwardPorts = [
+      { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
+    ];
   };
 };
 
