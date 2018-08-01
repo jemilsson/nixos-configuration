@@ -23,12 +23,16 @@
       };
 
       displayManager = {
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
         sddm = {
           enable = false;
 
         };
         lightdm = {
-          enable = true;
+          enable = false;
 
           greeters.gtk = {
             enable = true;
@@ -51,7 +55,7 @@
 
 
     compton = {
-      enable = true;
+      enable = false;
       fade = true;
       fadeDelta = 3;
       fadeSteps = ["0.25" "0.25"];
