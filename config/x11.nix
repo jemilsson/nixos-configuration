@@ -77,6 +77,7 @@
   environment.systemPackages = with pkgs; [
     compton
     xorg.xev
+    plasma5.sddm-kcm
   ];
 
   i18n.consoleUseXkbConfig = true;
