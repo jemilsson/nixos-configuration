@@ -24,11 +24,11 @@
 
       displayManager = {
         gdm = {
-          enable = true;
+          enable = false;
           wayland = true;
         };
         sddm = {
-          enable = false;
+          enable = true;
 
         };
         lightdm = {
@@ -55,7 +55,7 @@
 
 
     compton = {
-      enable = false;
+      enable = true;
       fade = true;
       fadeDelta = 3;
       fadeSteps = ["0.25" "0.25"];
