@@ -8,10 +8,7 @@ programs = {
     syntaxHighlighting = {
       enable = true;
     };
-    ohMyZsh = {
-      enable =true;
-      theme = "agnoster";
-    };
+    promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
   };
 };
 
