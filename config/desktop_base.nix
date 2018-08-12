@@ -78,7 +78,7 @@
     #skype
 
     #Games
-    unstable.steam
+    unstable.steam.override { extraPkgs = [];}
 
     #Graphical network tools
     wireshark
