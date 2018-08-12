@@ -274,9 +274,7 @@
 
   nixpkgs.overlays = [
       (self: super: {
-        zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
-        handbrake = super.handbrake.override { useGtk = true;};
-        steam = pkgs.unstable.steam.override { extraPkgs = []; };
+        steam = pkgs.unstable.steam.override { extraPkgs = pkgs: []; };
       }
       )
     ];
