@@ -1,8 +1,8 @@
-{ buildPythonPackage, fetchPypi, python36Packages  }:
+{ python36, python36Packages  }:
 
 #with import <nixpkgs> {};
 
-buildPythonPackage rec {
+python36.pkgs.buildPythonPackage rec {
   pname = "pylgtv";
   version = "0.1.7";
 
