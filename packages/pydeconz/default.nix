@@ -10,7 +10,7 @@ python36.pkgs.buildPythonPackage rec {
 
   src = python36.pkgs.fetchPypi {
     inherit pname version;
-    sha256 = "5bcccceb51a9e8a09d1c5d76e700b6660283876546e164b9fa579dd776ca19de";
+    sha256 = "03qwba8qn3939jwm79jmc8s8lpirdbwdl6chah79544l0lh0vvbf";
   };
 
   buildInputs = [ python36Packages.aiohttp ];
