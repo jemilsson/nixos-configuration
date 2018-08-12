@@ -23,7 +23,7 @@ rec {
     unpackPhase = "dpkg-deb -x $src .";
     installPhase = ''
       cp -r usr/* .
-      cp share/deCONZ/plugins/* lib/
+      cp -r share/deCONZ/plugins/* lib/
       cp -r . $out
     '';
 
