@@ -22,7 +22,7 @@ rec {
 
     unpackPhase = "dpkg-deb -x $src .";
     installPhase = ''
-      mv usr/* .
+      mv -u usr/* .
       cp share/deCONZ/plugins/* lib/
       cp -r . $out
     '';
