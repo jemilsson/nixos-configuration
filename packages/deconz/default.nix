@@ -1,7 +1,7 @@
 { config, pkgs, stdenv, buildFHSUserEnv, fetchurl, dpkg, qt5, sqlite, hicolor_icon_theme, libcap, libpng,   ... }:
 #ith import <nixpkgs> {};
 let
-version = "2.05.30";
+version = "2.05.34";
 name = "deconz-${version}";
 in
 rec {
@@ -11,7 +11,7 @@ rec {
     dpkg = dpkg;
     src = fetchurl {
       url = "https://www.dresden-elektronik.de/deconz/ubuntu/beta/${name}-qt5.deb";
-      sha256 = "00s9g1hwpgpw4j94g9kc1v3d1naml1mnwcv6l8hdr6k7w7vla1xv";
+      sha256 = "418f76eca7131c00cd577ca521fe59187b3f4e963a910bccabdbbe06dbaa2883";
     };
 
     dontConfigure = true;
