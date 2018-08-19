@@ -33,6 +33,7 @@
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
+    chromium
     google-chrome
 
     #Media
