@@ -13,6 +13,6 @@
   };
   services = {
     tlp.enable = true;
-  }
+  };
   networking.networkmanager.wifi.powersave = true;
 }
