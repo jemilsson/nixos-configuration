@@ -5,8 +5,6 @@
     ../../config/x_desktop.nix
   ];
 
-  system.stateVersion = "17.03";
-
   networking.hostName = "lazarus";
 
   boot.loader = {
@@ -14,11 +12,6 @@
     efi.canTouchEfiVariables = true;
   };
 
-  services.tlp.enable = true;
-
-  #boot.loader.grub.device = "/dev/sda";
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
  users.extraUsers = {
    user = {
     isNormalUser = true;
@@ -47,6 +40,8 @@
      dpi = 144;
 
    };
+
+   tlp.enable = true;
  };
 
  environment.systemPackages = with pkgs; [
