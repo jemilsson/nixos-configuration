@@ -96,7 +96,6 @@
   wayland
   #weston
   #unstable.alacritty
-  alacritty
   pptp
   #unstable.vulkan-loader
   vscode

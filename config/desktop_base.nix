@@ -49,6 +49,7 @@
     eclipses.eclipse-platform
 
     #Interface
+    alacritty
     rxvt_unicode
     synapse
     feh
