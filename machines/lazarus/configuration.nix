@@ -13,15 +13,6 @@
   };
 
  users.extraUsers = {
-   user = {
-    isNormalUser = true;
-    uid = 1000;
-    home = "/home/jonas/";
-    extraGroups = [ "wheel" "networkmanager" ];
-    createHome = true;
-    useDefaultShell = true;
-    };
-
     wanida = {
       isNormalUser = true;
       uid = 1001;
@@ -33,6 +24,7 @@
   };
 
  services = {
+
 
    xserver = {
 

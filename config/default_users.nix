@@ -6,8 +6,9 @@ in
   users.users.jonas = {
      createHome = true;
      isNormalUser = true;
-     home = "/home/jonas/";
+     home = "/home/jonas";
      group = "users";
+     uid = 1001;
      isSystemUser = false;
      extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
      shell = "/run/current-system/sw/bin/zsh";
