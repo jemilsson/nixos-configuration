@@ -12,6 +12,7 @@
   };
   services = {
     tlp.enable = true;
+    illum.enable = true;
   };
   networking.networkmanager.wifi.powersave = true;
 }
