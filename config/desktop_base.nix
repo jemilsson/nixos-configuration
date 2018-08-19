@@ -33,7 +33,6 @@
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
-    chromium
     google-chrome
 
     #Media
@@ -121,6 +120,18 @@
         '';
     };
 
+    chromium = {
+      enable = true;
+      extensions = [
+        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+        "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
+        "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
+        "kajibbejlbohfaggdiogboambcijhkke" # Mailvelope
+
+      ];
+
+    };
+
     browserpass = {
       enable = true;
     };
@@ -135,13 +146,15 @@
     };
 
 
+
+
   };
 
   nixpkgs.config = {
     chromium = {
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
-      #enableWideVine = true;
+      enableWideVine = true;
       pulseSupport = true;
     };
     firefox = {
