@@ -39,7 +39,15 @@
     };
   };
 
- services.xserver.desktopManager.gnome3.enable = true;
+ services = {
+
+   xserver = {
+
+     desktopManager.gnome3.enable = true;
+     dpi = 144;
+
+   };
+ };
 
  environment.systemPackages = with pkgs; [
 
