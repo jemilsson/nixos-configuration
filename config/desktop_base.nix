@@ -155,7 +155,7 @@
     chromium = {
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
-      enableWideVine = true;
+      #enableWideVine = true; Broken
       pulseSupport = true;
     };
     firefox = {
