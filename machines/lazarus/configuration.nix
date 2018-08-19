@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../config/x_desktop.nix
+    ../../config/laptop_base.nix
   ];
 
   networking.hostName = "lazarus";
@@ -24,16 +24,12 @@
   };
 
  services = {
-
-
    xserver = {
 
      desktopManager.gnome3.enable = true;
      dpi = 144;
 
    };
-
-   tlp.enable = true;
  };
 
  environment.systemPackages = with pkgs; [

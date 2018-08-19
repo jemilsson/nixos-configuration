@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
-    ../../config/x_desktop.nix
+    ../../config/desktop.nix
   ];
 
   system.stateVersion = "17.03";

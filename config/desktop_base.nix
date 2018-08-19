@@ -3,6 +3,8 @@
   imports = [
     ./base.nix
     #./systemd_user/gpg-agent.nix
+    ./x11.nix
+
   ];
   hardware = {
     pulseaudio = {
