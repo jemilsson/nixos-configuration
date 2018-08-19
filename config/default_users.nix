@@ -8,7 +8,7 @@ in
      isNormalUser = true;
      home = "/home/jonas";
      group = "users";
-     uid = 1001;
+     uid = 1000;
      isSystemUser = false;
      extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
      shell = "/run/current-system/sw/bin/zsh";
