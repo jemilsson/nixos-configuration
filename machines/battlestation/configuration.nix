@@ -4,7 +4,7 @@
     ../../config/desktop_base.nix
   ];
 
-  system.stateVersion = "17.03";
+  system.stateVersion = "18.03";
 
   networking = {
     hostName = "battlestation";
