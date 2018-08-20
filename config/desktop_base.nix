@@ -48,7 +48,7 @@
 
     #Programming
     atom
-    eclipses.eclipse-platform
+    python36Packages.yapf
 
     #Interface
     alacritty
