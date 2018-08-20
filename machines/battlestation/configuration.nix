@@ -45,7 +45,6 @@
       device = "/dev/sda";
     };
 
-  boot.kernelModules = [ "kvm-intel" ];
   virtualisation.libvirtd.enable = true;
 
 
@@ -88,30 +87,16 @@
  };
 
  environment.systemPackages = with pkgs; [
-  i3pystatus
-  python3
   teamspeak_client
-  sway
-  #unstable.way-cooler
-  wayland
-  #weston
-  #unstable.alacritty
-  pptp
-  #unstable.vulkan-loader
   vscode
   virtmanager
-
-  handbrake
 
   taskwarrior
 
   elmPackages.elm
   elmPackages.elm-reactor
 
-  #oraclejdk
   insomnia
-
-  sqlite
 
   freerdp
  ];

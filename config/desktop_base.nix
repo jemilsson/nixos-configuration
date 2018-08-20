@@ -49,6 +49,7 @@
     #Programming
     atom
     python36Packages.yapf
+    python3
 
     #Interface
     alacritty
