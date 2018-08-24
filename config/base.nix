@@ -9,9 +9,7 @@
 ];
 
 
-services.mingetty = {
-  helpLine = "test";
-};
+
 
 time.timeZone = "Europe/Stockholm";
 
@@ -35,6 +33,10 @@ services = {
     permitRootLogin = "no";
     passwordAuthentication = false;
   };
+  mingetty = {
+    helpLine = "test";
+  };
+
 };
 
 nixpkgs = {
