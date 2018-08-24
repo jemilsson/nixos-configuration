@@ -8,6 +8,11 @@
 
 ];
 
+
+services.mingetty = {
+  helpLine = "test";
+};
+
 time.timeZone = "Europe/Stockholm";
 
 system = {
