@@ -96,8 +96,6 @@
   elmPackages.elm
   elmPackages.elm-reactor
 
-  insomnia
-
   freerdp
  ];
 
