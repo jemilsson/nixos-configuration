@@ -50,6 +50,7 @@
     atom
     python36Packages.yapf
     python3
+    insomnia
 
     #Interface
     alacritty

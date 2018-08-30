@@ -8,6 +8,9 @@
 
 ];
 
+
+
+
 time.timeZone = "Europe/Stockholm";
 
 system = {
@@ -30,6 +33,10 @@ services = {
     permitRootLogin = "no";
     passwordAuthentication = false;
   };
+  mingetty = {
+    helpLine = "test";
+  };
+
 };
 
 nixpkgs = {
