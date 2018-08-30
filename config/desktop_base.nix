@@ -94,9 +94,10 @@
     pcsctools
     opensc
     yubikey-manager
+    ccid
 
     gnupg
-    gnupg1
+    #gnupg1
 
     pass
     qtpass
@@ -294,6 +295,8 @@
   nixpkgs.overlays = [
       (self: super: {
         steam = pkgs.unstable.steam.override { extraPkgs = pkgs: []; };
+        gnupg = pkgs.unstable.gnupg.override { extraPkgs = pkgs: []; };
+
       }
       )
     ];
