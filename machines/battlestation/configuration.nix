@@ -97,6 +97,8 @@
   elmPackages.elm-reactor
 
   freerdp
+
+  unstable.minecraft
  ];
 
  nixpkgs.overlays = [
