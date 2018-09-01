@@ -296,7 +296,7 @@
   nixpkgs.overlays = [
       (self: super: {
         steam = pkgs.unstable.steam.override { extraPkgs = pkgs: []; };
-        gnupg = pkgs.unstable.gnupg.override { extraPkgs = pkgs: []; };
+        gnupg = pkgs.unstable.gnupg.override { };
 
       }
       )
