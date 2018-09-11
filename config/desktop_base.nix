@@ -93,11 +93,11 @@
     yubikey-personalization
     yubico-piv-tool
     pcsctools
-    opensc
+    unstable.opensc
     yubikey-manager
     ccid
 
-    gnupg
+    unstable.gnupg
     #gnupg1
 
     pass
