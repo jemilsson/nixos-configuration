@@ -96,13 +96,13 @@ in
     yubikey-personalization
     yubico-piv-tool
     pcsctools
-    unstable.opensc
+    opensc
     yubikey-manager
     ccid
 
     scd-pkcs11
 
-    unstable.gnupg
+    gnupg
     #gnupg1
 
     pass
@@ -303,8 +303,6 @@ in
   nixpkgs.overlays = [
       (self: super: {
         steam = pkgs.unstable.steam.override { extraPkgs = pkgs: []; };
-        gnupg = pkgs.unstable.gnupg.override { };
-
       }
       )
     ];
