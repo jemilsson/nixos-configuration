@@ -100,7 +100,7 @@ in
     yubikey-manager
     ccid
     openssl
-
+    libp11
     scd-pkcs11
 
     gnupg
