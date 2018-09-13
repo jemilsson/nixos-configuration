@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let
+  scd-pkcs11 = pkgs.callPackage ../../packages/scd-pkcs11/default.nix {};
+in
 {
   imports = [
     ./base.nix
@@ -96,6 +99,8 @@
     unstable.opensc
     yubikey-manager
     ccid
+
+    scd-pkcs11
 
     unstable.gnupg
     #gnupg1
