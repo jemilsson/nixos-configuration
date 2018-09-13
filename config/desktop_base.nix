@@ -99,6 +99,7 @@ in
     opensc
     yubikey-manager
     ccid
+    openssl
 
     scd-pkcs11
 
