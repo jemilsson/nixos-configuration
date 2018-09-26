@@ -96,8 +96,8 @@ in
     yubikey-personalization
     yubico-piv-tool
     pcsctools
-    opensc
-    #yubikey-manager
+    unstable.opensc
+    yubikey-manager
     openssl
     unstable.libp11
     scd-pkcs11
@@ -280,9 +280,9 @@ in
           pkgs.libu2f-host
           pkgs.yubikey-personalization
           pkgs.yubico-piv-tool
-          #pkgs.yubikey-manager
+          pkgs.yubikey-manager
           pkgs.pcsctools
-          pkgs.opensc
+          pkgs.unstable.opensc
        ];
 
 
