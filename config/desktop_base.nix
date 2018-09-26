@@ -98,7 +98,6 @@ in
     pcsctools
     opensc
     yubikey-manager
-    ccid
     openssl
     unstable.libp11
     scd-pkcs11
@@ -271,7 +270,11 @@ in
     #   seahorse.enable = true;
      #};
 
-     pcscd.enable = true;
+     pcscd = {
+       enable = true;
+       plugins = [ pkgs.unstable.ccid ];
+     }
+
 
      udev = {
 
@@ -304,6 +307,7 @@ in
   nixpkgs.overlays = [
       (self: super: {
         steam = pkgs.unstable.steam.override { extraPkgs = pkgs: []; };
+        pcsclite = pkgs.unstable.pksclite;
       }
       )
     ];
