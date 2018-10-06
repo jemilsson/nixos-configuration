@@ -36,7 +36,7 @@
         interface = "enp6s0";
       };
     };
-    useNetworkd = true;
+    #useNetworkd = true;
   };
 
   boot.loader.grub = {
