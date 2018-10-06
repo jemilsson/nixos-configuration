@@ -94,7 +94,6 @@
   taskwarrior
 
   elmPackages.elm
-  elmPackages.elm-reactor
 
   freerdp
 
