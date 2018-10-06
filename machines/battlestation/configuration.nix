@@ -51,7 +51,7 @@
 
   services = {
     xserver = {
-      videoDrivers = [ "amdgpu-pro" ];
+      videoDrivers = [ "amdgpu" ];
 
       deviceSection = ''
       Option "DRI3" "1"
