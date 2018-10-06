@@ -98,6 +98,8 @@
   freerdp
 
   unstable.minecraft
+
+  xca
  ];
 
  nixpkgs.overlays = [
