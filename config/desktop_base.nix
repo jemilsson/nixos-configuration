@@ -34,7 +34,7 @@ in
 
   environment.systemPackages = with pkgs; [
     #Browsers
-    #firefox
+    firefox
     chromium
     google-chrome
 
@@ -160,9 +160,9 @@ in
   firejail = {
     enable = true;
 
-    wrappedBinaries = {
-      firefox = "${lib.getBin pkgs.firefox}/bin/firefox";
-    };
+    #wrappedBinaries = {
+    #  firefox = "${lib.getBin pkgs.firefox}/bin/firefox";
+    #};
 
   };
 
