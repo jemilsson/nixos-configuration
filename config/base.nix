@@ -16,7 +16,7 @@ time.timeZone = "Europe/Stockholm";
 system = {
   autoUpgrade = {
     enable = true;
-    channel = https://nixos.org/channels/nixos-18.03;
+    channel = https://nixos.org/channels/nixos-18.09;
     dates = "03:00";
   };
 };
