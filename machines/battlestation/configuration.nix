@@ -87,7 +87,7 @@
  };
 
  environment.systemPackages = with pkgs; [
-  teamspeak_client
+  #teamspeak_client
   vscode
   virtmanager
 
