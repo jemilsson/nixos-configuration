@@ -90,7 +90,7 @@ environment = {
 
     #Neovim
     neovim
-    python35Packages.neovim
+    python36Packages.neovim
     vimPlugins.deoplete-nvim
     vimPlugins.deoplete-jedi
 
