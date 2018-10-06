@@ -30,6 +30,13 @@ in
 
   };
 
+  boot = {
+    plymouth = {
+      enable = true;
+      
+    };
+  };
+
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
