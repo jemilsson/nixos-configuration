@@ -68,6 +68,7 @@
         detect-client-leader = true;
         unredir-if-possible = true;
         xrender-sync = true;
+        no-fading-openclose = true;
 
       '';
     };
