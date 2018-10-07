@@ -58,11 +58,10 @@
       enable = true;
       backend = "xrender";
       fade = true;
-      fadeDelta = 3;
-      fadeSteps = ["0.25" "0.25"];
+      fadeDelta = 8;
+      fadeSteps = ["0.03" "0.03"];
       vSync = "opengl-mswc";
       extraOptions = ''
-        sw-opti = true;
         detect-transient = true;
         detect-client-leader = true;
         unredir-if-possible = true;
