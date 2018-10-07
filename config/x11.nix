@@ -62,7 +62,6 @@
       fadeSteps = ["0.25" "0.25"];
       vSync = "opengl-mswc";
       extraOptions = ''
-        paint-on-overlay = true;
         sw-opti = true;
         detect-transient = true;
         detect-client-leader = true;
