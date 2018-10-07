@@ -62,14 +62,12 @@
       fadeSteps = ["0.25" "0.25"];
       vSync = "opengl-mswc";
       extraOptions = ''
-        glx-no-stencil = true;
-        glx-no-rebind-pixmap = true;
-        glx-swap-method = "-1";
         paint-on-overlay = true;
         sw-opti = true;
         detect-transient = true;
         detect-client-leader = true;
-        allow_rgb10_configs=false;
+        unredir-if-possible = true;
+        xrender-sync = true;
 
       '';
     };
