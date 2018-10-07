@@ -25,8 +25,8 @@ in
       enable = true;
       driSupport32Bit = true;
       s3tcSupport = true;
-      extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau mesa_noglu];
-      extraPackages32 = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau mesa_noglu];
+      extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau];
+      extraPackages32 = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau];
     };
 
   };
