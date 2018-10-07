@@ -30,13 +30,6 @@ in
 
   };
 
-  boot = {
-    plymouth = {
-      enable = true;
-      
-    };
-  };
-
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -107,6 +100,7 @@ in
     openssl
     unstable.libp11
     scd-pkcs11
+    kdeApplications.kleopatra
 
     gnupg
     #gnupg1
