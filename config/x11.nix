@@ -69,6 +69,7 @@
         sw-opti = true;
         detect-transient = true;
         detect-client-leader = true;
+        allow_rgb10_configs=false;
 
       '';
     };
