@@ -56,11 +56,11 @@
 
     compton = {
       enable = true;
-      backend = "glx";
+      backend = "xrender";
       fade = true;
       fadeDelta = 3;
       fadeSteps = ["0.25" "0.25"];
-      vSync = "opengl";
+      vSync = "opengl-mswc";
       extraOptions = ''
         glx-no-stencil = true;
         glx-no-rebind-pixmap = true;
