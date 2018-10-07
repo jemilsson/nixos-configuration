@@ -24,8 +24,9 @@ in
     opengl = {
       enable = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau];
-      extraPackages32 = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau];
+      s3tcSupport = true;
+      extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau mesa];
+      extraPackages32 = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau mesa];
     };
 
   };
