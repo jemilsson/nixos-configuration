@@ -27,6 +27,11 @@
       Option "TearFree" "on"
       '';
     };
+    displayManager.sddm.autoLogin = {
+      user = "alicia";
+      enable = true;
+
+    };
     xrdp = {
       enable = true;
       defaultWindowManager = "i3";
