@@ -60,6 +60,7 @@ in
     rxvt_unicode
     synapse
     feh
+    freerdp
 
     #Ricing
     paper-icon-theme

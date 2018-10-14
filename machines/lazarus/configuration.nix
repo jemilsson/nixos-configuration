@@ -3,6 +3,7 @@
 {
   imports = [
     ../../config/laptop_base.nix
+    ../../config/i3_X11.nix
   ];
 
   networking.hostName = "lazarus";
