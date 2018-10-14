@@ -159,14 +159,9 @@ in
     };
 
 
-  firejail = {
-    enable = true;
-
-    #wrappedBinaries = {
-    #  firefox = "${lib.getBin pkgs.firefox}/bin/firefox";
-    #};
-
-  };
+  #firejail = {
+  #  enable = true;
+  #};
 
 
   };
