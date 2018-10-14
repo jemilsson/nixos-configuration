@@ -2,42 +2,14 @@
 {
   imports = [
     ../../config/desktop_base.nix
-    ../../config/i3_X11.nix
+    ../../config/kde_x11.nix
   ];
 
   system.stateVersion = "18.03";
 
   networking = {
-    hostName = "battlestation";
+    hostName = "alicia";
     enableIPv6 = false;
-
-    interfaces = {
-      "lan-2" = {
-        useDHCP = true;
-      };
-      "old-lan" = {
-        useDHCP = true;
-      };
-      "management" = {
-        useDHCP = true;
-      };
-
-    };
-    vlans = {
-      "management" = {
-        id = 5;
-        interface = "enp6s0";
-      };
-      "lan-2" = {
-        id = 4;
-        interface = "enp6s0";
-      };
-      "old-lan" = {
-        id = 1;
-        interface = "enp6s0";
-      };
-    };
-    #useNetworkd = true;
   };
 
   boot.loader.grub = {
@@ -46,13 +18,9 @@
       device = "/dev/sda";
     };
 
-  virtualisation.libvirtd.enable = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
-
   services = {
     xserver = {
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = [ "radeon" ];
 
       deviceSection = ''
       Option "DRI3" "1"
@@ -69,7 +37,6 @@
     };
   };
 
-
   programs = {
     sway = {
       enable = true;
@@ -79,28 +46,15 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
- users.extraUsers.user = {
+ users.extraUsers.alicia = {
     isNormalUser = true;
-    uid = 1003;
-    home = "/home/user/";
+    uid = 1005;
+    home = "/home/alicia/";
     extraGroups = [ "wheel" "networkmanager" ];
     useDefaultShell = true;
  };
 
  environment.systemPackages = with pkgs; [
-  #teamspeak_client
-  vscode
-  virtmanager
-
-  taskwarrior
-
-  elmPackages.elm
-
-  freerdp
-
-  unstable.minecraft
-
-  xca
  ];
 
  nixpkgs.overlays = [
@@ -117,8 +71,8 @@
        #steam-fonts = pkgs.unstable.steam-fonts;
        #steam-chrootenv = pkgs.unstable.steam-chrootenv;
        #vulkan-loader = pkgs.unstable.vulkan-loader;
-       zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
-       handbrake = super.handbrake.override { useGtk = true;};
+       #zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
+       #handbrake = super.handbrake.override { useGtk = true;};
      }
      )
    ];
