@@ -29,6 +29,7 @@
         };
         sddm = {
           enable = true;
+          theme = "breeze";
 
         };
         lightdm = {
