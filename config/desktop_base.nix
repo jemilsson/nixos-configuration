@@ -62,7 +62,7 @@ in
     rxvt_unicode
     synapse
     feh
-    freerdp
+    (freerdp.override { pcsclite = pcsclite; libpulseaudio=libpulseaudio; } )
 
     #Ricing
     paper-icon-theme
