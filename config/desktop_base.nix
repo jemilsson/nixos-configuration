@@ -87,9 +87,9 @@ in
     #skype
 
     #Games
-    #unstable.steam
-    steam
-    
+    unstable.steam
+    #steam
+
     #Graphical network tools
     wireshark
 
