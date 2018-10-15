@@ -87,7 +87,7 @@ in
     #skype
 
     #Games
-    unstable.steam.override { extraPkgs = pkgs: []; }
+    (unstable.steam.override { extraPkgs = pkgs: []; })
 
 
     #Graphical network tools
