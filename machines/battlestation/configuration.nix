@@ -2,7 +2,7 @@
 {
   imports = [
     ../../config/desktop_base.nix
-    ../../config/i3_X11.nix
+    ../../config/i3_x11.nix
   ];
 
   system.stateVersion = "18.03";
