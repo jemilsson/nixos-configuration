@@ -58,7 +58,7 @@ in
     insomnia
 
     #Interface
-    alacritty
+    unstable.alacritty
     rxvt_unicode
     synapse
     feh
