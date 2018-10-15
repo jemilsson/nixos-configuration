@@ -88,7 +88,7 @@ in
 
     #Games
     steam
-    
+
 
     #Graphical network tools
     wireshark
@@ -310,7 +310,7 @@ in
 
   nixpkgs.overlays = [
       (self: super: {
-        steam = pkgs.steam.override { extraPkgs = pkgs: []; };
+        steam = steam.override { extraPkgs = pkgs: []; };
         #pcsclite = pkgs.unstable.pcsclite;
       }
       )
