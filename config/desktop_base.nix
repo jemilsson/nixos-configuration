@@ -33,6 +33,8 @@ in
 
   networking.networkmanager.enable = true;
 
+  nixpkgs.config.allowBroken = true;
+
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
