@@ -87,7 +87,7 @@ in
     #skype
 
     #Games
-    (steam.override { extraPkgs = pkgs: [ unstable.glibc ]; nativeOnly = true; })
+    (steam.override { extraPkgs = pkgs: [ unstable.glibc xorg.libxcb ]; nativeOnly = true; })
 
 
     #Graphical network tools
