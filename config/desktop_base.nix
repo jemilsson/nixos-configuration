@@ -87,7 +87,7 @@ in
     #skype
 
     #Games
-    (unstable.steam.override { extraPkgs = pkgs: [ unstable.glibc ]; })
+    (unstable.steam.override { extraPkgs = pkgs: [ unstable.glibcCross ]; })
 
 
     #Graphical network tools
