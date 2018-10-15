@@ -63,6 +63,7 @@ in
     synapse
     feh
     (freerdp.override { pcsclite = pcsclite; libpulseaudio=libpulseaudio; } )
+    rdesktop
 
     #Ricing
     paper-icon-theme
