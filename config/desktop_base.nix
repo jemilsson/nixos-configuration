@@ -87,7 +87,7 @@ in
     #skype
 
     #Games
-    unstable.steam
+    unstable.steam.override { extraPkgs = pkgs: []; }
 
 
     #Graphical network tools
@@ -310,7 +310,7 @@ in
 
   nixpkgs.overlays = [
       (self: super: {
-        #steam = pkgs.steam.override { extraPkgs = pkgs: []; };
+        #steam = pkgs.steam
         #pcsclite = pkgs.unstable.pcsclite;
       }
       )
