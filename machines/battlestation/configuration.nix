@@ -11,6 +11,8 @@
     hostName = "battlestation";
     enableIPv6 = false;
 
+    firewall.allowedTCPPorts = [ 3389 ];
+
     interfaces = {
       "lan-2" = {
         useDHCP = true;
