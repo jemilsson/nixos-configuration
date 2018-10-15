@@ -89,7 +89,7 @@ in
     #skype
 
     #Games
-    (steam.override { extraPkgs = pkgs: [ glibc xorg.libxcb bash ]; })
+    (steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ glibc xorg.libxcb bash ]; })
 
 
     #Graphical network tools
