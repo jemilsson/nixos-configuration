@@ -310,7 +310,7 @@ in
 
   nixpkgs.overlays = [
       (self: super: {
-        steam = pkgs.steam.override { extraPkgs = pkgs: []; nativeOnly = true;  };
+        steam = pkgs.steam.override { extraPkgs = pkgs: []; };
         #pcsclite = pkgs.unstable.pcsclite;
       }
       )
