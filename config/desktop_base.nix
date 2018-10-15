@@ -33,7 +33,7 @@ in
 
   networking.networkmanager.enable = true;
 
-  nixpkgs.config.allowBroken = true;
+
 
   environment.systemPackages = with pkgs; [
     #Browsers
@@ -171,6 +171,7 @@ in
   };
 
   nixpkgs.config = {
+    allowBroken = true;
     chromium = {
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
