@@ -49,7 +49,7 @@ environment.etc = {
       sha256 = "d0d15ac7e540c5722559fb1c0ca7475ceb1cfb027c3608099aafaa60d4d303f3";
     };
   };
-  "wallpapers/7.jpg" = {
+  "wallpapers/8.jpg" = {
     source = pkgs.fetchurl {
       url = "${wildtextures}wildtextures-leather-Campo-petroleum.jpg";
       sha256 = "36ab79bdd0b3dac7b9266ae92dd17cd9a6e8daae8031969870f9d283893c37c6";
