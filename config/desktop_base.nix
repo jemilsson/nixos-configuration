@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, fetchurl, ... }:
 let
   scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
 in
