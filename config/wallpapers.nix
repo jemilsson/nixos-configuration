@@ -33,7 +33,7 @@ environment.etc = {
   };
   "wallpapers/5.jpg" = {
     source = pkgs.fetchurl {
-      url = "${thepatternlibrary}ao.jpg";
+      url = "${thepatternlibrary}ao.gif";
       sha256 = "2886d91c0f0bbac19eadc7eca6c111711ad9a72da7b6a82fb53f82e5e5938e9e";
     };
   };
