@@ -38,6 +38,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    sway
+    wayland
 
   ];
 
