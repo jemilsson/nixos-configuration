@@ -1,4 +1,4 @@
-{ config, lib, pkgs, fetchurl, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ../../config/desktop_base.nix

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, fetchurl, ... }:
+{ config, lib, pkgs, ... }:
 let
   scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
 in
@@ -258,7 +258,7 @@ in
 
 
   environment.etc."wallpapers/1.jpg" = {
-    source = fetchurl {
+    source = pkgs.fetchurl {
       url = "https://www.wildtextures.com/wp-content/uploads/wildtextures-Seamless-Dark-Marble-Tiles-Texture1.jpg";
       sha256 = "d7f0c75305ed32212a375c0e3899610ae73a8a08577558a128a167e44bdcc04a";
     };
