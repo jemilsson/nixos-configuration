@@ -9,11 +9,7 @@
       windowManager = {
       };
 
-      programs = {
-        sway = {
-          enable = true;
-        };
-      };
+
 
 
       displayManager = {
@@ -33,6 +29,11 @@
           }
         ];
       };
+    };
+  };
+  programs = {
+    sway = {
+      enable = true;
     };
   };
 
