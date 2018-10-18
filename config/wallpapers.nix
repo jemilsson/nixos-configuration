@@ -77,7 +77,7 @@ environment.etc = {
   "wallpapers/12.jpg" = {
     source = pkgs.fetchurl {
       url = "${mb3d}Plant_and_Leaf_Seamless_and_Tileable_High_Res_Textures_files/plantbed_1.jpg";
-      sha256 = "d89637d0efb40479025d98be6456e6093afc870893813d52024cda7db269085d";
+      sha256 = "128scdk1l4pjbvilp3gppsahsalrxfcmiaqw7ghid5rq3wvmr3gp";
     };
   };
   "wallpapers/13.jpg" = {
