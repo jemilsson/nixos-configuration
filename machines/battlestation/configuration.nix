@@ -51,7 +51,8 @@
 
   virtualisation.libvirtd.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
+  #boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services = {
     xserver = {
