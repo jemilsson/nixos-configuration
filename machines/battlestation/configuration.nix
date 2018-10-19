@@ -100,7 +100,7 @@
 
   xca
 
-  steam
+  unstable.steam
  ];
 
  nixpkgs.overlays = [
