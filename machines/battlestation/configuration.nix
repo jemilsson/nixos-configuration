@@ -99,6 +99,8 @@
   unstable.minecraft
 
   xca
+
+  steam
  ];
 
  nixpkgs.overlays = [
