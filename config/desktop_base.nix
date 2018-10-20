@@ -92,7 +92,7 @@ in
 
     #Games
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ glibc ]; })
-
+    unstable.steam
 
     #Graphical network tools
     wireshark
