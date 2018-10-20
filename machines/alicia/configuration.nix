@@ -7,6 +7,8 @@
 
   system.stateVersion = "18.03";
 
+  firewall.allowedTCPPorts = [ 3389 ];
+
   networking = {
     hostName = "alicia";
     enableIPv6 = false;
