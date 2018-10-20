@@ -38,7 +38,7 @@
     };
     xrdp = {
       enable = true;
-      defaultWindowManager = "i3";
+      defaultWindowManager = "kwin";
     };
 
     lldpd = {
