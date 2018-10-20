@@ -38,7 +38,7 @@
     };
     xrdp = {
       enable = true;
-      defaultWindowManager = "kwin_x11";
+      defaultWindowManager = "startkde";
     };
 
     lldpd = {
