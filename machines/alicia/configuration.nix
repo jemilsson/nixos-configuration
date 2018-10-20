@@ -38,7 +38,7 @@
     };
     xrdp = {
       enable = true;
-      defaultWindowManager = "startkde";
+      #defaultWindowManager = "startkde";
     };
 
     lldpd = {
