@@ -71,6 +71,12 @@
     lldpd = {
       enable = true;
     };
+
+    redshift = {
+      enable = true;
+      latitude = 59.35;
+      longitude = 18.05;
+    };
   };
 
 
