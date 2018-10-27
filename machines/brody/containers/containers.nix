@@ -11,10 +11,10 @@
   "dnsmasq2" = import ./dnsmasq2/container.nix { pkgs = pkgs; config=config; };
   #"deconz" = import ./deconz/container.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   "rabbitmq" = import ./rabbitmq/container.nix { pkgs = pkgs; config=config; };
-  "woltest" = import ./woltest/container.nix { pkgs = pkgs; config=config; };
+  #"woltest" = import ./woltest/container.nix { pkgs = pkgs; config=config; };
   #"faucet" = import ./faucet/container.nix { pkgs = pkgs; config=config; };
-  "vxlan_a" = import ./vxlan_a/container.nix { pkgs = pkgs; config=config; };
-  "vxlan_b" = import ./vxlan_b/container.nix { pkgs = pkgs; config=config; };
-  "wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
+  #"vxlan_a" = import ./vxlan_a/container.nix { pkgs = pkgs; config=config; };
+  #"vxlan_b" = import ./vxlan_b/container.nix { pkgs = pkgs; config=config; };
+  #"wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
 
 }
