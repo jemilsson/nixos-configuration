@@ -57,6 +57,7 @@ in
     python36Packages.yapf
     python3
     insomnia
+    emacs
 
     #Interface
     unstable.alacritty
