@@ -80,7 +80,7 @@ environment = {
     git
     wget
     curl
-    python3
+    #python3
 
     #Network tools
     tcpdump
