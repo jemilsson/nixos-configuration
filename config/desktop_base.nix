@@ -54,14 +54,9 @@ in
 
     #Programming
     atom
-
-    python36Packages.yapf
-    python36Packages.jedi
-    python36Packages.flake8
-    python36Packages.autopep8
     
-
-    python3
+    (python36.withPackages(ps: with ps; [ python36Packages.yapf, python36Packages.jedi, python36Packages.flake8, python36Packages.autopep8 ]))  
+    
     insomnia
     emacs
 
