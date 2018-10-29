@@ -55,7 +55,7 @@ in
     #Programming
     atom
     
-    (python36.withPackages(ps: with ps; [ python36Packages.yapf python36Packages.jedi python36Packages.flake8 python36Packages.autopep8 ]))  
+    (python36.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 ]))  
     
     insomnia
     emacs
