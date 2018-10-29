@@ -273,6 +273,7 @@ in
        powerline-fonts
        dejavu_fonts
        liberation_ttf
+       emacs-all-the-icons-fonts
      ];
    };
    services = {
