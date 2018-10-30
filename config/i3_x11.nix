@@ -4,7 +4,7 @@
     xserver = {
       enable = true;
       layout = "se";
-      xkbOptions = "eurosign:e";
+      xkbOptions = "eurosign:e, ctrl:swapcaps";
 
       windowManager = {
         i3 = {
