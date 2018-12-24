@@ -33,6 +33,8 @@
    };
  };
 
+ programs.adb.enable = true;
+
  environment.systemPackages = with pkgs; [
 
     # On screen keyboard
