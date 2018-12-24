@@ -40,6 +40,9 @@
     # On screen keyboard
     gnome3.caribou
     atk
+
+    heimdall
+    heimdall-gui
  ];
 
 }
