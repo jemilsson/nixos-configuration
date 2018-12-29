@@ -6,7 +6,7 @@
     #../../config/sway_wayland.nix
   ];
 
-  system.stateVersion = "18.03";
+  system.stateVersion = "18.09";
 
   networking = {
     hostName = "battlestation";
@@ -29,25 +29,24 @@
     vlans = {
       "management" = {
         id = 5;
-        interface = "enp6s0";
+        interface = "enp8s0";
       };
       "lan-2" = {
         id = 4;
-        interface = "enp6s0";
+        interface = "enp8s0";
       };
       "old-lan" = {
         id = 1;
-        interface = "enp6s0";
+        interface = "enp8s0";
       };
     };
     #useNetworkd = true;
   };
 
-  boot.loader.grub = {
-      enable = true;
-      version = 2;
-      device = "/dev/sda";
-    };
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   virtualisation.libvirtd.enable = true;
 
@@ -85,13 +84,6 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
- users.extraUsers.user = {
-    isNormalUser = true;
-    uid = 1003;
-    home = "/home/user/";
-    extraGroups = [ "wheel" "networkmanager" ];
-    useDefaultShell = true;
- };
 
  environment.systemPackages = with pkgs; [
   #teamspeak_client
