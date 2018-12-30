@@ -11,6 +11,11 @@ in
     #./x11.nix
 
   ];
+
+  powerManagement = {
+    enable = true;
+  };
+
   hardware = {
     pulseaudio = {
       enable = true;
