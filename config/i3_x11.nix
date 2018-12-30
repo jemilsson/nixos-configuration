@@ -30,6 +30,7 @@
         sddm = {
           enable = true;
           theme = "breeze";
+          autoNumlock = true;
 
         };
         lightdm = {
