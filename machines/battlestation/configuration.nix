@@ -8,6 +8,8 @@
 
   system.stateVersion = "18.09";
 
+  hardware.cpu.amd.updateMicrocode = true;
+
   networking = {
     hostName = "battlestation";
     enableIPv6 = false;
