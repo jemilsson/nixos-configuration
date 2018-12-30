@@ -6,6 +6,7 @@ in
   imports = [
     ./base.nix
     ./wallpapers.nix
+    ./bare_metal.nix
     #./systemd_user/gpg-agent.nix
     #./x11.nix
 
@@ -54,9 +55,9 @@ in
 
     #Programming
     atom
-    
-    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 ]))  
-    
+
+    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 ]))
+
     insomnia
     emacs
 
