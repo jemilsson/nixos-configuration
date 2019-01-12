@@ -34,7 +34,7 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 80 443 ];
-      allowedUDPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 1053 ];
     };
 
     defaultGateway6 = {
