@@ -10,7 +10,7 @@ python37.pkgs.buildPythonPackage rec {
 
   src = python37.pkgs.fetchPypi {
     inherit pname version;
-    sha256 = "1k457x07xkbzibny1rpfq19wnk56frs0jbr3r2q7saxi94hqi05y";
+    sha256 = "0k2cj33mnfp914kvj698ldxw2807f6z1l1jr1h99h1xfdwrkz80f";
   };
 
   buildInputs = [ python37Packages.aiohttp python37Packages.asyncio python37Packages.websockets ];
