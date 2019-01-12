@@ -13,6 +13,6 @@ python37.pkgs.buildPythonPackage rec {
     sha256 = "0k2cj33mnfp914kvj698ldxw2807f6z1l1jr1h99h1xfdwrkz80f";
   };
 
-  buildInputs = [ python37Packages.aiohttp python37Packages.asyncio python37Packages.websockets ];
+  buildInputs = [ python37Packages.aiohttp python37Packages.asyncio python37Packages.websockets python37Packages.coverage ];
   doCheck = false;
 }
