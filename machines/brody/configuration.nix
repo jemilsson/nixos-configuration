@@ -65,7 +65,15 @@ in
     wireguard = {
       interfaces = {
         wgdummy = {
-
+          ips = [ "10.5.10.1/24" ];
+          privateKeyFile = "/var/wireguard/privakey";
+          peers = [
+            {
+              publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";
+              endpoint = "mannie.jonas.systems:53";
+              allowedIPs = [ "10.5.10.0/24" ];
+            }
+          ];
         };
       };
     };
