@@ -57,7 +57,7 @@ in
       interfaces = {
         wg0 = {
           ips = [ "10.5.10.2/24" ];
-          listenPort = 53;
+          listenPort = 1053;
           privateKeyFile = "/var/wireguard/privatekey";
           peers = [
             {
