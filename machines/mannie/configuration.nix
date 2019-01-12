@@ -59,6 +59,7 @@ in
           peers = [
             {
               publicKey = "";
+              allowedIPs = [ "10.5.10.1" ];
             }
           ];
         };
