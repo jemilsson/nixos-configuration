@@ -1,16 +1,16 @@
-{ python36, python36Packages  }:
+{ python37, python37Packages  }:
 
 #with import <nixpkgs> {};
 
-python36.pkgs.buildPythonPackage rec {
+python37.pkgs.buildPythonPackage rec {
   pname = "pydeconz";
   version = "43";
 
-  src = python36.pkgs.fetchPypi {
+  src = python37.pkgs.fetchPypi {
     inherit pname version;
     sha256 = "03qwba8qn3939jwm79jmc8s8lpirdbwdl6chah79544l0lh0vvbf";
   };
 
-  buildInputs = [ python36Packages.aiohttp ];
+  buildInputs = [ python37Packages.aiohttp ];
   doCheck = false;
 }
