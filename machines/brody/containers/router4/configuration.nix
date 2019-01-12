@@ -58,7 +58,26 @@ networking = {
       { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
     ];
   };
+
+  wireguard = {
+    interfaces = {
+      "wg0" = {
+        ips = [ "10.5.10.1/24" ];
+        privateKeyFile = "/var/wireguard/private_key";
+        peers = [
+          {
+            publicKey = "";
+            endpoint = "mannie.jonas.systems:53";
+          }
+        ];
+      };
+    };
+  };
 };
+
+environment.systemPackages = with pkgs; [
+  wireguard-tools
+];
 
 services = {};
 }

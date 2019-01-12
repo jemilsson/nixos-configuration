@@ -43,7 +43,6 @@ networking = {
   bridges."br1005".interfaces = [ "vlan1005" ];
   interfaces."br1005".useDHCP = false;
 
-
   #offline_servers 10.5.6.0/24
   vlans."vlan1006".interface = uplink;
   vlans."vlan1006".id = 1006;
@@ -55,6 +54,8 @@ networking = {
   #vlans."vlan1007".id = 1006;
   #bridges."br1007".interfaces = [ "vlan1007" ];
   #interfaces."br1007".useDHCP = false;
+
+  #wireguard_connections 10.5.10.0/24
 
 };
 

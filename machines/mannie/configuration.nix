@@ -1,5 +1,9 @@
 { config, lib, pkgs, ... }:
+let
+  containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
+in
 {
+  inherit containers;
   imports = [
     ../../config/server_base.nix
     ../../config/services/nginx/nginx.nix
@@ -46,6 +50,21 @@
 
     };
 
+    wireguard = {
+      interfaces = {
+        wg0 = {
+          ips = [ "10.5.10.2/24" ];
+          listenPort = 51820;
+          privateKeyFile = "/var/wireguard/private_key";
+          peers = [
+            {
+              publicKey = "";
+            }
+          ];
+        };
+      };
+    };
+
   };
 
 
@@ -67,6 +86,7 @@
   freeradius
   irssi
   screen
+  wireguard-tools
  ];
 
   services = {
