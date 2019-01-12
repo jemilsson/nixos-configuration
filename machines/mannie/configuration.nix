@@ -133,14 +133,14 @@ in
           };
           };
         };
-
+        /*
         "ipv6-only.se" = {
           forceSSL = true;
           enableACME = true;
           globalRedirect = "www.ipv6-only.se";
         };
 
-        /*
+
         "www.ipv6-only.se" = {
           forceSSL = true;
           enableACME = true;
