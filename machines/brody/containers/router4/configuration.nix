@@ -63,7 +63,7 @@ networking = {
     interfaces = {
       "wg0" = {
         ips = [ "10.5.10.1/24" ];
-        privateKeyFile = "/var/wireguard/privakey";
+        privateKeyFile = "/var/wireguard/privatekey";
         peers = [
           {
             publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";

@@ -66,7 +66,7 @@ in
       interfaces = {
         wgdummy = {
           ips = [ "10.5.11.1/24" ];
-          privateKeyFile = "/var/wireguard/privakey";
+          privateKeyFile = "/var/wireguard/privatekey";
           peers = [
             {
               publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";
