@@ -66,7 +66,7 @@ networking = {
         privateKeyFile = "/var/wireguard/privakey";
         peers = [
           {
-            publicKey = "";
+            publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";
             endpoint = "mannie.jonas.systems:53";
             allowedIPs = [ "10.5.10.0/24" ];
           }

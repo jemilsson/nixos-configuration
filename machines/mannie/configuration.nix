@@ -61,7 +61,7 @@ in
           privateKeyFile = "/var/wireguard/privatekey";
           peers = [
             {
-              publicKey = "";
+              publicKey = "gzppOIjAm6deU1bie42AICYF8KbQS0JXTF2TpGM8FCs=";
               allowedIPs = [ "10.5.10.1/32" ];
             }
           ];
