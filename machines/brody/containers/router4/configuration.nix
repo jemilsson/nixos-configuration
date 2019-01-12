@@ -63,12 +63,12 @@ networking = {
     interfaces = {
       "wg0" = {
         ips = [ "10.5.10.1/24" ];
-        privateKeyFile = "/var/wireguard/privatekey";
+        privateKeyFile = "/var/wireguard/privakey";
         peers = [
           {
             publicKey = "";
             endpoint = "mannie.jonas.systems:53";
-            allowedIPs = [ "10.5.10.2/24" ];
+            allowedIPs = [ "10.5.10.0/24" ];
           }
         ];
       };
