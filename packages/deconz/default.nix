@@ -11,7 +11,7 @@ rec {
     dpkg = dpkg;
     src = fetchurl {
       url = "https://www.dresden-elektronik.de/deconz/ubuntu/beta/${name}-qt5.deb";
-      sha256 = "9b5ea5b6d2086e4d477cbc9bf76206524b160754501eed0142982b40d0178dd2";
+      sha256 = "0fmywfhgay98n0sm56vjv6sksydgaccfgrmbswswim0dam24j0la";
     };
 
     dontConfigure = true;
