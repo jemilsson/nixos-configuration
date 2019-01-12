@@ -1,7 +1,7 @@
 { config, pkgs, stdenv, buildFHSUserEnv, fetchurl, dpkg, qt5, sqlite, hicolor_icon_theme, libcap, libpng,   ... }:
 #ith import <nixpkgs> {};
 let
-version = "2.05.38";
+version = "2.05.54";
 name = "deconz-${version}";
 in
 rec {

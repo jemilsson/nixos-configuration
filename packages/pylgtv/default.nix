@@ -4,7 +4,7 @@
 
 python37.pkgs.buildPythonPackage rec {
   pname = "pylgtv";
-  version = "0.1.7";
+  version = "0.1.9";
 
   disabled = !python37.pkgs.isPy3k;
 

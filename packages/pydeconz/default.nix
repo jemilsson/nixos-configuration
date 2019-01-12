@@ -4,7 +4,7 @@
 
 python37.pkgs.buildPythonPackage rec {
   pname = "pydeconz";
-  version = "43";
+  version = "47";
 
   src = python37.pkgs.fetchPypi {
     inherit pname version;
