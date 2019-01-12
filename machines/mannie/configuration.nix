@@ -1,6 +1,7 @@
 { config, lib, pkgs, stdenv, ... }:
 let
   containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
+  kernel = config.boot.kernelPackages;
 in
 {
   inherit containers;
@@ -24,6 +25,8 @@ in
   ];
 
   system.stateVersion = "17.03";
+
+  boot.extraModulePackages = [ kernel.wireguard ];
 
   networking = {
     hostName = "mannie";
