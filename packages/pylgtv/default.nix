@@ -1,4 +1,4 @@
-{ python36, python36Packages  }:
+{ python37, python37Packages  }:
 
 #with import <nixpkgs> {};
 
@@ -13,6 +13,6 @@ python37.pkgs.buildPythonPackage rec {
     sha256 = "1k457x07xkbzibny1rpfq19wnk56frs0jbr3r2q7saxi94hqi05y";
   };
 
-  buildInputs = [ python36Packages.aiohttp python36Packages.asyncio python36Packages.websockets ];
+  buildInputs = [ python37Packages.aiohttp python37Packages.asyncio python37Packages.websockets ];
   doCheck = false;
 }
