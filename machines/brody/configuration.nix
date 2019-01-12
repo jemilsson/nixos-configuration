@@ -94,7 +94,7 @@ in
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.extraModulePackages = [ kernel.wireguard ];
+  boot.extraModulePackages = [ pkgs.linuxPackages.wireguard ];
 
  environment.systemPackages = with pkgs; [
   dnsutils
