@@ -140,6 +140,7 @@ in
           globalRedirect = "www.ipv6-only.se";
         };
 
+        /*
         "www.ipv6-only.se" = {
           forceSSL = true;
           enableACME = true;
@@ -156,7 +157,9 @@ in
               proxy_pass https://www.ip-only.se;
           }
           '';
+
         };
+        */
     };
  };
 }
