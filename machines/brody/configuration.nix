@@ -3,6 +3,7 @@ let
     containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
     deconz-full = pkgs.callPackage ../../packages/deconz/default.nix {};
     deconz = deconz-full.deCONZ;
+    kernel = config.boot.kernelPackages;
 in
 {
   imports = [
@@ -94,7 +95,7 @@ in
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.extraModulePackages = [ pkgs.linuxPackages.wireguard ];
+  boot.extraModulePackages = [ kernel.wireguard ];
 
  environment.systemPackages = with pkgs; [
   dnsutils
