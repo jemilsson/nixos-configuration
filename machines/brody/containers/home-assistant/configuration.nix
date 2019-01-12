@@ -30,7 +30,7 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.unstable.home-assistant.override {
-      extraPackages = ps: with ps; [ ];#pydeconz ];# pylgtv ];#spotipy ];
+      extraPackages = ps: with ps; [ pydeconz ];# pylgtv ];#spotipy ];
       extraComponents = [ "media_player.spotify" ];
       #skipPip = false;
     };
