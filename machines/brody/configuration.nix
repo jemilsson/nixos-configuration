@@ -62,6 +62,11 @@ in
       };
     };
 
+    wireguard = {
+      interfaces = {
+      };
+    };
+
   #  vswitches = {
   #    "vs-wan" = {
 #
