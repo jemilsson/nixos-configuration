@@ -64,6 +64,9 @@ in
 
     wireguard = {
       interfaces = {
+        wgdummy = {
+
+        };
       };
     };
 
