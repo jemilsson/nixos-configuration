@@ -68,6 +68,7 @@ networking = {
           {
             publicKey = "";
             endpoint = "mannie.jonas.systems:53";
+            allowedIPs = [ "10.5.10.2/24" ];
           }
         ];
       };
