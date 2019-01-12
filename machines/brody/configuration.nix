@@ -96,6 +96,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.extraModulePackages = [ kernel.wireguard ];
+  boot.kernelModules = [ kernel.wireguard ];
 
  environment.systemPackages = with pkgs; [
   dnsutils
