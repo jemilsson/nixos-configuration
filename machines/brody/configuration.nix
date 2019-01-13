@@ -70,7 +70,7 @@ in
           peers = [
             {
               publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";
-              endpoint = "mannie.jonas.systems:1054";
+              endpoint = "109.230.199.73:1054";
               allowedIPs = [ "10.5.254.0/31" "10.5.10.0/24" ];
               persistentKeepalive = 25;
             }
