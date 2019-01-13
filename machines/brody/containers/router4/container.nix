@@ -6,6 +6,8 @@
   autoStart = true;
   privateNetwork = true;
 
+  interfaces = [ "wg0" ];
+
   macvlans = [ "wan" ];
   extraVeths = {
     #"wan4" = {
