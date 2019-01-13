@@ -59,6 +59,7 @@ in
           ips = [ "10.5.10.2/24" ];
           listenPort = 1053;
           privateKeyFile = "/var/wireguard/privatekey";
+          allowedIPsAsRoutes = false;
           peers = [
             {
               publicKey = "gzppOIjAm6deU1bie42AICYF8KbQS0JXTF2TpGM8FCs=";
