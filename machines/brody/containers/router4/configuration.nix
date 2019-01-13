@@ -28,7 +28,7 @@ networking = {
       ipv4 = {
 
         addresses = [
-          { address = "10.5.10.2"; prefixLength = 24; }
+          { address = "10.5.10.1"; prefixLength = 24; }
         ];
       };
     };
