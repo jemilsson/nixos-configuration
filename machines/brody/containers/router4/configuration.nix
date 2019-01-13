@@ -31,7 +31,7 @@ networking = {
           { address = "10.5.254.0"; prefixLength = 31; }
         ];
         routes = [
-          { address = "10.5.10.0"; prefixLength = 24; via = "10.5.254.0"; }
+          { address = "10.5.10.0"; prefixLength = 24; via = "10.5.254.1"; }
         ];
       };
     };
