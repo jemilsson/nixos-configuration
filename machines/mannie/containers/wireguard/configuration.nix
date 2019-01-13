@@ -9,13 +9,13 @@ networking = {
     enable = true;
 
     extraCommands = ''
-    iptables -I FORWARD -i wg0 -o wg0 -j ACCEPT
+    iptables -I FORWARD -i wg1 -o wg0 -j ACCEPT
     '';
 
   };
 
 
-  defaultGateway = { address = "10.5.10.1"; interface = "wg0"; };
+  defaultGateway = { address = "10.5.254.0"; interface = "wg0"; };
 
   interfaces = {
     wg0 = {
@@ -23,7 +23,16 @@ networking = {
       ipv4 = {
 
         addresses = [
-          { address = "10.5.10.2"; prefixLength = 24; }
+          { address = "10.5.254.1"; prefixLength = 31; }
+        ];
+      };
+    };
+    wg1 = {
+
+      ipv4 = {
+
+        addresses = [
+          { address = "10.5.10.1"; prefixLength = 24; }
         ];
       };
     };

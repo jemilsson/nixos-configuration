@@ -34,7 +34,7 @@ in
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 80 443 ];
-      allowedUDPPorts = [ 53 1053 ];
+      allowedUDPPorts = [ 53 1053 1054 ];
     };
 
     defaultGateway6 = {
@@ -56,8 +56,8 @@ in
     wireguard = {
       interfaces = {
         wg0 = {
-          ips = [ "10.5.10.2/24" ];
-          listenPort = 1053;
+          ips = [ "10.5.254.1/31" ];
+          listenPort = 1054;
           privateKeyFile = "/var/wireguard/privatekey";
           allowedIPsAsRoutes = false;
           peers = [
@@ -65,6 +65,14 @@ in
               publicKey = "gzppOIjAm6deU1bie42AICYF8KbQS0JXTF2TpGM8FCs=";
               allowedIPs = [ "0.0.0.0/0" ];
             }
+          ];
+        };
+        wg1 = {
+          ips = [ "10.5.10.1/24" ];
+          listenPort = 1053;
+          privateKeyFile = "/var/wireguard/privatekey";
+          allowedIPsAsRoutes = false;
+          peers = [
             {
               publicKey = "PglN/x6nY4rruLCqS9u6wWdWCbxcE6448C8+hVqEB30=";
               allowedIPs = [ "10.5.10.3/32" ];

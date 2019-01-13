@@ -3,7 +3,7 @@
   config = import ./configuration.nix { pkgs = pkgs; config=config; };
   autoStart = true;
   privateNetwork = true;
-  interfaces = [ "wg0" ];
+  interfaces = [ "wg0" "wg1" ];
 
   #forwardPorts = [
   #  { containerPort = 51820; hostPort = 53; protocol = "udp"; }

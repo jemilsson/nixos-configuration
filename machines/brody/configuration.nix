@@ -65,13 +65,13 @@ in
     wireguard = {
       interfaces = {
         wg0 = {
-          ips = [ "10.5.10.1/24" ];
+          ips = [ "10.5.254.0/31" ];
           privateKeyFile = "/var/wireguard/privatekey";
           peers = [
             {
               publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";
-              endpoint = "mannie.jonas.systems:1053";
-              allowedIPs = [ "10.5.10.0/24" ];
+              endpoint = "mannie.jonas.systems:1054";
+              allowedIPs = [ "10.5.254.1/31" ];
               persistentKeepalive = 25;
             }
           ];
