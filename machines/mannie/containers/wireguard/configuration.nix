@@ -10,6 +10,7 @@ networking = {
 
     extraCommands = ''
     iptables -I FORWARD -i wg1 -o wg0 -j ACCEPT
+    iptables -I FORWARD -i wg0 -o wg1 -j ACCEPT
     '';
 
   };
