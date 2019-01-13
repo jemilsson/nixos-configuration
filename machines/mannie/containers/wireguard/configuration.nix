@@ -5,6 +5,16 @@
 ];
 
 networking = {
+  firwall = {
+    enable = true;
+
+    extraCommands = ''
+    iptables -I FORWARD -i wg0 -o wg0 -j ACCEPT
+    '';
+
+  };
+
+
   defaultGateway = { address = "10.5.10.1"; interface = "wg0"; };
 
   interfaces = {
