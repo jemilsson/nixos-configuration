@@ -4,7 +4,7 @@ let
   kernel = config.boot.kernelPackages;
 in
 {
-  #inherit containers;
+  inherit containers;
   imports = [
     ../../config/server_base.nix
     ../../config/services/nginx/nginx.nix
