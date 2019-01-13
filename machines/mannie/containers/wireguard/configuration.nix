@@ -5,7 +5,7 @@
 ];
 
 networking = {
-  firwall = {
+  firewall = {
     enable = true;
 
     extraCommands = ''
