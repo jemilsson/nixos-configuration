@@ -38,6 +38,7 @@ networking = {
     extraCommands = ''
     iptables -I FORWARD -i eth1006-1 -o eth0 -j ACCEPT
     iptables -I FORWARD -i eth1005-1 -o eth0 -j ACCEPT
+    iptables -I FORWARD -i wg0 -o eth0 -j ACCEPT
 
     iptables -I FORWARD -i eth0 -j ACCEPT
 
