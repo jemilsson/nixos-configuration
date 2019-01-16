@@ -127,7 +127,8 @@ in
 
     unetbootin
 
-    unstable.teensy-loader-cli	
+    unstable.teensy-loader-cli
+    unstable.qmk_firmware
 
 
 
