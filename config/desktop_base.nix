@@ -127,7 +127,7 @@ in
 
     unetbootin
 
-    teensy-loader-cli	
+    unstable.teensy-loader-cli	
 
 
 
