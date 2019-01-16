@@ -127,6 +127,8 @@ in
 
     unetbootin
 
+    teensy-loader-cli	
+
 
 
   ];
