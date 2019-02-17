@@ -67,6 +67,14 @@ in
       };
       "1020" = {
         useDHCP = true;
+        ipv4 = {
+          addresses = [
+            { address = "10.5.20.4"; prefixLength = 24; }
+          ];
+          routes = [
+            { address = "0.0.0.0"; prefixLength = 0; via = "10.5.20.1"; }
+          ];
+        };
       };
     };
 
