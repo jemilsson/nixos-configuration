@@ -157,7 +157,7 @@ services.home-assistant ={
         qos = 1;
       }
     ];
-    */
+
     light = [
       {
         name = "Air cleaner";
@@ -169,6 +169,7 @@ services.home-assistant ={
       }
 
     ];
+    */
     history = {};
     history_graph = {
       gr1 = {
