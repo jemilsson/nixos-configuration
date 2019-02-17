@@ -26,6 +26,9 @@
       "management" = {
         useDHCP = true;
       };
+      "lan" = {
+        useDHCP = true;
+      };
 
     };
     vlans = {
@@ -39,6 +42,10 @@
       };
       "old-lan" = {
         id = 1;
+        interface = "enp8s0";
+      };
+      "lan" = {
+        id = 1020;
         interface = "enp8s0";
       };
     };
