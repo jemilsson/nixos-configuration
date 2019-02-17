@@ -18,6 +18,11 @@ in
     hostName = "brody";
     useDHCP = false;
 
+    defaultGateway = {
+      address = "10.5.20.1";
+      interface = "1020";
+    };
+
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 8080 8088 19999 1999 ];
@@ -70,9 +75,6 @@ in
         ipv4 = {
           addresses = [
             { address = "10.5.20.4"; prefixLength = 24; }
-          ];
-          routes = [
-            { address = "0.0.0.0"; prefixLength = 0; via = "10.5.20.1"; }
           ];
         };
       };
