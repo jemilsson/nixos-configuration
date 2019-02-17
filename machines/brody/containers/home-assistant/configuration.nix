@@ -143,7 +143,7 @@ services.home-assistant ={
       #}
     ];
 
-    fan = [
+    /*fan = [
       {
         name = "Air cleaner";
         platform = "mqtt";
@@ -157,6 +157,7 @@ services.home-assistant ={
         qos = 1;
       }
     ];
+    */
     light = [
       {
         name = "Air cleaner";
