@@ -47,6 +47,11 @@ in
         id = 2;
         interface = "enp0s20f0";
       };
+
+      "1020" = {
+        id = 1020;
+        interface = "enp0s20f0";
+      };
     };
 
     interfaces = {
@@ -59,6 +64,9 @@ in
       };
       "wan" = {
         useDHCP = false;
+      };
+      "1020" = {
+        useDHCP = true;
       };
     };
 
