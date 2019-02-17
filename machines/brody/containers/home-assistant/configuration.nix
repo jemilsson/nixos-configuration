@@ -84,6 +84,7 @@ services.home-assistant ={
         };
       };
 
+      /*
       sensor = [
         { platform = "mqtt";
           state_topic = "device/2708576E636058C0/sensor/push";
@@ -127,6 +128,7 @@ services.home-assistant ={
           ];
         }
       ];
+      */
 
     binary_sensor = [
       #{ name = "monitor1";
