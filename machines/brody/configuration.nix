@@ -8,7 +8,7 @@ in
 {
   imports = [
     ../../config/server_base.nix
-
+    ../../config/services/node_exporter.nix
     ./networks.nix
   ];
 
