@@ -159,8 +159,9 @@ services.home-assistant ={
         qos = 1;
       }
     ];
-
+    */
     light = [
+      /*
       {
         name = "Air cleaner";
         platform = "mqtt";
@@ -169,9 +170,9 @@ services.home-assistant ={
         payload_on = "4";
         payload_off = "0";
       }
-
+      */
     ];
-    */
+    
     history = {};
     history_graph = {
       gr1 = {
