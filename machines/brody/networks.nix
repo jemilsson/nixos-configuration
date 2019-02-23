@@ -51,7 +51,7 @@ networking = {
 
   #PublicServers 10.5.20.0/24
   vlans."vlan1020".interface = uplink;
-  vlans."vlan1020".id = 1006;
+  vlans."vlan1020".id = 1020;
   bridges."br1020".interfaces = [ "vlan1020" ];
   interfaces."br1020".useDHCP = false;
 
