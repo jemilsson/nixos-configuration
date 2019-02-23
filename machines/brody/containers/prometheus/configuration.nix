@@ -176,6 +176,102 @@ services = {
                 lookups = interface_lookups;
               }
               {
+                name = "ifHCOutUcastPkts";
+                oid = "1.3.6.1.2.1.31.1.1.1.11";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHCOutMulticastPkts";
+                oid = "1.3.6.1.2.1.31.1.1.1.12";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHCOutBroadcastPkts";
+                oid = "1.3.6.1.2.1.31.1.1.1.13";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHighSpeed";
+                oid = "1.3.6.1.2.1.31.1.1.1.15";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHCInOctets";
+                oid = "1.3.6.1.2.1.31.1.1.1.6";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHCInUcastPkts";
+                oid = "1.3.6.1.2.1.31.1.1.1.7";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHCInMulticastPkts";
+                oid = "1.3.6.1.2.1.31.1.1.1.8";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifHCInBroadcastPkts";
+                oid = "1.3.6.1.2.1.31.1.1.1.9";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
                 name = "sysUpTime";
                 oid = "1.3.6.1.2.1.1.3";
                 type = "counter";
