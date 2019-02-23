@@ -80,6 +80,12 @@ services = {
               "community" = "public";
             };
           };
+          "if_mib" = {
+            "version" = 2;
+            "auth" = {
+              "community" = "public";
+            };
+          };
         };
       };
     };
