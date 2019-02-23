@@ -8,6 +8,8 @@ networking = {
   firewall = {
     enable = false;
   };
+  interfaces."enp0s20f1".useDHCP = false;
+
   nameservers = [ "10.5.20.1" ];
 
   defaultGateway = {
