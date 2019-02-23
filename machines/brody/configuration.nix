@@ -16,6 +16,9 @@ in
 
   networking = {
     hostName = "brody";
+
+    nameservers = [ "1.1.1.1" ];
+
     useDHCP = false;
 
     defaultGateway = {
