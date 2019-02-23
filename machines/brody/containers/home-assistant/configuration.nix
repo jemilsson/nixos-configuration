@@ -282,6 +282,11 @@ services.home-assistant ={
           ];
       }
     ];
+
+    prometheus = {
+
+    };
+
     #mqtt_eventstream = {
     #  publish_topic = "homeassistant/eventstream";
     #};
