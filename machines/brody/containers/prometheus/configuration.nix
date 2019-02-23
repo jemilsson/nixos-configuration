@@ -272,6 +272,54 @@ services = {
                 lookups = interface_lookups;
               }
               {
+                name = "ifMtu";
+                oid = "1.3.6.1.2.1.2.2.1.4";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifInDiscards";
+                oid = "1.3.6.1.2.1.2.2.1.13";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifInErrors";
+                oid = "1.3.6.1.2.1.2.2.1.14";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifInUnknownProtos";
+                oid = "1.3.6.1.2.1.2.2.1.15";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
                 name = "sysUpTime";
                 oid = "1.3.6.1.2.1.1.3";
                 type = "counter";
