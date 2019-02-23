@@ -1,4 +1,53 @@
 { config, pkgs, ... }:
+let
+interface_lookups = [
+  {
+    labelname = "ifDescr";
+    labels = [ "ifIndex" ];
+    oid = "1.3.6.1.2.1.2.2.1.2";
+    type = "DisplayString";
+  }
+  {
+    labelname = "ifName";
+    labels = [ "ifIndex" ];
+    oid = "1.3.6.1.2.1.31.1.1.1.1";
+    type = "DisplayString";
+  }
+  {
+    labelname = "ifAlias";
+    labels = [ "ifIndex" ];
+    oid = "1.3.6.1.2.1.31.1.1.1.18";
+    type = "DisplayString";
+  }
+];
+system_lookups = [
+  {
+    labelname = "sysDescr";
+    labels = [  ];
+    oid = "1.3.6.1.2.1.1.1.0";
+    type = "DisplayString";
+  }
+  {
+    labelname = "sysName";
+    labels = [ ];
+    oid = "1.3.6.1.2.1.1.5.0";
+    type = "DisplayString";
+  }
+  {
+    labelname = "sysLocation";
+    labels = [ ];
+    oid = "1.3.6.1.2.1.1.6.0";
+    type = "DisplayString";
+  }
+  {
+    labelname = "sysContact";
+    labels = [ ];
+    oid = "1.3.6.1.2.1.1.4.0";
+    type = "DisplayString";
+  }
+];
+
+in
 {
   imports = [
     ../../../../config/minimum.nix
@@ -100,33 +149,27 @@ services = {
                     type = "Integer";
                   }
                 ];
-                lookups = [
+                lookups = interface_lookups;
+              }
+              {
+                name = "ifType";
+                oid = "1.3.6.1.2.1.2.2.1.3";
+                type = "gauge";
+                indexes = [
                   {
-                    labelname = "ifDescr";
-                    labels = [ "ifIndex" ];
-                    oid = "1.3.6.1.2.1.2.2.1.2";
-                    type = "DisplayString";
-                  }
-                  {
-                    labelname = "ifName";
-                    labels = [ "ifIndex" ];
-                    oid = "1.3.6.1.2.1.31.1.1.1.1";
-                    type = "DisplayString";
-                  }
-                  {
-                    labelname = "ifAlias";
-                    labels = [ "ifIndex" ];
-                    oid = "1.3.6.1.2.1.31.1.1.1.18";
-                    type = "DisplayString";
-                  }
-                  {
-                    labelname = "ifAlias";
-                    labels = [ "ifIndex" ];
-                    oid = "1.3.6.1.2.1.31.1.1.1.18";
-                    type = "DisplayString";
+                    labelname = "ifIndex";
+                    type = "Integer";
                   }
                 ];
+                lookups = interface_lookups;
               }
+              {
+                name = "sysUpTime";
+                oid = "1.3.6.1.2.1.1.3";
+                type = "counter";
+                lookups = system_lookups;
+              }
+
             ];
           };
         };
