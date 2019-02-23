@@ -17,7 +17,7 @@ networking = {
   nameservers = [ "1.1.1.1" ];
 
   defaultGateway = {
-    address = "10.5.20.6";
+    address = "10.5.20.1";
     interface = "eth0";
   };
 };
