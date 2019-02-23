@@ -7,6 +7,7 @@ in
 
 networking = {
 
+  /*
   #Routers 10.5.0.0/24
   vlans."vlan1000".interface = uplink;
   vlans."vlan1000".id = 1000;
@@ -48,6 +49,7 @@ networking = {
   vlans."vlan1006".id = 1006;
   bridges."br1006".interfaces = [ "vlan1006" ];
   interfaces."br1006".useDHCP = false;
+  */
 
   #PublicServers 10.5.20.0/24
   vlans."vlan1020".interface = uplink;
