@@ -72,9 +72,9 @@ services.home-assistant ={
         port = 8080;
         api_key = "A3909DDC09";
       };
-      mqtt = {
-        broker = "rabbitmq.ynglingagatan.local";
-      };
+      #mqtt = {
+      #  broker = "rabbitmq.ynglingagatan.local";
+      #};
 
       logger = {
         default= "info";
@@ -282,9 +282,9 @@ services.home-assistant ={
           ];
       }
     ];
-    mqtt_eventstream = {
-      publish_topic = "homeassistant/eventstream";
-    };
+    #mqtt_eventstream = {
+    #  publish_topic = "homeassistant/eventstream";
+    #};
 
 
   };
