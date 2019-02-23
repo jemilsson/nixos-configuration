@@ -164,6 +164,18 @@ services = {
                 lookups = interface_lookups;
               }
               {
+                name = "ifHCOutOctets";
+                oid = "1.3.6.1.2.1.31.1.1.1.10";
+                type = "counter";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = interface_lookups;
+              }
+              {
                 name = "sysUpTime";
                 oid = "1.3.6.1.2.1.1.3";
                 type = "counter";
