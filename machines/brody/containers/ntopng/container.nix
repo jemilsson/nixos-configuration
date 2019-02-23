@@ -6,7 +6,7 @@
   autoStart = true;
   privateNetwork = true;
   interfaces = [ "enp0s20f1" ];
-  additionalCapabilities = [ "CAP_NET_ADMIN" "CAP_NET_BIND_SERVICE" ];
+  additionalCapabilities = [ "CAP_NET_ADMIN" ];
   #forwardPorts = [
     #{ containerPort = 8123; hostPort = 80; protocol = "tcp"; }
   #];
