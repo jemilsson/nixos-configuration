@@ -31,7 +31,7 @@ services = {
       anonymous = {
         enable = true;
         org_role = "Editor";
-        org_name = "";
+        org_name = "org";
       };
     };
     addr = "0.0.0.0";
