@@ -88,6 +88,23 @@ services = {
         ];
       }
       {
+        job_name = "hass";
+        scrape_interval = "60s";
+        static_configs = [
+          {
+            targets = [
+              "10.5.20.6:8123"
+            ];
+            labels = {
+              alias = "${config.networking.hostName}";
+            };
+          }
+        ];
+        metrics_path = "/api/prometheus";
+        scheme = "http";
+        bearer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIzMTIzNzJlN2RjMmU0YWYyYWFjNjgxNTgzODMxOWQxMCIsImlhdCI6MTU1MDk2NDQxOSwiZXhwIjoxODY2MzI0NDE5fQ._q_nvt3F-XvLe4nZ0CXaq1kiCWhCGYQbd4DQiqNZsiY";
+      }
+      {
         job_name = "snmp";
         static_configs = [
           {
