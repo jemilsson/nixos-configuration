@@ -13,7 +13,7 @@ networking = {
   };
 
   defaultGateway = {
-    address = "10.5.6.1";
+    address = "10.5.20.6";
     interface = "eth0";
   };
 };
