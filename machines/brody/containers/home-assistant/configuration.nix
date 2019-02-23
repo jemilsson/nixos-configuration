@@ -68,9 +68,9 @@ services.home-assistant ={
         }
       ];
       deconz = {
-        host = "10.0.0.180";
+        host = "10.5.20.4";
         port = 8080;
-        api_key = "A6C3A8DB60";
+        api_key = "A3909DDC09";
       };
       mqtt = {
         broker = "rabbitmq.ynglingagatan.local";
