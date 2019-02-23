@@ -17,5 +17,6 @@
   #"vxlan_b" = import ./vxlan_b/container.nix { pkgs = pkgs; config=config; };
   #"wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
   "ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
+  "prometheus" = import ./prometheus/container.nix { pkgs = pkgs; config=config; };
 
 }
