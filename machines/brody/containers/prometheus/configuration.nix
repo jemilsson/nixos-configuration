@@ -45,29 +45,28 @@ services = {
             targets = [
               "10.5.20.1"
             ];
-            metrics_path = "/snmp";
-            params = {
-              module = "[if_mib]";
-            };
-            relabel_configs = [
-              {
-                source_labels = "[__address__]";
-                target_labels = "__param_target";
-              }
-              {
-                source_labels = "[__param_target]";
-                target_labels = "instance";
-              }
-              {
-                source_labels = "__address__";
-                target_labels = "127.0.0.1:9116";
-              }
-            ];
           }
         ];
-
+        metrics_path = "/snmp";
+        params = {
+          module = "[if_mib]";
+        };
+        relabel_configs = [
+          {
+            source_labels = "[__address__]";
+            target_labels = "__param_target";
+          }
+          {
+            source_labels = "[__param_target]";
+            target_labels = "instance";
+          }
+          {
+            source_labels = "__address__";
+            target_labels = "127.0.0.1:9116";
+          }
+        ];
       }
-    ];
+  ];
 
     exporters = {
       snmp = {
