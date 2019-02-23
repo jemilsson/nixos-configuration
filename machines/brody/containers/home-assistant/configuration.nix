@@ -14,10 +14,10 @@ networking = {
   firewall = {
     enable = false;
   };
-  nameservers = [ "10.5.6.4" ];
+  nameservers = [ "1.1.1.1" ];
 
   defaultGateway = {
-    address = "10.5.5.1";
+    address = "10.5.20.6";
     interface = "eth0";
   };
 };

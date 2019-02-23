@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 {
   config = import ./configuration.nix { pkgs = pkgs; config=config; };
-  hostBridge = "br1005";
-  localAddress = "10.5.5.6/24";
+  hostBridge = "br1020";
+  #localAddress = "10.5.5.6/24";
   autoStart = true;
   privateNetwork = true;
   #forwardPorts = [
