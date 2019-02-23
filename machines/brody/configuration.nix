@@ -20,7 +20,7 @@ in
 
     defaultGateway = {
       address = "10.5.20.1";
-      interface = "1020";
+      interface = "br1020";
     };
 
     firewall = {
@@ -53,10 +53,6 @@ in
         interface = "enp0s20f0";
       };
 
-      "1020" = {
-        id = 1020;
-        interface = "enp0s20f0";
-      };
     };
 
     interfaces = {
@@ -70,8 +66,7 @@ in
       "wan" = {
         useDHCP = false;
       };
-      "1020" = {
-        useDHCP = true;
+      "br1020" = {
         ipv4 = {
           addresses = [
             { address = "10.5.20.4"; prefixLength = 24; }
