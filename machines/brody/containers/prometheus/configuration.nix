@@ -49,7 +49,7 @@ services = {
         ];
         metrics_path = "/snmp";
         params = {
-          module = "[if_mib]";
+          module = [ "if_mib" ];
         };
         relabel_configs = [
           {
