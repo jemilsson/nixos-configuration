@@ -84,8 +84,10 @@ services.home-assistant ={
         };
       };
 
-      /*
+
       sensor = [
+
+        /*
         { platform = "mqtt";
           state_topic = "device/2708576E636058C0/sensor/push";
           name = "Temperature";
@@ -116,6 +118,7 @@ services.home-assistant ={
           unit_of_measurement = "ug/m3";
           value_template = "{{ value_json[0].pm/1000.0 }}";
         }
+        */
         {
           platform = "yr";
           name = "Current weather";
@@ -128,7 +131,7 @@ services.home-assistant ={
           ];
         }
       ];
-      */
+
 
     binary_sensor = [
       #{ name = "monitor1";
@@ -172,7 +175,7 @@ services.home-assistant ={
       }
       */
     ];
-    
+
     history = {};
     history_graph = {
       gr1 = {
