@@ -14,6 +14,10 @@ in
 
   system.stateVersion = "18.03";
 
+  powerManagement = {
+    enable = true;
+  };
+
   networking = {
     hostName = "brody";
 
