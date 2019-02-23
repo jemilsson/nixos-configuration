@@ -61,6 +61,7 @@ services = {
             target_label = "instance";
           }
           {
+            source_labels = [];
             target_label = "__address__";
             replacement = "127.0.0.1:9116";
           }
