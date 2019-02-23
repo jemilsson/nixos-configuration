@@ -23,7 +23,7 @@ environment.systemPackages = with pkgs; [
 services = {
   ntopng = {
     enable = true;
-    http-port = 80;
+    http-port = 3000;
     interfaces = [ "enp0s20f1" ];
   };
 };
