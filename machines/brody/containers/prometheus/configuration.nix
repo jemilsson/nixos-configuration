@@ -85,6 +85,49 @@ services = {
             "auth" = {
               "community" = "public";
             };
+            walk = [
+              "1.3.6.1.2.1.2.2"
+              "1.3.6.1.2.1.31.1.1"
+            ];
+            metrics = [
+              {
+                name = "ifIndex";
+                oid = "1.3.6.1.2.1.2.2.1.1";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "ifIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = [
+                  {
+                    labelname = "ifDescr";
+                    labels = [ "ifIndex" ];
+                    oid = "1.3.6.1.2.1.2.2.1.2";
+                    type = "DisplayString";
+                  }
+                  {
+                    labelname = "ifName";
+                    labels = [ "ifIndex" ];
+                    oid = "1.3.6.1.2.1.31.1.1.1.1";
+                    type = "DisplayString";
+                  }
+                  {
+                    labelname = "ifAlias";
+                    labels = [ "ifIndex" ];
+                    oid = "1.3.6.1.2.1.31.1.1.1.18";
+                    type = "DisplayString";
+                  }
+                  {
+                    labelname = "ifAlias";
+                    labels = [ "ifIndex" ];
+                    oid = "1.3.6.1.2.1.31.1.1.1.18";
+                    type = "DisplayString";
+                  }
+                ];
+              }
+            ];
           };
         };
       };
