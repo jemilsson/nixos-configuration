@@ -54,15 +54,15 @@ services = {
         relabel_configs = [
           {
             source_labels = "[__address__]";
-            target_labels = "__param_target";
+            target_label = "__param_target";
           }
           {
             source_labels = "[__param_target]";
-            target_labels = "instance";
+            target_label = "instance";
           }
           {
             source_labels = "__address__";
-            target_labels = "127.0.0.1:9116";
+            target_label = "127.0.0.1:9116";
           }
         ];
       }
