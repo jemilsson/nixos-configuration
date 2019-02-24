@@ -39,4 +39,11 @@ services = {
   };
 };
 
+nixpkgs.overlays = [
+    (self: super: {
+      prometheus = pkgs.unstable.prometheus_2;
+    }
+    )
+  ];
+
 }
