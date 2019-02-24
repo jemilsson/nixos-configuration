@@ -354,8 +354,6 @@ services = {
   };
 };
 
-packageOverrides = pkgs: {
-    graphviz = pkgs.prometheus_2;
-  };
+
 
 }
