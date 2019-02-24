@@ -168,8 +168,4 @@ in
          #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
        };
      };
-
-     packageOverrides = pkgs: {
-         graphviz = pkgs.prometheus_2;
-       };
 }
