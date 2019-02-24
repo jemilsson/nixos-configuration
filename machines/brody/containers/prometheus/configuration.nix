@@ -108,6 +108,7 @@ services = {
       }
       {
         job_name = "snmp";
+        scrape_interval = "10s";
         static_configs = [
           {
             targets = [
