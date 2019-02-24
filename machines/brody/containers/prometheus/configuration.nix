@@ -102,8 +102,9 @@ services = {
         ];
         metrics_path = "/api/prometheus";
         scheme = "http";
+        bearer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIzMTIzNzJlN2RjMmU0YWYyYWFjNjgxNTgzODMxOWQxMCIsImlhdCI6MTU1MDk2NDQxOSwiZXhwIjoxODY2MzI0NDE5fQ._q_nvt3F-XvLe4nZ0CXaq1kiCWhCGYQbd4DQiqNZsiY";
         params = {
-                 bearer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIzMTIzNzJlN2RjMmU0YWYyYWFjNjgxNTgzODMxOWQxMCIsImlhdCI6MTU1MDk2NDQxOSwiZXhwIjoxODY2MzI0NDE5fQ._q_nvt3F-XvLe4nZ0CXaq1kiCWhCGYQbd4DQiqNZsiY";
+
         };
       }
       {
