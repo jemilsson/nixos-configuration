@@ -89,7 +89,7 @@ services = {
       }
       {
         job_name = "hass";
-        scrape_interval = "60s";
+        scrape_interval = "10s";
         static_configs = [
           {
             targets = [
