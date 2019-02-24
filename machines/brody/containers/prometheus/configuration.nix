@@ -354,11 +354,8 @@ services = {
   };
 };
 
-nixpkgs.overlays = [
-    (self: super: {
-      prometheus = pkgs.unstable.prometheus_2;
-    }
-    )
-  ];
+packageOverrides = pkgs: {
+    graphviz = pkgs.prometheus_2.override;
+  };
 
 }
