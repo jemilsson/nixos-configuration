@@ -75,7 +75,7 @@ services = {
     scrapeConfigs = [
       {
         job_name = "node";
-        scrape_interval = "10s";
+        scrape_interval = "5s";
         static_configs = [
           {
             targets = [
@@ -89,7 +89,7 @@ services = {
       }
       {
         job_name = "hass";
-        scrape_interval = "10s";
+        scrape_interval = "5s";
         static_configs = [
           {
             targets = [
@@ -108,7 +108,7 @@ services = {
       }
       {
         job_name = "snmp";
-        scrape_interval = "10s";
+        scrape_interval = "5s";
         static_configs = [
           {
             targets = [
