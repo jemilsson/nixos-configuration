@@ -102,9 +102,8 @@ services = {
         ];
         metrics_path = "/api/prometheus";
         scheme = "http";
-        bearer_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIzMTIzNzJlN2RjMmU0YWYyYWFjNjgxNTgzODMxOWQxMCIsImlhdCI6MTU1MDk2NDQxOSwiZXhwIjoxODY2MzI0NDE5fQ._q_nvt3F-XvLe4nZ0CXaq1kiCWhCGYQbd4DQiqNZsiY";
         params = {
-
+          api_password = ["8wzUfUfLa6ZuewFd4j2UxtVu"];
         };
       }
       {
@@ -353,12 +352,5 @@ services = {
     };
   };
 };
-
-nixpkgs.overlays = [
-    (self: super: {
-      prometheus = pkgs.unstable.prometheus_2;
-    }
-    )
-  ];
 
 }
