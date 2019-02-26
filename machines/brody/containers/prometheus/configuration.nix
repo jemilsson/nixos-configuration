@@ -61,7 +61,25 @@ jnxOperatingLookups = [
   type = "DisplayString";
 }
 
+];
 
+jnxOperatingIndexes = [
+{
+  labelname = "jnxOperatingContentsIndex";
+  type = "Integer";
+}
+{
+  labelname = "jnxOperatingL1Index";
+  type = "Integer";
+}
+{
+  labelname = "jnxOperatingL2Index";
+  type = "Integer";
+}
+{
+  labelname = "jnxOperatingL3Index";
+  type = "Integer";
+}
 ];
 
 
@@ -370,108 +388,84 @@ services = {
                 name = "jnxOperatingContentsIndex";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.1";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingL1Index";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.2";
+                type = "gauge";
+                indexes = jnxOperatingIndexes;
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingL2Index";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.3";
+                type = "gauge";
+                indexes = jnxOperatingIndexes;
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingL3Index";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.4";
+                type = "gauge";
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingState";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.6";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingTemp";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.7";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingCPU";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.8";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingISR";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.9";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingDRAMSize";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.10";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingBuffer";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.11";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingHeap";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.12";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
               {
                 name = "jnxOperatingHeap";
                 oid = "1.3.6.1.4.1.2636.3.1.13.1.12";
                 type = "gauge";
-                indexes = [
-                  {
-                    labelname = "jnxOperatingContentsIndex";
-                    type = "Integer";
-                  }
-                ];
+                indexes = jnxOperatingIndexes;
                 lookups = jnxOperatingLookups;
               }
 
