@@ -245,7 +245,7 @@ services = {
                 type = "gauge";
                 indexes = [
                   {
-                    labelname = "ifIndex";"1.3.6.1.4.1.2636.3.1.13.1.1"
+                    labelname = "ifIndex";
                     type = "Integer";
                   }
                 ];
