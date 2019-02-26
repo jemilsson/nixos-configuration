@@ -50,13 +50,13 @@ system_lookups = [
 jnxOperatingLookups = [
 {
   labelname = "jnxOperatingDescr";
-  labels = [ "jnxOperatingContentsIndex" ];
+  labels = [ "jnxOperatingContentsIndex" "jnxOperatingL1Index" "jnxOperatingL2Index" "jnxOperatingL3Index" ];
   oid = "1.3.6.1.4.1.2636.3.1.13.1.5";
   type = "DisplayString";
 }
 {
   labelname = "jnxOperatingChassisDescr";
-  labels = [ "jnxOperatingContentsIndex" ];
+  labels = [ "jnxOperatingContentsIndex" "jnxOperatingL1Index" "jnxOperatingL2Index" "jnxOperatingL3Index" ];
   oid = "1.3.6.1.4.1.2636.3.1.13.1.18";
   type = "DisplayString";
 }
