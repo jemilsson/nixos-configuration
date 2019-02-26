@@ -47,6 +47,24 @@ system_lookups = [
   }
 ];
 
+jnxOperatingLookups = [
+{
+  labelname = "jnxOperatingDescr";
+  labels = [ "jnxOperatingContentsIndex" ];
+  oid = "1.3.6.1.4.1.2636.3.1.13.1.5";
+  type = "DisplayString";
+}
+{
+  labelname = "jnxOperatingChassisDescr";
+  labels = [ "jnxOperatingContentsIndex" ];
+  oid = "1.3.6.1.4.1.2636.3.1.13.1.18";
+  type = "DisplayString";
+}
+
+
+];
+
+
 in
 {
   imports = [
@@ -346,6 +364,114 @@ services = {
                 oid = "1.3.6.1.2.1.1.3";
                 type = "counter";
                 lookups = system_lookups;
+              }
+              {
+                name = "jnxOperatingContentsIndex";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.1";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingState";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.6";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingTemp";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.7";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingCPU";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.8";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingISR";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.9";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingDRAMSize";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.10";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingBuffer";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.11";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingHeap";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.12";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
+              }
+              {
+                name = "jnxOperatingHeap";
+                oid = "1.3.6.1.4.1.2636.3.1.13.1.12";
+                type = "gauge";
+                indexes = [
+                  {
+                    labelname = "jnxOperatingContentsIndex";
+                    type = "Integer";
+                  }
+                ];
+                lookups = jnxOperatingLookups;
               }
 
             ];
