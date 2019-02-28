@@ -19,5 +19,6 @@
   "ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
   "prometheus" = import ./prometheus/container.nix { pkgs = pkgs; config=config; };
   "grafana" = import ./grafana/container.nix { pkgs = pkgs; config=config; };
+  "nginx" = import ./nginx/container.nix { pkgs = pkgs; config=config; };
 
 }
