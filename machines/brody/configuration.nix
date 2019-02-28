@@ -21,7 +21,7 @@ in
   networking = {
     hostName = "brody";
 
-    nameservers = [ "1.1.1.1" ];
+    nameservers = [ "10.5.20.1" ];
 
     useDHCP = false;
 
