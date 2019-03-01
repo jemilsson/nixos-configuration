@@ -5,7 +5,7 @@
     ../../config/kde_x11.nix
   ];
 
-  system.stateVersion = "18.03";
+  system.stateVersion = "18.09";
 
 
 
@@ -15,11 +15,10 @@
     firewall.allowedTCPPorts = [ 3389 ];
   };
 
-  boot.loader.grub = {
-      enable = true;
-      version = 2;
-      device = "/dev/sda";
-    };
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   services = {
     xserver = {
