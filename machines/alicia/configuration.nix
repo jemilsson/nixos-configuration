@@ -22,7 +22,7 @@
 
   services = {
     xserver = {
-      videoDrivers = [ "radeon" ];
+      videoDrivers = [ "ati_unfree" ];
 
       deviceSection = ''
       Option "DRI3" "1"
