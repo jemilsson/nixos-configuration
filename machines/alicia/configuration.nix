@@ -70,7 +70,7 @@
  };
 
  environment.systemPackages = with pkgs; [
-  unstable.tuxtyping
+  #unstable.tuxtyping
   gcompris
  ];
 
