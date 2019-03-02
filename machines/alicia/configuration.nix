@@ -70,6 +70,8 @@
  };
 
  environment.systemPackages = with pkgs; [
+  unstable.tuxtyping
+  gcompris
  ];
 
  nixpkgs.overlays = [
