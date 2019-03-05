@@ -30,6 +30,10 @@
         useDHCP = true;
       };
 
+      "enp8s0" = {
+        mtu = 9000;
+      };
+
     };
     vlans = {
       "management" = {
