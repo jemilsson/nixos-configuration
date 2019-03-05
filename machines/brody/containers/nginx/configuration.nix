@@ -4,6 +4,7 @@ in
 {
   imports = [
     ../../../../config/minimum.nix
+    ../../../../config/services/nginx/nginx.nix
 ];
 
 networking = {
@@ -21,11 +22,12 @@ networking = {
 environment.systemPackages = with pkgs; [
 
 ];
-
+/*
 services = {
-    stubby = {
+    nginx = {
       enable = true;
-      listenAddresses = [ "0.0.0.0" ];
+
     };
   };
+*/
 }

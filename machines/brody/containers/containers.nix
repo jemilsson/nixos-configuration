@@ -4,7 +4,7 @@
   #"router2" = import ./router2/container.nix { pkgs = pkgs; config=config; };
   #"router4" = import ./router4/container.nix { pkgs = pkgs; config=config; };
   #"dnsmasq" = import ./dnsmasq/container.nix { pkgs = pkgs; config=config; };
-  #"stubby" = import ./stubby/container.nix { pkgs = pkgs; config=config; };
+  "stubby" = import ./stubby/container.nix { pkgs = pkgs; config=config; };
   "home-assistant" = import ./home-assistant/container.nix { pkgs = pkgs; config=config; };
   #"adserver" = import ./adserver/container.nix { pkgs = pkgs; config=config; };
   #"dhcp" = import ./dhcp/container.nix { pkgs = pkgs; config=config; };
@@ -19,5 +19,6 @@
   "ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
   "prometheus" = import ./prometheus/container.nix { pkgs = pkgs; config=config; };
   "grafana" = import ./grafana/container.nix { pkgs = pkgs; config=config; };
+  "nginx" = import ./nginx/container.nix { pkgs = pkgs; config=config; };
 
 }
