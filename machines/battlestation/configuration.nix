@@ -28,6 +28,7 @@
       };
       "lan" = {
         useDHCP = true;
+        mtu = 9000;
       };
 
       "enp8s0" = {
