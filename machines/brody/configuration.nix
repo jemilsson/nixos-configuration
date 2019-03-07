@@ -36,43 +36,7 @@ in
       allowedUDPPorts = [ ];
     };
 
-    bridges = {
-      "br2" = {
-        interfaces = [ ];
-      };
-      "br0" = {
-        interfaces = [ "lan-1" ];
-      };
-    };
-
-    vlans = {
-      "management" = {
-        id = 5;
-        interface = "enp0s20f0";
-      };
-      "lan-1" = {
-        id = 3;
-        interface = "enp0s20f0";
-      };
-
-      "wan" = {
-        id = 2;
-        interface = "enp0s20f0";
-      };
-
-    };
-
     interfaces = {
-
-      "br0" = {
-        useDHCP = true;
-      };
-      "lan-1" = {
-        useDHCP = false;
-      };
-      "wan" = {
-        useDHCP = false;
-      };
       "br1020" = {
         ipv4 = {
           addresses = [
