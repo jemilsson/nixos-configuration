@@ -5,6 +5,7 @@
   localAddress = "10.5.20.12/24";
   autoStart = true;
   privateNetwork = true;
+  additionalCapabilities = [ "SYS_NICE" ];
   #forwardPorts = [
     #{ containerPort = 8123; hostPort = 80; protocol = "tcp"; }
   #];

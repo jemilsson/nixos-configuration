@@ -42,6 +42,16 @@ systemd.services.freeswitch = {
         #DeviceAllow = "char-ttyUSB rwm";
         #DeviceAllow = "char-usb_device rwm";
         #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
+        LimitCORE="infinity";
+        LimitNOFILE=100000;
+        LimitNPROC=60000;
+        LimitSTACK=250000;
+        LimitRTPRIO="infinity";
+        LimitRTTIME="infinity";
+        IOSchedulingClass="realtime";
+        IOSchedulingPriority=2;
+        CPUSchedulingPolicy="rr";
+        CPUSchedulingPriority=89;
       };
     };
 
