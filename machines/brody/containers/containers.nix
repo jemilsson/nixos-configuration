@@ -20,5 +20,6 @@
   "prometheus" = import ./prometheus/container.nix { pkgs = pkgs; config=config; };
   "grafana" = import ./grafana/container.nix { pkgs = pkgs; config=config; };
   "nginx" = import ./nginx/container.nix { pkgs = pkgs; config=config; };
+  "pbx" = import ./pbx/container.nix { pkgs = pkgs; config=config; };
 
 }
