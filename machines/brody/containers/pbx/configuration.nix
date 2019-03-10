@@ -52,6 +52,7 @@ systemd.services.freeswitch = {
         IOSchedulingPriority=2;
         CPUSchedulingPolicy="rr";
         CPUSchedulingPriority=89;
+        NoNewPrivileges=false;
       };
     };
 
