@@ -22,6 +22,7 @@ environment = {
     htop
     wget
     curl
+    git
 
     file
     usbutils
