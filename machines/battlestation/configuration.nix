@@ -12,7 +12,6 @@
 
   networking = {
     hostName = "battlestation";
-    enableIPv6 = false;
 
     firewall.allowedTCPPorts = [ 3389 ];
 
