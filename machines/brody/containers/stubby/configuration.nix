@@ -10,7 +10,7 @@ networking = {
   firewall = {
     enable = false;
   };
-  nameservers = [ "10.5.20.1" ];
+  nameservers = [ "2001:470:dc6b::1" ];
 
   defaultGateway = {
     address = "10.5.20.1";
