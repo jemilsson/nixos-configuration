@@ -25,7 +25,7 @@ environment.systemPackages = with pkgs; [
 services = {
     stubby = {
       enable = true;
-      listenAddresses = [ "0.0.0.0" ];
+      listenAddresses = [ "::/0" ];
     };
   };
 }
