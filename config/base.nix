@@ -8,11 +8,6 @@
 
 ];
 
-
-
-
-time.timeZone = "Europe/Stockholm";
-
 system = {
   autoUpgrade = {
     enable = true;
