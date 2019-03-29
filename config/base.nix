@@ -113,6 +113,8 @@ environment = {
 
 };
 
+time.timeZone = "Europe/Stockholm";
+
 networking = {
   timeServers = [
     "sth1.ntp.se"
