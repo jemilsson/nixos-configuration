@@ -8,6 +8,7 @@ in
 {
   imports = [
     ../../config/server_base.nix
+    ../../location/sesto01/configuration.nix
     ../../config/services/prometheus/node_exporter.nix
     ./networks.nix
   ];
@@ -20,9 +21,6 @@ in
 
   networking = {
     hostName = "brody";
-
-    nameservers = [ "2001:470:dc6b::1" ];
-
     useDHCP = false;
 
     defaultGateway = {
