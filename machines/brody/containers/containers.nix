@@ -18,7 +18,7 @@
   #"wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
   "ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
   "prometheus" = import ./prometheus/container.nix { pkgs = pkgs; config=config; };
-  "grafana" = import ./grafana/container.nix { pkgs = pkgs; config=config; };
+  "grf01" = import ./grf01/container.nix { pkgs = pkgs; config=config; };
   "web01" = import ./web01/container.nix { pkgs = pkgs; config=config; };
   "pbx" = import ./pbx/container.nix { pkgs = pkgs; config=config; };
 
