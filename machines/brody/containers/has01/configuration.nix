@@ -8,19 +8,8 @@ in
 {
   imports = [
     ../../../../config/minimum.nix
+    ../public_server.nix
 ];
-
-networking = {
-  firewall = {
-    enable = false;
-  };
-  nameservers = [ "1.1.1.1" ];
-
-  defaultGateway = {
-    address = "10.5.20.1";
-    interface = "eth0";
-  };
-};
 
 environment.systemPackages = with pkgs; [
 
@@ -69,7 +58,7 @@ services.home-assistant ={
         }
       ];
       deconz = {
-        host = "10.5.20.4";
+        host = "brody.jonas.systems";
         port = 8080;
         api_key = "A3909DDC09";
       };
