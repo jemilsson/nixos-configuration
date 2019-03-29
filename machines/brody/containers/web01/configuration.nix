@@ -9,23 +9,25 @@ in
 environment.systemPackages = with pkgs; [
 ];
 
-nginx.virtualHosts = {
+services = {
+  nginx.virtualHosts = {
 
-      "default.jonasem.com" = {
-        default = true;
-        extraConfig = "return 444;";
-      };
+        "default.jonasem.com" = {
+          default = true;
+          extraConfig = "return 444;";
+        };
 
-     "he.jonasem.com" = {
-       forceSSL = true;
-       enableACME = true;
-       locations = {
-         "/" = {
-         root = "/var/www/he";
-         index = "index.html";
+       "he.jonasem.com" = {
+         forceSSL = true;
+         enableACME = true;
+         locations = {
+           "/" = {
+           root = "/var/www/he";
+           index = "index.html";
+         };
+         };
        };
-       };
-     };
- };
+   };
+};
 
 }
