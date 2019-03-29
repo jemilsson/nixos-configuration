@@ -129,7 +129,7 @@ in
        wantedBy = [ "multi-user.target" ];
        stopIfChanged = false;
        serviceConfig = {
-         ExecStart = "${deconz}/bin/deCONZ -platform minimal --dbg-info=2 --dbg-zcldb=2";
+         ExecStart = "${deconz}/bin/deCONZ -platform minimal --dbg-info=2 --dbg-zcldb=2 --http-listen=::0";
          ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
          Restart = "always";
          RestartSec = "10s";
