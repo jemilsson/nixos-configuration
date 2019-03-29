@@ -43,6 +43,12 @@ in
             { address = "10.5.20.4"; prefixLength = 24; }
           ];
         };
+        ipv6 = {
+          addresses = [
+            { address = "2001:470:dc6b::4"; prefixLength = 64; }
+          ];
+        };
+
       };
     };
 
