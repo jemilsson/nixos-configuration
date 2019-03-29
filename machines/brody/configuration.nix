@@ -21,12 +21,17 @@ in
   networking = {
     hostName = "brody";
 
-    nameservers = [ "10.5.20.1" ];
+    nameservers = [ "2001:470:dc6b::1" ];
 
     useDHCP = false;
 
     defaultGateway = {
       address = "10.5.20.1";
+      interface = "br1020";
+    };
+
+    defaultGateway6 = {
+      address = "2001:470:dc6b::1";
       interface = "br1020";
     };
 
