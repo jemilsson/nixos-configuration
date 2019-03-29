@@ -5,7 +5,7 @@
   #"router4" = import ./router4/container.nix { pkgs = pkgs; config=config; };
   #"dnsmasq" = import ./dnsmasq/container.nix { pkgs = pkgs; config=config; };
   "stubby" = import ./stubby/container.nix { pkgs = pkgs; config=config; };
-  "home-assistant" = import ./home-assistant/container.nix { pkgs = pkgs; config=config; };
+  "has01" = import ./has01/container.nix { pkgs = pkgs; config=config; };
   #"adserver" = import ./adserver/container.nix { pkgs = pkgs; config=config; };
   #"dhcp" = import ./dhcp/container.nix { pkgs = pkgs; config=config; };
   #"dnsmasq2" = import ./dnsmasq2/container.nix { pkgs = pkgs; config=config; };
