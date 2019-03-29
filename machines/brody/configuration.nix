@@ -8,7 +8,7 @@ in
 {
   imports = [
     ../../config/server_base.nix
-    ../../location/sesto01/configuration.nix
+    ../../config/location/sesto01/configuration.nix
     ../../config/services/prometheus/node_exporter.nix
     ./networks.nix
   ];
