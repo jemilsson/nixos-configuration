@@ -35,6 +35,7 @@ services.home-assistant ={
       };
       frontend = { };
       http = {
+        server_host = "::0";
         server_port = 8123;
         api_password = "8wzUfUfLa6ZuewFd4j2UxtVu" ;
       };

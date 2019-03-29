@@ -104,7 +104,7 @@ services = {
         static_configs = [
           {
             targets = [
-              "10.5.20.4:9100"
+              "brody.jonas.systems:9100"
             ];
             labels = {
               alias = "${config.networking.hostName}";
@@ -118,7 +118,7 @@ services = {
         static_configs = [
           {
             targets = [
-              "10.5.20.6:8123"
+              "has01.sesto01.jonas.systems:8123"
             ];
             labels = {
               alias = "${config.networking.hostName}";
