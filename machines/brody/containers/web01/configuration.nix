@@ -18,8 +18,8 @@ services = {
         };
 
        "he.jonasem.com" = {
-         forceSSL = true;
-         enableACME = true;
+         #forceSSL = true;
+         #enableACME = true;
          locations = {
            "/" = {
            root = "/var/www/he";
