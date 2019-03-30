@@ -30,6 +30,9 @@
         useDHCP = true;
         mtu = 9000;
       };
+      "test" = {
+        useDHCP = true;
+      };
 
       "enp8s0" = {
         mtu = 9000;
@@ -51,6 +54,10 @@
       };
       "lan" = {
         id = 1020;
+        interface = "enp8s0";
+      };
+      "test" = {
+        id = 1025;
         interface = "enp8s0";
       };
     };
