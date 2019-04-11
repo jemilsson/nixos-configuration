@@ -130,6 +130,9 @@ in
     unstable.teensy-loader-cli
     unstable.qmk_firmware
 
+    #Accessories
+    piper
+
 
 
   ];
@@ -299,6 +302,10 @@ in
      pcscd = {
        enable = true;
        plugins = [ pkgs.unstable.ccid ];
+     };
+
+     ratbagd = {
+       enable = true;
      };
 
      udev = {
