@@ -24,11 +24,11 @@
 
       displayManager = {
         gdm = {
-          enable = false;
+          enable = true;
           wayland = true;
         };
         sddm = {
-          enable = true;
+          enable = false;
           theme = "breeze";
           autoNumlock = true;
 
@@ -73,6 +73,12 @@
       '';
     };
 
+  };
+
+  programs = {
+    sway = {
+      enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [

@@ -150,10 +150,6 @@ in
         '';
     };
 
-    sway = {
-      enable = true;
-    };
-
     chromium = {
       enable = true;
       extensions = [
@@ -187,6 +183,7 @@ in
 
 
   };
+
 
   nixpkgs.config = {
     allowBroken = true;
