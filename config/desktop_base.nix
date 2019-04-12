@@ -150,6 +150,10 @@ in
         '';
     };
 
+    sway = {
+      enable = true;
+    };
+
     chromium = {
       enable = true;
       extensions = [
