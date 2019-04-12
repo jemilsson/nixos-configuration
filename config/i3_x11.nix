@@ -24,11 +24,11 @@
 
       displayManager = {
         gdm = {
-          enable = true;
+          enable = false;
           wayland = true;
         };
         sddm = {
-          enable = false;
+          enable = true;
           theme = "breeze";
           autoNumlock = true;
 
@@ -75,11 +75,6 @@
 
   };
 
-  programs = {
-    sway = {
-      enable = true;
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     compton
