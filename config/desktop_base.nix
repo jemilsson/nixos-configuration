@@ -100,7 +100,7 @@ in
 
     #Games
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ glibc ]; })
-    unstable.steam
+    unstable-small.steam
     virtualgl
 
     #Graphical network tools
