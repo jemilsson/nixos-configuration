@@ -31,10 +31,10 @@ services = {
   mingetty = {
     helpLine = "test";
   };
-  #emacs = {
-  #  enable = true;
-  #  defaultEditor = true;
-  #};
+  emacs = {
+    enable = true;
+    defaultEditor = true;
+  };
 
 };
 
