@@ -16,7 +16,7 @@
   networking.networkmanager.wifi.powersave = true;
   programs = {
     nm-applet = {
-      enable = false;
+      enable = true;
     };
   };
 }
