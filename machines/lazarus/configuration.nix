@@ -13,6 +13,9 @@
     efi.canTouchEfiVariables = true;
   };
 
+
+  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+
  users.extraUsers = {
     wanida = {
       isNormalUser = true;
