@@ -266,7 +266,7 @@ in
   };
 
   environment.variables = {
-    GTK_DATA_PREFIX = "/run/current-system/sw";
+    #GTK_DATA_PREFIX = "/run/current-system/sw";
 
   };
 
