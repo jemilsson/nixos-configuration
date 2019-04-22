@@ -75,6 +75,7 @@ environment = {
     git
     wget
     curl
+    neofetch
     #python3
 
     #Network tools
