@@ -31,6 +31,10 @@ services = {
   mingetty = {
     helpLine = "test";
   };
+  emacs = {
+    enable = true;
+    defaultEditor = true;
+  };
 
 };
 
