@@ -33,7 +33,7 @@
    };
  };
 
- programs.adb.enable = true;
+ #programs.adb.enable = true;
 
  environment.systemPackages = with pkgs; [
 
@@ -41,8 +41,8 @@
     gnome3.caribou
     atk
 
-    heimdall
-    heimdall-gui
+    #heimdall
+    #heimdall-gui
  ];
 
 }
