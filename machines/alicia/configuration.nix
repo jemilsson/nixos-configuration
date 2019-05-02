@@ -8,6 +8,7 @@
   system.stateVersion = "18.09";
 
 
+  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
   networking = {
     hostName = "alicia";
