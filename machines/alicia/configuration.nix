@@ -22,7 +22,7 @@
 
   services = {
     xserver = {
-      videoDrivers = [ "ati_unfree" ];
+      videoDrivers = [ "amdgpu" ];
 
       deviceSection = ''
       Option "DRI3" "1"
