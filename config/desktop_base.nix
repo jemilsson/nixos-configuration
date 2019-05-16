@@ -32,8 +32,8 @@ in
       enable = true;
       driSupport32Bit = true;
       #s3tcSupport = true;
-      extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau ];
-      extraPackages32 = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau ];
+      extraPackages = with pkgs; [ 	intel-media-driver libvdpau-va-gl vaapiVdpau ];
+      extraPackages32 = with pkgs; [ 	intel-media-driver libvdpau-va-gl vaapiVdpau ];
     };
 
   };
