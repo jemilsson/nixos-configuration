@@ -185,7 +185,7 @@ in
   };
 
 
-  nixpkgs.unstable.config = {
+  nixpkgs.config = {
     allowBroken = true;
     chromium = {
       #enableAdobeFlash = true;
