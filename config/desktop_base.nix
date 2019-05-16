@@ -45,7 +45,7 @@ in
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
-    chromium
+    unstable.chromium
     google-chrome
 
     #Media
@@ -185,7 +185,7 @@ in
   };
 
 
-  nixpkgs.config = {
+  nixpkgs.unstable.config = {
     allowBroken = true;
     chromium = {
       #enableAdobeFlash = true;
