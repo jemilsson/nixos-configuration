@@ -192,6 +192,7 @@ in
       #enablePepperPDF = true;
       #enableWideVine = true; Broken
       pulseSupport = true;
+      useVaapi = true;
     };
     firefox = {
       #enableAdobeFlash = true;
