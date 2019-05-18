@@ -45,7 +45,7 @@ in
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
-    unstable.chromium
+    (unstable.chromium.override {  useVaapi = true; })
     google-chrome
 
     #Media
@@ -98,8 +98,8 @@ in
     signal-desktop
     #skype
 
-    #Games
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ glibc ]; })
+    #Games
     unstable-small.steam
     virtualgl
 
