@@ -45,7 +45,7 @@ in
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
-    (unstable.chromium.override {  useVaapi = true; })
+    (unstable.chromium.override {  useVaapi = true;  })
     google-chrome
 
     #Media
@@ -190,7 +190,7 @@ in
     chromium = {
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
-      #enableWideVine = true; Broken
+      enableWideVine = true;
       pulseSupport = true;
     };
     firefox = {
