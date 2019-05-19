@@ -29,7 +29,7 @@
 
  services = {
    xserver = {
-     videoDrivers = [ "displaylink" "intel" ];
+     videoDrivers = [ "intel" ];
 
      desktopManager.gnome3.enable = true;
      dpi = 144;
