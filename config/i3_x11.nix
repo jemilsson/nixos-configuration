@@ -62,13 +62,11 @@
       fade = true;
       fadeDelta = 8;
       fadeSteps = ["0.03" "0.03"];
-      vSync = "opengl";
+      vSync = "opengl-swc";
       extraOptions = ''
-        detect-transient = true;
-        detect-client-leader = true;
         unredir-if-possible = true;
-        xrender-sync = true;
         no-fading-openclose = true;
+        glx-swap-method = copy;
 
       '';
     };
