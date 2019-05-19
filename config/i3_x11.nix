@@ -62,7 +62,7 @@
       fade = true;
       fadeDelta = 8;
       fadeSteps = ["0.03" "0.03"];
-      vSync = "opengl-swc";
+      vSync = "opengl-mswc";
       extraOptions = ''
         unredir-if-possible = true;
         no-fading-openclose = true;
