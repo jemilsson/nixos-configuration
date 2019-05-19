@@ -58,11 +58,11 @@
 
     compton = {
       enable = true;
-      backend = "xrender";
+      backend = "glx";
       fade = true;
       fadeDelta = 8;
       fadeSteps = ["0.03" "0.03"];
-      vSync = "opengl-mswc";
+      vSync = "opengl";
       extraOptions = ''
         detect-transient = true;
         detect-client-leader = true;
