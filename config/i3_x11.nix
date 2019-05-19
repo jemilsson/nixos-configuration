@@ -60,8 +60,8 @@
       enable = true;
       backend = "glx";
       fade = true;
-      fadeDelta = 8;
-      fadeSteps = ["0.03" "0.03"];
+      #fadeDelta = 8;
+      #fadeSteps = ["0.03" "0.03"];
       vSync = "opengl-mswc";
       extraOptions = ''
         unredir-if-possible = true;
