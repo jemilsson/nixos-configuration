@@ -102,6 +102,7 @@ in
     #Games
     unstable-small.steam
     virtualgl
+    xboxdrv
 
     #Graphical network tools
     wireshark
