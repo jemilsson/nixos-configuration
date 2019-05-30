@@ -36,6 +36,10 @@ in
       extraPackages32 = with pkgs; [ 	intel-media-driver libvdpau-va-gl vaapiVdpau (vaapiIntel.override {  enableHybridCodec = true;  }) ];
     };
 
+    steam-hardware = {
+      enable = true;
+    };
+
   };
 
   networking.networkmanager.enable = true;
