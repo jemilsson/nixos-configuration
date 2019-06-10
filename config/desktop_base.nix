@@ -26,6 +26,7 @@ in
     bluetooth = {
       enable = true;
       powerOnBoot = true;
+      package = pkgs.bluezFull;
     };
 
     opengl = {
@@ -49,7 +50,7 @@ in
   environment.systemPackages = with pkgs; [
     #Browsers
     firefox
-    (unstable.chromium.override {  useVaapi = true;  })
+    unstable.chromium
     google-chrome
 
     #Media
