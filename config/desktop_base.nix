@@ -41,6 +41,10 @@ in
       enable = true;
     };
 
+    leder = {
+      enable = true;
+    };
+
   };
 
   networking.networkmanager.enable = true;
