@@ -41,7 +41,7 @@ in
       enable = true;
     };
 
-    leder = {
+    ledger = {
       enable = true;
     };
 
