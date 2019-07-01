@@ -106,6 +106,7 @@ in
     #Communication
     pidgin
     signal-desktop
+    tdesktop
     #skype
 
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ glibc ]; })
