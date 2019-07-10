@@ -83,6 +83,7 @@ environment = {
     wget
     curl
     neofetch
+    unrar
     #python3
 
     #Network tools
