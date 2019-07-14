@@ -19,4 +19,8 @@
       enable = true;
     };
   };
+  environment.systemPackages = with pkgs; [
+    wavemon
+    kismet
+  ];
 }
