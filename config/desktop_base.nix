@@ -145,6 +145,8 @@ in
     #Accessories
     piper
 
+    sweethome3d.application
+
 
 
   ];
