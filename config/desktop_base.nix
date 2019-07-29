@@ -147,6 +147,9 @@ in
 
     sweethome3d.application
 
+    #Terminal system tools
+    lm-sensors
+
 
 
   ];
