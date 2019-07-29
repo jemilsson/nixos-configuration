@@ -22,5 +22,6 @@
   environment.systemPackages = with pkgs; [
     wavemon
     kismet
+    powertop
   ];
 }
