@@ -306,7 +306,10 @@ in
    };
    services = {
 
-     tor.client.enable = true;
+     tor = {
+       enable = true;
+       client.enable = true;
+     };
 
      openssh.forwardX11 = true;
 
