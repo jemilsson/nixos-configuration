@@ -306,6 +306,8 @@ in
    };
    services = {
 
+     tor.client.enable = true;
+
      openssh.forwardX11 = true;
 
      #udisks2.enable = true;
