@@ -112,7 +112,7 @@ in
 
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ glibc ]; })
     #Games
-    #unstable-small.steam
+    unstable-small.steam
     virtualgl
     xboxdrv
 
