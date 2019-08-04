@@ -56,7 +56,8 @@ in
     unstable.icecat
     unstable.firefox
     unstable.chromium
-    google-chrome
+    unstable.google-chrome
+    unstable.firefoxPackages.tor-browser
 
     #Media
     spotify
