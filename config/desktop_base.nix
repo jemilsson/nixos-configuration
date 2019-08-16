@@ -214,7 +214,7 @@ in
     firefox = {
       #enableAdobeFlash = true;
       enableWideVine = true;
-      enableVLC = true;
+      #enableVLC = true;
     };
 
   };
