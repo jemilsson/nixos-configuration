@@ -16,7 +16,7 @@
   #"vxlan_a" = import ./vxlan_a/container.nix { pkgs = pkgs; config=config; };
   #"vxlan_b" = import ./vxlan_b/container.nix { pkgs = pkgs; config=config; };
   #"wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
-  "ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
+  #"ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
   "prm01" = import ./prm01/container.nix { pkgs = pkgs; config=config; };
   "grf01" = import ./grf01/container.nix { pkgs = pkgs; config=config; };
   "web01" = import ./web01/container.nix { pkgs = pkgs; config=config; };
