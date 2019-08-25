@@ -84,6 +84,7 @@ environment = {
     curl
     neofetch
     unrar
+    ncdu
     #python3
 
     #Network tools
