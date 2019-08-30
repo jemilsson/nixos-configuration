@@ -8,7 +8,7 @@
 
       libinput = {
         enable = true;
-        }
+      };
 
       windowManager = {
         i3 = {

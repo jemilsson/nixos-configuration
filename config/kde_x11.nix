@@ -8,7 +8,7 @@
 
       libinput = {
         enable = true;
-        }
+      };
 
       desktopManager = {
         plasma5 = {
