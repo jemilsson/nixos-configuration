@@ -3,7 +3,6 @@
 {
   imports = [
     ../../config/laptop_base.nix
-    ../../config/i3_x11.nix
     ../../config/kde_x11.nix
     ../../config/emilsson.nix
   ];
