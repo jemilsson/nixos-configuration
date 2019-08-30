@@ -6,6 +6,10 @@
       layout = "se";
       xkbOptions = "eurosign:e";
 
+      libinput = {
+        enable = true;
+        }
+
       desktopManager = {
         plasma5 = {
           enable = true;

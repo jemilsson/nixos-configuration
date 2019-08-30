@@ -6,6 +6,10 @@
       layout = "se";
       xkbOptions = "eurosign:e";
 
+      libinput = {
+        enable = true;
+        }
+
       windowManager = {
         i3 = {
           enable = true;
