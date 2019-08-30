@@ -8,6 +8,8 @@
     ../../emilsson.nix
   ];
 
+  system.stateVersion = "19.03";
+
   networking.hostName = "thor";
 
   boot.loader = {
