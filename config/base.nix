@@ -159,4 +159,6 @@ i18n = {
   ];
 };
 
+users.mutableUsers = false;
+
 }
