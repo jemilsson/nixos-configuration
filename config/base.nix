@@ -16,6 +16,10 @@ system = {
   };
 };
 
+i18n = {
+  consoleFont = "Lat2-Hack16";
+};
+
 security = {
   pam = {
     enableSSHAgentAuth = true;
