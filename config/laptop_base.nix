@@ -14,11 +14,7 @@
     illum.enable = true;
   };
   networking.networkmanager.wifi.powersave = true;
-  programs = {
-    nm-applet = {
-      enable = true;
-    };
-  };
+
   environment.systemPackages = with pkgs; [
     wavemon
     kismet
