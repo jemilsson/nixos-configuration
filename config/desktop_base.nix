@@ -315,6 +315,8 @@ in
        client.enable = true;
      };
 
+     gpm.enable = true;
+
      openssh.forwardX11 = true;
 
      #udisks2.enable = true;
