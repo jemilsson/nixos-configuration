@@ -153,4 +153,12 @@ nix = {
   };
 };
 
+i18n = {
+  supportedLocales = [
+    "en_US.UTF-8/UTF-8"
+    "sv_SE.UTF-8/UTF-8"
+    "th_TH.UTF-8/UTF-8"
+  ];
+};
+
 }
