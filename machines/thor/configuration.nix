@@ -5,6 +5,7 @@
     ../../config/laptop_base.nix
     ../../config/kde_x11.nix
     ../../config/emilsson.nix
+    ../../config/language/swedish.nix
   ];
 
   system.stateVersion = "19.03";
