@@ -8,6 +8,7 @@ in
   imports = [
     ../../config/server_base.nix
     ../../config/services/nginx/nginx.nix
+    ../../config/language/english.nix
 
     ../../config/services/prometheus/prometheus.nix
     ../../config/services/prometheus/nginx_exporter.nix

@@ -10,6 +10,7 @@ in
     ../../config/server_base.nix
     ../../config/location/sesto01/configuration.nix
     ../../config/services/prometheus/node_exporter.nix
+    ../../config/language/english.nix
     ./networks.nix
   ];
 

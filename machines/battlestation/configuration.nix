@@ -4,7 +4,7 @@
     ../../config/desktop_base.nix
     ../../config/i3_x11.nix
     ../../config/location/sesto01/configuration.nix
-    #../../config/sway_wayland.nix
+    ../../config/language/english.nix
   ];
 
   system.stateVersion = "18.09";
