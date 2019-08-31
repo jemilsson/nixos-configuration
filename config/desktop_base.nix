@@ -194,6 +194,10 @@ in
       };
     };
 
+    adb = {
+      enable = true;
+    };
+
 
   #firejail = {
   #  enable = true;
