@@ -36,6 +36,10 @@
      dpi = 144;
 
    };
+   undervolt = {
+     enable = true;
+   };
+
  };
 
  #programs.adb.enable = true;
