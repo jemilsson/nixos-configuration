@@ -11,7 +11,7 @@ in
       LC_TIME = swedish;
       LC_COLLATE = swedish;
       LC_MONETARY = swedish;
-      LC_MESSAGES = english;
+      LC_MESSAGES = swedish;
       LC_PAPER = swedish;
       LC_NAME = swedish;
       LC_ADDRESS = swedish;
