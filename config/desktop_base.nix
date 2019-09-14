@@ -84,6 +84,7 @@ in
     feh
     (freerdp.override { pcsclite = pcsclite; libpulseaudio=libpulseaudio; } )
     rdesktop
+    appimage-run
 
     #Ricing
     paper-icon-theme
