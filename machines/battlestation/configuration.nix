@@ -102,7 +102,7 @@
 
 
   programs = {
-    java.package = pkgs.jre
+    java.package = pkgs.jre;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
