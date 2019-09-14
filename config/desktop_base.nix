@@ -310,6 +310,13 @@ in
    };
    services = {
 
+     flatpak = {
+       enable = true;
+       extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+       ];
+     };
+
      tor = {
        enable = true;
        client.enable = true;
