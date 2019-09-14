@@ -102,7 +102,7 @@
 
 
   programs = {
-    java.package = pkgs.oraclejdk;
+    java.package = pkgs.jdk;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
