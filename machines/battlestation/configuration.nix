@@ -123,6 +123,9 @@
   xca
 
   unstable.steam
+
+  unstable.wasabiwallet
+
  ];
 
  nixpkgs.overlays = [
