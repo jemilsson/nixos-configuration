@@ -80,6 +80,10 @@
     nm-applet = {
       enable = true;
     };
+
+      sway = {
+        enable = true;
+      };
   };
 
 
