@@ -67,12 +67,11 @@
       #fadeDelta = 8;
       #fadeSteps = ["0.03" "0.03"];
       vSync = "opengl-mswc";
-      extraOptions = ''
+      settings = {
         unredir-if-possible = true;
         no-fading-openclose = true;
-        glx-swap-method = copy;
-
-      '';
+        glx-swap-method = "copy";
+      };
     };
 
   };
