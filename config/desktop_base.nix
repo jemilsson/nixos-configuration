@@ -142,7 +142,7 @@ in
     unetbootin
 
     teensy-loader-cli
-    qmk_firmware
+    unstable.qmk_firmware
 
     #Accessories
     piper
