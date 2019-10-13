@@ -102,7 +102,8 @@ in
 
     #Office
     libreoffice
-    adobe-reader
+    mupdf
+    #adobe-reader
 
     #Communication
     pidgin
