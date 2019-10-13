@@ -53,7 +53,6 @@ in
 
   environment.systemPackages = with pkgs; [
     #Browsers
-    unstable.icecat
     unstable.firefox
     unstable.chromium
     unstable.google-chrome
