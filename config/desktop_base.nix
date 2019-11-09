@@ -193,6 +193,7 @@ in
         enableExtraSocket = true;
         enableSSHSupport = true;
       };
+      package = pkgs.unstable.gnupg;
     };
 
     adb = {
@@ -331,7 +332,7 @@ in
      #};
 
      pcscd = {
-       enable = true;
+       enable = false;
        plugins = [ pkgs.unstable.ccid ];
      };
 

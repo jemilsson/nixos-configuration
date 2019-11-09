@@ -124,8 +124,6 @@
 
   xca
 
-  unstable.steam
-
   unstable.wasabiwallet
 
  ];
