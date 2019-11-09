@@ -193,7 +193,7 @@ in
         enableExtraSocket = true;
         enableSSHSupport = true;
       };
-      package = pkgs.unstable.gnupg;
+      #package = pkgs.unstable.gnupg;
     };
 
     adb = {
