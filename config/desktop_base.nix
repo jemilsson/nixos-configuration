@@ -111,7 +111,7 @@ in
     tdesktop
     #skype
 
-    (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+    (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.unstable-small.pkgsi686Linux; [ libva ]; })
     #Games
     #unstable-small.steam
     virtualgl
@@ -131,9 +131,6 @@ in
     unstable.libp11
     scd-pkcs11
     kdeApplications.kleopatra
-
-    gnupg
-    #gnupg1
 
     pass
     qtpass
@@ -193,7 +190,7 @@ in
         enableExtraSocket = true;
         enableSSHSupport = true;
       };
-      #package = pkgs.unstable.gnupg;
+      package = pkgs.unstable.gnupg;
     };
 
     adb = {
