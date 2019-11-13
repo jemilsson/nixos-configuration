@@ -129,7 +129,7 @@ in
     yubikey-manager
     openssl
     unstable.libp11
-    scd-pkcs11
+    #scd-pkcs11
     kdeApplications.kleopatra
 
     pass
@@ -144,6 +144,7 @@ in
     #Accessories
     piper
     android-file-transfer
+    go-mtpfs
 
     sweethome3d.application
 
