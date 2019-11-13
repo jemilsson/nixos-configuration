@@ -111,7 +111,7 @@ in
     tdesktop
     #skype
 
-    (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.unstable-small.pkgsi686Linux; [ libva ]; })
+    (steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
     #Games
     #unstable-small.steam
     virtualgl
