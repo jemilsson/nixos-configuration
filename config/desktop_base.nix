@@ -143,6 +143,7 @@ in
 
     #Accessories
     piper
+    go-mtpfs
 
     sweethome3d.application
 
