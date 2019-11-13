@@ -65,6 +65,7 @@ in
     pasystray
     audacity
     gimp
+    exiftool
     playerctl
     deluge
 
