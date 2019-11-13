@@ -143,7 +143,7 @@ in
 
     #Accessories
     piper
-    go-mtpfs
+    android-file-transfer
 
     sweethome3d.application
 
