@@ -112,9 +112,10 @@ in
     tdesktop
     #skype
 
-    (steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+    #(unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+
     #Games
-    #unstable-small.steam
+    unstable-small.steam
     virtualgl
     xboxdrv
 
