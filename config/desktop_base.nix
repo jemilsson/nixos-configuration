@@ -116,7 +116,7 @@ in
 
     #Games
     #unstable-small.steam
-    (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ lib32-libpulse lib32-alsa lib32-alsa-plugins ]; })
+    (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
     unstable.winetricks
     unstable.wine
     virtualgl
