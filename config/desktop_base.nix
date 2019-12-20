@@ -117,6 +117,7 @@ in
     #Games
     unstable-small.steam
     unstable.winetricks
+    unstable.wine
     virtualgl
     xboxdrv
 
