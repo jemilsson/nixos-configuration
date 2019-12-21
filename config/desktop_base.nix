@@ -118,7 +118,7 @@ in
     #unstable-small.steam
     (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
     unstable.winetricks
-    unstable.wine
+    (unstable.wine.override { wineBuild = "wineWow"; })
     virtualgl
     xboxdrv
 
