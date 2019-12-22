@@ -336,8 +336,8 @@ in
      #};
 
      pcscd = {
-       enable = false;
-       plugins = [ pkgs.unstable.ccid ];
+       enable = true;
+       #plugins = [ pkgs.unstable.ccid ];
      };
 
      ratbagd = {
