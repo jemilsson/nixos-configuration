@@ -336,7 +336,7 @@ in
      #};
 
      pcscd = {
-       enable = true;
+       enable = false;
        plugins = [ pkgs.unstable.ccid ];
      };
 
