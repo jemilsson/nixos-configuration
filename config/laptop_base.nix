@@ -4,6 +4,8 @@
     ./desktop_base.nix
   ];
 
+  location.provider = "geoclue2";
+
   powerManagement = {
     powertop = {
       enable = true;
