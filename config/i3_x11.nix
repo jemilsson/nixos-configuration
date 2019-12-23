@@ -10,6 +10,10 @@
         enable = true;
       };
 
+      xautolock = {
+        locker = "${pkgs.i3lock}/bin/i3lock";
+      };
+
       windowManager = {
         i3 = {
           enable = true;
@@ -72,10 +76,6 @@
         glx-swap-method = "copy";
       };
       */
-    };
-
-    xautolock = {
-      locker = "${pkgs.i3lock}/bin/i3lock";
     };
 
   };
