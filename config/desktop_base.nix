@@ -367,6 +367,12 @@ in
 
     };
 
+    redshift = {
+      enable = true;
+      latitude = "59.35";
+      longitude = "18.05";
+    };
+
   };
 
   #sound.mediaKeys.enable = true;
