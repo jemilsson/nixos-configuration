@@ -63,10 +63,8 @@
     compton = {
       enable = true;
       backend = "glx";
-      fade = true;
-      #fadeDelta = 8;
-      #fadeSteps = ["0.03" "0.03"];
-      vSync = "opengl-mswc";
+      fade = false;
+      vSync = true;
       /*
       settings = {
         unredir-if-possible = true;
