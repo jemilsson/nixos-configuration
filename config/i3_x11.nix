@@ -63,7 +63,7 @@
     compton = {
       enable = true;
       backend = "glx";
-      fade = false;
+      fade = true;
       vSync = true;
       /*
       settings = {
