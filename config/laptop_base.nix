@@ -14,6 +14,7 @@
   services = {
     tlp.enable = true;
     illum.enable = true;
+    localtime.enable = true;
   };
   networking.networkmanager.wifi.powersave = true;
 
