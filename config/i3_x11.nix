@@ -74,6 +74,10 @@
       */
     };
 
+    xautolock = {
+      locker = "${pkgs.i3lock}/bin/i3lock";
+    };
+
   };
 
   programs = {
@@ -91,6 +95,7 @@
     compton
     xorg.xev
     plasma5.sddm-kcm
+    i3lock
   ];
 
   i18n.consoleUseXkbConfig = true;
