@@ -12,7 +12,7 @@
 
       xautolock = {
         enable = true;
-        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -w blur";
+        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l blur";
       };
 
       windowManager = {
