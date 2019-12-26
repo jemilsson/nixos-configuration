@@ -3,7 +3,7 @@
   imports = [
     ../../config/desktop_base.nix
     ../../config/kde_x11.nix
-    ../../emilsson.nix
+    ../../config/emilsson.nix
     ../../config/language/english.nix
   ];
 

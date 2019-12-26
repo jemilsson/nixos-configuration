@@ -115,7 +115,10 @@ in
     #(unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
 
     #Games
-    unstable-small.steam
+    #unstable-small.steam
+    (unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
+    (unstable.winetricks.override { wine = unstable.wine.override { wineBuild = "wineWow"; };} )
+    (unstable.wine.override { wineBuild = "wineWow"; })
     virtualgl
     xboxdrv
 
@@ -131,7 +134,7 @@ in
     yubikey-manager
     openssl
     unstable.libp11
-    #scd-pkcs11
+    scd-pkcs11
     kdeApplications.kleopatra
 
     pass
@@ -334,7 +337,7 @@ in
 
      pcscd = {
        enable = true;
-       plugins = [ pkgs.unstable.ccid ];
+       #plugins = [ pkgs.unstable.ccid ];
      };
 
      ratbagd = {
@@ -362,6 +365,10 @@ in
           LABEL="u2f_end"
         '';
 
+    };
+
+    redshift = {
+      enable = true;
     };
 
   };

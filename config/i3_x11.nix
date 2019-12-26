@@ -10,6 +10,10 @@
         enable = true;
       };
 
+      xautolock = {
+        locker = "${pkgs.i3lock}/bin/i3lock";
+      };
+
       windowManager = {
         i3 = {
           enable = true;
@@ -64,9 +68,7 @@
       enable = true;
       backend = "glx";
       fade = true;
-      #fadeDelta = 8;
-      #fadeSteps = ["0.03" "0.03"];
-      vSync = "opengl-mswc";
+      vSync = true;
       /*
       settings = {
         unredir-if-possible = true;
@@ -93,6 +95,7 @@
     compton
     xorg.xev
     plasma5.sddm-kcm
+    i3lock
   ];
 
   i18n.consoleUseXkbConfig = true;
