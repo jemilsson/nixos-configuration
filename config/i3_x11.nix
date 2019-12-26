@@ -11,6 +11,7 @@
       };
 
       xautolock = {
+        enable = true;
         locker = "${pkgs.i3lock}/bin/i3lock";
       };
 
