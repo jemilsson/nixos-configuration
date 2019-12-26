@@ -12,7 +12,7 @@
 
       xautolock = {
         enable = true;
-        locker = "${pkgs.i3lock}/bin/i3lock";
+        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -w blur";
       };
 
       windowManager = {
@@ -93,6 +93,7 @@
 
 
   environment.systemPackages = with pkgs; [
+    betterlockscreen
     compton
     xorg.xev
     plasma5.sddm-kcm
