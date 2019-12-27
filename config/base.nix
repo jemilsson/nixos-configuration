@@ -132,7 +132,7 @@ networking = {
     "ntp3.sptime.se"
     "ntp4.sptime.se"
   ];
-  search = [ "jonas.systems" "internal.jonas.systems" ];
+  search = [ "jonas.systems" ];
 
 };
 
