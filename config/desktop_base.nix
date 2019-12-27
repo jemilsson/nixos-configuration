@@ -78,7 +78,7 @@ in
     emacs
 
     #Interface
-    unstable.alacritty
+    alacritty
     rxvt_unicode
     synapse
     feh
