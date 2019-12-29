@@ -30,7 +30,7 @@ in
     };
 
     defaultGateway6 = {
-      address = "2001:470:dc6b::1";
+      address = "2a0e:b107:330::1";
       interface = "br1020";
     };
 
@@ -49,7 +49,7 @@ in
         };
         ipv6 = {
           addresses = [
-            { address = "2001:470:dc6b::4"; prefixLength = 64; }
+            { address = "2a0e:b107:330::4"; prefixLength = 64; }
           ];
         };
 
