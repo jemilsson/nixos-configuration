@@ -5,6 +5,7 @@
 ];
 
 networking = {
+  defaultGateway = { address = "10.5.24.1";};
 
   };
 
