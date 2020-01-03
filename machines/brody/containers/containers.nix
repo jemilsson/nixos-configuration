@@ -22,5 +22,6 @@
   "web01" = import ./web01/container.nix { pkgs = pkgs; config=config; };
   "pbx" = import ./pbx/container.nix { pkgs = pkgs; config=config; };
   "avahi" = import ./avahi/container.nix { pkgs = pkgs; config=config; };
+  "rpki" = import ./rpki/container.nix { pkgs = pkgs; config=config; };
 
 }
