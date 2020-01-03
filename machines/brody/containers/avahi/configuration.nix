@@ -15,7 +15,7 @@ services = {
     reflector = true;
     nssmdns = true;
     ipv6 = true;
-    ipv4 = false;
+    ipv4 = true;
     interfaces = [ "eth0" "eth1024-1" ];
   };
 };
