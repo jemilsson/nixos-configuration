@@ -8,6 +8,7 @@ networking = {
   firewall = {
     enable = false;
   };
+};
 
 systemd = {
   services = {
