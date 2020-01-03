@@ -9,14 +9,14 @@ networking = {
 
 systemd = {
   services = {
-    gort = {
+    gortr = {
       enable = true;
       description = "gortr";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       stopIfChanged = false;
       serviceConfig = {
-        ExecStart = "${pkgs.unstable.gortr}/bin/gortr -bind :8282";
+        ExecStart = "${pkgs.unstable.gortr}/bin/gortr -bind :8282 -verify=false";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         Restart = "always";
         RestartSec = "10s";
