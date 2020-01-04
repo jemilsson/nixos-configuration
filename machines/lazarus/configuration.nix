@@ -9,7 +9,7 @@
 
   networking.hostName = "lazarus";
   system.stateVersion = "18.09";
-  
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -38,7 +38,7 @@
 
    };
    undervolt = {
-     enable = true;
+     enable = false;
    };
 
  };
