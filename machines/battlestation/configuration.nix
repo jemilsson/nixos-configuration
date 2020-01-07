@@ -28,14 +28,13 @@
       };
       "lan" = {
         useDHCP = true;
-        mtu = 9000;
       };
       "test" = {
         useDHCP = true;
       };
 
       "enp8s0" = {
-        mtu = 9000;
+        mtu = 1520;
       };
 
     };
