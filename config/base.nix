@@ -143,12 +143,12 @@ nix = {
   autoOptimiseStore = true;
   gc = {
     automatic = true;
-    dates = "03:30";
+    dates = "03:00";
     options = "--delete-older-than 90d";
   };
   optimise = {
     automatic = true;
-    dates = ["04:00"];
+    dates = ["03:00"];
 
   };
 };
