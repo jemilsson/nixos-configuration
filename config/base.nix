@@ -153,7 +153,13 @@ nix = {
   };
 };
 
+systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
+
 systemd.timers.nix-gc.timerConfig.Persistent = true;
+systemd.timers.nix-gc.after = [ "nixos-upgrade.timer" ];
+
+systemd.timers.nix-optimise.timerConfig.Persistent = true;
+systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
 
 i18n = {
   consoleFont = "Lat2-Hack16";
