@@ -153,6 +153,8 @@ nix = {
   };
 };
 
+systemd.timers.nix-gc.timerConfig.Persistent = true;
+
 i18n = {
   consoleFont = "Lat2-Hack16";
   supportedLocales = [
