@@ -36,6 +36,9 @@ services = {
     enable = true;
     defaultEditor = true;
   };
+  journald = {
+      extraConfig = "MaxFileSec=1year";
+  };
 
 };
 
