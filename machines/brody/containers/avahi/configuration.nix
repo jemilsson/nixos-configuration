@@ -23,7 +23,7 @@ services = {
     };
 
     extraServiceFiles = {
-      shield = ''
+      shieldAndroidRemote = ''
       <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
       <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
       <service-group>
@@ -35,8 +35,19 @@ services = {
         </service>
       </service-group>
       '';
-
-    };
+    shieldCast = ''
+    <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+    <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+    <service-group>
+      <name>HelloWorld</name>
+      <service>
+        <type>_googlecast._tcp</type>
+        <port>8009</port>
+        <host-name>shield.sesto01.jonas.systems</host-name>
+      </service>
+    </service-group>
+    '';
+  };
   };
 };
 
