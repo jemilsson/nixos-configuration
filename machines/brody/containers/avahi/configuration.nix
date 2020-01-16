@@ -31,7 +31,7 @@ services = {
         <service>
           <type>_androidtvremote._tcp</type>
           <port>6466</port>
-          <host-name>shield.local</host-name>
+          <host-name>shield.sesto01.jonas.systems</host-name>
         </service>
       </service-group>
       '';
@@ -40,9 +40,9 @@ services = {
   };
 };
 
-environment.etc."avahi/hosts".text = ''
-2a0e:b107:330:4:c516:4e7a:40c:43a1 shield.local
-'';
+#environment.etc."avahi/hosts".text = ''
+#2a0e:b107:330:4:c516:4e7a:40c:43a1 shield.local
+#'';
 
 
     environment.systemPackages = with pkgs; [
