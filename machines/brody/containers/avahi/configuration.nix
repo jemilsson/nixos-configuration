@@ -18,6 +18,10 @@ services = {
     ipv4 = true;
     interfaces = [ "eth0" "eth1024-1" ];
 
+    publish = {
+      enable = true;
+    };
+
     extraServiceFiles = {
       shield = ''
       <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
