@@ -90,6 +90,18 @@
       enable = true;
     };
 
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      ipv6 = true;
+      ipv4 = true;
+      interfaces = [ "lan" ];
+
+      publish = {
+        enable = false;
+      };
+    };
+
   };
 
 
