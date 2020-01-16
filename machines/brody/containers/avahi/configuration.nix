@@ -44,18 +44,6 @@ services = {
         <type>_googlecast._tcp</type>
         <port>8009</port>
         <host-name>shield.sesto01.jonas.systems</host-name>
-        <txt-record>rs=s</txt-record>
-        <txt-record>nf=1</txt-record>
-        <txt-record>bs=FA8F70F3B781</txt-record>
-        <txt-record>st=0</txt-record>
-        <txt-record>ca=200709</txt-record>
-        <txt-record>fn=AndroidTV</txt-record>
-        <txt-record>ic=/setup/icon.png</txt-record>
-        <txt-record>md=SHIELD Android TV</txt-record>
-        <txt-record>ve=05</txt-record>
-        <txt-record>rm=</txt-record>
-        <txt-record>cd=F65683CC58FE3F2805CA04DEC27488B3</txt-record>
-        <txt-record>id=3cde360ad8d4b999f10c32ea3673d6eb</txt-record>
       </service>
     </service-group>
     '';
