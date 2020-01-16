@@ -17,8 +17,30 @@ services = {
     ipv6 = true;
     ipv4 = true;
     interfaces = [ "eth0" "eth1024-1" ];
+
+    extraServiceFiles = {
+      shield = ''
+      <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+      <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+      <service-group>
+        <name>Hello World</name>
+        <service>
+          <type>_androidtvremote._tcp</type>
+          <port>6466</port>
+          <host-name>shield.local</host-name>
+        </service>
+      </service-group>
+      '';
+
+    };
   };
 };
+
+environment.etc."avahi/hosts".text = ''
+shield.local 2a0e:b107:330:4:c516:4e7a:40c:43a1
+'';
+
+
     environment.systemPackages = with pkgs; [
 
     ];
