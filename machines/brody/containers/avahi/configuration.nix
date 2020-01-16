@@ -37,7 +37,7 @@ services = {
 };
 
 environment.etc."avahi/hosts".text = ''
-shield.local 2a0e:b107:330:4:c516:4e7a:40c:43a1
+2a0e:b107:330:4:c516:4e7a:40c:43a1 shield.local
 '';
 
 
