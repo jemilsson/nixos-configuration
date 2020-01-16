@@ -23,7 +23,7 @@ services = {
       <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
       <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
       <service-group>
-        <name>Hello World</name>
+        <name>HelloWorld</name>
         <service>
           <type>_androidtvremote._tcp</type>
           <port>6466</port>
