@@ -31,7 +31,7 @@ services = {
         <service>
           <type>_androidtvremote._tcp</type>
           <port>6466</port>
-          <host-name>shield.sesto01.jonas.systems</host-name>
+          <host-name>shield.local</host-name>
         </service>
       </service-group>
       '';
@@ -43,7 +43,7 @@ services = {
       <service>
         <type>_googlecast._tcp</type>
         <port>8009</port>
-        <host-name>shield.sesto01.jonas.systems</host-name>
+        <host-name>shield.local</host-name>
       </service>
     </service-group>
     '';
@@ -51,9 +51,9 @@ services = {
   };
 };
 
-#environment.etc."avahi/hosts".text = ''
-#2a0e:b107:330:4:c516:4e7a:40c:43a1 shield.local
-#'';
+environment.etc."avahi/hosts".text = ''
+2a0e:b107:330:0:3385:bf0f:1be8:8b8d shield.local
+'';
 
 
     environment.systemPackages = with pkgs; [
