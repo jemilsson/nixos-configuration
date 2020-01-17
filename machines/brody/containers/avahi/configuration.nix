@@ -53,6 +53,7 @@ services = {
 
 environment.etc."avahi/hosts".text = ''
 2a0e:b107:330:0:3385:bf0f:1be8:8b8d shield.local
+2a0e:b107:330:0:3385:bf0f:1be8:8b8d HelloWorld.local
 '';
 
 
