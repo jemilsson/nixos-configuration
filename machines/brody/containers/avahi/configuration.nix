@@ -31,7 +31,7 @@ services = {
         <service>
           <type>_androidtvremote._tcp</type>
           <port>6466</port>
-          <host-name>shield.local</host-name>
+          <host-name>shield.sesto01.jonas.systems</host-name>
         </service>
       </service-group>
       '';
@@ -43,7 +43,7 @@ services = {
       <service>
         <type>_googlecast._tcp</type>
         <port>8009</port>
-        <host-name>shield.local</host-name>
+        <host-name>shield.sesto01.jonas.systems</host-name>
       </service>
     </service-group>
     '';
