@@ -21,6 +21,10 @@ in
       enable = true;
       support32Bit = true;
       package = pkgs.pulseaudioFull;
+      extraConfig = ''
+default-fragments=5
+default-fragment-size-msec=2
+      '';
     };
 
     bluetooth = {
@@ -159,7 +163,6 @@ in
 
 
   ];
-
   programs = {
     ssh = {
       startAgent = false;
