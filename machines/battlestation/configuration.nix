@@ -28,14 +28,12 @@
       };
       "lan" = {
         useDHCP = true;
-        mtu = 9000;
       };
       "test" = {
         useDHCP = true;
       };
 
       "enp8s0" = {
-        mtu = 9000;
       };
 
     };
@@ -90,6 +88,18 @@
 
     lldpd = {
       enable = true;
+    };
+
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      ipv6 = true;
+      ipv4 = true;
+      interfaces = [ "lan" ];
+
+      publish = {
+        enable = false;
+      };
     };
 
   };

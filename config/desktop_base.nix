@@ -21,6 +21,17 @@ in
       enable = true;
       support32Bit = true;
       package = pkgs.pulseaudioFull;
+
+      daemon = {
+        config = {
+          "flat-volumes" = "no";
+          "resample-method" = "speex-float-5";
+          "realtime-scheduling" = "yes";
+          "realtime-priority" = 1;
+          "default-fragments" = 5;
+          "default-fragment-size-msec" = 2;
+        };
+      };
     };
 
     bluetooth = {
@@ -159,7 +170,6 @@ in
 
 
   ];
-
   programs = {
     ssh = {
       startAgent = false;

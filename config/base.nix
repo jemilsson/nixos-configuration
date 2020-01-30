@@ -36,6 +36,9 @@ services = {
     enable = true;
     defaultEditor = true;
   };
+  journald = {
+      extraConfig = "MaxFileSec=1year";
+  };
 
 };
 
@@ -140,15 +143,23 @@ nix = {
   autoOptimiseStore = true;
   gc = {
     automatic = true;
-    dates = "03:30";
-    options = "--delete-older-than 90d";
+    dates = "03:00";
+    options = "--delete-older-than 30d";
   };
   optimise = {
     automatic = true;
-    dates = ["04:00"];
+    dates = ["03:00"];
 
   };
 };
+
+systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
+
+systemd.timers.nix-gc.timerConfig.Persistent = true;
+systemd.timers.nix-gc.after = [ "nixos-upgrade.timer" ];
+
+systemd.timers.nix-optimise.timerConfig.Persistent = true;
+systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
 
 i18n = {
   consoleFont = "Lat2-Hack16";
