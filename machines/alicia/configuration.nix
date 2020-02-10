@@ -4,7 +4,8 @@
     ../../config/desktop_base.nix
     ../../config/kde_x11.nix
     ../../config/emilsson.nix
-    ../../config/language/english.nix
+    ../../config/language/swedish.nix
+    ../../config/location/sejkg01/configuration.nix
   ];
 
   system.stateVersion = "18.09";
