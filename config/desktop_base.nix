@@ -122,6 +122,7 @@ in
     pidgin
     signal-desktop
     tdesktop
+    unstable.teams
     #skype
 
     #(unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
