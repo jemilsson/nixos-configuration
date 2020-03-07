@@ -101,7 +101,7 @@ in
     appimage-run
 
     #Ricing
-    #paper-icon-theme
+    paper-icon-theme
     hicolor-icon-theme
     gtk3
     gtk-engine-murrine

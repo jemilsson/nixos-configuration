@@ -41,7 +41,7 @@ in
         };
         sddm = {
           enable = true;
-          theme = "breeze";
+          #theme = "breeze";
           autoNumlock = true;
 
         };
@@ -50,7 +50,7 @@ in
 
           greeters.gtk = {
             enable = true;
-            theme.name = "Adapta";
+            #theme.name = "Adapta";
           };
         };
 
