@@ -94,7 +94,8 @@
         "status-notifier-watcher" = {
           enable = true;
           description = "SNI watcher";
-          wantedBy = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" "taffybar.service" ];
+          before = [ "taffybar.service" ];
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
 
