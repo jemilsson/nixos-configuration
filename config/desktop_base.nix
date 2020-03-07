@@ -16,6 +16,8 @@ in
     enable = true;
   };
 
+  gtk.iconCache.enable = true;
+
   hardware = {
     pulseaudio = {
       enable = true;
