@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  taffybar = pkgs.taffybar.override {packages = [ pkgs.hicolor-icon-theme ];};
+  taffybar = pkgs.haskellPackages.ghcWithPackages (self: [self.taffybar pkgs.hicolor-icon-theme ]);
 in
 {
   services = {
