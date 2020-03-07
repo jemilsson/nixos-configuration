@@ -260,6 +260,16 @@ in
             serviceConfig.RestartSec = 2;
             serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
           };
+
+
+        "nm-applet" = {
+          enable = true;
+          description = "Network manager applet";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
+
+        };
       };
     };
   };

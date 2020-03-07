@@ -82,10 +82,6 @@
   };
 
   programs = {
-    nm-applet = {
-      enable = true;
-    };
-
       sway = {
         enable = true;
       };
