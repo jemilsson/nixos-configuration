@@ -87,6 +87,22 @@
       };
   };
 
+  systemd = {
+    user = {
+
+      services = {
+        "status-notifier-watcher" = {
+          enable = true;
+          description = "SNI watcher";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-watcher}/bin/nm-applet --sm-disable --indicator";
+
+        };
+      };
+    };
+  };
+
 
   environment.systemPackages = with pkgs; [
     betterlockscreen
