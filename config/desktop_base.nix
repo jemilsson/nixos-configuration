@@ -275,6 +275,8 @@ in
     };
   };
 
+
+  /*
     # GTK3 global theme (widget and icon theme)
   environment.etc."gtk-3.0/settings.ini" = {
     text = ''
@@ -320,6 +322,8 @@ in
     #GTK_DATA_PREFIX = "/run/current-system/sw";
 
   };
+
+  */
 
 
 
