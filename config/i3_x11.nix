@@ -96,7 +96,7 @@
           description = "SNI watcher";
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-          serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-watcher}/bin/nm-applet --sm-disable --indicator";
+          serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
 
         };
       };
