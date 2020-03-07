@@ -16,7 +16,7 @@
   };
 
 
-  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
  users.extraUsers = {
     wanida = {
@@ -31,7 +31,7 @@
 
  services = {
    xserver = {
-     videoDrivers = [ "intel" ];
+     videoDrivers = [ "intel" "displaylink" "modesetting" ];
 
      desktopManager.gnome3.enable = true;
      dpi = 144;
