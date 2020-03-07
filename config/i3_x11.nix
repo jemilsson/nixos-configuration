@@ -99,6 +99,14 @@
           serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
 
         };
+        "taffybar" = {
+          enable = true;
+          description = "Taffybar";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.ExecStart = "${pkgs.taffybar}/bin/taffybar";
+
+        };
       };
     };
   };
