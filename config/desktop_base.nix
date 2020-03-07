@@ -328,6 +328,8 @@ in
    };
    services = {
 
+     upower.enable = true;
+
      tor = {
        enable = true;
        client.enable = true;
