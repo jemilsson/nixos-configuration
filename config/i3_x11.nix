@@ -54,9 +54,9 @@ in
           };
         };
 
-        sessionCommands =''
+        sessionCommands = ''
         systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS
-        '';
+      '';
       };
 
     };
