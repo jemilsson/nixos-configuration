@@ -279,7 +279,7 @@ in
   environment.etc."gtk-3.0/settings.ini" = {
     text = ''
       gtk-theme-name=Adapta-Nokto
-      gtk-icon-theme-name=Paper
+      gtk-icon-theme-name="hicolor"
       gtk-font-name=Sans 10
       gtk-cursor-theme-size=0
       gtk-toolbar-style=GTK_TOOLBAR_BOTH
@@ -299,7 +299,7 @@ in
   environment.etc."gtk-2.0/gtkrc" = {
     text = ''
       gtk-theme-name="Adapta-Nokto"
-      gtk-icon-theme-name="Paper"
+      gtk-icon-theme-name="hicolor"
       gtk-font-name="Sans 10"
       gtk-cursor-theme-size=0
       gtk-toolbar-style=GTK_TOOLBAR_BOTH
