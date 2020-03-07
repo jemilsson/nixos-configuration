@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let
+  taffybar = pkgs.taffybar.override {packages = [ pkgs.hicolor-icon-theme ];};
+in
 {
   services = {
     xserver = {
@@ -99,7 +102,7 @@
           description = "Taffybar";
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-          serviceConfig.ExecStart = "${pkgs.taffybar}/bin/taffybar";
+          serviceConfig.ExecStart = "${taffybar}/bin/taffybar";
 
         };
       };
