@@ -100,6 +100,7 @@ in
 
     #Ricing
     paper-icon-theme
+    hicolor-icon-theme
     gtk3
     gtk-engine-murrine
     lxappearance
