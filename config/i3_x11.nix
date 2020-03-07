@@ -98,6 +98,8 @@
     xorg.xev
     plasma5.sddm-kcm
     i3lock
+    xmobar
+    taffybar
   ];
 
   i18n.consoleUseXkbConfig = true;
