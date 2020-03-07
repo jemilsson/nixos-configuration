@@ -54,15 +54,9 @@ in
           };
         };
 
-        #sessionCommands =
-        #  ''
-        #    eval $(gpg-agent --daemon --enable-ssh-support)
-        #    if [ -f "~/.gpg-agent-info" ]; then
-        #      . "~/.gpg-agent-info"
-        #      export GPG_AGENT_INFO
-        #      export SSH_AUTH_SOCK
-        #    fi
-        #  '';
+        sessionCommands =''
+        systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS
+        '';
       };
 
     };
