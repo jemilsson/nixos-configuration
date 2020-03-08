@@ -19,9 +19,9 @@ in
         enable = true;
       };
 
-      xautolock = {
+      xss-lock = {
         enable = true;
-        locker = "${pkgs.betterlockscreen}/bin/betterlockscreen -l blur";
+        lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
       };
 
       windowManager = {
