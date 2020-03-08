@@ -103,6 +103,8 @@ in
     #Ricing
     paper-icon-theme
     hicolor-icon-theme
+    gnome2.gnome_icon_theme
+    gnome3.adwaita-icon-theme
     pantheon.elementary-icon-theme
     gtk3
     gtk-engine-murrine
