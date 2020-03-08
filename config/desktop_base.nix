@@ -273,7 +273,7 @@ in
           description = "Network manager applet";
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
-          serviceConfig.ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
+          serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
 
         };
       };
