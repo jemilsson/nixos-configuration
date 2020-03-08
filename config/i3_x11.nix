@@ -139,7 +139,7 @@ in
           wants = [ "taffybar.service" ];
           after = ["status-notifier-watcher.service" ];
           partOf = [ "graphical-session.target" ];
-          serviceConfig.ExecStart = "${pkgs.blueman}/bin/blueman-applet --sm-disable --indicator";
+          serviceConfig.ExecStart = "${pkgs.blueman}/bin/blueman-applet";
         };
 
       };
