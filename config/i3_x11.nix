@@ -56,7 +56,7 @@ in
         };
 
         sessionCommands = ''
-        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_DATA_DIRS XDG_RUNTIME_DIR DISPLAY
+        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS
       '';
       };
 
@@ -130,6 +130,16 @@ in
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
 
+        };
+
+        "blueman-applet" = {
+          enable = true;
+          description = "Bluetooth manager applet";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [ "taffybar.service" ];
+          after = ["status-notifier-watcher.service" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.ExecStart = "${pkgs.blueman}/bin/blueman-applet --sm-disable --indicator";
         };
 
       };
