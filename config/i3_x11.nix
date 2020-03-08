@@ -118,6 +118,16 @@ in
           serviceConfig.ExecStart = "${pkgs.pasystray}/bin/pasystray";
         };
 
+        "nm-applet" = {
+          enable = true;
+          description = "Network manager applet";
+          wantedBy = [ "graphical-session.target" ];
+          wants= [ "taffybar.service" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
+
+        };
+
       };
     };
   };
