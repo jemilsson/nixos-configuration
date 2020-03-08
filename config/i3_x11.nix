@@ -123,7 +123,7 @@ in
           description = "Network manager applet";
           wantedBy = [ "graphical-session.target" ];
           wants = [ "taffybar.service" ];
-          after = ["status-notifier-watcher.service" ]; 
+          after = ["status-notifier-watcher.service" ];
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
 
@@ -142,6 +142,7 @@ in
     i3lock
     xmobar
     taffybar
+    slock
   ];
 
   i18n.consoleUseXkbConfig = true;
