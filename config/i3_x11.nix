@@ -143,8 +143,9 @@ in
     i3lock
     xmobar
     taffybar
+    i3lock-fancy
   ];
-  
+
   i18n.consoleUseXkbConfig = true;
 
 }
