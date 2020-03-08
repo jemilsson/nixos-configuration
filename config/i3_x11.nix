@@ -144,6 +144,7 @@ in
     taffybar
     slock
   ];
+  security.setuidPrograms = [ "slock" ];
 
   i18n.consoleUseXkbConfig = true;
 
