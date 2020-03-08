@@ -61,7 +61,7 @@ in
         };
 
         sessionCommands = ''
-        systemctl --user import-environment GDK_PIXBUF_MODULE_FILE DBUS_SESSION_BUS_ADDRESS
+        systemctl --user import-environment XDG_DATA_DIRS
       '';
       };
 
@@ -109,8 +109,15 @@ in
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${taffybar}/bin/taffybar";
-
         };
+        "pasystray" = {
+          enable = true;
+          description = "Pulse audio systray";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.ExecStart = "${pkgs.pasystray}/bin/pasystray";
+        };
+
       };
     };
   };
