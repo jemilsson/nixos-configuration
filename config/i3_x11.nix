@@ -88,6 +88,7 @@ in
       sway = {
         enable = true;
       };
+      slock.enable = true;
   };
 
   systemd = {
@@ -142,10 +143,8 @@ in
     i3lock
     xmobar
     taffybar
-    slock
   ];
-  security.setuidPrograms = [ "slock" ];
-
+  
   i18n.consoleUseXkbConfig = true;
 
 }
