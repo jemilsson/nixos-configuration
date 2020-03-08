@@ -131,7 +131,7 @@ in
           serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
 
         };
-
+        /*
         "blueman-applet" = {
           enable = true;
           description = "Bluetooth manager applet";
@@ -141,6 +141,7 @@ in
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.blueman}/bin/blueman-applet";
         };
+        */
 
       };
     };
