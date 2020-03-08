@@ -56,11 +56,13 @@ in
         };
 
         sessionCommands = ''
-        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_DATA_DIRS XDG_RUNTIME_DIR DISPLAY 
+        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_DATA_DIRS XDG_RUNTIME_DIR DISPLAY
       '';
       };
 
     };
+
+    blueman.enable = true;
 
 
     compton = {
