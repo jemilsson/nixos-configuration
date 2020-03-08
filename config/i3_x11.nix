@@ -19,11 +19,6 @@ in
         enable = true;
       };
 
-      xss-lock = {
-        enable = true;
-        lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
-      };
-
       windowManager = {
         i3 = {
           enable = true;
@@ -89,6 +84,11 @@ in
         enable = true;
       };
       slock.enable = true;
+
+      xss-lock = {
+        enable = true;
+        lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
+      };
   };
 
   systemd = {
