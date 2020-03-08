@@ -56,7 +56,7 @@ in
         };
 
         sessionCommands = ''
-        systemctl --user import-environment XDG_DATA_DIRS
+        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS
       '';
       };
 
