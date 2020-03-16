@@ -43,6 +43,16 @@
 
  };
 
+ docker-containers = {
+   "bpi-build" = {
+  image = "sinovoip/bpi-build-linux-4.4";
+  environment = {
+  };
+  volumes = [  ];
+  extraDockerOptions = [  ];
+};
+ };
+
  #programs.adb.enable = true;
 
  environment.systemPackages = with pkgs; [
