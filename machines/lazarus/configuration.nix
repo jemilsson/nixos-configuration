@@ -72,5 +72,10 @@
    extra-platforms = aarch64-linux arm-linux
    '';
  };
+ boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+ 
+ virtualisation.libvirtd = {
+   enable = true;
+ };
 
 }
