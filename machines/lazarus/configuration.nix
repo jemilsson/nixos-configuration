@@ -43,6 +43,7 @@
 
  };
 
+/*
  docker-containers = {
    "bpi-build" = {
   image = "sinovoip/bpi-build-linux-4.4";
@@ -52,6 +53,7 @@
   extraDockerOptions = [  ];
 };
  };
+ */
 
  #programs.adb.enable = true;
 
@@ -64,5 +66,11 @@
     #heimdall
     #heimdall-gui
  ];
+
+ nix = {
+   extraOptions = ''
+   extra-platforms = aarch64-linux arm-linux
+   '';
+ };
 
 }

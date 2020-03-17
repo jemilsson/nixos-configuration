@@ -140,6 +140,8 @@ networking = {
 };
 
 nix = {
+  daemonIONiceLevel = 7;
+  daemonNiceLevel = 19;
   autoOptimiseStore = true;
   gc = {
     automatic = true;
