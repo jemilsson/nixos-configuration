@@ -12,6 +12,7 @@
 
   boot.loader = {
     systemd-boot.enable = true;
+    initScript.enable = true;
     efi.canTouchEfiVariables = true;
   };
 
@@ -73,7 +74,7 @@
    '';
  };
  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
- 
+
  virtualisation.libvirtd = {
    enable = true;
  };
