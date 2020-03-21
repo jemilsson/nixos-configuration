@@ -43,7 +43,7 @@ in
 
      displayManager.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
-        Xft.dpi: ${dpi}
+        Xft.dpi: ${toString dpi}
        EOF
       '';
 
