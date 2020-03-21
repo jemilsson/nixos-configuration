@@ -41,7 +41,7 @@ in
      desktopManager.gnome3.enable = true;
      dpi = dpi;
 
-     sessionCommands = ''
+     displayManager.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
         Xft.dpi: ${dpi}
        EOF
