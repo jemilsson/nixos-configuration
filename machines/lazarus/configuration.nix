@@ -37,7 +37,7 @@
      videoDrivers = [ "intel" "modesetting" ];
 
      desktopManager.gnome3.enable = true;
-     dpi = 96;
+     dpi = 120;
 
    };
    undervolt = {
