@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  dpi = 120;
+in
 {
   imports = [
     ../../config/laptop_base.nix
@@ -37,7 +39,13 @@
      videoDrivers = [ "intel" "modesetting" ];
 
      desktopManager.gnome3.enable = true;
-     dpi = 120;
+     dpi = dpi;
+
+     sessionCommands = ''
+      ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
+        Xft.dpi: ${dpi}
+       EOF
+      '';
 
    };
    undervolt = {
