@@ -41,12 +41,13 @@ in
      desktopManager.gnome3.enable = true;
      dpi = dpi;
 
+     /*
      displayManager.sessionCommands = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
         Xft.dpi: ${toString dpi}
        EOF
       '';
-
+    */
    };
    undervolt = {
      enable = false;
