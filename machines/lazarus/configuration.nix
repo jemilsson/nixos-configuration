@@ -13,6 +13,8 @@
   boot.loader = {
     systemd-boot.enable = true;
     initScript.enable = true;
+
+
     efi.canTouchEfiVariables = true;
   };
 
@@ -35,7 +37,7 @@
      videoDrivers = [ "intel" "modesetting" ];
 
      desktopManager.gnome3.enable = true;
-     dpi = 144;
+     dpi = 120;
 
    };
    undervolt = {
