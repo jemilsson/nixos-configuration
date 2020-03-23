@@ -58,25 +58,8 @@ in
    enable = true;
  };
 
- boot.kernelPatches = [ {
-        name = "sof-sound";
-        patch = null;
-        extraConfig = ''
-        SND_SOC_SOF = m
-        SND_SOC_SOF_PROBE_WORK_QUEUE = y
-        SND_SOC_SOF_INTEL_TOPLEVEL = y
-        SND_SOC_SOF_INTEL_PCI = m
-        SND_SOC_SOF_INTEL_COMMON = m
-        SND_SOC_SOF_CANNONLAKE_SUPPORT = y
-        SND_SOC_SOF_CANNONLAKE = m
-        SND_SOC_SOF_HDA_COMMON = m
-        SND_SOC_SOF_HDA_LINK = y
-        SND_SOC_SOF_HDA_AUDIO_CODEC = y
-        SND_SOC_SOF_HDA_COMMON_HDMI_CODEC = y
-        SND_SOC_SOF_HDA_LINK_BASELINE = m
-        SND_SOC_SOF_HDA = m
-        SND_SOC_SOF_XTENSA = m
-              '';
-        } ];
+ boot.extraModprobeConfig = ''
+  options snd-intel-dspcfg dsp_driver=1
+ '';
 
 }
