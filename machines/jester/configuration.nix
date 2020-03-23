@@ -39,6 +39,7 @@ in
 
    fprintd = {
      enable = true;
+     package = pkgs.unstable.fprintd-thinkpad;
    };
  };
 
