@@ -37,6 +37,9 @@ in
      enable = false;
    };
 
+   fprintd = {
+     enable = true;
+   };
  };
 
  environment.systemPackages = with pkgs; [

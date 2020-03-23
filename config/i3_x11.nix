@@ -6,6 +6,7 @@ let
     pkgs.paper-icon-theme
     pkgs.gnome2.gnome_icon_theme
     pkgs.gnome3.adwaita-icon-theme
+    pkgs.pantheon.elementary-icon-theme
      ]);
 in
 {
@@ -56,7 +57,7 @@ in
         };
 
         sessionCommands = ''
-        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS
+        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS NO_AT_BRIDGE
       '';
       };
 
