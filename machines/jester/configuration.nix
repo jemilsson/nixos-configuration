@@ -62,7 +62,7 @@ in
         name = "sof-sound";
         patch = null;
         extraConfig = ''
-        CONFIG_SND_SOC_SOF_INTEL_TOPLEVEL=y
+        SND_SOC_SOF_INTEL_TOPLEVEL y
               '';
         } ];
 
