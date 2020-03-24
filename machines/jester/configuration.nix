@@ -59,7 +59,7 @@ in
  };
 
  boot.extraModprobeConfig = ''
-  options snd-intel-dspcfg dsp_driver=1
+  options snd-intel-dspcfg dsp_driver=3
  '';
 
 }
