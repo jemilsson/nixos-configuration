@@ -174,6 +174,7 @@ in
 
     #Terminal system tools
     lm_sensors
+    picocom
 
 
 
