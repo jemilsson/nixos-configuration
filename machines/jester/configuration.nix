@@ -44,7 +44,7 @@ in
  };
 
  environment.systemPackages = with pkgs; [
-
+  virtmanager
  ];
 
  nix = {
@@ -54,12 +54,17 @@ in
  };
  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
- virtualisation.libvirtd = {
-   enable = true;
- };
-
  boot.extraModprobeConfig = ''
   options snd-intel-dspcfg dsp_driver=0
  '';
+
+ virtualisation = {
+  libvirtd = {
+    enable = true;
+  };
+ };
+
+
+ };
 
 }
