@@ -59,9 +59,12 @@ in
  '';
 
  virtualisation = {
+  kvmgt = {
+    enable = true;
+  };
   libvirtd = {
     enable = true;
   };
  };
- 
+
 }
