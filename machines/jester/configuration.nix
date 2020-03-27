@@ -24,12 +24,6 @@ in
 
   networking = {
     hostName = "jester";
-
-    bridges = {
-      "br-wlan" = {
-        interfaces = [ "wlp0s20f3" ];
-      };
-    };
   };
 
  services = {
