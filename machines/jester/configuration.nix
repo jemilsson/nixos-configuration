@@ -20,6 +20,7 @@ in
 
   boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
+  boot.kernelModules = [ "kvm-intel" ];
  services = {
    xserver = {
      videoDrivers = [ "intel" "modesetting" ];
