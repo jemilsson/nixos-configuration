@@ -9,18 +9,29 @@ in
     ../../config/language/english.nix
   ];
 
-  networking.hostName = "jester";
   system.stateVersion = "19.03";
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelModules = [ "kvm-intel" ];
+
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
+  networking = {
+    hostName = "jester";
 
-  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+    bridges = {
+      "br-wlan" = {
+        interfaces = [ "wlp0s20f3" ];
+      };
+    };
+  };
 
-  boot.kernelModules = [ "kvm-intel" ];
  services = {
    xserver = {
      videoDrivers = [ "intel" "modesetting" ];
@@ -53,11 +64,6 @@ in
    extra-platforms = aarch64-linux arm-linux
    '';
  };
- boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
- boot.extraModprobeConfig = ''
-  options snd-intel-dspcfg dsp_driver=0
- '';
 
  virtualisation = {
   kvmgt = {
