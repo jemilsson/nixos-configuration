@@ -8,7 +8,6 @@ in
     ../../config/i3_x11.nix
     ../../config/language/english.nix
   ];
-services.openssh.permitRootLogin
   system.stateVersion = "19.03";
 
   boot = {
@@ -29,7 +28,6 @@ services.openssh.permitRootLogin
       br0 = {
         interfaces = [];
       };
-
     };
   };
 
