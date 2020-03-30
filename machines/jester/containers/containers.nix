@@ -1,4 +1,5 @@
 { config, pkgs, stdenv, ... }:
 {
-  "testclient" = import ./testclient/container.nix { pkgs = pkgs; config=config; };
+  "testclient1" = import ./testclient1/container.nix { pkgs = pkgs; config=config; };
+  "testclient2" = import ./testclient1/container.nix { pkgs = pkgs; config=config; };
 }

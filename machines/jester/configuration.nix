@@ -29,6 +29,9 @@ in
       br0 = {
         interfaces = [];
       };
+      br1 = {
+        interfaces = [];
+      };
     };
   };
 
