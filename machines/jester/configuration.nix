@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 let
+  containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   dpi = 144;
 in
 {
@@ -72,5 +73,7 @@ in
     enable = true;
   };
  };
+
+ inherit containers;
 
 }
