@@ -8,7 +8,7 @@ in
     ../../config/i3_x11.nix
     ../../config/language/english.nix
   ];
-
+services.openssh.permitRootLogin
   system.stateVersion = "19.03";
 
   boot = {
@@ -24,6 +24,13 @@ in
 
   networking = {
     hostName = "jester";
+
+    bridges = {
+      br0 = {
+        interfaces = [];
+      };
+
+    };
   };
 
  services = {
