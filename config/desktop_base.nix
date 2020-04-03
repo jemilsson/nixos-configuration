@@ -176,7 +176,7 @@ in
     lm_sensors
     picocom
 
-
+    gnome3.gvfs
 
   ];
   programs = {
