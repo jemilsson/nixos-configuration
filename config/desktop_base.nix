@@ -249,9 +249,9 @@ in
   };
 
 
-  #services = {
-  #    autofs.enable = true;
-  #};
+  services = {
+      gvfs.enable = true;
+  };
 
   systemd = {
     user = {
