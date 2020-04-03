@@ -84,7 +84,7 @@ in
     deluge
 
     #Programming
-    unstable.atom
+    atom
 
     (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 ]))
 
