@@ -17,7 +17,7 @@ in
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.unstable.linuxPackages_latest;
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "acpi_call" ];
 
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
