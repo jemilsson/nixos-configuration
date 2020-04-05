@@ -14,7 +14,7 @@ in
 
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "ondemand";
+    # cpuFreqGovernor = "ondemand";
   };
 
   gtk.iconCache.enable = true;
