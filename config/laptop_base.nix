@@ -12,9 +12,16 @@
     };
   };
   services = {
-    tlp.enable = true;
     illum.enable = true;
     localtime.enable = true;
+
+    tlp = {
+      enable = true;
+      extraConfig = ''
+      CPU_SCALING_GOVERNOR_ON_AC=ondemand
+      CPU_SCALING_GOVERNOR_ON_BAT=conservative
+      '';
+    };
   };
   networking.networkmanager.wifi.powersave = true;
 
