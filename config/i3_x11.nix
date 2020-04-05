@@ -10,7 +10,16 @@ let
      ]);
 in
 {
+  sound.mediaKeys.enable = true;
+
+
   services = {
+
+    actkbd = {
+      enable = true;
+
+    };
+
     xserver = {
       enable = true;
       layout = "se";
