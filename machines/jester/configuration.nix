@@ -49,7 +49,7 @@ in
     */
    };
    undervolt = {
-     enable = true;
+     enable = false;
    };
 
    fprintd = {
