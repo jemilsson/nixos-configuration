@@ -71,7 +71,7 @@ in
     unstable.firefox
     unstable.chromium
     unstable.google-chrome
-    tor-browser-bundle-bin
+    #tor-browser-bundle-bin
 
     #Media
     spotify
@@ -340,10 +340,10 @@ in
 
      upower.enable = true;
 
-     tor = {
-       enable = true;
-       client.enable = true;
-     };
+     #tor = {
+      # enable = true;
+      # client.enable = true;
+     #};
 
      gpm.enable = true;
 
