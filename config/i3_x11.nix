@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 let
+/*
   taffybar = pkgs.haskellPackages.ghcWithPackages (self: [
     self.taffybar
     pkgs.hicolor-icon-theme
@@ -7,8 +8,10 @@ let
     pkgs.gnome2.gnome_icon_theme
     pkgs.gnome3.adwaita-icon-theme
     pkgs.pantheon.elementary-icon-theme
-    pkgs.haskellPackages.gi-gtk_4_0_1
      ]);
+*/
+taffybar = pkgs.unstable.taffybar;
+
 in
 {
   sound.mediaKeys.enable = true;
