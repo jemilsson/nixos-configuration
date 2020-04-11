@@ -74,7 +74,7 @@ programs = {
   };
 };
 
-boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+#boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
 
 environment = {
   #disrupts git
