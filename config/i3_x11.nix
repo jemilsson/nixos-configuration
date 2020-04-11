@@ -10,7 +10,7 @@ let
     pkgs.pantheon.elementary-icon-theme
      ]);
 */
-taffybar = pkgs.unstable.taffybar;
+taffybar = pkgs.unstable-small.taffybar;
 
 in
 {
