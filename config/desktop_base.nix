@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
+  #scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
 in
 {
   imports = [
@@ -154,7 +154,7 @@ in
     yubikey-manager
     openssl
     unstable.libp11
-    scd-pkcs11
+    #scd-pkcs11
     kdeApplications.kleopatra
 
     pass
