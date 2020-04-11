@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
     owner = "sektioneins";
     repo = "scd-pkcs11";
     rev = "5c7df15579832776909958d524a149777ec1c51f";
-    sha256 = "1hz2x29qhm9ryajrxssigqlrh6g77vi8ncmasvcqbabfkc2njwwa";
+    sha256 = "10cl46gq4hq5n5avmpvcn9fw3h3mpwasflz4m99gc5cdlx22wwsg";
   };
   doCheck = false;
   buildInputs = [ libgcrypt libgpgerror libassuan ];
