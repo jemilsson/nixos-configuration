@@ -5,8 +5,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "sektioneins";
     repo = "scd-pkcs11";
-    rev = "6356e8e90e6c4c7078c448380d79bc1623183c6b";
-    sha256 = "1hz2x29qhm9ryajrxssigqlrh6g77vi8ncmasvcqbabfkc2njwwx";
+    rev = "5c7df15579832776909958d524a149777ec1c51f";
+    sha256 = "1hz2x29qhm9ryajrxssigqlrh6g77vi8ncmasvcqbabfkc2njwwa";
   };
   doCheck = false;
   buildInputs = [ libgcrypt libgpgerror libassuan ];
