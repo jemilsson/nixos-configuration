@@ -119,6 +119,7 @@ in
     gparted
     file
     keepass
+    shutter
 
     #Office
     libreoffice
