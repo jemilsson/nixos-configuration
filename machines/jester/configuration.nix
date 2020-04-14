@@ -1,7 +1,7 @@
 { config, lib, pkgs, stdenv, ... }:
 let
   containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
-  dpi = 144;
+  dpi = 96;
 in
 {
   imports = [
