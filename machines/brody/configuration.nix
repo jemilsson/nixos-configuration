@@ -114,6 +114,8 @@ in
   python2nix
   pypi2nix
 
+  unstable.pmacct
+
  ];
 
  users.users."deconz" = {
@@ -143,8 +145,4 @@ in
        };
      };
 
-
-environment.systemPackages = with pkgs; [
-  pmacct
-     ];
 }
