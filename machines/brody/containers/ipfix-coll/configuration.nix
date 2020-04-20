@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-pmacctd_config = pkgs.writeText "nfacctd.config" ''
+nfacctd_config = pkgs.writeText "nfacctd.config" ''
 #daemonize: true
 daemonize: false
 pmacctd_nonroot: true
