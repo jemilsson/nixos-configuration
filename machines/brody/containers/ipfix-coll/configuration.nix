@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 let
+nfacctd_datadir = "/var/nfacctd/";
 nfacctd_config = pkgs.writeText "nfacctd.config" ''
 #daemonize: true
 daemonize: false
@@ -8,7 +9,7 @@ aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, ds
 plugins: print
 nfacctd_port: 9995
 nfacctd_renormalize: true
-print_output_file: /var/nfacctd/ipfix.json
+print_output_file: ${nfacctd_datadir}/ipfix.json
 '';
 in
 {
@@ -51,7 +52,14 @@ systemd.services.nfacctd = {
 
       serviceConfig = {
         ExecStart = "${pkgs.unstable.pmacct}/bin/nfacctd -f ${nfacctd_config}";
-        DynamicUser = true;
+        User = "nfacctd";
+        Group = "nfacctd";
       };
+
+      preStart =
+          ''
+          mkdir -m 0700 -p ${nfacctd_datadir}
+          chown -R nfacctd:nfacctd ${nfacctd_datadir}
+          ''; # */
   };
 }
