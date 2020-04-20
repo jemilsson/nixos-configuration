@@ -54,7 +54,7 @@ systemd.services.pmacctd = {
       serviceConfig = {
         AmbientCapabilities = "CAP_NET_BIND_SERVICE,CAP_NET_ADMIN";
         CapabilityBoundingSet = "CAP_NET_BIND_SERVICE,CAP_NET_ADMIN";
-        ExecStart = "${pkgs.unstable.pmacct}/bin/pmacctd - ${pmacctd_config}";
+        ExecStart = "${pkgs.unstable.pmacct}/bin/pmacctd -f ${pmacctd_config}";
         DynamicUser = true;
       };
   };
