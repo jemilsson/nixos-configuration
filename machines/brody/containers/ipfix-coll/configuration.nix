@@ -8,7 +8,7 @@ aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, ds
 plugins: print
 nfacctd_port: 9995
 nfacctd_renormalize: true
-print_output_file: /tmp/ipfix.json
+print_output_file: /var/nfacctd/ipfix.json
 '';
 in
 {
