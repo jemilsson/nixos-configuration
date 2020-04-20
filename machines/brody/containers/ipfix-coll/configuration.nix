@@ -46,7 +46,7 @@ services = {
 
 users.users.nfacctd =
       { name = "nfacctd";
-        #group = "nfacctd";
+        group = "nfacctd";
         home = "${nfacctd_datadir}";
       };
 
