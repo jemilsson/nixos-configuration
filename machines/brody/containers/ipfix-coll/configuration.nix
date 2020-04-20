@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-nfacctd_datadir = "/var/nfacctd/";
+nfacctd_datadir = "/var/lib/nfacctd/";
 nfacctd_config = pkgs.writeText "nfacctd.config" ''
 #daemonize: true
 daemonize: false
