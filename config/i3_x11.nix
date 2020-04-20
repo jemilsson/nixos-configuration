@@ -20,8 +20,9 @@ in
 
     actkbd = {
       enable = true;
-
     };
+
+    system-config-printer.enable = true;
 
     xserver = {
       enable = true;
@@ -104,6 +105,8 @@ in
         enable = true;
         lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
       };
+
+      system-config-printer.enable = true;
   };
 
   systemd = {
