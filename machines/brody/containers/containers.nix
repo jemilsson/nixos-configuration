@@ -23,5 +23,6 @@
   "pbx" = import ./pbx/container.nix { pkgs = pkgs; config=config; };
   "avahi" = import ./avahi/container.nix { pkgs = pkgs; config=config; };
   "rpki" = import ./rpki/container.nix { pkgs = pkgs; config=config; };
+  "ipfix-distributor" = import ./ipfix-distributor/container.nix { pkgs = pkgs; config=config; };
 
 }
