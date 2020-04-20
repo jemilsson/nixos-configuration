@@ -35,7 +35,7 @@ environment.systemPackages = with pkgs; [
   unstable.pmacct
 ];
 
-*/
+/*
 services = {
   ntopng = {
     enable = true;
