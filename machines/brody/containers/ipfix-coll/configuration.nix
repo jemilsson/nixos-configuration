@@ -46,7 +46,7 @@ services = {
 
 users.users.nfacctd =
       { name = "nfacctd";
-        group = "nfacctd";
+        #group = "nfacctd";
         home = "${nfacctd_datadir}";
       };
 
@@ -59,7 +59,7 @@ systemd.services.nfacctd = {
       serviceConfig = {
         ExecStart = "${pkgs.unstable.pmacct}/bin/nfacctd -f ${nfacctd_config}";
         User = "nfacctd";
-        Group = "nfacctd";
+        #Group = "nfacctd";
       };
 
       preStart =
