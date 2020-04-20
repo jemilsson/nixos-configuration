@@ -44,6 +44,12 @@ services = {
 };
 */
 
+users.users.nfacctd =
+      { name = "nfacctd";
+        group = "nfacctd";
+        home = "${nfacctd_datadir}";
+      };
+
 systemd.services.nfacctd = {
       description = "nfacctd IPFIX collector";
       after = [ "network.target" ];
