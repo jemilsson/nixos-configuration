@@ -7,7 +7,7 @@ daemonize: false
 pmacctd_nonroot: true
 aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, dst_mac, timestamp_arrival
 plugins: print
-nfacctd_port: 9995
+nfacctd_port: 4739
 nfacctd_renormalize: true
 print_output_file: ${nfacctd_datadir}/ipfix.json
 print_refresh_time: 10
