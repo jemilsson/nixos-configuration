@@ -253,6 +253,9 @@ in
 
   services = {
       gvfs.enable = true;
+      printing  = {
+        enable = true;    
+      };
   };
 
   systemd = {
