@@ -64,7 +64,7 @@ systemd.services.nfacctd = {
 
       preStart =
           ''
-          mkdir -m 0700 -p ${nfacctd_datadir}
+          mkdir -m 644 -p ${nfacctd_datadir}
           chown -R nfacctd:nfacctd ${nfacctd_datadir}
           ''; # */
   };
