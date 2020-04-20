@@ -1,16 +1,14 @@
 { config, pkgs, ... }:
 let
-pmacctd_config = pkgs.writeText "pmacctd.config" ''
+pmacctd_config = pkgs.writeText "nfacctd.config" ''
 #daemonize: true
 daemonize: false
 pmacctd_nonroot: true
-interface: enp0s20f1
 aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, dst_mac, timestamp_arrival
-plugins: nfprobe
-nfprobe_receiver: 10.5.20.14:9995
-! Do IPFIX:
-nfprobe_version: 10
-nfprobe_timeouts: tcp=30:maxlife=60
+plugins: print
+nfacctd_port: 9995
+nfacctd_renormalize: true
+print_output_file: /tmp/ipfix.json
 '';
 in
 {
@@ -22,7 +20,6 @@ networking = {
   firewall = {
     enable = false;
   };
-  interfaces."enp0s20f1".useDHCP = false;
 
   nameservers = [ "10.5.20.1" ];
 
@@ -46,16 +43,14 @@ services = {
 };
 */
 
-systemd.services.pmacctd = {
-      description = "pmacctd IPFIX distributor";
+systemd.services.nfacctd = {
+      description = "nfacctd IPFIX collector";
       after = [ "network.target" ];
       before = [ "nss-lookup.target" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        AmbientCapabilities = "CAP_NET_ADMIN CAP_NET_RAW";
-        CapabilityBoundingSet = "CAP_NET_ADMIN CAP_NET_RAW";
-        ExecStart = "${pkgs.unstable.pmacct}/bin/pmacctd -f ${pmacctd_config}";
+        ExecStart = "${pkgs.unstable.pmacct}/bin/nfacctd -f ${nfacctd_config}";
         DynamicUser = true;
       };
   };

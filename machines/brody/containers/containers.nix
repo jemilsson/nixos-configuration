@@ -24,5 +24,6 @@
   "avahi" = import ./avahi/container.nix { pkgs = pkgs; config=config; };
   "rpki" = import ./rpki/container.nix { pkgs = pkgs; config=config; };
   "ipfix-dist" = import ./ipfix-dist/container.nix { pkgs = pkgs; config=config; };
+  "ipfix-coll" = import ./ipfix-dist/container.nix { pkgs = pkgs; config=config; };
 
 }
