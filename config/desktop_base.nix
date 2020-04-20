@@ -254,7 +254,12 @@ in
   services = {
       gvfs.enable = true;
       printing  = {
-        enable = true;    
+        enable = true;
+      };
+      avahie = {
+        nssmdn = {
+          enable = true;
+        };
       };
   };
 
