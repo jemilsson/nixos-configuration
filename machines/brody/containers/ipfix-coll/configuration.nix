@@ -10,6 +10,8 @@ plugins: print
 nfacctd_port: 9995
 nfacctd_renormalize: true
 print_output_file: ${nfacctd_datadir}/ipfix.json
+print_refresh_time: 10
+print_output: json
 '';
 in
 {
