@@ -257,7 +257,7 @@ in
         enable = true;
       };
       avahi = {
-        nssmds = {
+        nssmdns = {
           enable = true;
         };
       };
