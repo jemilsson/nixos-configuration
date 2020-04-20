@@ -256,7 +256,7 @@ in
       printing  = {
         enable = true;
       };
-      avahie = {
+      avahi = {
         nssmdn = {
           enable = true;
         };
