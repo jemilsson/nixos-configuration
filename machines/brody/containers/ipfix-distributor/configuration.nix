@@ -57,4 +57,5 @@ systemd.services.pmacctd = {
         ExecStart = "${pkgs.unstable.pmacct}/bin/pmacctd - ${pmacctd_config}";
         DynamicUser = true;
       };
+  };
 }
