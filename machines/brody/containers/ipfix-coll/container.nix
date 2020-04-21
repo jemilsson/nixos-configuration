@@ -3,7 +3,7 @@
   config = import ./configuration.nix { pkgs = pkgs; config=config; };
   hostBridge = "br1020";
   localAddress = "10.5.20.14/24";
-  localAddress6 = "2001:470:dc6b::14/64";
+  localAddress6 = "2a0e:b107:330::14/64";
   autoStart = true;
   privateNetwork = true;
   #interfaces = [ "enp0s20f1" ];

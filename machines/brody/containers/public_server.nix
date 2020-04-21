@@ -9,7 +9,7 @@ networking = {
   };
 
   defaultGateway6 = {
-    address = "2001:470:dc6b::1";
+    address = "2a0e:b107:330::1";
     interface = "eth0";
   };
 };
