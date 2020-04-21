@@ -6,7 +6,7 @@
        recommendedProxySettings=true;
        recommendedTlsSettings = true;
        recommendedGzipSettings = true;
-       sslCiphers = "EECDH+AES256+GCM:EDH+AES256+GCM";
+       #sslCiphers = "EECDH+AES256+GCM:EDH+AES256+GCM";
        appendHttpConfig="server_names_hash_bucket_size 128; add_header Strict-Transport-Security \"max-age=31536000; includeSubDomains; preload\" always;";
        sslDhparam = "/var/lib/dhparams/nginx.pem";
        statusPage = true;
