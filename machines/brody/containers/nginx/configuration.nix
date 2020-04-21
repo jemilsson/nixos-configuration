@@ -21,8 +21,6 @@ services = {
 
        "he.jonasem.com" = {
          inherit forceSSL enableACME;
-         forceSSL = true;
-         enableACME = true;
          locations = {
            "/" = {
            root = "/var/www/he.jonasem.com";
