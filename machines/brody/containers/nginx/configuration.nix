@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 let
+forceSSL = true;
+enableACME = true;
 in
 {
   imports = [
@@ -18,6 +20,7 @@ services = {
         };
 
        "he.jonasem.com" = {
+         inherit forceSSL enableACME;
          forceSSL = true;
          enableACME = true;
          locations = {
