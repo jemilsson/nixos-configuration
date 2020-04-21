@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../../../config/minimum.nix
     ../public_server.nix
 ];
 
