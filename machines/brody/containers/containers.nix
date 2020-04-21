@@ -25,6 +25,6 @@
   "rpki" = import ./rpki/container.nix { pkgs = pkgs; config=config; };
   "ipfix-dist" = import ./ipfix-dist/container.nix { pkgs = pkgs; config=config; };
   "ipfix-coll" = import ./ipfix-coll/container.nix { pkgs = pkgs; config=config; };
-  "influx" = import ./ipfix-coll/container.nix { pkgs = pkgs; config=config; };
+  "influx" = import ./influx/container.nix { pkgs = pkgs; config=config; };
 
 }
