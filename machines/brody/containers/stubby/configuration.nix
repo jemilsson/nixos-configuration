@@ -3,20 +3,8 @@ let
 in
 {
   imports = [
-    ../../../../config/minimum.nix
+    ../public_server.nix
 ];
-
-networking = {
-  firewall = {
-    enable = false;
-  };
-  nameservers = [ "2001:470:dc6b::1" ];
-
-  defaultGateway6 = {
-    address = "2001:470:dc6b::1";
-    interface = "eth0";
-  };
-};
 
 environment.systemPackages = with pkgs; [
 
