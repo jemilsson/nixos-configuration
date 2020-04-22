@@ -5,7 +5,7 @@ pmacctd_config = pkgs.writeText "pmacctd.config" ''
 daemonize: false
 pmacctd_nonroot: true
 interface: enp0s20f1
-aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, dst_mac, timestamp_arrival
+aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, dst_mac, timestamp_end, timestamp_arrival
 plugins: nfprobe
 nfprobe_receiver: 10.5.20.14:4739
 ! Do IPFIX:

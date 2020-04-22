@@ -5,7 +5,7 @@ nfacctd_config = pkgs.writeText "nfacctd.config" ''
 #daemonize: true
 daemonize: false
 pmacctd_nonroot: true
-aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, dst_mac, timestamp_arrival
+aggregate: src_host, dst_host, src_port, dst_port, proto, tos, vlan, src_mac, dst_mac, timestamp_arrival, timestamp_end, in_iface, out_iface, peer_src_ip
 plugins: print
 nfacctd_port: 4739
 nfacctd_renormalize: true
