@@ -3,6 +3,7 @@ let
 pmacct = pkgs.callPackage ../../../../packages/pmacct/default.nix {};
 nfacctd_datadir = "/var/lib/nfacctd/";
 nfacctd_config = pkgs.writeText "nfacctd.config" ''
+#debug_internal_msg: true
 debug: true
 #daemonize: true
 daemonize: false
@@ -13,7 +14,7 @@ nfacctd_port: 4739
 nfacctd_renormalize: true
 print_output_file: ${nfacctd_datadir}/ipfix.json
 print_refresh_time: 60
-print_output: json:
+print_output: json
 nfacctd_templates_file: ${nfacctd_datadir}/ipfix-templates.json
 '';
 in
