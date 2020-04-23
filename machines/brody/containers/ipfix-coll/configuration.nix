@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 let
+pmacct = pkgs.callPackage ../../../../packages/pmacct/default.nix {};
 nfacctd_datadir = "/var/lib/nfacctd/";
 nfacctd_config = pkgs.writeText "nfacctd.config" ''
 debug: true
@@ -35,7 +36,7 @@ networking = {
 };
 
 environment.systemPackages = with pkgs; [
-  unstable.pmacct
+  pmacct
 ];
 
 /*
@@ -61,7 +62,7 @@ systemd.services.nfacctd = {
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = "${pkgs.unstable.pmacct}/bin/nfacctd -f ${nfacctd_config}";
+        ExecStart = "${pmacct}/bin/nfacctd -f ${nfacctd_config}";
         User = "nfacctd";
         #Group = "nfacctd";
       };
