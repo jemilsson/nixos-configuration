@@ -1,4 +1,3 @@
-/*
 { stdenv, fetchFromGitHub, pkgconfig, autoreconfHook, libtool, libpcap, zlib, jansson, libnetfilter_log, sqlite, postgresql}
 #with import <nixpkgs> {};
 let
