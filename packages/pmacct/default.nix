@@ -1,8 +1,6 @@
 { stdenv, fetchFromGitHub, pkgconfig, autoreconfHook, libtool, libpcap, zlib, jansson, libnetfilter_log, sqlite, postgresql}
 #with import <nixpkgs> {};
-let
-  inherit (stdenv.lib) optional;
-in
+let inherit (stdenv.lib) optional; in
 stdenv.mkDerivation rec {
   version = "1.7.4p1";
   pname = "pmacct";
