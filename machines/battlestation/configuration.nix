@@ -127,9 +127,6 @@
   xca
 
   unstable.wasabiwallet
-
-  gtk3
-
  ];
 
  nixpkgs.overlays = [
