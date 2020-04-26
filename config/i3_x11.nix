@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-/*
   taffybar = pkgs.haskellPackages.ghcWithPackages (self: [
     self.taffybar
     pkgs.hicolor-icon-theme
@@ -9,8 +8,8 @@ let
     pkgs.gnome3.adwaita-icon-theme
     pkgs.pantheon.elementary-icon-theme
      ]);
-*/
-taffybar = pkgs.unstable-small.taffybar;
+
+#taffybar = pkgs.unstable-small.taffybar;
 
 in
 {
