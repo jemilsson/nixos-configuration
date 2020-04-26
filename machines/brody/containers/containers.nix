@@ -18,10 +18,13 @@
   #"wgtest" = import ./wgtest/container.nix { pkgs = pkgs; config=config; };
   #"ntopng" = import ./ntopng/container.nix { pkgs = pkgs; config=config; };
   "prm01" = import ./prm01/container.nix { pkgs = pkgs; config=config; };
-  "grf01" = import ./grf01/container.nix { pkgs = pkgs; config=config; };
-  "web01" = import ./web01/container.nix { pkgs = pkgs; config=config; };
+  "grafana" = import ./grafana/container.nix { pkgs = pkgs; config=config; };
+  "nginx" = import ./nginx/container.nix { pkgs = pkgs; config=config; };
   "pbx" = import ./pbx/container.nix { pkgs = pkgs; config=config; };
   "avahi" = import ./avahi/container.nix { pkgs = pkgs; config=config; };
   "rpki" = import ./rpki/container.nix { pkgs = pkgs; config=config; };
+  "ipfix-dist" = import ./ipfix-dist/container.nix { pkgs = pkgs; config=config; };
+  "ipfix-coll" = import ./ipfix-coll/container.nix { pkgs = pkgs; config=config; };
+  "influx" = import ./influx/container.nix { pkgs = pkgs; config=config; };
 
 }

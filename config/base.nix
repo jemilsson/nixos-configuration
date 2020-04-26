@@ -11,7 +11,7 @@
 system = {
   autoUpgrade = {
     enable = true;
-    channel = https://nixos.org/channels/nixos-20.03;
+    channel = https://nixos.org/channels/nixos-19.09;
     dates = "03:00";
   };
 };

@@ -119,6 +119,7 @@ in
     gparted
     file
     keepass
+    shutter
 
     #Office
     libreoffice
@@ -252,6 +253,13 @@ in
 
   services = {
       gvfs.enable = true;
+      printing  = {
+        enable = true;
+      };
+      avahi = {
+        nssmdns = true;
+        enable = true;
+      };
   };
 
   systemd = {

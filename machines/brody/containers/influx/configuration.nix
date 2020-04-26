@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 let
+
 in
 {
   imports = [
@@ -7,13 +8,13 @@ in
 ];
 
 environment.systemPackages = with pkgs; [
-
+  influxdb
 ];
 
 services = {
-    stubby = {
-      enable = true;
-      listenAddresses = [ "::/0" ];
-    };
+  influxdb = {
+    enable = true;
   };
+};
+
 }

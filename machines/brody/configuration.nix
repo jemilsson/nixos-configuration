@@ -114,6 +114,8 @@ in
   python2nix
   pypi2nix
 
+  unstable.pmacct
+
  ];
 
  users.users."deconz" = {
@@ -142,4 +144,5 @@ in
          #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
        };
      };
+
 }

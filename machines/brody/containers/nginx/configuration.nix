@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 let
+forceSSL = true;
+enableACME = true;
 in
 {
   imports = [
@@ -18,8 +20,7 @@ services = {
         };
 
        "he.jonasem.com" = {
-         forceSSL = true;
-         enableACME = true;
+         inherit forceSSL enableACME;
          locations = {
            "/" = {
            root = "/var/www/he.jonasem.com";
