@@ -136,8 +136,8 @@ in
     #(unstable-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
 
     #Games
-    #unstable-small.steam
-    (unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
+    unstable-small.steam
+    #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
     (unstable.winetricks.override { wine = unstable.wine.override { wineBuild = "wineWow"; };} )
     (unstable.wine.override { wineBuild = "wineWow"; })
     virtualgl
