@@ -341,7 +341,7 @@ in
        powerline-fonts
        dejavu_fonts
        liberation_ttf
-       emacs-all-the-icons-fontsxrandr: Configure crtc 1 failed
+       emacs-all-the-icons-fonts
      ];
    };
    services = {
