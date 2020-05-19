@@ -87,10 +87,11 @@ in
     #Programming
     atom
 
-    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 ]))
+    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn ]))
 
     insomnia
     emacs
+
 
     #Interface
     alacritty
