@@ -341,7 +341,7 @@ in
        powerline-fonts
        dejavu_fonts
        liberation_ttf
-       emacs-all-the-icons-fonts
+       emacs-all-the-icons-fontsxrandr: Configure crtc 1 failed
      ];
    };
    services = {
@@ -414,5 +414,9 @@ in
       }
       )
     ];
+
+    nixpkgs.config.permittedInsecurePackages = [
+             "p7zip-16.02"
+           ];
 
 }
