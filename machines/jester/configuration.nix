@@ -36,8 +36,6 @@ in
   };
 
  services = {
-   docker.enable = true;
-
    xserver = {
      videoDrivers = [ "intel" "modesetting" ];
      dpi = dpi;
@@ -59,6 +57,8 @@ in
      package = pkgs.unstable.fprintd-thinkpad;
    };
  };
+
+ virtualisation.docker.enable = true;
 
  environment.systemPackages = with pkgs; [
   virtmanager
