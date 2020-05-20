@@ -62,6 +62,8 @@ in
 
  environment.systemPackages = with pkgs; [
   virtmanager
+  docker
+  docker-compose
  ];
 
  nix = {
