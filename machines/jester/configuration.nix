@@ -36,6 +36,8 @@ in
   };
 
  services = {
+   docker.enable = true;
+
    xserver = {
      videoDrivers = [ "intel" "modesetting" ];
      dpi = dpi;
