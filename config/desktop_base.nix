@@ -2,6 +2,7 @@
 let
   #scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
   python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
+  python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 in
 {
   imports = [
@@ -88,7 +89,7 @@ in
     #Programming
     atom
 
-    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu tensorflow numpy pillow ]))
+    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu python3-tflite tensorflow numpy pillow ]))
 
     insomnia
     emacs
