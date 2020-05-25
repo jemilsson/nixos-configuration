@@ -11,4 +11,5 @@ environment = {
   libedgetpu-max
   python3-edgetpu
   ];
+};
 }
