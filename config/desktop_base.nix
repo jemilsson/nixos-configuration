@@ -88,7 +88,7 @@ in
     #Programming
     atom
 
-    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu ]))
+    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu tensorflow ]))
 
     insomnia
     emacs
