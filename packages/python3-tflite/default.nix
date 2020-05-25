@@ -11,7 +11,7 @@ python37.pkgs.buildPythonPackage rec {
   src = python37.pkgs.fetchPypi {
     format = "wheel";
     inherit pname version;
-    sha256 = "1l8ya0cln926x0mx2j5ngl1xwpc0r89hs3wcvb8x8paw3d4dl1ab";
+    sha256 = "1mxy08lvmpqqrbnzh8hd7614hk7fvmplszmviyhrg3hb77j8gs0v";
   };
 
   buildInputs = [ python37Packages.requests python37Packages.requests ];
