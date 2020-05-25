@@ -1,5 +1,5 @@
-#{ stdenv, fetchurl, dpkg   }:
-with import <nixpkgs> {};
+{ stdenv, fetchurl, dpkg   }:
+#with import <nixpkgs> {};
 stdenv.mkDerivation{
   name = "libedgetpu-max_14";
   src = fetchurl {
