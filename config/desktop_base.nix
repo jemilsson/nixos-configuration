@@ -124,7 +124,7 @@ in
 
     #Office
     libreoffice
-    #mupdf
+    mupdf
     #adobe-reader
 
     #Communication
