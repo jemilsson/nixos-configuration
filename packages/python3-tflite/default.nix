@@ -14,6 +14,17 @@ python37.pkgs.buildPythonPackage rec {
     sha256 = "17g13d42dy4xxchryc67spqj7i14ilzclvar6g8b7ypz50adkb9d";
   };
 
-  buildInputs = [ python37Packages.numpy ];
+  buildInputs = [ python37Packages.numpy python37Packages.pip ];
   doCheck = false;
+
+
+
+  preConfigure = ''
+      patchShebangs configure
+      # dummy ldconfig
+      mkdir dummy-ldconfig
+      echo "#!${stdenv.shell}" > dummy-ldconfig/ldconfig
+
+    '';
+
 }
