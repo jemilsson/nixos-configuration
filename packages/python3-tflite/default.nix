@@ -35,7 +35,6 @@ python37.pkgs.buildPythonPackage rec {
 
     configurePhase = ''
       runHook preConfigure
-      ./configure
       runHook postConfigure
     '';
 
