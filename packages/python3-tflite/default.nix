@@ -18,6 +18,7 @@ python37.pkgs.buildPythonPackage rec {
   doCheck = false;
 
   preConfigure = ''
+      mkdir -p $out/lib/
       ln -s ${stdenv.cc.cc.lib}/lib/libstdc++.so.6 $out/lib/
     '';
 
