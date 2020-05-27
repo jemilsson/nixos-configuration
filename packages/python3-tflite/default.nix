@@ -17,6 +17,11 @@ python37.pkgs.buildPythonPackage rec {
   buildInputs = [ python37Packages.numpy python37Packages.pip ];
   doCheck = false;
 
+  preConfigure = ''
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${stdenv.cc.cc.lib}/lib/libstdc++.so.6"
+  '';
+
+
   preShellHook = ''
       mkdir -p $out/lib/
       ln -s ${stdenv.cc.cc.lib}/lib/libstdc++.so.6 $out/lib/
