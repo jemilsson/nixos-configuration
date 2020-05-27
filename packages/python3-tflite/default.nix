@@ -17,7 +17,7 @@ python37.pkgs.buildPythonPackage rec {
   buildInputs = [ python37Packages.numpy python37Packages.pip ];
   doCheck = false;
 
-  preConfigure = ''
+  installPhase = ''
       mkdir -p $out/lib/
       ln -s ${stdenv.cc.cc.lib}/lib/libstdc++.so.6 $out/lib/
     '';
