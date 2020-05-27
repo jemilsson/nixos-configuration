@@ -27,7 +27,6 @@ python37.pkgs.buildPythonPackage rec {
       export PATH="$PWD/dummy-ldconfig:$PATH"
 
       export PYTHON_LIB_PATH="$NIX_BUILD_TOP/site-packages"
-      export CC_OPT_FLAGS="${lib.concatStringsSep " " opt_flags}"
       mkdir -p "$PYTHON_LIB_PATH"
       # To avoid mixing Python 2 and Python 3
       unset PYTHONPATH
