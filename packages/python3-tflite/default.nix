@@ -21,10 +21,13 @@ python37.pkgs.buildPythonPackage rec {
 
   preConfigure = ''
       patchShebangs configure
+
       # dummy ldconfig
       mkdir dummy-ldconfig
       echo "#!${stdenv.shell}" > dummy-ldconfig/ldconfig
-
+      chmod +x dummy-ldconfig/ldconfig
+      export PATH="$PWD/dummy-ldconfig:$PATH"
+      
     '';
 
 }
