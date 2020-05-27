@@ -17,8 +17,6 @@ python37.pkgs.buildPythonPackage rec {
   buildInputs = [ python37Packages.numpy python37Packages.pip ];
   doCheck = false;
 
-
-
   preConfigure = ''
       patchShebangs configure
 
@@ -27,7 +25,19 @@ python37.pkgs.buildPythonPackage rec {
       echo "#!${stdenv.shell}" > dummy-ldconfig/ldconfig
       chmod +x dummy-ldconfig/ldconfig
       export PATH="$PWD/dummy-ldconfig:$PATH"
-      
+
+      export PYTHON_LIB_PATH="$NIX_BUILD_TOP/site-packages"
+      export CC_OPT_FLAGS="${lib.concatStringsSep " " opt_flags}"
+      mkdir -p "$PYTHON_LIB_PATH"
+      # To avoid mixing Python 2 and Python 3
+      unset PYTHONPATH
+    '';
+
+
+    configurePhase = ''
+      runHook preConfigure
+      ./configure
+      runHook postConfigure
     '';
 
 }
