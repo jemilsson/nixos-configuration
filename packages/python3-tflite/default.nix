@@ -26,7 +26,6 @@ python37.pkgs.buildPythonPackage rec {
       export PYTHON_LIB_PATH="$NIX_BUILD_TOP/site-packages"
       mkdir -p "$PYTHON_LIB_PATH"
       # To avoid mixing Python 2 and Python 3
-      unset PYTHONPATH
   '';
 
 }
