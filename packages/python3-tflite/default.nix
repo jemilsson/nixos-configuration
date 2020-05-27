@@ -18,24 +18,7 @@ python37.pkgs.buildPythonPackage rec {
   doCheck = false;
 
   preConfigure = ''
-      patchShebangs configure
-
-      # dummy ldconfig
-      mkdir dummy-ldconfig
-      echo "#!${stdenv.shell}" > dummy-ldconfig/ldconfig
-      chmod +x dummy-ldconfig/ldconfig
-      export PATH="$PWD/dummy-ldconfig:$PATH"
-
-      export PYTHON_LIB_PATH="$NIX_BUILD_TOP/site-packages"
-      mkdir -p "$PYTHON_LIB_PATH"
-      # To avoid mixing Python 2 and Python 3
-      unset PYTHONPATH
-    '';
-
-
-    configurePhase = ''
-      runHook preConfigure
-      runHook postConfigure
+      ln -s ${stdenv.cc.cc.lib}/lib/libstdc++.so.6 $out/lib/
     '';
 
 }
