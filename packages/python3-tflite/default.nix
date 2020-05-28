@@ -1,4 +1,4 @@
-{ stdenv, lib, python37, fetchurl, python37Packages  }:
+{ stdenv, lib, python37, fetchurl, python37Packages, zlib }:
 #with import <nixpkgs> {};
 
 python37.pkgs.buildPythonPackage rec {
