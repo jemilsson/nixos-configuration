@@ -14,7 +14,7 @@ stdenv.mkDerivation{
 
   propagatedBuildInputs = [
     libedgetpu-dev
-    libedgetpu-max 
+    libedgetpu-max
   ];
 
   dontConfigure = true;
@@ -27,5 +27,18 @@ stdenv.mkDerivation{
   cp -r usr/* .
   cp -r . $out
   '';
+
+  postFixup = let
+    rpath = stdenv.lib.makeLibraryPath
+      (
+        [ stdenv.cc.cc.lib zlib libedgetpu-dev libedgetpu-max]
+      );
+  in
+  ''
+    rrPath="${libedgetpu-max}/lib/x86_64-linux-gnu:${rpath}"
+    find $out -name '*.so' -exec patchelf --set-rpath "$rrPath" {} \;
+  '';
+
+
   doCheck = false;
 }
