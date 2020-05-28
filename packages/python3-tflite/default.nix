@@ -2,6 +2,8 @@
 #with import <nixpkgs> {};
 let
   python3-edgetpu = pkgs.callPackage ../python3-edgetpu/default.nix {};
+  libedgetpu-dev = pkgs.callPackage ../libedgetpu-dev/default.nix {};
+  libedgetpu-max = pkgs.callPackage ../libedgetpu-max/default.nix {};
 in
 python37.pkgs.buildPythonPackage rec {
   pname = "tflite";
@@ -15,7 +17,7 @@ python37.pkgs.buildPythonPackage rec {
     sha256 = "17g13d42dy4xxchryc67spqj7i14ilzclvar6g8b7ypz50adkb9d";
   };
 
-  buildInputs = [ python37Packages.numpy];
+  buildInputs = [ python37Packages.numpy libedgetpu-dev libedgetpu-max];
 
   propagatedBuildInputs = [
     python37Packages.numpy python3-edgetpu
@@ -28,7 +30,7 @@ python37.pkgs.buildPythonPackage rec {
   postFixup = let
     rpath = stdenv.lib.makeLibraryPath
       (
-        [ stdenv.cc.cc.lib zlib python3-edgetpu]
+        [ stdenv.cc.cc.lib zlib python3-edgetpu libedgetpu-dev libedgetpu-max]
       );
   in
   ''
