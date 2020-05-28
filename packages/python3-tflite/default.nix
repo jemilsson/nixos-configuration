@@ -36,8 +36,7 @@ python37.pkgs.buildPythonPackage rec {
       );
   in
   ''
-    rrPath="$out/${python37.sitePackages}/tflite_runtime/:${rpath}"
-    internalLibPath="$out/${python37.sitePackages}/tensorflow/python/_pywrap_tensorflow_internal.so"
+    rrPath="${libedgetpu-max}/lib/x86_64-linux-gnu:${rpath}"
     find $out -name '*.so' -exec patchelf --set-rpath "$rrPath" {} \;
   '';
 
