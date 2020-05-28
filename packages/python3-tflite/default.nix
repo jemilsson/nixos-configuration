@@ -1,6 +1,8 @@
 { stdenv, lib, python37, fetchurl, python37Packages, zlib }:
 #with import <nixpkgs> {};
-
+let
+  python3-edgetpu = pkgs.callPackage ../python3-edgetpu/default.nix {};
+in
 python37.pkgs.buildPythonPackage rec {
   pname = "tflite";
   version = "2.2.0";
@@ -16,7 +18,7 @@ python37.pkgs.buildPythonPackage rec {
   buildInputs = [ python37Packages.numpy];
 
   propagatedBuildInputs = [
-    python37Packages.numpy
+    python37Packages.numpy python3-edgetpu
   ];
 
   checkPhase = ''
@@ -26,7 +28,7 @@ python37.pkgs.buildPythonPackage rec {
   postFixup = let
     rpath = stdenv.lib.makeLibraryPath
       (
-        [ stdenv.cc.cc.lib zlib ]
+        [ stdenv.cc.cc.lib zlib python3-edgetpu]
       );
   in
   ''
