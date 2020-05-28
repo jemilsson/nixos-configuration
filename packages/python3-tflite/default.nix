@@ -1,4 +1,4 @@
-{ stdenv, lib, python37, fetchurl, python37Packages, zlib }:
+{ stdenv, lib, python37, fetchurl, python37Packages, zlib, pkgs }:
 #with import <nixpkgs> {};
 let
   python3-edgetpu = pkgs.callPackage ../python3-edgetpu/default.nix {};
