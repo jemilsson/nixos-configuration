@@ -1,6 +1,5 @@
-{ stdenv, lib, python37, fetchurl, python37Packages  }:
-
-#with import <nixpkgs> {};
+#{ stdenv, lib, python37, fetchurl, python37Packages  }:
+with import <nixpkgs> {};
 
 python37.pkgs.buildPythonPackage rec {
   pname = "tflite";
@@ -14,7 +13,7 @@ python37.pkgs.buildPythonPackage rec {
     sha256 = "17g13d42dy4xxchryc67spqj7i14ilzclvar6g8b7ypz50adkb9d";
   };
 
-  buildInputs = [ python37Packages.numpy python37Packages.pip  glibcLocales];
+  buildInputs = [ python37Packages.numpy];
 
   propagatedBuildInputs = [
     python37Packages.numpy
@@ -22,21 +21,6 @@ python37.pkgs.buildPythonPackage rec {
 
   checkPhase = ''
     python -c 'import tflite_runtime.interpreter'
-  '';
-
-
-  preConfigure = ''
-      patchShebangs configure
-
-      # dummy ldconfig
-      mkdir dummy-ldconfig
-      echo "#!${stdenv.shell}" > dummy-ldconfig/ldconfig
-      chmod +x dummy-ldconfig/ldconfig
-      export PATH="$PWD/dummy-ldconfig:$PATH"
-      export PYTHON_LIB_PATH="$NIX_BUILD_TOP/site-packages"
-      mkdir -p "$PYTHON_LIB_PATH"
-
-      export LD_LIBRARY_PATH="$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${stdenv.cc.cc.lib}/lib/libstdc++.so.6"
   '';
 
   postFixup = let
