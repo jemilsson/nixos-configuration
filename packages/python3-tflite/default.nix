@@ -1,5 +1,5 @@
-#{ stdenv, lib, python37, fetchurl, python37Packages  }:
-with import <nixpkgs> {};
+{ stdenv, lib, python37, fetchurl, python37Packages  }:
+#with import <nixpkgs> {};
 
 python37.pkgs.buildPythonPackage rec {
   pname = "tflite";
