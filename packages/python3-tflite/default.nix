@@ -31,7 +31,7 @@ python37.pkgs.buildPythonPackage rec {
   in
   ''
     rrPath="$out/${python37.sitePackages}/tensorflow/:${rpath}"
-    internalLibPath="$out/${python.sitePackages}/tensorflow/python/_pywrap_tensorflow_internal.so"
+    internalLibPath="$out/${python37.sitePackages}/tensorflow/python/_pywrap_tensorflow_internal.so"
     find $out -name '*.so' -exec patchelf --set-rpath "$rrPath" {} \;
   '';
 
