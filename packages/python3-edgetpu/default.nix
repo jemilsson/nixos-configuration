@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, dpkg   }:
+{ stdenv, fetchurl, dpkg, pkgs   }:
 #with import <nixpkgs> {};
 let
   libedgetpu-dev = pkgs.callPackage ../libedgetpu-dev/default.nix {};
