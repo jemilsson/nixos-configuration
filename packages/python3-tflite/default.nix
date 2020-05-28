@@ -17,10 +17,12 @@ python37.pkgs.buildPythonPackage rec {
     sha256 = "17g13d42dy4xxchryc67spqj7i14ilzclvar6g8b7ypz50adkb9d";
   };
 
-  buildInputs = [ python37Packages.numpy libedgetpu-dev libedgetpu-max];
+  buildInputs = [ python37Packages.numpy ];
 
   propagatedBuildInputs = [
     python37Packages.numpy python3-edgetpu
+    libedgetpu-dev
+    libedgetpu-max
   ];
 
   checkPhase = ''
@@ -34,7 +36,7 @@ python37.pkgs.buildPythonPackage rec {
       );
   in
   ''
-    rrPath="$out/${python37.sitePackages}/tensorflow/:${rpath}"
+    rrPath="$out/${python37.sitePackages}/tflite_runtime/:${rpath}"
     internalLibPath="$out/${python37.sitePackages}/tensorflow/python/_pywrap_tensorflow_internal.so"
     find $out -name '*.so' -exec patchelf --set-rpath "$rrPath" {} \;
   '';
