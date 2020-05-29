@@ -65,6 +65,11 @@ in
   virtmanager
   docker
   docker-compose
+
+  python37Packages.opencv4.override { enableGtk2 = true; enableFfmpeg=true; }
+  ffmpeg python37Packages.imutils
+  python37Packages.scipy
+  python37Packages.shapely
  ];
 
  nix = {
