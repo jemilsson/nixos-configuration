@@ -55,7 +55,7 @@ in
 
    fprintd = {
      enable = true;
-     package = pkgs.unstable.fprintd-thinkpad;
+     #package = pkgs.unstable.fprintd-thinkpad;
    };
  };
 
