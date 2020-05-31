@@ -8,7 +8,7 @@ let
     pkgs.gnome3.adwaita-icon-theme
     pkgs.pantheon.elementary-icon-theme
     pkgs.gtk3
-    pkgs.zsh
+    pkgs.bash
      ]);
 
 #taffybar = pkgs.unstable-small.taffybar;
