@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  taffybar = pkgs.haskellPackages.ghcWithPackages (self: [
+  taffybar = unstable.pkgs.haskellPackages.ghcWithPackages (self: [
     self.taffybar
     pkgs.hicolor-icon-theme
     pkgs.paper-icon-theme
