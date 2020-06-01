@@ -79,6 +79,7 @@ in
     spotify
     vlc
     mplayer
+    smplayer
     pavucontrol
     pasystray
     audacity
