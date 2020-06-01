@@ -78,6 +78,7 @@ in
     #Media
     spotify
     vlc
+    mplayer
     pavucontrol
     pasystray
     audacity
