@@ -17,5 +17,9 @@
            nginx = 4096;
          };
        };
+       acme = {
+         email = "jonas.emilsson+acme@gmail.com";
+         acceptTerms = true;
+       };
     };
 }
