@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 let
+/*
   taffybar = pkgs.unstable.haskellPackages.ghcWithPackages (self: [
     self.taffybar
     pkgs.hicolor-icon-theme
@@ -10,7 +11,7 @@ let
     pkgs.gtk3
     pkgs.bash
      ]);
-
+*/
 #taffybar = pkgs.unstable-small.taffybar;
 
 in
@@ -124,6 +125,7 @@ in
           serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
 
         };
+        /*
         "taffybar" = {
           enable = true;
           description = "Taffybar";
@@ -131,6 +133,7 @@ in
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${taffybar}/bin/taffybar";
         };
+        */
         "pasystray" = {
           enable = true;
           description = "Pulse audio systray";
