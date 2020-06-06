@@ -4,7 +4,7 @@ let
   inherit (stdenv.lib) optional;
 in
 stdenv.mkDerivation rec {
-  version = "1.7.4p1";
+  version = "v1.7.4p1";
   pname = "pmacct";
 
   src = fetchFromGitHub {
