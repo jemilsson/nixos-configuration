@@ -63,9 +63,9 @@ in
           privateKeyFile = "/var/wireguard/privatekey";
           peers = [
             {
-              publicKey = "+ZGgVXQiwTQSzi0oB+1LACUew1nNwuc9TBXkNwNbY1s=";
-              endpoint = "109.230.199.73:1054";
-              allowedIPs = [ "10.5.254.0/31" "10.5.10.0/24" ];
+              publicKey = "84s+/kDWRNasxQq5FyEk+kYLp00JJLGfm1i62ioFtWY=";
+              endpoint = "78.141.220.154:1054";
+              allowedIPs = [ "10.5.254.1/32" ];
               persistentKeepalive = 25;
             }
           ];
