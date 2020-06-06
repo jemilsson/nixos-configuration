@@ -116,6 +116,7 @@ in
     user = {
 
       services = {
+        /*
         "status-notifier-watcher" = {
           enable = true;
           description = "SNI watcher";
@@ -125,7 +126,7 @@ in
           serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
 
         };
-        /*
+
         "taffybar" = {
           enable = true;
           description = "Taffybar";
@@ -176,7 +177,7 @@ in
     plasma5.sddm-kcm
     i3lock
     xmobar
-    taffybar
+    #taffybar
     i3lock-fancy
   ];
 
