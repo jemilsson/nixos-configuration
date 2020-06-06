@@ -1,31 +1,31 @@
 { config, lib, pkgs, stdenv, ... }:
 let
-  containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
+  #containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   kernel = config.boot.kernelPackages;
 in
 {
   inherit containers;
   imports = [
     ../../config/server_base.nix
-    ../../config/services/nginx/nginx.nix
+    #../../config/services/nginx/nginx.nix
     ../../config/language/english.nix
 
-    ../../config/services/prometheus/prometheus.nix
-    ../../config/services/prometheus/nginx_exporter.nix
+    #../../config/services/prometheus/prometheus.nix
+    #../../config/services/prometheus/nginx_exporter.nix
 
-    services/gogs.nix
-    services/synapse.nix
-    services/grafana.nix
-    services/influxdb.nix
-    services/uwsgi.nix
+    #services/gogs.nix
+    #services/synapse.nix
+    #services/grafana.nix
+    #services/influxdb.nix
+    #services/uwsgi.nix
     #services/openvpn.nix
     #services/radicale/radicale.nix
-    services/helloflask/helloflask.nix
+    #services/helloflask/helloflask.nix
 
     #test default signed commit
   ];
 
-  system.stateVersion = "17.03";
+  system.stateVersion = "20.03";
 
   boot.extraModulePackages = [ kernel.wireguard ];
 
@@ -37,6 +37,7 @@ in
       allowedTCPPorts = [ 22 80 443 ];
       allowedUDPPorts = [ 53 1053 1054 ];
     };
+    /*
 
     defaultGateway6 = {
       address = "2A00:1A28:1510:9::1";
@@ -83,7 +84,9 @@ in
       };
     };
 
+  */
   };
+
 
 
   boot.loader.grub = {
@@ -92,28 +95,14 @@ in
       device = "/dev/vda";
     };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
- users.extraUsers.user = {
-    isNormalUser = true;
-    uid = 1002;
-    home = "/home/user/";
-    extraGroups = [ "wheel" ];
- };
-
  environment.systemPackages = with pkgs; [
-  freeradius
   irssi
   screen
   wireguard-tools
  ];
 
   services = {
-
-    postgresql = {
-     enable = true;
-     package = pkgs.postgresql95;
-  };
-
+   /*
    nginx.virtualHosts = {
 
          "default.jonasem.com" = {
@@ -173,7 +162,7 @@ in
           '';
 
         };
-        */
     };
+    */
  };
 }
