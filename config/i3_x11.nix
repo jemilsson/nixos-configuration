@@ -45,7 +45,7 @@ in
           extraPackages = haskellPackages: [
             haskellPackages.xmonad-contrib
             haskellPackages.xmonad-extras
-            haskellPackages.taffybar
+            #haskellPackages.taffybar
           ];
         };
 
