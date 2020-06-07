@@ -71,7 +71,7 @@ in
       ip link add gretap1 type gretap local 10.5.254.1 remote 10.5.254.0
       ip link set gretap1 up mtu 1500
       ip addr add 10.5.254.3 peer 10.5.254.2 dev gretap1
-      ip addr add 2a0e:b107:330:fffe::1/64 dev gretap1
+      ip addr add 2a0e:b107:330:fffe::2/64 dev gretap1
     '';
 
     /*
