@@ -65,6 +65,14 @@ in
       };
     };
 
+    localCommands = ''
+      ip link set dev wg0 mtu 1542
+      ip link delete gretap1
+      ip link add gretap1 type gretap local 10.5.254.1 remote 10.5.254.0
+      ip link set gretap1 up mtu 1500
+      ip addr add 10.5.254.3 peer 10.5.254.2 dev gretap1
+    '';
+
     /*
 0
 
