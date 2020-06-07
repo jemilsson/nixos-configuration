@@ -9,13 +9,6 @@
     }
     {
       "hostNames" = [
-        "mannie.jonas.systems"
-        "git.jonasem.com"
-      ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAAyGdMwX5EqluNr/PZKV4d13cymcrnleDf10bmzGBi3";
-    }
-    {
-      "hostNames" = [
         "mike.jonas.systems"
       ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBxf8Y5BvgHiH7d12bTEaI5GenZwPxBaVW/4MVt87cMd";
