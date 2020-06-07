@@ -89,6 +89,8 @@ environment = {
     neofetch
     unrar
     ncdu
+    bridge-utils
+    killall
     #python3
 
     #Network tools
