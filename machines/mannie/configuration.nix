@@ -99,12 +99,13 @@ in
   irssi
   screen
   wireguard-tools
+  bird2
  ];
 
   services = {
-    bird6 = {
+    bird2 = {
       enable = true;
-      config = (builtins.readFile ./bird/bird6.conf);
+      config = (builtins.readFile ./bird/bird.conf);
     };
    /*
    nginx.virtualHosts = {
