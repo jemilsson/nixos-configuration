@@ -104,7 +104,7 @@ in
   services = {
     bird6 = {
       enable = true;
-      config = (builtins.readFile ./bird/bird6.config);
+      config = (builtins.readFile ./bird/bird6.conf);
     };
    /*
    nginx.virtualHosts = {
