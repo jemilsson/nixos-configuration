@@ -80,7 +80,7 @@ in
       ip link add gretap1 type gretap local 10.5.254.0 remote 10.5.254.1
       ip link set gretap1 up mtu 1500
       ip addr add 10.5.254.2 peer 10.5.254.3 dev gretap1
-      brctl addif br0 gretap1
+      {pkgs.brctl}/bin/brctl addif br0 gretap1
     '';
 
   #  vswitches = {
