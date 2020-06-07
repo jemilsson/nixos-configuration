@@ -32,6 +32,16 @@ in
   networking = {
     hostName = "mannie";
 
+    interfaces = {
+      ens3 = {
+        ipv6 = {
+          addresses = [
+            { address = "2001:19f0:5001:1062::1"; prefixLength = 64; }
+          ];
+        };
+      };
+    };
+
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 80 443 ];
@@ -92,6 +102,10 @@ in
  ];
 
   services = {
+    bird6 = {
+      enable = true;
+      config = (builtins.readFile ./bird/bird6.config);
+    };
    /*
    nginx.virtualHosts = {
 
