@@ -46,6 +46,17 @@ in
       enable = true;
       allowedTCPPorts = [ 22 80 443 ];
       allowedUDPPorts = [ 53 1053 1054 ];
+
+      interfaces = {
+        "gretap1" = {
+          allowedTCPPorts = [
+            179
+          ];
+        };
+
+
+      };
+
     };
 
     wireguard = {
