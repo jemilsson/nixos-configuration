@@ -96,13 +96,18 @@ in
   */
   };
 
-
-
-  boot.loader.grub = {
+  boot = {
+    kernelModules = [
+      fou
+    ];
+    loader.grub = {
       enable = true;
       version = 2;
       device = "/dev/vda";
     };
+
+
+  };
 
  environment.systemPackages = with pkgs; [
   irssi
