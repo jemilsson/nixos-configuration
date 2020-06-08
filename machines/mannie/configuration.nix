@@ -98,7 +98,7 @@ in
 
   boot = {
     kernelModules = [
-      fou
+      "fou"
     ];
     loader.grub = {
       enable = true;
