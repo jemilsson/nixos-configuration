@@ -28,6 +28,7 @@ in
   system.stateVersion = "20.03";
 
   boot.extraModulePackages = [ kernel.wireguard ];
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   networking = {
     hostName = "mannie";
