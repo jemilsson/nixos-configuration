@@ -22,6 +22,7 @@ in
   gtk.iconCache.enable = true;
 
   hardware = {
+    enableAllFirmware = true;
     pulseaudio = {
       enable = true;
       support32Bit = true;
