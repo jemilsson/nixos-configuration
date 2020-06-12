@@ -2,6 +2,10 @@
 {
   services = {
     fstrim.enable = true;
-    fwupd.enable = true;
+
+    fwupd = {
+      enable = true;
+      enableTestRemote = true;
+    };
   };
 }
