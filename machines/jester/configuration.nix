@@ -5,6 +5,7 @@ let
 in
 {
   imports = [
+    <nixos-hardware/lenovo/thinkpad/x1/7th-gen>
     ../../config/laptop_base.nix
     ../../config/i3_x11.nix
     ../../config/language/english.nix
