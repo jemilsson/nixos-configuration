@@ -5,7 +5,7 @@ let
 in
 {
   imports = [
-    <nixos-hardware/lenovo/thinkpad/x1/7th-gen>
+    #<nixos-hardware/lenovo/thinkpad/x1/7th-gen>
     ../../config/laptop_base.nix
     ../../config/i3_x11.nix
     ../../config/language/english.nix
@@ -87,6 +87,11 @@ in
     enable = true;
   };
  };
+
+ hardware.pulseaudio.extraConfig = ''
+  load-module module-alsa-sink   device=hw:0,0 channels=4
+  load-module module-alsa-source device=hw:0,6 channels=4
+'';
 
  inherit containers;
 
