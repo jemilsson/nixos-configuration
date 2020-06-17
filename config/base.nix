@@ -88,8 +88,9 @@ environment = {
     curl
     neofetch
     unrar
+    unzip
+    dnsutils
     ncdu
-    bridge-utils
     killall
     #python3
 
