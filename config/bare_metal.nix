@@ -16,6 +16,7 @@
 
     systemPackages = with pkgs; [
       ethtool
+      wol
     ];
   };
 }
