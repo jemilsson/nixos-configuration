@@ -224,7 +224,7 @@ in
     gnupg = {
       agent = {
         enable = true;
-        pinentryFlavor = gnome3;
+        pinentryFlavor = "gnome3";
         #enableBrowserSocket = true;
         enableExtraSocket = true;
         enableSSHSupport = true;
