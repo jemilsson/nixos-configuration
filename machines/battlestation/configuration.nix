@@ -73,6 +73,10 @@
   boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
   services = {
+    wakeonlan.interfaces = [
+      { interface = "enp8s0"; method = "password"; password = "00:11:22:33:44:55"; }
+    ];
+
     xserver = {
       videoDrivers = [ "amdgpu" ];
 
