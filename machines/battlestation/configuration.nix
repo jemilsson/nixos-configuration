@@ -16,6 +16,11 @@
 
     firewall.allowedTCPPorts = [ 3389 ];
 
+    defaultGateway = {
+      address = "10.5.20.1";
+      interface = "enp8s0";
+    };
+
     interfaces = {
       "enp8s0" = {
         ipv4 = {
