@@ -1,7 +1,6 @@
 { config, lib, pkgs, stdenv, ... }:
 let
   containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
-  dpi = 144;
 in
 {
   imports = [
@@ -40,15 +39,6 @@ in
  services = {
    xserver = {
      videoDrivers = [ "intel" "modesetting" ];
-     dpi = dpi;
-
-     /*
-     displayManager.sessionCommands = ''
-      ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
-        Xft.dpi: ${toString dpi}
-       EOF
-      '';
-    */
    };
    undervolt = {
      enable = false;
@@ -56,7 +46,6 @@ in
 
    fprintd = {
      enable = true;
-     #package = pkgs.unstable.fprintd-thinkpad;
    };
  };
 
