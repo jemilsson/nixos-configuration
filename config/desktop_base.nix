@@ -339,8 +339,7 @@ in
 
   };
 
-
-
+  virtualisation.docker.enable = true;
 
   fonts = {
      enableFontDir = true;
