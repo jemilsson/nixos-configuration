@@ -17,6 +17,18 @@
     firewall.allowedTCPPorts = [ 3389 ];
 
     interfaces = {
+      "enp8s0" = {
+        ipv4 = {
+          addresses = [
+            { address = "10.5.20.18"; prefixLength = 24; }
+          ];
+        };
+        ipv6 = {
+          addresses = [
+            { address = "2a0e:b107:330::18"; prefixLength = 64; }
+          ];
+        };
+      };
       "lan-2" = {
         useDHCP = true;
       };

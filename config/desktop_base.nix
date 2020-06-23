@@ -343,7 +343,7 @@ in
     docker = {
       enable = true;
       extraOptions = ''
-        dm.basesize=20G
+        --storage-opt dm.basesize=20G
       '';
     };
   };
