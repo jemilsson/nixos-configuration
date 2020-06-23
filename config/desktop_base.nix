@@ -342,9 +342,9 @@ in
   virtualisation = {
     docker = {
       enable = true;
-      extraOptions = """
+      extraOptions = ''
         dm.basesize=20G
-      """;
+      '';
     };
   };
   fonts = {
