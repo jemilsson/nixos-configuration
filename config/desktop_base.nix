@@ -339,8 +339,14 @@ in
 
   };
 
-  virtualisation.docker.enable = true;
-
+  virtualisation = {
+    docker = {
+      enable = true;
+      extraOptions = """
+        dm.basesize=20G
+      """;
+    };
+  };
   fonts = {
      enableFontDir = true;
      enableGhostscriptFonts = true;
