@@ -2,7 +2,7 @@
 {
   imports = [
     ../../config/desktop_base.nix
-    ../../config/services/kvm.nix
+    ../../config/services/kvm/kvm.nix
     ../../config/i3_x11.nix
     ../../config/location/sesto01/configuration.nix
     ../../config/language/english.nix

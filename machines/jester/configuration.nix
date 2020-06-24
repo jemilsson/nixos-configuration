@@ -6,7 +6,7 @@ in
   imports = [
     #<nixos-hardware/lenovo/thinkpad/x1/7th-gen>
     ../../config/laptop_base.nix
-    ../../config/services/kvm.nix
+    ../../config/services/kvm/kvm.nix
     ../../config/i3_x11.nix
     ../../config/language/english.nix
     ../../config/software/tensorflow.nix
