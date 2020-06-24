@@ -2,6 +2,7 @@
 {
   imports = [
     ../../config/desktop_base.nix
+    ../../config/services/kvm.nix
     ../../config/i3_x11.nix
     ../../config/location/sesto01/configuration.nix
     ../../config/language/english.nix
@@ -83,8 +84,6 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
-
-  virtualisation.libvirtd.enable = true;
 
   #boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
   boot.kernelPackages = pkgs.unstable.linuxPackages_latest;

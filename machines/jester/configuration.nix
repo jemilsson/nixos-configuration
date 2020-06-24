@@ -6,6 +6,7 @@ in
   imports = [
     #<nixos-hardware/lenovo/thinkpad/x1/7th-gen>
     ../../config/laptop_base.nix
+    ../../config/services/kvm.nix
     ../../config/i3_x11.nix
     ../../config/language/english.nix
     ../../config/software/tensorflow.nix
@@ -18,10 +19,7 @@ in
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.unstable.linuxPackages_latest;
-    kernelModules = [ "kvm-intel" "acpi_call" ];
-
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
-  };
+    };
 
   networking = {
     hostName = "jester";
@@ -50,7 +48,6 @@ in
  };
 
  environment.systemPackages = with pkgs; [
-  virtmanager
   docker
   docker-compose
   (python37Packages.opencv4.override{enableGtk2 = true; enableFfmpeg=true;})
@@ -64,15 +61,6 @@ in
    extraOptions = ''
    extra-platforms = aarch64-linux arm-linux
    '';
- };
-
- virtualisation = {
-  kvmgt = {
-    enable = true;
-  };
-  libvirtd = {
-    enable = true;
-  };
  };
 
  hardware.pulseaudio.extraConfig = ''

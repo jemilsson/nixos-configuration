@@ -190,6 +190,9 @@ in
 
     gnome3.gvfs
 
+    #virtualisation
+    virtmanager
+
   ];
   programs = {
     ssh = {
