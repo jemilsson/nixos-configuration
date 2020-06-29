@@ -179,6 +179,7 @@ in
     xmobar
     #taffybar
     i3lock-fancy
+    nm-applet
   ];
 
   i18n.consoleUseXkbConfig = true;
