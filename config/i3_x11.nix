@@ -179,6 +179,7 @@ in
     xmobar
     #taffybar
     i3lock-fancy
+    gnome3.networkmanagerapplet
   ];
 
   i18n.consoleUseXkbConfig = true;
