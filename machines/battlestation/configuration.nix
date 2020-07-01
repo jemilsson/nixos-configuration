@@ -19,7 +19,7 @@
 
     defaultGateway = {
       address = "10.5.20.1";
-      interface = "enp8s0";
+      interface = "br0";
     };
 
     interfaces = {
@@ -35,8 +35,9 @@
           ];
         };
       };
-      bridges."br0".interfaces = [ "enp8s0" ];
     };
+
+    bridges."br0".interfaces = [ "enp8s0" ];
 
     #useNetworkd = true;
   };
