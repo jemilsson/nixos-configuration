@@ -69,6 +69,12 @@ networking = {
   bridges."br2000".interfaces = [ "vlan2000" ];
   interfaces."br2000".useDHCP = false;
 
+
+  vlans."vlan1".interface = uplink;
+  vlans."vlan1".id = 1;
+  bridges."br1".interfaces = [ "vlan1" ];
+  interfaces."br1".useDHCP = true;
+
   #private_servers 10.5.7.0/24
   #vlans."vlan1007".interface = uplink;
   #vlans."vlan1007".id = 1006;
