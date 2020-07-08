@@ -189,6 +189,7 @@ in
     picocom
 
     #gnome3.gvfs
+    gtk3
     gsettings-desktop-schemas
 
     #virtualisation
