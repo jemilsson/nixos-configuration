@@ -189,6 +189,7 @@ in
     picocom
 
     #gnome3.gvfs
+    gsettings-desktop-schemas
 
     #virtualisation
     virtmanager
