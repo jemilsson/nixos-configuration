@@ -188,7 +188,7 @@ in
     lm_sensors
     picocom
 
-    gnome3.gvfs
+    #gnome3.gvfs
 
     #virtualisation
     virtmanager
