@@ -194,6 +194,11 @@ in
     virtmanager
 
   ];
+	
+  environment.extraSetup = ''
+      ln -s ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0 $out/share
+    '';
+
   programs = {
     ssh = {
       startAgent = false;
