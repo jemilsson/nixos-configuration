@@ -117,8 +117,8 @@ in
     gnome2.gnome_icon_theme
     gnome3.adwaita-icon-theme
     pantheon.elementary-icon-theme
-    gtk3
-    gtk-engine-murrine
+    #gtk3
+    #gtk-engine-murrine
     lxappearance
 
     #Graphical System tools
