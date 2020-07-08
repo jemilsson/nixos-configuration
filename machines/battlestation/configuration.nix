@@ -19,11 +19,11 @@
 
     defaultGateway = {
       address = "10.5.20.1";
-      interface = "enp8s0";
+      interface = "br0";
     };
 
     interfaces = {
-      "enp8s0" = {
+      "br0" = {
         ipv4 = {
           addresses = [
             { address = "10.5.20.18"; prefixLength = 24; }
@@ -35,48 +35,10 @@
           ];
         };
       };
-      "lan-2" = {
-        useDHCP = true;
-      };
-      "old-lan" = {
-        useDHCP = true;
-      };
-      "management" = {
-        useDHCP = true;
-      };
-      "lan" = {
-        useDHCP = true;
-      };
-      "test" = {
-        useDHCP = true;
-      };
-
-      "enp8s0" = {
-      };
-
     };
-    vlans = {
-      "management" = {
-        id = 5;
-        interface = "enp8s0";
-      };
-      "lan-2" = {
-        id = 4;
-        interface = "enp8s0";
-      };
-      "old-lan" = {
-        id = 1;
-        interface = "enp8s0";
-      };
-      "lan" = {
-        id = 1020;
-        interface = "enp8s0";
-      };
-      "test" = {
-        id = 1025;
-        interface = "enp8s0";
-      };
-    };
+
+    bridges."br0".interfaces = [ "enp8s0" ];
+
     #useNetworkd = true;
   };
 
