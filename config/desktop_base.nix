@@ -387,12 +387,12 @@ in
      #udisks2.enable = true;
      devmon.enable = true;
 
-     #gnome3 = {
-    #   gvfs.enable = true;
+     gnome3 = {
+       gvfs.enable = true;
     #   gnome-disks.enable = true;
     #   gnome-keyring.enable = true;
     #   seahorse.enable = true;
-     #};
+     };
 
      pcscd = {
        enable = true;
