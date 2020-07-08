@@ -3,6 +3,17 @@ let
   #scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
   python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
   python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
+
+  vscode-extensions = (with pkgs.vscode-extensions; [
+      #bbenoist.Nix
+      ms-python.python
+      #ms-azuretools.vscode-docker
+      #ms-vscode-remote.remote-ssh
+    ]);
+  vscode-with-extensions = pkgs.vscode-with-extensions.override {
+      vscodeExtensions = vscode-extensions;
+    };
+
 in
 {
   imports = [
@@ -194,6 +205,7 @@ in
 
     #virtualisation
     virtmanager
+    vscode-with-extensions
 
   ];
 	
