@@ -94,7 +94,7 @@ in
     deluge
 
     #Programming
-    unstable.atom-beta
+    unstable.atom
 
     (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu tensorflow numpy pillow python3-tflite ]))
 
@@ -188,7 +188,7 @@ in
     lm_sensors
     picocom
 
-    #gnome3.gvfs
+    gnome3.gvfs
     gtk3
     gsettings-desktop-schemas
 
