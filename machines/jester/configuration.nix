@@ -84,7 +84,7 @@ in
 
  docker-containers = {
    cvat = {
-     image = "cvorhemus/cvat";
+     image = "stobias123/cvat";
      #ports = [
      #  "8080:8080"
      #];
