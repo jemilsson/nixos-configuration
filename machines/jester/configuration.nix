@@ -86,7 +86,7 @@ in
    dataturks = {
      image = "klimentij/dataturks";
      ports = [
-       "8080:80"
+       "8080:9090"
      ];
    };
  };
