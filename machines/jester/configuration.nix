@@ -84,7 +84,7 @@ in
 
  docker-containers = {
    dataturks = {
-     image = "dataturks/dataturks";
+     image = "klimentij/dataturks";
      ports = [
        "8080:80"
      ];
