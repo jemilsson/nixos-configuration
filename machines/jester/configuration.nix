@@ -60,6 +60,7 @@ in
   python37Packages.imutils
   python37Packages.scipy
   python37Packages.shapely
+  opencl-headers
  ];
 
  nix = {
