@@ -82,6 +82,12 @@ in
 
  };
 
+ docker-containers = {
+   cvat = {
+     image = "cvorhemus/cvat";
+   };
+ };
+
  inherit containers;
 
 }
