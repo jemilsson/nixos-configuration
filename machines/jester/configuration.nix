@@ -61,6 +61,7 @@ in
   python37Packages.scipy
   python37Packages.shapely
   opencl-headers
+  labelimg
  ];
 
  nix = {
