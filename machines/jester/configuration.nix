@@ -83,11 +83,11 @@ in
  };
 
  docker-containers = {
-   cvat = {
-     image = "stobias123/cvat";
-     #ports = [
-     #  "8080:8080"
-     #];
+   dataturks = {
+     image = "dataturks/dataturks";
+     ports = [
+       "8080:80"
+     ];
    };
  };
 
