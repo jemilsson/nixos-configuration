@@ -78,6 +78,8 @@ in
       enable = true;
     };
 
+    logitech.enable = true;
+
   };
 
   networking.networkmanager.enable = true;
