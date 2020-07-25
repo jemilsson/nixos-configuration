@@ -78,7 +78,10 @@ in
       enable = true;
     };
 
-    logitech.enable = true;
+    logitech = {
+      enable = true;
+      enableGraphical = true;
+    };
 
   };
 
@@ -208,6 +211,8 @@ in
     #virtualisation
     virtmanager
     vscode-with-extensions
+
+    ltwheelconf
 
   ];
 	
