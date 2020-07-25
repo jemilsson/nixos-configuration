@@ -55,6 +55,11 @@
       { interface = "enp8s0"; method = "password"; password = "00:11:22:33:44:55"; }
     ];
 
+    # Support Logitech G29 Steering Wheel
+    udev.packages = with pkgs; [
+      usb-modeswitch-data
+    ];
+
     xserver = {
       videoDrivers = [ "amdgpu" ];
 
