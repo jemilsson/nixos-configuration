@@ -440,6 +440,10 @@ in
           # Yubico YubiKey
           KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", MODE="0660", GROUP="plugdev", TAG+="uaccess"
 
+          # G29
+          SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24f", TAG+="uaccess"
+
+
           LABEL="u2f_end"
         '';
 
