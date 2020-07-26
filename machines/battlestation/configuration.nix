@@ -60,6 +60,7 @@
     udev = {
       packages = with pkgs; [
         usb-modeswitch-data
+        usb-modeswitch
       ];
       extraRules = ''
         ATTR{idVendor}=="046d", ATTR{idProduct}=="c24f", RUN+="{pkgs.usb-modeswitch}/lib/udev/usb_modeswitch '/%k'"
