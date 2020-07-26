@@ -63,7 +63,7 @@
         usb-modeswitch
       ];
       extraRules = ''
-        ATTR{idVendor}=="046d", ATTR{idProduct}=="c24f", RUN+="{pkgs.usb-modeswitch}/lib/udev/usb_modeswitch '/%k'"
+        ATTR{idVendor}=="046d", ATTR{idProduct}=="c24f", RUN+="usb_modeswitch '/%k'"
       '';
     };
 
