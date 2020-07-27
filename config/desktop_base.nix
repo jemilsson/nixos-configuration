@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, ... }:
+{ config, lib, pkgs, ... }:
 let
   #scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
   python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
@@ -431,7 +431,7 @@ in
           pkgs.yubikey-manager
           pkgs.pcsctools
           pkgs.unstable.opensc
-          pkgs.bashInteractive
+          pkgs.bash
        ];
 
 
@@ -446,7 +446,7 @@ in
           #SUBSYSTEMS=="hidraw", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", MODE="0660", GROUP="plugdev", TAG+="uaccess"
 
           # Logitech G29 Driving Force Racing Wheel
-          SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="${stdenv.shell} -c 'chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'
+          SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="${pkgs.bash}/bin/sh -c 'chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'
 
           LABEL="u2f_end"
         '';
