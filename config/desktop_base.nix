@@ -431,6 +431,7 @@ in
           pkgs.yubikey-manager
           pkgs.pcsctools
           pkgs.unstable.opensc
+          pkgs.bashInteractive
        ];
 
 
