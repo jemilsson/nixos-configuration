@@ -213,6 +213,7 @@ in
     vscode-with-extensions
 
     ltwheelconf
+    aws
 
   ];
 	
