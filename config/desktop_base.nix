@@ -432,6 +432,7 @@ in
           pkgs.pcsctools
           pkgs.unstable.opensc
           pkgs.bash
+          pkgs.unstable.usb-modeswitch-data
        ];
 
 

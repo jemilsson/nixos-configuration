@@ -57,12 +57,12 @@
 
 
     #Logitech G29
-    udev = {
-      packages = with pkgs; [
-        unstable.usb-modeswitch-data
-        unstable.usb-modeswitch
-      ];
-    };
+    #udev = {
+    #  packages = with pkgs; [
+    #    unstable.usb-modeswitch-data
+    #    unstable.usb-modeswitch
+    #  ];
+    #};
 
     xserver = {
       videoDrivers = [ "amdgpu" ];
