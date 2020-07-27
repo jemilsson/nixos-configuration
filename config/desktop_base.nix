@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, stdenv, ... }:
 let
   #scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
   python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
