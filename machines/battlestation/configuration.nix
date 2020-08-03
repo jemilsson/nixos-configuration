@@ -55,6 +55,15 @@
       { interface = "enp8s0"; method = "password"; password = "00:11:22:33:44:55"; }
     ];
 
+
+    #Logitech G29
+    #udev = {
+    #  packages = with pkgs; [
+    #    unstable.usb-modeswitch-data
+    #    unstable.usb-modeswitch
+    #  ];
+    #};
+
     xserver = {
       videoDrivers = [ "amdgpu" ];
 

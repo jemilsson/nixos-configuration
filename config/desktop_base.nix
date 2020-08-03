@@ -78,6 +78,11 @@ in
       enable = true;
     };
 
+    logitech = {
+      enable = true;
+      enableGraphical = true;
+    };
+
   };
 
   networking.networkmanager.enable = true;
@@ -89,7 +94,7 @@ in
     unstable.firefox
     unstable.chromium
     unstable.google-chrome
-    tor-browser-bundle-bin
+    unstable-small.tor-browser-bundle-bin
 
     #Media
     spotify
@@ -209,6 +214,9 @@ in
     #virtualisation
     virtmanager
 
+
+    ltwheelconf
+    awscli
 
   ];
 	
@@ -426,6 +434,8 @@ in
           pkgs.yubikey-manager
           pkgs.pcsctools
           pkgs.unstable.opensc
+          #pkgs.bash
+          pkgs.unstable.usb-modeswitch-data
        ];
 
 
@@ -437,6 +447,14 @@ in
           KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", MODE="0660", GROUP="plugdev", TAG+="uaccess"
 
           LABEL="u2f_end"
+          # G29
+          #SUBSYSTEMS=="hidraw", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", MODE="0660", TAG+="uaccess"
+
+          # Logitech G29 Driving Force Racing Wheel
+          #SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech" , MODE="0660", TAG+="uaccess", RUN+="${pkgs.stdenv.shell} -c 'chmod 666 %S%p/../../range; chmod 777 %S%p/../../leds/ %S%p/../../leds/*; chmod 666 %S%p/../../leds/*/brightness'"
+          #SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech" , MODE="0660", TAG+="uaccess", RUN+="${pkgs.stdenv.shell} -c 'chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'"
+          SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="${pkgs.stdenv.shell} -c 'cd %S%p/../../../; echo 65535 > autocenter; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level leds/*/brightness; chmod 777 leds/ leds/*'"
+          
         '';
 
     };
