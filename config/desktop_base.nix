@@ -106,11 +106,14 @@ in
 
     #Programming
     unstable.atom
-
     (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu tensorflow numpy pillow python3-tflite ]))
-
+    vscode-with-extensions
     insomnia
     emacs
+    (python37Packages.opencv4.override{
+    enableGtk2 = true;
+    enableFfmpeg=true;
+  })
 
 
     #Interface
@@ -205,7 +208,7 @@ in
 
     #virtualisation
     virtmanager
-    vscode-with-extensions
+
 
   ];
 	
