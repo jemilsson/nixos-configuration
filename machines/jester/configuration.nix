@@ -50,12 +50,6 @@ in
  environment.systemPackages = with pkgs; [
   docker
   docker-compose
-  (python37Packages.opencv4.override{
-    enableGtk2 = true;
-    enableFfmpeg=true;
-    enableUnfree=true;
-    enableCuda=true;
-  })
   ffmpeg
   python37Packages.imutils
   python37Packages.scipy
