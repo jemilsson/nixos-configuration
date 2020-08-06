@@ -108,6 +108,7 @@ in
     exiftool
     playerctl
     deluge
+    openscad
 
     #Programming
     unstable.atom
