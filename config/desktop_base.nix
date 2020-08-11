@@ -109,6 +109,7 @@ in
     playerctl
     deluge
     openscad
+    cura
 
     #Programming
     unstable.atom
