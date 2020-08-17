@@ -30,6 +30,8 @@ in
     # cpuFreqGovernor = "ondemand";
   };
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+
   gtk.iconCache.enable = true;
 
   hardware = {
@@ -110,6 +112,7 @@ in
     deluge
     openscad
     cura
+    ffmpeg-full
 
     #Programming
     unstable.atom
