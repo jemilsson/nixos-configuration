@@ -45,7 +45,7 @@
     wireguard = {
       interfaces = {
         wg0 = {
-          ips = ["10.50.0.38/32";]
+          ips = ["10.50.0.38/32"];
           peers = {
             [
               {
