@@ -40,6 +40,26 @@
     bridges."br0".interfaces = [ "enp8s0" ];
 
     #useNetworkd = true;
+
+
+    wireguard = {
+      interfaces = {
+        wg0 = {
+          ips = ["10.50.0.38/32";]
+          peers = {
+            [
+              {
+                allowedIPs = [
+                  "10.50.0.0/16"
+                ];
+                endpoint = "13.48.43.75:124";
+              }
+
+            ]
+          }
+        }
+      }
+    }
   };
 
   boot.loader = {
