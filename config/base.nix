@@ -12,7 +12,7 @@ networking = {
   wireguard = {
     interfaces = {
       wg0 = {
-        privateKeyFile = "/var/lib/wireguard/privatekey"
+        privateKeyFile = "/var/lib/wireguard/privatekey";
         generatePrivateKeyFile = true;
       };
     };
