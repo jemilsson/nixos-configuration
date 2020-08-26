@@ -48,6 +48,7 @@
           ips = ["10.50.0.38/32"];
           peers = [
               {
+                publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
                 allowedIPs = [
                   "10.50.0.0/16"
                 ];
