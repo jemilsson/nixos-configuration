@@ -32,6 +32,24 @@ in
         interfaces = [];
       };
     };
+
+    wireguard = {
+      interfaces = {
+        wg0 = {
+          ips = ["10.50.0.37/32"];
+          peers = [
+              {
+                publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
+                allowedIPs = [
+                  "10.50.0.0/16"
+                ];
+                endpoint = "13.48.43.75:124";
+              }
+
+          ];
+        };
+      };
+    };
   };
 
  services = {
