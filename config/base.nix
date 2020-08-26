@@ -8,6 +8,17 @@
 
 ];
 
+networking = {
+  wireguard = {
+    interfaces = {
+      wg0 = {
+        privateKeyFile = "/var/lib/wireguard/privatekey"
+        generatePrivateKeyFile = true;
+      };
+    };
+  };
+};
+
 system = {
   autoUpgrade = {
     enable = true;
