@@ -250,6 +250,7 @@ in
         "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
         "kajibbejlbohfaggdiogboambcijhkke" # Mailvelope
+        "naepdomgkenhinolocfifgehidddafch" # Browserpass
       ];
       defaultSearchProviderSearchURL = "https://duckduckgo.com/?q=%s";
       defaultSearchProviderSuggestURL = "https://duckduckgo.com/?q=%s";
