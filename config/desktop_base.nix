@@ -70,6 +70,7 @@ in
       #s3tcSupport = true;
       extraPackages = with pkgs; [ intel-media-driver libvdpau-va-gl vaapiVdpau (vaapiIntel.override {  enableHybridCodec = true;  }) ];
       extraPackages32 = with pkgs; [ 	intel-media-driver libvdpau-va-gl vaapiVdpau (vaapiIntel.override {  enableHybridCodec = true;  }) ];
+      setLdLibraryPath = true;
     };
 
     steam-hardware = {
