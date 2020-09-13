@@ -106,9 +106,9 @@ security = {
       enable = true;
     };
   };
+};
 */
 
-};
 
 /*
  docker-containers = {
