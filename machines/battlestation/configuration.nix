@@ -67,7 +67,7 @@
   };
 
   #boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
-  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
   services = {
     wakeonlan.interfaces = [
