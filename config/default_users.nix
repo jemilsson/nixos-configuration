@@ -10,7 +10,7 @@ in
      group = "users";
      uid = 1000;
      isSystemUser = false;
-     extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "plugdev" ];
+     extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "plugdev" "tss" ];
      shell = "/run/current-system/sw/bin/zsh";
      openssh.authorizedKeys.keys = sshKeys.jonas;
   };
