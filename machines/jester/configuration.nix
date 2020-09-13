@@ -94,6 +94,7 @@ in
 
  };
 
+/*
 security = {
   tpm2 = {
     enable = true;
@@ -105,7 +106,7 @@ security = {
       enable = true;
     };
   };
-
+*/
 
 };
 
