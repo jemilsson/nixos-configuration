@@ -103,7 +103,7 @@ security = {
     };
     pkcs11 = {
       enable = true;
-    }
+    };
   };
 
 
