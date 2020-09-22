@@ -33,7 +33,6 @@ security = {
     enableSSHAgentAuth = true;
     p11 = {
       enable = true;
-      
     };
   };
 };
