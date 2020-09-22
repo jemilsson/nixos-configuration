@@ -31,6 +31,9 @@ system = {
 security = {
   pam = {
     enableSSHAgentAuth = true;
+    p11 = {
+      enable = true;
+    };
   };
 };
 
