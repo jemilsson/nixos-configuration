@@ -193,7 +193,7 @@ in
     openssl
     unstable.libp11
     #scd-pkcs11
-    kdeApplications.kleopatra
+    #kdeApplications.kleopatra
 
     pass
     qtpass
