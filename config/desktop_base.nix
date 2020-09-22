@@ -122,6 +122,7 @@ in
     vscode-with-extensions
     insomnia
     emacs
+    aws-sam-cli
     (python37Packages.opencv4.override{
     enableGtk2 = true;
     enableFfmpeg=true;
