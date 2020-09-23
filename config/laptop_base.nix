@@ -32,7 +32,7 @@
 
   environment.systemPackages = with pkgs; [
     wavemon
-    kismet
+    #kismet
     powertop
   ];
 }
