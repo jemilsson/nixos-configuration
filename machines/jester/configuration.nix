@@ -19,6 +19,8 @@ in
       efi.canTouchEfiVariables = true;
     };
     kernelPackages = pkgs.unstable.linuxPackages_latest;
+
+    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
     };
 
   networking = {
@@ -93,6 +95,7 @@ in
   };
 
  };
+
 
 /*
 security = {
