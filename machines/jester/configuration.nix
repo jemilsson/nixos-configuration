@@ -20,7 +20,7 @@ in
     };
     kernelPackages = pkgs.unstable.linuxPackages_latest;
 
-    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
+    binfmt.emulatedSystems = [ "aarch64-linux" "armv7lhf-linux" ];
     };
 
   networking = {
