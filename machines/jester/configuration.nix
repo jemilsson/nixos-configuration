@@ -20,7 +20,7 @@ in
     };
     kernelPackages = pkgs.unstable.linuxPackages_latest;
 
-    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" "arm-linux"];
+    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux"];
     };
 
   networking = {
@@ -76,6 +76,8 @@ in
   python37Packages.shapely
   opencl-headers
   labelImg
+
+  gcc-arm-embedded
  ];
 
  nix = {
