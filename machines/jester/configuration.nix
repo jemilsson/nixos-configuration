@@ -77,7 +77,7 @@ in
   opencl-headers
   labelImg
 
-  gcc-arm-embedded
+  pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
  ];
 
  nix = {
