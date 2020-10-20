@@ -127,8 +127,8 @@ in
     enableGtk2 = true;
     enableFfmpeg=true;
   })
-    ponyc
-    pony-corral
+    unstable.ponyc
+    unstable.pony-corral
 
 
     #Interface
