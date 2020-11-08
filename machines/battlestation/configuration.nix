@@ -16,6 +16,7 @@
     hostName = "battlestation";
 
     firewall.allowedTCPPorts = [ 3389 ];
+    firewall.allowedUDPPorts = [ 59802 ];
 
     defaultGateway = {
       address = "10.5.20.1";
