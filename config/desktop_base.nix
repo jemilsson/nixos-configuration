@@ -227,8 +227,9 @@ in
 
     ltwheelconf
     awscli
-    samba4Full
 
+    samba4Full
+    cifs-utils
   ];
 	
   environment.extraSetup = ''
