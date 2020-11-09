@@ -307,6 +307,7 @@ in
 
 
   services = {
+      samba.enable = true;
       gvfs.enable = true;
       printing  = {
         enable = true;
