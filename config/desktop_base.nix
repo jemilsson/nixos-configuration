@@ -312,7 +312,6 @@ in
         enable = true;
         package = pkgs.samba4Full;
       };
-      samba.enable = true;
       gvfs.enable = true;
       printing  = {
         enable = true;
