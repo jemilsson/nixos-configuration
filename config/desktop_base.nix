@@ -123,10 +123,12 @@ in
     insomnia
     emacs
     aws-sam-cli
+    /*
     (python37Packages.opencv4.override{
     enableGtk2 = true;
     enableFfmpeg=true;
   })
+    */
     unstable.ponyc
     unstable.pony-corral
 
@@ -226,8 +228,10 @@ in
 
 
     ltwheelconf
-    awscli
+    unstable.awscli
 
+    samba4Full
+    cifs-utils
   ];
 	
   environment.extraSetup = ''
@@ -307,6 +311,10 @@ in
 
 
   services = {
+      samba = {
+        enable = true;
+        package = pkgs.samba4Full;
+      };
       gvfs.enable = true;
       printing  = {
         enable = true;
