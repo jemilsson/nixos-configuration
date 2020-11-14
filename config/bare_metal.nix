@@ -7,6 +7,7 @@
       enable = true;
       enableTestRemote = true;
       package = pkgs.unstable.fwupd;
+      blacklistPlugins = [];
     };
   };
 
