@@ -228,7 +228,7 @@ in
 
 
     ltwheelconf
-    unstable.awscli
+    awscli
 
     samba4Full
     cifs-utils
