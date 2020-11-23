@@ -52,6 +52,8 @@ in
         };
 
         wg1 = {
+          privateKeyFile = "/var/lib/wireguard/privatekey";
+          generatePrivateKeyFile = true;
           ips = ["10.111.255.253/32" 10.112.255.253/32];
           peers = [
               {
@@ -75,7 +77,6 @@ in
       };
       };
     };
-  };
 
  services = {
    xserver = {
