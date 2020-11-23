@@ -50,6 +50,29 @@ in
 
           ];
         };
+
+        wg1 = {
+          ips = ["10.111.255.253/32" 10.112.255.253/32];
+          peers = [
+              {
+                publicKey = "zYgI7WYsKHNh70oZvdHDPKCeqKeEdsQbAIxtlNGSw2c=";
+                allowedIPs = [
+                  "10.111.0.0/16"
+                ];
+                endpoint = "18.198.12.235:123";
+              }
+
+              {
+                publicKey = "Uv6JEWpVPBAt44WBRWmyGRYtF0k7mYm2vRKmkOArtUw=";
+                allowedIPs = [
+                  "10.112.0.0/16"
+                ];
+                endpoint = "54.75.127.255:123";
+              }
+
+          ];
+        };
+      };
       };
     };
   };
