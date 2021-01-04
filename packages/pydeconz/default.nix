@@ -8,7 +8,7 @@ python38.pkgs.buildPythonPackage rec {
 
   src = python38.pkgs.fetchPypi {
     inherit pname version;
-    sha256 = "1d8drgy712sxxvisdaz53jgyiiidbhvnbrsvgci6jh9b6s6188wb";
+    sha256 = "1v06c31w1fy90xh0y3al1y0s6iilvg729j9jqbq320ka6a1742gh";
   };
 
   buildInputs = [ pkgs.unstable.python38Packages.aiohttp ];
