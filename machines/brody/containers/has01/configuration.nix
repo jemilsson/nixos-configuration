@@ -37,7 +37,7 @@ services.home-assistant ={
       http = {
         server_host = "::0";
         server_port = 8123;
-        api_password = "8wzUfUfLa6ZuewFd4j2UxtVu" ;
+        #api_password = "8wzUfUfLa6ZuewFd4j2UxtVu" ;
       };
       feedreader.urls = [ "https://nixos.org/blogs.xml" ];
       media_player = [
