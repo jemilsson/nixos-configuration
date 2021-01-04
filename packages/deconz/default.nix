@@ -10,7 +10,7 @@ rec {
     inherit name;
     dpkg = dpkg;
     src = fetchurl {
-      url = "https://www.dresden-elektronik.de/deconz/ubuntu/beta/${name}-qt5.deb";
+      url = "https://deconz.dresden-elektronik.de/ubuntu/beta/${name}-qt5.deb";
       sha256 = "ed89af827266072957cb8e92d5ca9faee8d728d4b53fe00a6f599d4ebf89ba80";
     };
 
