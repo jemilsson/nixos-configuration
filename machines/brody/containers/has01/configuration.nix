@@ -18,11 +18,11 @@ environment.systemPackages = with pkgs; [
 services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
-   package = pkgs.unstable.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz ];# pylgtv ];#spotipy ];
-      extraComponents = [ "media_player.spotify" "cast" ];
-      #skipPip = false;
-    };
+   #package = pkgs.unstable.home-assistant.override {
+   #   extraPackages = ps: with ps; [ pydeconz ];# pylgtv ];#spotipy ];
+   #   extraComponents = [ "media_player.spotify" "cast" ];
+   #   #skipPip = false;
+   # };
    config = {
       homeassistant = {
         name = "Home";
