@@ -123,6 +123,8 @@ in
           ports = [
               "55123:55123"
           ];
+          volumes = [
+            "/var/lib/ring-mqtt:/data"
         };
       };
     };
