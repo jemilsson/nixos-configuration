@@ -35,7 +35,7 @@ in
     };
 
     firewall = {
-      enable = true;
+      enable = false;
       allowedTCPPorts = [ 22 8080 8088 19999 1999 ];
       allowedUDPPorts = [ ];
       checkReversePath = false;
