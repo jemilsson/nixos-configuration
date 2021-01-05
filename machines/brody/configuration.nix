@@ -79,7 +79,7 @@ in
       ip link set gretap1 up mtu 1500
       ip link set gretap1 master br2000
 
-      ip route add unreachable 2a0e:b107:330:beef::64
+      ip route add unreachable 2a0e:b107:330:beef::/64
       ip route add unreachable 10.5.30.0/24
       
     '';
