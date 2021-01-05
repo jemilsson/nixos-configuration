@@ -41,6 +41,16 @@ in
     };
 
     interfaces = {
+      "lo" = {
+        ipv6.routes = [
+          {
+            address = "2a0e:b107:330:beef::";
+            prefixLength = 64;
+            via = "::1/128";
+          }
+        ]
+      }
+
       "br1020" = {
         ipv4 = {
           addresses = [
