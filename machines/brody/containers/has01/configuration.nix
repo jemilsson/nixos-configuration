@@ -169,14 +169,14 @@ services.home-assistant ={
 
     #history = {};
     #history_graph = {
-      gr1 = {
-        name = "Temperature";
-        entities = [
-          "sensor.temperature"
-          "sensor.current_weather_temperature"
-        ];
-      };
-    };
+    #  gr1 = {
+    #    name = "Temperature";
+    #    entities = [
+    #      "sensor.temperature"
+    #      "sensor.current_weather_temperature"
+    #    ];
+    #  };
+    #};
     logbook = {};
     wake_on_lan = {
       mac = "14:C9:13:02:02:A6";
