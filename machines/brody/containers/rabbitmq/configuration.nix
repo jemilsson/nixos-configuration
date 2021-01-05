@@ -5,9 +5,9 @@ in
 {
   
 imports = [
-    ../base.nix
-    ../public_server.nix
+  ../../../../config/minimum.nix   
 ];
+
 
 
 networking = {
@@ -15,10 +15,10 @@ networking = {
     enable = false;
   };
 
-  defaultGateway = {
-    address = "10.5.20.1";
-    interface = "eth0";
-  };
+  #defaultGateway = {
+  #  address = "10.5.20.1";
+  #  interface = "eth0";
+  #};
 };
 
 environment.systemPackages = with pkgs; [
