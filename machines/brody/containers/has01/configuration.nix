@@ -59,7 +59,7 @@ services.home-assistant ={
         }
       ];
       deconz = {
-        host = "brody.jonas.systems";
+        host = "2a0e:b107:330::4";
         port = 8080;
         api_key = "A3909DDC09";
       };
