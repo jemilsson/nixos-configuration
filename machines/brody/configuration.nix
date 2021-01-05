@@ -41,16 +41,6 @@ in
     };
 
     interfaces = {
-      "lo" = {
-        ipv6.routes = [
-          {
-            address = "2a0e:b107:330:beef::";
-            prefixLength = 64;
-            via = "::1";
-          }
-        ];
-      };
-
       "br1020" = {
         ipv4 = {
           addresses = [
@@ -88,6 +78,10 @@ in
       ip link add gretap1 type gretap local 10.5.254.0 remote 10.5.254.1
       ip link set gretap1 up mtu 1500
       ip link set gretap1 master br2000
+
+      ip route add unreachable 2a0e:b107:330:beef::64
+      ip route add unreachable 10.5.30.0/24
+      
     '';
     # ip addr add 10.5.254.2 peer 10.5.254.3 dev gretap1
   #  vswitches = {
