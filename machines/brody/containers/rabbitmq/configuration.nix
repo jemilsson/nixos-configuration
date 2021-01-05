@@ -3,9 +3,12 @@ let
   rabbitmqConfig = builtins.readFile ./rabbitmq.conf;
 in
 {
-  imports = [
-    ../../../../config/minimum.nix
+  
+imports = [
+    ../base.nix
+    ../public_server.nix
 ];
+
 
 networking = {
   firewall = {
