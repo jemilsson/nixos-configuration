@@ -111,6 +111,23 @@ in
 
   containers = containers;
 
+  virtualisation = {
+    oci-containers = {
+      containers = {
+        "ring-mqtt" = {
+          autoStart = true;
+          image = "tsightler/ring-mqtt";
+          environment = {
+            MQTTHOST = "db.example.com";
+            DATABASE_PORT = "3306";
+          }
+        }
+      }
+    }
+  }
+
+
+
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
