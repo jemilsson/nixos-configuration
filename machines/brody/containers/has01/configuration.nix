@@ -7,7 +7,7 @@ secrets = import ../../secrets.nix;
 in
 {
   imports = [
-    ../../../../config/minimum.nix
+    ../base.nix
     ../public_server.nix
 ];
 
