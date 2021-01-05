@@ -125,6 +125,7 @@ in
           ];
           volumes = [
             "/var/lib/ring-mqtt:/data"
+          ];
         };
       };
     };
