@@ -11,6 +11,6 @@ python38.pkgs.buildPythonPackage rec {
     sha256 = "1v06c31w1fy90xh0y3al1y0s6iilvg729j9jqbq320ka6a1742gh";
   };
 
-  buildInputs = [ pkgs.unstable.python38Packages.aiohttp ];
+  buildInputs = [ pkgs.unstable.python38Packages.aiohttp pkgs.unstable.python38Packages.netdisco ];
   doCheck = false;
 }

@@ -167,8 +167,8 @@ services.home-assistant ={
       */
     ];
 
-    history = {};
-    history_graph = {
+    #history = {};
+    #history_graph = {
       gr1 = {
         name = "Temperature";
         entities = [
