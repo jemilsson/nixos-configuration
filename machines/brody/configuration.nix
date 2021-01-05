@@ -38,6 +38,10 @@ in
       allowedTCPPorts = [ 22 8080 8088 19999 1999 ];
       allowedUDPPorts = [ ];
       checkReversePath = false;
+      extraCommands = ''
+      iptables -A FORWARD -d 10.5.30.0/24 -s 10.5.0.0/16 -j ACCEPT
+      iptables -A FORWARD -s 10.5.30.0/24 -j ACCEPT
+      '';
     };
 
     interfaces = {
