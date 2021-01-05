@@ -15,10 +15,15 @@ networking = {
     enable = false;
   };
 
-  #defaultGateway = {
-  #  address = "10.5.20.1";
-  #  interface = "eth0";
-  #};
+  defaultGateway = {
+    address = "10.5.30.1";
+    interface = "eth0";
+  };
+
+  defaultGateway6 = {
+    address = "fe80::1";
+    interface = "eth0";
+  };
 };
 
 environment.systemPackages = with pkgs; [
