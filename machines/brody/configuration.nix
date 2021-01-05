@@ -119,7 +119,7 @@ in
           image = "tsightler/ring-mqtt";
           environment = {
             MQTTHOST = "10.5.20.7";
-            RINGTOKEN = "abc123";
+            RINGTOKEN = "eyJhbGciOiJIUzUxMiIsImprdSI6Ii9vYXV0aC9pbnRlcm5hbC9qd2tzIiwia2lkIjoiYzEyODEwMGIiLCJ0eXAiOiJKV1QifQ.eyJpYXQiOjE2MDk4NjEzNjYsInJlZnJlc2hfY2lkIjoicmluZ19vZmZpY2lhbF9hbmRyb2lkIiwicmVmcmVzaF9zY29wZXMiOlsiY2xpZW50Il0sInJlZnJlc2hfdXNlcl9pZCI6MTIzLCJybmQiOiJyYW5kb21zdHJpbmciLCJzZXNzaW9uX2lkIjoiM2U2YzJjMmMtMTMzNy0xMjM0LTk4ZDktNjc1YWQyZmZhNjYwIiwidHlwZSI6InJlZnJlc2gtdG9rZW4ifQ.zAqzOxSWsBo_hSskH1z7uq-g4Kke0N4gRGuIREPkw99l1XtkqT7bwOI6uDRDkK75Sd6991p-oh0J-jvNEnJlSg";
             DEBUG = "*";
           };
           ports = [
