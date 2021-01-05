@@ -118,9 +118,11 @@ in
           autoStart = true;
           image = "tsightler/ring-mqtt";
           environment = {
-            MQTTHOST = "db.example.com";
-            DATABASE_PORT = "3306";
+            MQTTHOST = "10.5.20.7";
           };
+          ports = [
+              "55123:55123"
+          ];
         };
       };
     };
