@@ -134,6 +134,7 @@ in
 
 
   boot.kernelParams = [ "--- console=ttyS0,115200n8" ];
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.extraModulePackages = [ kernel.wireguard ];
