@@ -8,8 +8,6 @@ imports = [
   ../../../../config/minimum.nix   
 ];
 
-
-
 networking = {
   firewall = {
     enable = false;
@@ -37,4 +35,5 @@ services = {
     config = rabbitmqConfig;
     };
   };
+
 }
