@@ -119,6 +119,7 @@ in
           image = "tsightler/ring-mqtt";
           environment = {
             MQTTHOST = "10.5.20.7";
+            RINGTOKEN = "ring_token";
           };
           ports = [
               "55123:55123"
