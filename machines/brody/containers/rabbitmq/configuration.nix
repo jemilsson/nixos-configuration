@@ -19,7 +19,7 @@ networking = {
   };
 
   defaultGateway6 = {
-    address = "fe80::1";
+    #address = "fe80::1";
     interface = "eth0";
   };
 };
