@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 {
   config = import ./configuration.nix { pkgs = pkgs; config=config; };
-  hostBridge = "br1020";
-  localAddress = "10.5.20.6/24";
-  localAddress6 = "2a0e:b107:330::6/64";
+  localAddress = "10.5.30.3/32";
+  localAddress6 = "2a0e:b107:330:beef::3/128";
+  hostAddress6 = "fc00::1";
+  hostAddress = "10.5.30.1";
   autoStart = true;
   privateNetwork = true;
-  #forwardPorts = [
-    #{ containerPort = 8123; hostPort = 80; protocol = "tcp"; }
-  #];
+}
 }

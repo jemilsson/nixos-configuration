@@ -7,8 +7,7 @@ secrets = import ../../secrets.nix;
 in
 {
   imports = [
-    ../base.nix
-    ../public_server.nix
+    ../../../../config/minimum.nix 
 ];
 
 environment.systemPackages = with pkgs; [

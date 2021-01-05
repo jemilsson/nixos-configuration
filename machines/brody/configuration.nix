@@ -41,6 +41,9 @@ in
       extraCommands = ''
       iptables -A FORWARD -d 10.5.30.0/24 -s 10.5.0.0/16 -j ACCEPT
       iptables -A FORWARD -s 10.5.30.0/24 -j ACCEPT
+
+      iptables -A FORWARD -d 10.5.30.0/24 -s 10.5.0.0/16 -j ACCEPT
+      iptables -A FORWARD -s 10.5.30.0/24 -j ACCEPT
       '';
     };
 
