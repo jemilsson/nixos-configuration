@@ -104,7 +104,7 @@ in
   };
 
   services = {
-    */
+    /*
     radvd = {
       enable = true;
       config = ''
