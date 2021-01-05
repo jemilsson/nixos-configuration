@@ -8,4 +8,3 @@
   autoStart = true;
   privateNetwork = true;
 }
-}
