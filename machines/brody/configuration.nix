@@ -120,11 +120,11 @@ in
           environment = {
             MQTTHOST = "db.example.com";
             DATABASE_PORT = "3306";
-          }
-        }
-      }
-    }
-  }
+          };
+        };
+      };
+    };
+  };
 
 
 
