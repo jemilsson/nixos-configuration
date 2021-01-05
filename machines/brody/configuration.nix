@@ -46,7 +46,7 @@ in
           {
             address = "2a0e:b107:330:beef::";
             prefixLength = 64;
-            via = "::1/128";
+            via = "::1";
           }
         ];
       };
