@@ -39,7 +39,7 @@ in
       allowedUDPPorts = [ ];
       checkReversePath = false;
       extraCommands = ''
-      iptables -A FORWARD -d 10.5.30.0/24 -s ACCEPT
+      iptables -A FORWARD -d 10.5.30.0/24 -j ACCEPT
       iptables -A FORWARD -s 10.5.30.0/24 -j ACCEPT
       '';
     };
