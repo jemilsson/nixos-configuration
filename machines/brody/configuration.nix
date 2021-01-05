@@ -104,6 +104,16 @@ in
   };
 
   services = {
+    */
+    radvd = {
+      enable = true;
+      config = ''
+
+
+      '';
+    };
+    */
+
     lldpd = {
       enable = true;
     };
