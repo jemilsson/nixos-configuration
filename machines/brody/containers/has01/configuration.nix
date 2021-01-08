@@ -69,7 +69,7 @@ services.home-assistant ={
         api_key = "A3909DDC09";
       };
       mqtt = {
-        broker = "10.5.20.7";
+        broker = "10.5.30.2";
       };
 
       logger = {
@@ -283,9 +283,9 @@ services.home-assistant ={
 
     };
 
-    #mqtt_eventstream = {
-    #  publish_topic = "homeassistant/eventstream";
-    #};
+    mqtt_eventstream = {
+      publish_topic = "homeassistant/eventstream";
+    };
 
 
   };
