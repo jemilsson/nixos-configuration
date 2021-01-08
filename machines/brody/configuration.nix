@@ -135,7 +135,7 @@ in
           autoStart = true;
           image = "tsightler/ring-mqtt";
           environment = {
-            #DEBUG = "*";
+            DEBUG = "*";
           };
           ports = [
               "55123:55123"
