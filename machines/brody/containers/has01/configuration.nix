@@ -14,6 +14,12 @@ environment.systemPackages = with pkgs; [
 
 ];
 
+networking = {
+  firewall = {
+    enable = false;
+  };
+};
+
 services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
