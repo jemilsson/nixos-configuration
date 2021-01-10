@@ -172,6 +172,16 @@ services.home-assistant ={
       */
     ];
 
+    switch = [
+      {
+        platform = "flux";
+        lights = [
+          "light.color_temperature_light_12";
+        ];
+      }
+
+    ];
+
     #history = {};
     #history_graph = {
     #  gr1 = {
