@@ -176,7 +176,7 @@ services.home-assistant ={
       {
         platform = "flux";
         lights = [
-          "light.color_temperature_light_12";
+          "light.color_temperature_light_12"
         ];
       }
 
