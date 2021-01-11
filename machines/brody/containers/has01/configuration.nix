@@ -178,6 +178,10 @@ services.home-assistant ={
         name = "Fluxer";
         lights = [
           "light.bedroom"
+          "light.sofa_1"
+          "light.sofa_2"
+          "light.sofa_3"
+          "light.sofa_4"
         ];
       }
 
