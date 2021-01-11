@@ -183,6 +183,7 @@ services.home-assistant ={
           "light.sofa_3"
           "light.sofa_4"
         ];
+        mode = "mired";
       }
 
     ];
