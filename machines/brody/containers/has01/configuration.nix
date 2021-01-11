@@ -175,8 +175,9 @@ services.home-assistant ={
     switch = [
       {
         platform = "flux";
+        name = "Fluxer";
         lights = [
-          "light.color_temperature_light_12"
+          "light.bedroom"
         ];
       }
 
