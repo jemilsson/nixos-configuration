@@ -184,6 +184,10 @@ services.home-assistant ={
           "light.sofa_4"
         ];
         mode = "mired";
+        start_time = "04:30";
+        stop_time = "20:00";
+        start_colortemp = 6500;
+        stop_colortemp = 2200;
       }
 
     ];
