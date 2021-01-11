@@ -187,7 +187,7 @@ services.home-assistant ={
         start_time = "04:30";
         stop_time = "20:00";
         start_colortemp = 6500;
-        stop_colortemp = 2700;
+        stop_colortemp = 2200;
       }
 
     ];
