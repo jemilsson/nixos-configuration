@@ -68,7 +68,7 @@ in
       enable = true;
       driSupport32Bit = true;
       #s3tcSupport = true;
-      extraPackages = with pkgs; [ intel-media-driver libvdpau-va-gl vaapiVdpau (vaapiIntel.override {  enableHybridCodec = true;  }) ];
+      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime intel-media-driver libvdpau-va-gl vaapiVdpau (vaapiIntel.override {  enableHybridCodec = true;  }) ];
       extraPackages32 = with pkgs; [ 	intel-media-driver libvdpau-va-gl vaapiVdpau (vaapiIntel.override {  enableHybridCodec = true;  }) ];
       setLdLibraryPath = true;
     };
