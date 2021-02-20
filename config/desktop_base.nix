@@ -233,7 +233,7 @@ in
     samba4Full
     cifs-utils
 
-    ledger-live-desktop
+    unstable.ledger-live-desktop
 
 
   ];
