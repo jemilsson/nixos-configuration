@@ -459,6 +459,7 @@ in
           pkgs.unstable.opensc
           #pkgs.bash
           pkgs.unstable.usb-modeswitch-data
+          pkgs.unstable.ledger-udev-rules
        ];
 
 
