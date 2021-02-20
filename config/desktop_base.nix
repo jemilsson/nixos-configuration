@@ -26,7 +26,7 @@ in
   ];
 
   powerManagement = {
-    enable = true;
+    enable = false;
     # cpuFreqGovernor = "ondemand";
   };
 
@@ -232,6 +232,10 @@ in
 
     samba4Full
     cifs-utils
+
+    ledger-live-desktop
+
+
   ];
 	
   /*environment.extraSetup = ''
