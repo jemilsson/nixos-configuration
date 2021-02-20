@@ -77,9 +77,9 @@ in
       enable = true;
     };
 
-    ledger = {
-      enable = true;
-    };
+    #ledger = {
+    #  enable = true;
+    #};
 
     logitech = {
       enable = true;
