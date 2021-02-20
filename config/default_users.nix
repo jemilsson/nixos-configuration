@@ -15,4 +15,6 @@ in
      openssh.authorizedKeys.keys = sshKeys.jonas;
   };
 
+  groups.plugdev = {};
+
 }
