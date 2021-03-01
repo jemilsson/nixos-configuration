@@ -424,7 +424,7 @@ in
      tor = {
        enable = true;
        client.enable = true;
-       package = pkgs.unstable-small.tor
+       package = pkgs.unstable-small.tor;
      };
 
      gpm.enable = true;
