@@ -97,7 +97,7 @@ in
     unstable.firefox
     unstable.chromium
     unstable.google-chrome
-    tor-browser-bundle-bin
+    #unstable-small.tor-browser-bundle-bin
 
     #Media
     spotify
