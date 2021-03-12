@@ -147,10 +147,13 @@ time.timeZone = "Europe/Stockholm";
 
 networking = {
   timeServers = [
-    "sth1.ntp.se"
-    "sth2.ntp.se"
-    "ntp3.sptime.se"
-    "ntp4.sptime.se"
+    "ntp.se"
+    "ntp.stupi.se"
+    "ntp1.sp.se"
+    "ntp2.sp.se"
+    "ntp3.sp.se"
+    "194.58.200.20"
+    "2a01:3f7::1"
   ];
   search = [ "jonas.systems" ];
 
