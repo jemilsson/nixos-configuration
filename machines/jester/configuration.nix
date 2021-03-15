@@ -18,7 +18,7 @@ in
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    #kernelPackages = pkgs.unstable.linuxPackages_latest;
 
     binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux"];
     };
