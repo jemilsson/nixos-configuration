@@ -89,6 +89,8 @@ in
    fprintd = {
      enable = true;
    };
+
+   ofono.enable = true; 
  };
 
  environment.systemPackages = with pkgs; [
