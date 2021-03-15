@@ -91,6 +91,8 @@ in
    };
 
    ofono.enable = true; 
+
+   dbus.packages = [ pkgs.unstable.hsphfpd ]
  };
 
  environment.systemPackages = with pkgs; [
@@ -104,6 +106,10 @@ in
   labelImg
 
   pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
+
+
+
+  unstable.hsphfpd
  ];
 
  nix = {
@@ -123,6 +129,18 @@ in
   };
 
  };
+
+systemd.services = {
+  hsphfpd = {
+        after = [ "bluetooth.service" ];
+        requires = [ "bluetooth.service" ];
+        wantedBy = [ "bluetooth.target" ];
+
+        description = "A prototype implementation used for connecting HSP/HFP Bluetooth devices";
+        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/hsphfpd.pl";
+      };
+};
+
 
 
 /*
