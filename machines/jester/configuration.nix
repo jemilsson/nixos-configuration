@@ -144,7 +144,7 @@ systemd.services = {
         wantedBy = [ "default.target" ];
 
         description = "telephony_client for hsphfpd";
-        serviceConfig.ExecStart = "${pkgs.hsphfpd}/bin/telephony_client.pl";
+        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/telephony_client.pl";
       };
 };
 
