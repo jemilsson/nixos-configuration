@@ -42,7 +42,7 @@ in
       package = pkgs.unstable.pulseaudio-hsphfpd;
 
       extraModules = [
-        pkgs.unstable.pulseaudio-modules-bt
+        #pkgs.unstable.pulseaudio-modules-bt
       ];
 
       daemon = {
