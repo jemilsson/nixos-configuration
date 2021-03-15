@@ -61,7 +61,7 @@ in
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-      package = pkgs.bluezFull;
+      package = pkgs.unstable.bluezFull;
     };
 
     opengl = {
