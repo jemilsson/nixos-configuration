@@ -39,7 +39,7 @@ in
     pulseaudio = {
       enable = true;
       support32Bit = true;
-      package = pkgs.unstable.pulseaudioFull;
+      package = pkgs.unstable.pulseaudio-hsphfpd;
 
       extraModules = [
         pkgs.unstable.pulseaudio-modules-bt
