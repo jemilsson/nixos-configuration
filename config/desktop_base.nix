@@ -104,7 +104,7 @@ in
     vlc
     mplayer
     smplayer
-    pavucontrol
+    unstable.pavucontrol
     pasystray
     audacity
     gimp
