@@ -92,7 +92,6 @@ in
 
    ofono.enable = true; 
 
-   dbus.packages = [ pkgs.unstable.hsphfpd ];
  };
 
  environment.systemPackages = with pkgs; [
@@ -109,7 +108,7 @@ in
 
 
 
-  unstable.hsphfpd
+  
  ];
 
  nix = {

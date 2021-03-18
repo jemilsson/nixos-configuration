@@ -235,6 +235,8 @@ in
 
     unstable.ledger-live-desktop
 
+    unstable.hsphfpd
+
 
   ];
 	
@@ -327,6 +329,8 @@ in
         nssmdns = true;
         enable = true;
       };
+
+      dbus.packages = [ pkgs.unstable.hsphfpd ];
   };
 
   systemd = {
