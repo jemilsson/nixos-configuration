@@ -92,7 +92,6 @@ in
 
    ofono.enable = true; 
 
-   dbus.packages = [ pkgs.unstable.hsphfpd ];
  };
 
  environment.systemPackages = with pkgs; [
@@ -109,7 +108,7 @@ in
 
 
 
-  unstable.hsphfpd
+  
  ];
 
  nix = {
@@ -130,23 +129,7 @@ in
 
  };
 
-systemd.services = {
-  hsphfpd = {
-        after = [ "bluetooth.service" ];
-        requires = [ "bluetooth.service" ];
-        wantedBy = [ "bluetooth.target" ];
 
-        description = "A prototype implementation used for connecting HSP/HFP Bluetooth devices";
-        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/hsphfpd.pl";
-      };
-
-  telephony_client = {
-        wantedBy = [ "default.target" ];
-
-        description = "telephony_client for hsphfpd";
-        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/telephony_client.pl";
-      };
-};
 
 
 
