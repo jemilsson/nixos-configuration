@@ -15,6 +15,17 @@
     illum.enable = true;
     localtime.enable = true;
 
+    geoclue2 = {
+      enable = true;
+
+      appConfig = {
+        "chromium" = {
+          isSystem = false;
+          isAllowed = true;
+        };
+      };
+    };
+
 
     tlp = {
       enable = true;
