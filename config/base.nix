@@ -66,6 +66,9 @@ nixpkgs = {
       unstable-small = import <nixos-unstable-small> {
         config = config.nixpkgs.config;
       };
+      small = import <nixos-small> {
+        config = config.nixpkgs.config;
+      };
     };
   };
 };
