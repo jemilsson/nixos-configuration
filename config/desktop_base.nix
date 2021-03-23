@@ -174,7 +174,7 @@ in
     unstable.teams
     #skype
 
-    (nixos-small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+    (small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
 
     #Games
     #unstable-small.steam
