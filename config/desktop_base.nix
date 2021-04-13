@@ -118,7 +118,7 @@ in
 
     #Programming
     unstable.atom
-    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu numpy pillow python3-tflite pylint ]))
+    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn python3-edgetpu numpy pillow python3-tflite pylint scipy numpy ]))
     vscode-with-extensions
     insomnia
     emacs
