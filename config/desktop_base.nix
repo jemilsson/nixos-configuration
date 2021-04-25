@@ -441,7 +441,7 @@ in
    };
    services = {
 
-     upower.enable = true;
+     #upower.enable = true;
 
      tor = {
        enable = true;
