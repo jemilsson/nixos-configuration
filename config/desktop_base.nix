@@ -304,8 +304,9 @@ in
     chromium = {
       #enableAdobeFlash = true;
       #enablePepperPDF = true;
-      #enableWideVine = true; #Still broken
+      enableWideVine = true; #Still broken
       pulseSupport = true;
+      enableVaapi = true;
     };
     firefox = {
       #enableAdobeFlash = true;
