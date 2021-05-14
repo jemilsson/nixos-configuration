@@ -95,7 +95,7 @@ in
   environment.systemPackages = with pkgs; [
     #Browsers
     unstable.firefox
-    #unstable.chromium
+    unstable.chromium
     unstable.google-chrome
     #unstable-small.tor-browser-bundle-bin
 
