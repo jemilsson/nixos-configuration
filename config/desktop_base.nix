@@ -95,7 +95,7 @@ in
   environment.systemPackages = with pkgs; [
     #Browsers
     unstable.firefox
-    unstable.chromium
+    #unstable.chromium
     unstable.google-chrome
     #unstable-small.tor-browser-bundle-bin
 
@@ -306,7 +306,7 @@ in
       #enablePepperPDF = true;
       enableWideVine = true; #Still broken
       pulseSupport = true;
-      enableVaapi = true;
+      #enableVaapi = true;
     };
     firefox = {
       #enableAdobeFlash = true;
