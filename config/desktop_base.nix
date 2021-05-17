@@ -122,7 +122,7 @@ in
     vscode-with-extensions
     insomnia
     emacs
-    unstable-small.aws-sam-cli
+    aws-sam-cli
     /*
     (python37Packages.opencv4.override{
     enableGtk2 = true;
