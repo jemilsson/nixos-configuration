@@ -9,7 +9,7 @@ in
     ../../config/services/kvm/kvm.nix
     ../../config/i3_x11.nix
     ../../config/language/english.nix
-    ../../config/software/tensorflow.nix
+    #../../config/software/tensorflow.nix
   ];
   system.stateVersion = "19.03";
 
