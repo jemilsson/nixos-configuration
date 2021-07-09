@@ -174,7 +174,7 @@ in
     betterlockscreen
     compton
     xorg.xev
-    plasma5.sddm-kcm
+    #plasma5.sddm-kcm
     i3lock
     xmobar
     #taffybar
