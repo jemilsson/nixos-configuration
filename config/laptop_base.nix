@@ -20,14 +20,14 @@
 
       appConfig = {
         "chromium" = {
-          isSystem = false;
+          isSystem = true;
           isAllowed = true;
         };
       };
 
       appConfig = {
         "redshift" = {
-          isSystem = false;
+          isSystem = true;
           isAllowed = true;
         };
       };
