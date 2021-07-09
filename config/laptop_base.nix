@@ -13,7 +13,7 @@
   };
   services = {
     illum.enable = true;
-    localtime.enable = true;
+    #localtime.enable = true;
 
     geoclue2 = {
       enable = true;
