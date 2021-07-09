@@ -45,5 +45,6 @@
     wavemon
     #kismet
     powertop
+    geoclue2
   ];
 }
