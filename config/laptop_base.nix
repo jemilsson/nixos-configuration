@@ -24,6 +24,13 @@
           isAllowed = true;
         };
       };
+
+      appConfig = {
+        "redshift" = {
+          isSystem = false;
+          isAllowed = true;
+        };
+      };
     };
 
 
