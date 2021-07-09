@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, libgcrypt, libgpgerror, libassuan, gnupg, openssl   }:
+{ lib, fetchFromGitHub, libgcrypt, libgpgerror, libassuan, gnupg, openssl   }:
 #with import <nixpkgs> {};
 stdenv.mkDerivation rec {
   name = "scd-pkcs11-0.01";
@@ -19,8 +19,8 @@ stdenv.mkDerivation rec {
     It allows PKCS#11 aware applications such as Firefox or OpenSSH to use smart cards via GnuPG's builtin smart card support. scd-pkcs#11 is an alternative to the OpenSC PKCS#11 module.
     '';
     homepage = https://github.com/sektioneins/scd-pkcs11;
-    license = stdenv.lib.licenses.asl20;
+    license = lib.licenses.asl20;
     #maintainers = [  ];
-    platforms = stdenv.lib.platforms.all;
+    platforms = lib.platforms.all;
   };
 }
