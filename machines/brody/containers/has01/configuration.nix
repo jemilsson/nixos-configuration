@@ -24,7 +24,7 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.unstable.home-assistant.override {
-      extraPackages = ps: with ps; [ pkgs.pydeconz pkgs.unstable.python38Packages.netdisco ];# pylgtv ];#spotipy ];
+      extraPackages = ps: with ps; [ pydeconz pkgs.unstable.python38Packages.netdisco ];# pylgtv ];#spotipy ];
       extraComponents = [ ];
       #skipPip = false;
     };
