@@ -162,8 +162,6 @@ in
 
  environment.systemPackages = with pkgs; [
   dnsutils
-  python2nix
-  pypi2nix
   deconz
 
   unstable.pmacct
