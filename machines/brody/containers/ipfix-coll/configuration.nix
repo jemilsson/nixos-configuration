@@ -51,7 +51,8 @@ services = {
 */
 
 users.users.nfacctd =
-      { name = "nfacctd";
+      { isSystemUser = true;
+        name = "nfacctd";
         group = "nfacctd";
         home = "${nfacctd_datadir}";
       };
