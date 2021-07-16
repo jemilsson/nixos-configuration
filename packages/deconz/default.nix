@@ -35,9 +35,9 @@ rec {
     ];
     multiPkgs = pkgs: [
       dpkg
-      qt5.qtbase
-      qt5.qtserialport
-      qt5.qtwebsockets
+      #qt5.qtbase
+      #qt5.qtserialport
+      #qt5.qtwebsockets
       sqlite
       hicolor_icon_theme
       libcap
