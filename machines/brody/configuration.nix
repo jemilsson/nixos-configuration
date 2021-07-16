@@ -35,7 +35,7 @@ in
     #};
 
     firewall = {
-      allowedTCPPorts = [ 22 8080 8088 19999 1999 ];
+      allowedTCPPorts = [ 22 ]; # 8080 8088 19999 1999 ];
       allowedUDPPorts = [ ];
       checkReversePath = false;
       extraCommands = ''
