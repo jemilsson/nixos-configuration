@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-pydeconz = pkgs.callPackage ../../../../packages/pydeconz/default.nix {};
+#pydeconz = pkgs.callPackage ../../../../packages/pydeconz/default.nix {};
 pylgtv = pkgs.callPackage ../../../../packages/pylgtv/default.nix {};
 spotipy = pkgs.callPackage ../../../../packages/spotipy/default.nix {};
 secrets = import ../../secrets.nix;
@@ -24,7 +24,7 @@ services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
    package = pkgs.unstable.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz pkgs.unstable.python38Packages.netdisco ];# pylgtv ];#spotipy ];
+      extraPackages = ps: with ps; [ pkgs.pydeconz pkgs.unstable.python38Packages.netdisco ];# pylgtv ];#spotipy ];
       extraComponents = [ ];
       #skipPip = false;
     };
