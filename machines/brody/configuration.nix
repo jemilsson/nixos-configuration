@@ -157,7 +157,7 @@ in
   boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = "1";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.extraModulePackages = [ kernel.wireguard ];
+  #boot.extraModulePackages = [ kernel.wireguard ];
   boot.kernelModules = [ "wireguard" ];
 
  environment.systemPackages = with pkgs; [
