@@ -24,15 +24,15 @@ in
     hostName = "brody";
     useDHCP = false;
 
-    defaultGateway = {
-      address = "10.5.20.1";
-      interface = "br1020";
-    };
+    #defaultGateway = {
+    #  address = "10.5.20.1";
+    #  interface = "br1020";
+    #};
 
-    defaultGateway6 = {
-      address = "2a0e:b107:330::1";
-      interface = "br1020";
-    };
+    #defaultGateway6 = {
+    #  address = "2a0e:b107:330::1";
+    #  interface = "br1020";
+    #};
 
     firewall = {
       allowedTCPPorts = [ 22 8080 8088 19999 1999 ];
@@ -41,6 +41,8 @@ in
       extraCommands = ''
       iptables -A FORWARD -d 10.5.30.0/24 -j ACCEPT
       iptables -A FORWARD -s 10.5.30.0/24 -j ACCEPT
+      iptables -A FORWARD -d 10.5.20.0/24 -j ACCEPT
+      iptables -A FORWARD -s 10.5.20.0/24 -j ACCEPT
       '';
     };
 
@@ -48,7 +50,7 @@ in
       "br1020" = {
         ipv4 = {
           addresses = [
-            { address = "10.5.20.4"; prefixLength = 24; }
+            { address = "10.5.20.1"; prefixLength = 24; }
           ];
         };
         ipv6 = {
