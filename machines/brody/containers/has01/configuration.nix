@@ -23,11 +23,11 @@ networking = {
 services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
-   package = pkgs.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz pkgs.python38Packages.netdisco ];# pylgtv ];#spotipy ];
-      extraComponents = [ ];
-      #skipPip = false;
-    };
+   #package = pkgs.home-assistant.override {
+   #   extraPackages = ps: with ps; [ pydeconz pkgs.python38Packages.netdisco ];# pylgtv ];#spotipy ];
+   #   extraComponents = [ ];
+   #   #skipPip = false;
+   # };
    config = {
       homeassistant = {
         name = "Home";
