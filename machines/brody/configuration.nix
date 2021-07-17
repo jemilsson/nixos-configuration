@@ -135,9 +135,8 @@ in
     netdata = {
       enable = true;
     };
-  };
-
-  dhcpd4 = {
+    
+    dhcpd4 = {
     enable = true;
     interfaces = [ "br1020" ];
     extraConfig = ''
@@ -152,6 +151,10 @@ in
       }
     '';
   };
+  
+  };
+
+  
 
   containers = containers;
 
