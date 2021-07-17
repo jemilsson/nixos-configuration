@@ -44,6 +44,14 @@ in
       iptables -A FORWARD -d 10.5.20.0/24 -j ACCEPT
       iptables -A FORWARD -s 10.5.20.0/24 -j ACCEPT
       '';
+      nat = {
+        enable = true;
+        externalInterface = "br2";
+        internalInterfaces = [ "br1020" ];
+        #forwardPorts = [
+        #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
+        #];
+     };
     };
 
     interfaces = {
