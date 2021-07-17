@@ -23,8 +23,8 @@ networking = {
 services.home-assistant ={
    enable = true;
    autoExtraComponents = true;
-   package = pkgs.unstable.home-assistant.override {
-      extraPackages = ps: with ps; [ pydeconz pkgs.unstable.python38Packages.netdisco ];# pylgtv ];#spotipy ];
+   package = pkgs.home-assistant.override {
+      extraPackages = ps: with ps; [ pydeconz pkgs.python38Packages.netdisco ];# pylgtv ];#spotipy ];
       extraComponents = [ ];
       #skipPip = false;
     };
