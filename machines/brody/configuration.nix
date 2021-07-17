@@ -137,6 +137,22 @@ in
     };
   };
 
+  dhcpd4 = {
+    enable = true;
+    interfaces = [ "br1020" ];
+    extraConfig = ''
+
+      option domain-name-servers 1.1.1.1;
+
+      subnet 10.5.20.0 netmask 255.255.255.0 {
+        range 10.5.20.100 10.5.20.200;
+        option broadcast-address 10.5.20.255;
+        option routers 10.5.20.1;
+        option subnet-mask 255.255.255.0;
+      }
+    '';
+  };
+
   containers = containers;
 
   virtualisation = {
