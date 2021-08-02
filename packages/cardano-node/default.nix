@@ -20,8 +20,8 @@ stdenv.mkDerivation rec {
 
     installPhase = ''
       mkdir -p $out/bin/
-      #mkdir -p $out/usr/share/
-      #mv configuration/ $out/usr/share/
+      mkdir -p $out/usr/share/cardano-node/doc/examples/
+      mv configuration/ $out/usr/share/cardano-node/doc/examples/
       cp -r .  $out/bin/
     '';
 
