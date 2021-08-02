@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
     buildInputs = [ ];
 
     installPhase = ''
+      mv * $out/bin/
       cp -r . $out
     '';
 
