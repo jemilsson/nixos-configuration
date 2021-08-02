@@ -20,7 +20,9 @@ stdenv.mkDerivation rec {
 
     installPhase = ''
       mkdir -p $out/bin/
-      cp -r . $out/bin/
+      mkdir -p $out/usr/share/
+      cp . $out/bin/
+      cp -r configuration/ $out/usr/share/
     '';
 
   }
