@@ -1,6 +1,7 @@
 { config, lib, pkgs, stdenv, ... }:
 let
   containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
+  cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix {};
 in
 {
   imports = [
@@ -106,7 +107,7 @@ in
 
   pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 
-
+  cardano-node
 
   
  ];
