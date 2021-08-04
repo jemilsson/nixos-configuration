@@ -187,7 +187,7 @@ systemd.timers.nix-optimise.timerConfig.Persistent = true;
 systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
 
 i18n = {
-  consoleFont = "Lat2-Hack16";
+  #consoleFont = "Lat2-Hack16";
   supportedLocales = [
     "en_US.UTF-8/UTF-8"
     "sv_SE.UTF-8/UTF-8"
