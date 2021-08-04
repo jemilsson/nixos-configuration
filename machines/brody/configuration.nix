@@ -132,9 +132,6 @@ in
     lldpd = {
       enable = true;
     };
-    netdata = {
-      enable = true;
-    };
     
     dhcpd4 = {
     enable = true;

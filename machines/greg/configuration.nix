@@ -64,9 +64,6 @@ in
     lldpd = {
       enable = true;
     };
-    netdata = {
-      enable = true;
-    };
     
   };
 
