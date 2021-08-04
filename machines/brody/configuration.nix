@@ -154,7 +154,7 @@ in
   
 
   containers = containers;
-
+  /*
   virtualisation = {
     oci-containers = {
       containers = {
@@ -174,6 +174,7 @@ in
       };
     };
   };
+  */
 
 
 
@@ -192,6 +193,8 @@ in
   unstable.pmacct
 
  ];
+
+ /*
 
  users.users."deconz" = {
   createHome = true;
@@ -219,5 +222,7 @@ in
          #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
        };
      };
+
+*/
 
 }
