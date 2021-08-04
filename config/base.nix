@@ -104,7 +104,7 @@ environment = {
     wget
     curl
     neofetch
-    unrar
+    #unrar
     unzip
     dnsutils
     ncdu
