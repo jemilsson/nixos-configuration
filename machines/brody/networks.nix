@@ -54,7 +54,7 @@ networking = {
   #Servers 2a0e:b107:330::/64 10.5.20.0/24
   vlans."vlan1020".interface = uplink;
   vlans."vlan1020".id = 1020;
-  bridges."br1020".interfaces = [ "vlan1020" ];
+  bridges."br1020".interfaces = [ "vlan1020" "enp0s20f1" "enp0s20f2" "enp0s20f3" "enp1s0" "enp2s0" ];
   interfaces."br1020".useDHCP = false;
 
   #LegacyLAN 2a0e:b107:330:4::/64  10.5.24.0/24
