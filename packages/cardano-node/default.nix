@@ -1,5 +1,5 @@
-#{ stdenv, fetchurl}:
-with import <nixpkgs> {};
+{ stdenv, fetchurl}:
+#with import <nixpkgs> {};
 let
   inherit (stdenv.lib) optional;
   hydra_build = "7408438";
