@@ -1,15 +1,16 @@
-{ stdenv, fetchurl}:
-#with import <nixpkgs> {};
+#{ stdenv, fetchurl}:
+with import <nixpkgs> {};
 let
   inherit (stdenv.lib) optional;
+  hydra_build = "7408438";
 in
 stdenv.mkDerivation rec {
-    version = "1.27.0";
+    version = "1.29.0";
     pname = "cardano-node";
 
     src = fetchurl {
-      url = "https://hydra.iohk.io/build/6263009/download/1/${pname}-${version}-linux.tar.gz";
-      sha256 = "be764f62efacc0980db827da8d84c7c9d06f613bc371e1557309cce63692e2ac";
+      url = "https://hydra.iohk.io/build/${hydra_build}/download/1/${pname}-${version}-linux.tar.gz";
+      sha256 = "1q08bf0ndk6d0052fmjvra44jdsddkkszzgh3gxrqvnkx9fvc5av";
     };
     dontConfigure = true;
     dontBuild = true;
