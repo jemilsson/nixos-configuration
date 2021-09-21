@@ -54,7 +54,7 @@ in
         #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
         #];
         extraCommands = ''
-          iptables -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
+          iptables -t nat -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
         '';
      };
 
