@@ -73,11 +73,11 @@ in
 
       };
       "enp0s22u1u2" = {
-        useDHCP = true;
-        #ipv4 = {
-        #  addresses = [
-        #    { address = "192.168.8.10"; prefixLength = 24; }
-        #  ];
+        useDHCP = false;
+        ipv4 = {
+          addresses = [
+            { address = "192.168.8.10"; prefixLength = 24; }
+          ];
       };
     };
 
