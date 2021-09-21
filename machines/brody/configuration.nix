@@ -48,14 +48,14 @@ in
 
     nat = {
         enable = true;
-        externalInterface = "br2";
+        #externalInterface = "br2";
         internalInterfaces = [ "br1020" ];
         #forwardPorts = [
         #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
         #];
-        extraCommands = ''
-          iptables -t nat -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
-        '';
+        #extraCommands = ''
+        #  iptables -t nat -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
+        #'';
      };
 
     interfaces = {
