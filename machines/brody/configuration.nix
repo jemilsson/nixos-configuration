@@ -80,8 +80,8 @@ in
           ];
           routes = [
              {
-              "address" = "0.0.0.0";
-              "prefixLength" = 0;
+              "address" = "192.168.8.0";
+              "prefixLength" = 24;
               "via" = "192.168.8.1";
               options = {
                 "preference" = 10000;
