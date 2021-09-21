@@ -69,6 +69,9 @@ in
         };
 
       };
+      "enp0s22u1u4c2" = {
+        useDHCP = true;
+      };
     };
 
     wireguard = {
