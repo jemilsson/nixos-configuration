@@ -78,6 +78,7 @@ in
           addresses = [
             { address = "192.168.8.10"; prefixLength = 24; }
           ];
+        };
       };
     };
 
