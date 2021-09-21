@@ -53,6 +53,9 @@ in
         #forwardPorts = [
         #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
         #];
+        extraCommands = ''
+          iptables -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
+        '';
      };
 
     interfaces = {
@@ -71,6 +74,10 @@ in
       };
       "enp0s22u1u2" = {
         useDHCP = true;
+        #ipv4 = {
+        #  addresses = [
+        #    { address = "192.168.8.10"; prefixLength = 24; }
+        #  ];
       };
     };
 
