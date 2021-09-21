@@ -83,7 +83,9 @@ in
               "address" = "0.0.0.0";
               "prefixLength" = 0;
               "via" = "192.168.8.1";
-              "preference" = 10000;
+              options = {
+                "preference" = 10000;
+              };
             }
           ];
         };
