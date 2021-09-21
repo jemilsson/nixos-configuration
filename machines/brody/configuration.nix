@@ -69,7 +69,7 @@ in
         };
 
       };
-      "enp0s22u1u4c2" = {
+      "enp0s22u1u2" = {
         useDHCP = true;
       };
     };
