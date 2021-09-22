@@ -87,7 +87,7 @@ in
               "prefixLength" = 0;
               "via" = "192.168.8.1";
               options = {
-                "metric" = "10000";
+                "preference" = "10000";
               };
             }
           ];
