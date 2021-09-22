@@ -20,6 +20,8 @@ in
     enable = true;
   };
 
+  hardware.usbWwan.enable = true;
+
   networking = {
     hostName = "brody";
     useDHCP = false;
