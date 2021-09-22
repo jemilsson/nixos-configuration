@@ -78,9 +78,10 @@ in
           addresses = [
             { address = "192.168.8.10"; prefixLength = 24; }
           ];
+          /*
           routes = [
              {
-              "address" = "192.168.8.0";
+              "address" = "192.168.8.1";
               "prefixLength" = 24;
               "via" = "192.168.8.1";
               options = {
@@ -88,6 +89,7 @@ in
               };
             }
           ];
+          */
         };
       };
     };
