@@ -160,7 +160,7 @@ in
     gparted
     file
     keepass
-    #shutter
+    shutter
 
     #Office
     libreoffice
