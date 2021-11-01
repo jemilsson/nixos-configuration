@@ -5,7 +5,7 @@ version = "21.10";
 name = "vpp-${version}";
 libvppinfra = pkgs.callPackage ../libvppinfra/default.nix {};
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
     #builder = ./builder.sh;
     inherit name;
     dpkg = dpkg;
