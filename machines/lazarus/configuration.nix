@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 let
   dpi = 120;
+
+  vpp = pkgs.callPackage pkgs.callPackage ../packages/vpp/default.nix {};
 in
 {
   imports = [
@@ -77,6 +79,8 @@ in
 
     #heimdall
     #heimdall-gui
+
+    vpp
  ];
 
  nix = {
