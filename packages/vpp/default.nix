@@ -1,4 +1,4 @@
-#{ config, pkgs, stdenv, buildFHSUserEnv, fetchurl, dpkg, qt5, sqlite, hicolor_icon_theme, libcap, libpng,   ... }:
+{ config, pkgs, stdenv, fetchurl, dpkg}:
 with import <nixpkgs> {};
 let
 version = "21.10";
