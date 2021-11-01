@@ -2,7 +2,7 @@
 let
   containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix {};
-  vpp = pkgs.callPackage pkgs.callPackage ../../packages/vpp/default.nix {};
+  vpp = pkgs.callPackage ../../packages/vpp/default.nix {};
 in
 {
   imports = [
