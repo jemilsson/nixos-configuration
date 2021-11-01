@@ -110,6 +110,8 @@ in
 
   cardano-node
 
+  vpp
+
   
  ];
 
