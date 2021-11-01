@@ -1,4 +1,4 @@
-{ config, pkgs, stdenv, fetchurl, dpkg}:
+{ config, pkgs, stdenv, fetchurl, dpkg, gcc, libnl, libuuid}:
 #with import <nixpkgs> {};
 let
 version = "21.10";
