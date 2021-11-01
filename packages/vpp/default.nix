@@ -1,5 +1,5 @@
 { config, pkgs, stdenv, fetchurl, dpkg}:
-with import <nixpkgs> {};
+#with import <nixpkgs> {};
 let
 version = "21.10";
 name = "vpp-${version}";
