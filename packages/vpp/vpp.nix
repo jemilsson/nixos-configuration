@@ -286,7 +286,7 @@ logging {
 		"CAP_NET_ADMIN" 
 		"CAP_SYS_ADMIN" 
 		"CAP_NET_BIND_SERVICE"
-	
+		"CAP_NET_RAW"
 	];
 	*/
     ExecStart = "${app}/bin/vpp -c ${vpp-config}";
