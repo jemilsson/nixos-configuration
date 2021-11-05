@@ -280,8 +280,8 @@ cpu {
   after = [ "network.target" ];
   wantedBy = [ "multi-user.target" ];
   serviceConfig = {
-	AmbientCapabilities="CAP_NET_ADMIN";
-	CapabilityBoundingSet="CAP_NET_ADMIN";
+	AmbientCapabilities="CAP_SYS_ADMIN";
+	CapabilityBoundingSet="CAP_SYS_ADMIN";
     ExecStart = "${app}/bin/vpp -c ${vpp-config}";
     User = "vpp";
     Group = "vpp";
