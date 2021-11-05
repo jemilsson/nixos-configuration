@@ -280,6 +280,7 @@ cpu {
   after = [ "network.target" ];
   wantedBy = [ "multi-user.target" ];
   serviceConfig = {
+	Type="simple";
 	AmbientCapabilities= [ 
 		"CAP_NET_ADMIN" 
 		"CAP_SYS_ADMIN" 
