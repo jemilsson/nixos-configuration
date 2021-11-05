@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
   let
-      app = import ./default.nix { pkgs = pkgs; };
+      app = import ./default.nix { };
   in
   {
 
