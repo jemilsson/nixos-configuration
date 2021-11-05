@@ -12,7 +12,7 @@ in
     ../../config/i3_x11.nix
     ../../config/language/english.nix
     #../../config/software/tensorflow.nix
-    #../../packages/vpp/vpp.nix
+    ../../packages/vpp/vpp.nix
 
   ];
   system.stateVersion = "19.03";
