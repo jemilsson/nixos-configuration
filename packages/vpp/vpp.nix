@@ -8,7 +8,7 @@
   nodaemon
   log /var/log/vpp/vpp.log
   full-coredump
-  cli-listen /run/vpp/cli.sock
+  cli-listen /var/run/vpp/cli.sock
   gid vpp
 
   ## run vpp in the interactive mode
