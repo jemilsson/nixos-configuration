@@ -11,6 +11,10 @@
   home = "/home/vpp";
  };
 
+ users.groups."vpp" = {
+     members = ["vpp"];
+ };
+
 
   systemd.services.vpp = {
   description = "vpp";
