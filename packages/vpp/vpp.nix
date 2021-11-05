@@ -281,12 +281,14 @@ cpu {
   wantedBy = [ "multi-user.target" ];
   serviceConfig = {
 	Type="simple";
+	/*
 	AmbientCapabilities= [ 
 		"CAP_NET_ADMIN" 
 		"CAP_SYS_ADMIN" 
 		"CAP_NET_BIND_SERVICE"
 	
 	];
+	*/
     ExecStart = "${app}/bin/vpp -c ${vpp-config}";
     User = "vpp";
     Group = "vpp";
