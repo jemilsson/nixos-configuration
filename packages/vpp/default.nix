@@ -1,4 +1,4 @@
-{ config, pkgs, stdenv, fetchurl, dpkg, gcc, libnl, libuuid, autoPatchelfHook, glibc}:
+{ config, pkgs, stdenv, fetchurl, dpkg, gcc, libnl, libuuid, autoPatchelfHook, glibc, gcc-unwrapped}:
 #with import <nixpkgs> {};
 let
 version = "21.10";
