@@ -21,7 +21,7 @@
   after = [ "network.target" ];
   wantedBy = [ "multi-user.target" ];
   serviceConfig = {
-    ExecStart = "${app}/bin/vpp -c {app}/etc/vpp/startup.conf";
+    ExecStart = "${app}/bin/vpp -c ${app}/etc/vpp/startup.conf";
     User = "vpp";
     Group = "vpp";
     };
