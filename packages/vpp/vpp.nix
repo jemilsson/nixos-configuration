@@ -290,12 +290,12 @@ cpu {
 
   boot.kernel.sysctl = {
     # Number of 2MB hugepages desired
-    #"vm.nr_hugepages" = 1024;
-	"vm.nr_hugepages" = 512;
+    "vm.nr_hugepages" = 1024;
+	#"vm.nr_hugepages" = 512;
 
     # Must be greater than or equal to (2 * vm.nr_hugepages).
-    #"vm.max_map_count" = 3096;
-	"vm.max_map_count" = 2048;
+    "vm.max_map_count" = 3096;
+	#"vm.max_map_count" = 2048;
 
     # All groups allowed to access hugepages
     "vm.hugetlb_shm_group" = 0;
@@ -305,8 +305,8 @@ cpu {
     # If the existing kernel.shmmax setting  (cat /proc/sys/kernel/shmmax)
     # is greater than the calculated TotalHugepageSize then set this parameter
     # to current shmmax value.
-    #"kernel.shmmax" = 2147483648;
-	"kernel.shmmax" = 1073741824;
+    "kernel.shmmax" = 2147483648;
+	#"kernel.shmmax" = 1073741824;
   };
 
 }
