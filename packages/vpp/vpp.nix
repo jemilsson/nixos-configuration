@@ -248,7 +248,7 @@ cpu {
    # }
 # }
 
-# logging {
+logging {
    ## set default logging level for logging buffer
    ## logging levels: emerg, alert,crit, error, warn, notice, info, debug, disabled
    # default-log-level debug
@@ -256,7 +256,7 @@ cpu {
    default-syslog-log-level debug
    ## Set per-class configuration
    # class dpdk/cryptodev { rate-limit 100 level debug syslog-level error }
-# }
+}
 
      '';
 
