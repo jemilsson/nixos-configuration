@@ -2,7 +2,7 @@
 let
   containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
   cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix {};
-  vpp = pkgs.callPackage ../../packages/vpp/default.nix {};
+  #vpp = pkgs.callPackage ../../packages/vpp/default.nix {};
 in
 {
   imports = [
@@ -12,6 +12,8 @@ in
     ../../config/i3_x11.nix
     ../../config/language/english.nix
     #../../config/software/tensorflow.nix
+    ../../packages/vpp/vpp.nix
+
   ];
   system.stateVersion = "19.03";
 
@@ -110,7 +112,7 @@ in
 
   cardano-node
 
-  vpp
+  #vpp
 
   
  ];
