@@ -283,8 +283,8 @@ cpu {
 	AmbientCapabilities="CAP_SYS_ADMIN";
 	CapabilityBoundingSet="CAP_SYS_ADMIN";
     ExecStart = "${app}/bin/vpp -c ${vpp-config}";
-    #User = "vpp";
-    #Group = "vpp";
+    User = "vpp";
+    Group = "vpp";
     };
   };
 
