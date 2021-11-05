@@ -18,12 +18,26 @@ stdenv.mkDerivation {
     dontBuild = true;
     dontStrip = true;
 
-    buildInputs = [ dpkg libvppinfra gcc libnl libuuid] ; # qt5.qtbase qt5.qtserialport qt5.qtwebsockets ];
+    nativeBuildInputs = [
+    autoPatchelfHook
+    libvppinfra
+    
+    
+  ];
+
+    propagatedBuildInputs = [ 
+      gcc 
+      #libvppinfra 
+    ];
+    buildInputs = [ dpkg  gcc libnl libuuid  glibc gcc-unwrapped libvppinfra] ; # qt5.qtbase qt5.qtserialport qt5.qtwebsockets ];
 
     unpackPhase = "dpkg-deb -x $src .";
     installPhase = ''
+      rm usr/bin/vapi_cpp_test
+      rm usr/bin/vapi_c_test
       cp -r usr/* .
       cp -r . $out
+      
     '';
 
 }
