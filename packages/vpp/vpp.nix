@@ -288,7 +288,7 @@ cpu {
 
   environment.systemPackages = [app];
 
-  boot.kernelParams.sysctl = {
+  boot.kernel.sysctl = {
     # Number of 2MB hugepages desired
     "vm.nr_hugepages" = 1024;
 
