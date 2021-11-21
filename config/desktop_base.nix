@@ -179,8 +179,8 @@ in
     #Games
     #unstable-small.steam
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
-    (unstable.winetricks.override { wine = unstable.wine.override { wineBuild = "wineWow"; };} )
-    (unstable.wine.override { wineBuild = "wineWow"; })
+    #(unstable.winetricks.override { wine = unstable.wine.override { wineBuild = "wineWow"; };} )
+    #(unstable.wine.override { wineBuild = "wineWow"; })
     virtualgl
     xboxdrv
 
