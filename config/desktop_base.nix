@@ -253,6 +253,9 @@ in
     vulkan-tools
 
     swaybg
+    grim
+    wl-clipboard
+    slurp
 
 
   ];
