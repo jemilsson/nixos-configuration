@@ -114,6 +114,13 @@ in
 
   #vpp
 
+  (chromium.override {
+    commandLineArgs = [
+      "--enable-features=UseOzonePlatform"
+      "--ozone-platform=wayland"
+      ];
+  })
+
   
  ];
 
