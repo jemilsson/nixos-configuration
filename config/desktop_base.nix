@@ -252,6 +252,8 @@ in
     vulkan-validation-layers
     vulkan-tools
 
+    jq
+
     swaybg
     grim
     wl-clipboard
