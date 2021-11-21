@@ -125,7 +125,8 @@ in
     openscad
     cura
     ffmpeg-full
-    v4l-utils	
+    v4l-utils
+    imagemagick
 
     #Programming
     unstable.atom
