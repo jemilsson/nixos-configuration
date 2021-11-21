@@ -109,8 +109,8 @@ environment = {
     dnsutils
     ncdu
     killall
-    #python3
-
+    jq
+    
     #Network tools
     tcpdump
     whois
