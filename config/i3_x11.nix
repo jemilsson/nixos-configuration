@@ -38,10 +38,10 @@ in
 
       windowManager = {
         i3 = {
-          enable = true;
+          enable = false;
         };
         xmonad = {
-          enable = true;
+          enable = false;
           extraPackages = haskellPackages: [
             haskellPackages.xmonad-contrib
             haskellPackages.xmonad-extras
@@ -142,6 +142,7 @@ in
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.pasystray}/bin/pasystray";
         };
+
 
         "nm-applet" = {
           enable = true;
