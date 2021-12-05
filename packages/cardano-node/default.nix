@@ -3,10 +3,10 @@
 #with import <nixpkgs> {};
 let
   inherit (stdenv.lib) optional;
-  hydra_build = "7501993";
+  hydra_build = "8674953";
 in
 stdenv.mkDerivation rec {
-    version = "1.29.0";
+    version = "1.31.0";
     pname = "cardano-node";
 
     src = fetchurl {
