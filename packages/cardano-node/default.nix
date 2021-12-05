@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
 
     src = fetchurl {
       url = "https://hydra.iohk.io/build/${hydra_build}/download/1/${pname}-${version}-linux.tar.gz";
-      sha256 = "0gqpw0la69mj4ax23bqqzgkmgb0c9f0y4ghj2ihn8ik4bcdjywr9";
+      sha256 = "519df3fe364c6aec75b4c727857d5c0a0211b945c1b47d96bd09b27ebc212b33";
     };
     dontConfigure = true;
     dontBuild = true;
