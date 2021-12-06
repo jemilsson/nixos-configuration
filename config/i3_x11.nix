@@ -101,6 +101,9 @@ in
   programs = {
       sway = {
         enable = true;
+        extraSessionCommands = ''
+          export WLR_DRM_NO_MODIFIERS=1
+        '';
       };
       slock.enable = true;
 
