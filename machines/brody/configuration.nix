@@ -199,7 +199,7 @@ in
 
       option domain-name-servers 1.1.1.1;
 
-      subnet 100.65.4.1 netmask 255.255.255.0 {
+      subnet 100.65.4.0 netmask 255.255.255.0 {
         range 100.65.4.100 100.65.4.200;
         option broadcast-address 100.65.4.255;
         option routers 100.65.4.1;
