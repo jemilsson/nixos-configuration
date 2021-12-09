@@ -197,7 +197,6 @@ in
     enable = true;
     interfaces = [ "br1020" ];
     extraConfig = ''
-
       option domain-name-servers 1.1.1.1;
 
       subnet 100.65.4.0 netmask 255.255.255.0 {
