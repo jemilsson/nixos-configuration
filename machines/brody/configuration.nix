@@ -65,11 +65,13 @@ in
         ipv4 = {
           addresses = [
             { address = "10.5.20.1"; prefixLength = 24; }
+            { adress = "100.65.4.1"; prefixLength = 24; }
           ];
         };
         ipv6 = {
           addresses = [
             { address = "2a0e:b107:330::4"; prefixLength = 64; }
+            { address = "2a12:5800:4:4::1"; prefixLength = 64; }
           ];
         };
 
@@ -164,15 +166,27 @@ in
   };
 
   services = {
-    /*
+    
     radvd = {
       enable = true;
       config = ''
-
-
+      interface br1020 { 
+        AdvSendAdvert on;
+        MinRtrAdvInterval 3; 
+        MaxRtrAdvInterval 10;
+        prefix 2a12:5800:4:4::/64 { 
+                AdvOnLink on; 
+                AdvAutonomous on; 
+                AdvRouterAddr on; 
+        };
+        RDNSS 2001:4860:4860::8888 2001:4860:4860::8844
+        {
+                # AdvRDNSSLifetime 3600;
+        };
+      };
       '';
     };
-    */
+    
 
     lldpd = {
       enable = true;
@@ -185,10 +199,10 @@ in
 
       option domain-name-servers 1.1.1.1;
 
-      subnet 10.5.20.0 netmask 255.255.255.0 {
-        range 10.5.20.100 10.5.20.200;
-        option broadcast-address 10.5.20.255;
-        option routers 10.5.20.1;
+      subnet 100.65.4.1 netmask 255.255.255.0 {
+        range 100.65.4.100 100.65.4.200;
+        option broadcast-address 100.65.4.255;
+        option routers 100.65.4.1;
         option subnet-mask 255.255.255.0;
       }
     '';
