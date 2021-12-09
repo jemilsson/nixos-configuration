@@ -65,7 +65,7 @@ in
         ipv4 = {
           addresses = [
             { address = "10.5.20.1"; prefixLength = 24; }
-            { adress = "100.65.4.1"; prefixLength = 24; }
+            { address = "100.65.4.1"; prefixLength = 24; }
           ];
         };
         ipv6 = {
