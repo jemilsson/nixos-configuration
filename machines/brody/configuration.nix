@@ -121,7 +121,7 @@ in
               publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
               endpoint = "194.26.208.0:51820";
               allowedIPs = [ 
-                "10.128.2.4/24"
+                "10.128.2.0/24"
                 "2a12:5800:0:5::/64"
                 #"0::/0"
               ];
