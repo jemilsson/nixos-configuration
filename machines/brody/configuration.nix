@@ -50,7 +50,7 @@ in
 
     nat = {
         enable = true;
-        #externalInterface = "br2";
+        externalInterface = ["br2"];
         internalInterfaces = [ "br1020" ];
         #forwardPorts = [
         #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
