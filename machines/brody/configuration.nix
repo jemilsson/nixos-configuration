@@ -49,7 +49,7 @@ in
     };
 
     nat = {
-        enable = true;
+        enable = false;
         externalInterface = "br2";
         internalInterfaces = [ "br1020" ];
         #forwardPorts = [
