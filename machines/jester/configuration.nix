@@ -78,6 +78,26 @@ in
 
           ];
         };
+
+
+
+        wg2 = {
+          privateKeyFile = "/var/lib/wireguard/privatekey";
+          ips = ["10.128.2.3/24" "2a12:5800:0:5::3/64"];
+          peers = [
+              {
+                publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
+                allowedIPs = [
+                  "0.0.0.0/0"
+                  "0::/0"
+                ];
+                endpoint = "194.26.208.1:51820";
+              }
+          ];
+        }
+
+
+
       };
     };
   };
