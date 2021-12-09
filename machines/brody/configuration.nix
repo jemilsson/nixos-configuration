@@ -111,6 +111,7 @@ in
         };
 
         wg1 = {
+          privateKeyFile = "/var/lib/wireguard/privatekey";
           ips = [ 
             "10.128.2.4/24"
             "2a12:5800:0:5::4/64"
