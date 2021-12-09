@@ -67,6 +67,16 @@ in
             { address = "10.5.20.1"; prefixLength = 24; }
             { address = "100.65.4.1"; prefixLength = 24; }
           ];
+          routes = [
+            {
+              address = "194.26.208.1";
+              prefixLength = 32;
+
+            }
+
+          ];
+
+
         };
         ipv6 = {
           addresses = [
@@ -126,7 +136,7 @@ in
                 "10.128.2.0/24"
                 "2a12:5800:0:5::/64"
                 "0::/0"
-                #"0.0.0.0/0"
+                "0.0.0.0/0"
               ];
               persistentKeepalive = 25;
             }
