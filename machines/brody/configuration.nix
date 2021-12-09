@@ -169,7 +169,7 @@ in
   services = {
     
     radvd = {
-      enable = true;
+      enable = false;
       config = ''
       interface br1020 { 
         AdvSendAdvert on;
