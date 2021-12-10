@@ -37,7 +37,7 @@ in
     #};
 
     firewall = {
-      allowedTCPPorts = [ 22 ]; # 8080 8088 19999 1999 ];
+      allowedTCPPorts = [ 22 5201 ]; # 8080 8088 19999 1999 ];
       allowedUDPPorts = [ ];
       checkReversePath = false;
       extraCommands = ''
@@ -157,9 +157,8 @@ in
 
       ip link delete gretap2.42
       ip link delete gretap2
-      ip link add gretap2 type gretap local 10.128.2.7 remote 10.128.2.1
+      ip link add gretap2 type gretap local 10.128.2.4 remote 10.128.2.1
       ip link set gretap2 up mtu 1514
-      ip link set gretap2 master br2000
       ip link add link gretap2 name gretap2.42 type vlan id 42
       ip link set gretap2.42 up
 
