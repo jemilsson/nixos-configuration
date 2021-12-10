@@ -155,9 +155,17 @@ in
       ip link set gretap1 up mtu 1500
       ip link set gretap1 master br2000
 
+      ip link delete gretap2.42
+      ip link delete gretap2
+      ip link add gretap2 type gretap local 10.128.2.7 remote 10.128.2.1
+      ip link set gretap2 up mtu 1514
+      ip link set gretap2 master br2000
+      ip link add link gretap2 name gretap2.42 type vlan id 42
+      ip link set gretap2.42 up
+
       ip route add unreachable 2a0e:b107:330:beef::/64
       ip route add unreachable 10.5.30.0/24
-      
+
     '';
     # ip addr add 10.5.254.2 peer 10.5.254.3 dev gretap1
   #  vswitches = {
