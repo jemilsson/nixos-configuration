@@ -61,22 +61,21 @@ in
      };
 
     interfaces = {
+      br2.ipv4.routes = [
+            {
+              address = "194.26.208.1";
+              prefixLength = 32;
+
+            }
+      ];
+
+
       "br1020" = {
         ipv4 = {
           addresses = [
             { address = "10.5.20.1"; prefixLength = 24; }
             { address = "100.65.4.1"; prefixLength = 24; }
           ];
-          routes = [
-            {
-              address = "194.26.208.1";
-              prefixLength = 32;
-
-            }
-
-          ];
-
-
         };
         ipv6 = {
           addresses = [
