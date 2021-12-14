@@ -133,6 +133,7 @@ i18n = {
   #consoleFont = "Lat2-Hack16";
   supportedLocales = [
     "en_US.UTF-8/UTF-8"
+    "sv_SE.UTF-8/UTF-8"
   ];
 };
 
