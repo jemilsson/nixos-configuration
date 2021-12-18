@@ -47,6 +47,13 @@ in
       iptables -A FORWARD -i br2 -o br1020 -j DROP
       iptables -A FORWARD -i br1020 -o br2 -j ACCEPT
       iptables -A FORWARD -i br1020 -o wg1 -j ACCEPT
+      iptables -P FORWARD DROP
+      ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
+      ip6tables -A FORWARD -i wg1 -o br1020 -j DROP
+      ip6tables -A FORWARD -i br2 -o br1020 -j DROP
+      ip6tables -A FORWARD -i br1020 -o br2 -j ACCEPT
+      ip6tables -A FORWARD -i br1020 -o wg1 -j ACCEPT
+      ip6tables -P FORWARD DROP
       '';
 
       extraStopCommands = ''
@@ -55,6 +62,11 @@ in
       iptables -D FORWARD -i br2 -o br1020 -j DROP
       iptables -D FORWARD -i br1020 -o br2 -j ACCEPT
       iptables -D FORWARD -i br1020 -o wg1 -j ACCEPT
+      ip6tables -D FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
+      ip6tables -D FORWARD -i wg1 -o br1020 -j DROP
+      ip6tables -D FORWARD -i br2 -o br1020 -j DROP
+      ip6tables -D FORWARD -i br1020 -o br2 -j ACCEPT
+      ip6tables -D FORWARD -i br1020 -o wg1 -j ACCEPT
       '';
       
       
