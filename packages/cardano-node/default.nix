@@ -3,15 +3,15 @@
 #with import <nixpkgs> {};
 let
   inherit (stdenv.lib) optional;
-  hydra_build = "8674953";
+  hydra_build = "9808501";
 in
 stdenv.mkDerivation rec {
-    version = "1.31.0";
+    version = "1.32.1";
     pname = "cardano-node";
 
     src = fetchurl {
       url = "https://hydra.iohk.io/build/${hydra_build}/download/1/${pname}-${version}-linux.tar.gz";
-      sha256 = "519df3fe364c6aec75b4c727857d5c0a0211b945c1b47d96bd09b27ebc212b33";
+      sha256 = "b1d58b06daa011875098d9bc96ee5b42cf2ad9732c4e7b8254cd44b4ada46466";
     };
     dontConfigure = true;
     dontBuild = true;
