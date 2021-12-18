@@ -46,6 +46,7 @@ in
       iptables -A FORWARD -i wg1 -j nixos-fw-log-refuse
       iptables -A FORWARD -i br2 -j nixos-fw-log-refuse
       iptables -A FORWARD -i br1020 -j nixos-fw-accept
+      iptables -A FORWARD -j DROP
       '';
       
     };
