@@ -41,6 +41,7 @@ in
       allowedUDPPorts = [ ];
       checkReversePath = false;
       extraCommands = ''
+      iptables -N jonas-forward
       iptables -A FORWARD -j jonas-forward
       iptables -A jonas-forward -m conntrack --ctstate RELATED,ESTABLISHED -j nixos-fw-accept
       iptables -A jonas-forward -i wg1 -j nixos-fw-log-refuse
