@@ -44,7 +44,7 @@ in
       extraCommands = ''
       iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
       iptables -A FORWARD -i wg1 -o br1020 -j DROP
-      iptables -A FORWARD -i br2 -o br1020-j DROP
+      iptables -A FORWARD -i br2 -o br1020 -j DROP
       iptables -A FORWARD -i br1020 -o br2 -j ACCEPT
       iptables -A FORWARD -i br1020 -o wg1 -j ACCEPT
       '';
