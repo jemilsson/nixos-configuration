@@ -40,14 +40,21 @@ in
       allowedTCPPorts = [ 22 5201 ]; # 8080 8088 19999 1999 ];
       allowedUDPPorts = [ ];
       checkReversePath = false;
-      /*
+      
       extraCommands = ''
       iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
       iptables -A FORWARD -i wg1 -j nixos-fw-log-refuse
       iptables -A FORWARD -i br2 -j nixos-fw-log-refuse
       iptables -A FORWARD -i br1020 -j nixos-fw-accept
       '';
-      */
+
+      extraStopCommands = ''
+      iptables -D FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
+      iptables -D FORWARD -i wg1 -j nixos-fw-log-refuse
+      iptables -D FORWARD -i br2 -j nixos-fw-log-refuse
+      iptables -D FORWARD -i br1020 -j nixos-fw-accept
+      ''
+      
       
     };
 
