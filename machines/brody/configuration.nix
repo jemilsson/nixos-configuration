@@ -41,6 +41,7 @@ in
       allowedUDPPorts = [ ];
       checkReversePath = false;
       extraCommands = ''
+      iptables -F jonas-forward
       iptables -X jonas-forward
       iptables -N jonas-forward
       iptables -A FORWARD -j jonas-forward
