@@ -41,12 +41,10 @@ in
       allowedUDPPorts = [ ];
       checkReversePath = false;
       extraCommands = ''
-      iptables -N jonas-forward
-      iptables -A FORWARD -j jonas-forward
-      iptables -A jonas-forward -m conntrack --ctstate RELATED,ESTABLISHED -j nixos-fw-accept
-      iptables -A jonas-forward -i wg1 -j nixos-fw-log-refuse
-      iptables -A jonas-forward -i br2 -j nixos-fw-log-refuse
-      iptables -A jonas-forward -i br1020 -j nixos-fw-accept
+      iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j nixos-fw-accept
+      iptables -A FORWARD -i wg1 -j nixos-fw-log-refuse
+      iptables -A FORWARD -i br2 -j nixos-fw-log-refuse
+      iptables -A FORWARD -i br1020 -j nixos-fw-accept
       iptables -P FORWARD DROP
       '';
     };
