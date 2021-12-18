@@ -42,7 +42,7 @@ in
       checkReversePath = false;
       
       extraCommands = ''
-      iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j nixos-fw-accept
+      iptables -A FORWARD -m conntrack - -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
       iptables -A FORWARD -i wg1 -j nixos-fw-log-refuse
       iptables -A FORWARD -i br2 -j nixos-fw-log-refuse
       iptables -A FORWARD -i br1020 -j nixos-fw-accept
