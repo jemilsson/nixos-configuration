@@ -52,7 +52,7 @@ in
       extraStopCommands = ''
       iptables -D FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
       iptables -D FORWARD -i wg1 -o br1020 -j DROP
-      iptables -D FORWARD -i br2 -o br1020-j DROP
+      iptables -D FORWARD -i br2 -o br1020 -j DROP
       iptables -D FORWARD -i br1020 -o br2 -j ACCEPT
       iptables -D FORWARD -i br1020 -o wg1 -j ACCEPT
       '';
