@@ -18,7 +18,7 @@
     in
     {
       nixosConfigurations = {
-        jester = nixpkgs.pkgs.callPackage ./machines/jester/configuration.nix;
+        jester = pkgs.callPackage ./machines/jester/configuration.nix;
       };
     };
 
