@@ -5,14 +5,14 @@ let
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
   vscode-extensions = (with pkgs.vscode-extensions; [
-      ms-python.python
-      ms-python.vscode-pylance
+    ms-python.python
+    ms-python.vscode-pylance
 
-      jnoortheen.nix-ide
-    ]);
+    jnoortheen.nix-ide
+  ]);
   vscode-with-extensions = pkgs.vscode-with-extensions.override {
-      vscodeExtensions = vscode-extensions;
-    };
+    vscodeExtensions = vscode-extensions;
+  };
 
 in
 {
@@ -74,13 +74,14 @@ in
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
-        (vaapiIntel.override {  enableHybridCodec = true;  }) 
+        (vaapiIntel.override { enableHybridCodec = true; })
       ];
-      extraPackages32 = with pkgs; [ 
+      extraPackages32 = with pkgs; [
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
-        (vaapiIntel.override {  enableHybridCodec = true;  }) ];
+        (vaapiIntel.override { enableHybridCodec = true; })
+      ];
       setLdLibraryPath = true;
     };
 
@@ -130,17 +131,17 @@ in
 
     #Programming
     unstable.atom
-    (python3.withPackages(ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib ]))
+    (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib ]))
     vscode-with-extensions
     insomnia
     emacs
     aws-sam-cli
 
     ## Nix
-    
+
     nixpkgs-fmt
     rnix-lsp
-    
+
     ## Pony
     unstable.ponyc
     unstable.pony-corral
@@ -151,7 +152,7 @@ in
     rxvt_unicode
     synapse
     feh
-    (freerdp.override { pcsclite = pcsclite; libpulseaudio=libpulseaudio; } )
+    (freerdp.override { pcsclite = pcsclite; libpulseaudio = libpulseaudio; })
     rdesktop
     appimage-run
 
@@ -187,7 +188,7 @@ in
     unstable.teams
     #skype
 
-    (small.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+    (small.steam.override { extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
 
     #Games
     #unstable-small.steam
@@ -261,9 +262,9 @@ in
 
 
   ];
-	
+
   /*environment.extraSetup = ''
-      ln -s ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0 $out/share
+    ln -s ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0 $out/share
     '';*/
 
   programs = {
@@ -276,7 +277,7 @@ in
 
         Host *.jonas.systems
           ForwardAgent yes
-        '';
+      '';
     };
 
     chromium = {
@@ -313,9 +314,9 @@ in
     };
 
 
-  #firejail = {
-  #  enable = true;
-  #};
+    #firejail = {
+    #  enable = true;
+    #};
 
 
   };
@@ -340,20 +341,20 @@ in
 
 
   services = {
-      samba = {
-        enable = true;
-        package = pkgs.samba4Full;
-      };
-      gvfs.enable = true;
-      printing  = {
-        enable = true;
-      };
-      avahi = {
-        nssmdns = true;
-        enable = true;
-      };
+    samba = {
+      enable = true;
+      package = pkgs.samba4Full;
+    };
+    gvfs.enable = true;
+    printing = {
+      enable = true;
+    };
+    avahi = {
+      nssmdns = true;
+      enable = true;
+    };
 
-      dbus.packages = [ pkgs.unstable.hsphfpd ];
+    dbus.packages = [ pkgs.unstable.hsphfpd ];
   };
 
   systemd = {
@@ -362,170 +363,170 @@ in
       services = {
 
         "urxvtd" = {
-            enable = true;
-            description = "rxvt unicode daemon";
-            wantedBy = [ "default.target" ];
-            path = [ pkgs.rxvt_unicode ];
-            serviceConfig.Restart = "always";
-            serviceConfig.RestartSec = 2;
-            serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
-          };
+          enable = true;
+          description = "rxvt unicode daemon";
+          wantedBy = [ "default.target" ];
+          path = [ pkgs.rxvt_unicode ];
+          serviceConfig.Restart = "always";
+          serviceConfig.RestartSec = 2;
+          serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
+        };
       };
     };
 
     services = {
       hsphfpd = {
-            after = [ "bluetooth.service" ];
-            requires = [ "bluetooth.service" ];
-            wantedBy = [ "bluetooth.target" ];
+        after = [ "bluetooth.service" ];
+        requires = [ "bluetooth.service" ];
+        wantedBy = [ "bluetooth.target" ];
 
-            description = "A prototype implementation used for connecting HSP/HFP Bluetooth devices";
-            serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/hsphfpd.pl";
-          };
+        description = "A prototype implementation used for connecting HSP/HFP Bluetooth devices";
+        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/hsphfpd.pl";
+      };
 
       telephony_client = {
-            wantedBy = [ "default.target" ];
+        wantedBy = [ "default.target" ];
 
-            description = "telephony_client for hsphfpd";
-            serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/telephony_client.pl";
-          };
-        };
+        description = "telephony_client for hsphfpd";
+        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/telephony_client.pl";
+      };
+    };
   };
 
 
   /*
     # GTK3 global theme (widget and icon theme)
-  environment.etc."gtk-3.0/settings.ini" = {
+    environment.etc."gtk-3.0/settings.ini" = {
     text = ''
-      gtk-theme-name=Adapta-Nokto
-      gtk-icon-theme-name="elementary"
-      gtk-font-name=Sans 10
-      gtk-cursor-theme-size=0
-      gtk-toolbar-style=GTK_TOOLBAR_BOTH
-      gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-      gtk-button-images=1
-      gtk-menu-images=1
-      gtk-enable-event-sounds=1
-      gtk-enable-input-feedback-sounds=1
-      gtk-xft-antialias=1
-      gtk-xft-hinting=1
-      gtk-xft-hintstyle=hintfull
-      gtk-xft-rgba=rgb
-      '';
+    gtk-theme-name=Adapta-Nokto
+    gtk-icon-theme-name="elementary"
+    gtk-font-name=Sans 10
+    gtk-cursor-theme-size=0
+    gtk-toolbar-style=GTK_TOOLBAR_BOTH
+    gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+    gtk-button-images=1
+    gtk-menu-images=1
+    gtk-enable-event-sounds=1
+    gtk-enable-input-feedback-sounds=1
+    gtk-xft-antialias=1
+    gtk-xft-hinting=1
+    gtk-xft-hintstyle=hintfull
+    gtk-xft-rgba=rgb
+    '';
     mode = "444";
-  };
+    };
 
-  environment.etc."gtk-2.0/gtkrc" = {
+    environment.etc."gtk-2.0/gtkrc" = {
     text = ''
-      gtk-theme-name="Adapta-Nokto"
-      gtk-icon-theme-name="elementary"
-      gtk-font-name="Sans 10"
-      gtk-cursor-theme-size=0
-      gtk-toolbar-style=GTK_TOOLBAR_BOTH
-      gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-      gtk-button-images=1
-      gtk-menu-images=1
-      gtk-enable-event-sounds=1
-      gtk-enable-input-feedback-sounds=1
-      gtk-xft-antialias=1
-      gtk-xft-hinting=1
-      gtk-xft-hintstyle="hintfull"
-      gtk-xft-rgba="rgb"
-      '';
+    gtk-theme-name="Adapta-Nokto"
+    gtk-icon-theme-name="elementary"
+    gtk-font-name="Sans 10"
+    gtk-cursor-theme-size=0
+    gtk-toolbar-style=GTK_TOOLBAR_BOTH
+    gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+    gtk-button-images=1
+    gtk-menu-images=1
+    gtk-enable-event-sounds=1
+    gtk-enable-input-feedback-sounds=1
+    gtk-xft-antialias=1
+    gtk-xft-hinting=1
+    gtk-xft-hintstyle="hintfull"
+    gtk-xft-rgba="rgb"
+    '';
     mode = "444";
-  };
+    };
 
-  environment.variables = {
+    environment.variables = {
     #GTK_DATA_PREFIX = "/run/current-system/sw";
 
-  };
+    };
   */
 
   virtualisation = {
     docker = {
       enable = true;
-    #extraOptions = ''
-    #    --storage-opt dm.basesize=20G
-    #  '';
+      #extraOptions = ''
+      #    --storage-opt dm.basesize=20G
+      #  '';
     };
   };
   fonts = {
-     enableFontDir = true;
-     enableGhostscriptFonts = true;
-     fonts = with pkgs; [
-       google-fonts
-       hack-font
-       font-awesome-ttf
-       powerline-fonts
-       dejavu_fonts
-       liberation_ttf
-       emacs-all-the-icons-fonts
-     ];
-   };
-   services = {
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      google-fonts
+      hack-font
+      font-awesome-ttf
+      powerline-fonts
+      dejavu_fonts
+      liberation_ttf
+      emacs-all-the-icons-fonts
+    ];
+  };
+  services = {
 
-     #upower.enable = true;
+    #upower.enable = true;
 
-     tor = {
-       enable = true;
-       client.enable = true;
-       package = pkgs.unstable-small.tor;
-     };
+    tor = {
+      enable = true;
+      client.enable = true;
+      package = pkgs.unstable-small.tor;
+    };
 
-     gpm.enable = true;
+    gpm.enable = true;
 
-     openssh.forwardX11 = true;
+    openssh.forwardX11 = true;
 
-     #udisks2.enable = true;
-     devmon.enable = true;
+    #udisks2.enable = true;
+    devmon.enable = true;
 
-     gnome3 = {
-       gvfs.enable = true;
-    #   gnome-disks.enable = true;
-    #   gnome-keyring.enable = true;
-    #   seahorse.enable = true;
-     };
+    gnome3 = {
+      gvfs.enable = true;
+      #   gnome-disks.enable = true;
+      #   gnome-keyring.enable = true;
+      #   seahorse.enable = true;
+    };
 
-     pcscd = {
-       enable = true;
-       #plugins = [ pkgs.unstable.ccid ];
-     };
+    pcscd = {
+      enable = true;
+      #plugins = [ pkgs.unstable.ccid ];
+    };
 
-     ratbagd = {
-       enable = true;
-     };
+    ratbagd = {
+      enable = true;
+    };
 
-     udev = {
-       packages = [
-          pkgs.libu2f-host
-          pkgs.yubikey-personalization
-          pkgs.yubico-piv-tool
-          pkgs.yubikey-manager
-          pkgs.pcsctools
-          pkgs.unstable.opensc
-          #pkgs.bash
-          pkgs.unstable.usb-modeswitch-data
-          pkgs.unstable.ledger-udev-rules
-       ];
+    udev = {
+      packages = [
+        pkgs.libu2f-host
+        pkgs.yubikey-personalization
+        pkgs.yubico-piv-tool
+        pkgs.yubikey-manager
+        pkgs.pcsctools
+        pkgs.unstable.opensc
+        #pkgs.bash
+        pkgs.unstable.usb-modeswitch-data
+        pkgs.unstable.ledger-udev-rules
+      ];
 
 
-       extraRules = ''
-          # this udev file should be used with udev 188 and newer
-          ACTION!="add|change", GOTO="u2f_end"
+      extraRules = ''
+        # this udev file should be used with udev 188 and newer
+        ACTION!="add|change", GOTO="u2f_end"
 
-          # Yubico YubiKey
-          KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", MODE="0660", GROUP="plugdev", TAG+="uaccess"
+        # Yubico YubiKey
+        KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0113|0114|0115|0116|0120|0402|0403|0406|0407|0410", MODE="0660", GROUP="plugdev", TAG+="uaccess"
 
-          LABEL="u2f_end"
-          # G29
-          #SUBSYSTEMS=="hidraw", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", MODE="0660", TAG+="uaccess"
+        LABEL="u2f_end"
+        # G29
+        #SUBSYSTEMS=="hidraw", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", MODE="0660", TAG+="uaccess"
 
-          # Logitech G29 Driving Force Racing Wheel
-          #SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech" , MODE="0660", TAG+="uaccess", RUN+="${pkgs.stdenv.shell} -c 'chmod 666 %S%p/../../range; chmod 777 %S%p/../../leds/ %S%p/../../leds/*; chmod 666 %S%p/../../leds/*/brightness'"
-          #SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech" , MODE="0660", TAG+="uaccess", RUN+="${pkgs.stdenv.shell} -c 'chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'"
-          SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="${pkgs.stdenv.shell} -c 'cd %S%p/../../../; echo 65535 > autocenter; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level leds/*/brightness; chmod 777 leds/ leds/*'"
+        # Logitech G29 Driving Force Racing Wheel
+        #SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech" , MODE="0660", TAG+="uaccess", RUN+="${pkgs.stdenv.shell} -c 'chmod 666 %S%p/../../range; chmod 777 %S%p/../../leds/ %S%p/../../leds/*; chmod 666 %S%p/../../leds/*/brightness'"
+        #SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech" , MODE="0660", TAG+="uaccess", RUN+="${pkgs.stdenv.shell} -c 'chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'"
+        SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="${pkgs.stdenv.shell} -c 'cd %S%p/../../../; echo 65535 > autocenter; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level leds/*/brightness; chmod 777 leds/ leds/*'"
           
-        '';
+      '';
 
     };
 
@@ -538,15 +539,15 @@ in
   #sound.mediaKeys.enable = true;
 
   nixpkgs.overlays = [
-      (self: super: {
-        #steam = pkgs.steam
-        #pcsclite = pkgs.unstable.pcsclite;
-      }
-      )
-    ];
+    (self: super: {
+      #steam = pkgs.steam
+      #pcsclite = pkgs.unstable.pcsclite;
+    }
+    )
+  ];
 
-    nixpkgs.config.permittedInsecurePackages = [
-             "p7zip-16.02"
-           ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "p7zip-16.02"
+  ];
 
 }
