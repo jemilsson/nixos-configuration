@@ -13,6 +13,7 @@ in
     ../../config/language/english.nix
     #../../config/software/tensorflow.nix
     #../../packages/vpp/vpp.nix
+    ./hardware-configuration.nix
 
   ];
   system.stateVersion = "19.03";

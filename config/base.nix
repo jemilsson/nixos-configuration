@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
-    ../../hardware-configuration.nix
+    #../../hardware-configuration.nix
     ./minimum.nix
     ./default_users.nix
     ./known_hosts.nix
@@ -60,17 +60,19 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      packageOverrides = pkgs: {
+      /*
+        packageOverrides = pkgs: {
         unstable = import <nixos-unstable> {
-          config = config.nixpkgs.config;
+        config = config.nixpkgs.config;
         };
         unstable-small = import <nixos-unstable-small> {
-          config = config.nixpkgs.config;
+        config = config.nixpkgs.config;
         };
         small = import <nixos-small> {
-          config = config.nixpkgs.config;
+        config = config.nixpkgs.config;
         };
-      };
+        };
+      */
     };
   };
 
@@ -200,3 +202,4 @@
   };
 
 }
+

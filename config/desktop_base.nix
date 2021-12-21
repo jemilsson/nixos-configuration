@@ -41,7 +41,7 @@ in
     pulseaudio = {
       enable = true;
       support32Bit = true;
-      package = pkgs.unstable.pulseaudio-hsphfpd;
+      package = pkgs.pulseaudio-hsphfpd;
 
       extraModules = [
         #pkgs.unstable.pulseaudio-modules-bt
@@ -63,7 +63,7 @@ in
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-      package = pkgs.unstable.bluezFull;
+      package = pkgs.bluezFull;
     };
 
     opengl = {
@@ -108,9 +108,9 @@ in
 
   environment.systemPackages = with pkgs; [
     #Browsers
-    unstable.firefox
-    unstable.chromium
-    unstable.google-chrome
+    firefox
+    chromium
+    google-chrome
     #unstable-small.tor-browser-bundle-bin
 
     #Media
@@ -118,7 +118,7 @@ in
     vlc
     mplayer
     smplayer
-    unstable.pavucontrol
+    pavucontrol
     pasystray
     audacity
     gimp
@@ -132,7 +132,7 @@ in
     imagemagick
 
     #Programming
-    unstable.atom
+    atom
     (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib ]))
     vscode-with-extensions
     insomnia
@@ -145,8 +145,8 @@ in
     rnix-lsp
 
     ## Pony
-    unstable.ponyc
-    unstable.pony-corral
+    ponyc
+    pony-corral
 
 
     #Interface
@@ -187,10 +187,10 @@ in
     pidgin
     signal-desktop
     tdesktop
-    unstable.teams
+    teams
     #skype
 
-    (small.steam.override { extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+    (steam.override { extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
 
     #Games
     #unstable-small.steam
@@ -208,10 +208,10 @@ in
     yubikey-personalization
     yubico-piv-tool
     pcsctools
-    unstable.opensc
+    opensc
     yubikey-manager
     openssl
-    unstable.libp11
+    libp11
     #scd-pkcs11
     #kdeApplications.kleopatra
 
@@ -244,14 +244,14 @@ in
 
 
     ltwheelconf
-    unstable.awscli
+    awscli
 
     samba4Full
     cifs-utils
 
-    unstable.ledger-live-desktop
+    ledger-live-desktop
 
-    unstable.hsphfpd
+    hsphfpd
 
     vulkan-loader
     vulkan-validation-layers
@@ -308,7 +308,7 @@ in
         enableExtraSocket = true;
         enableSSHSupport = true;
       };
-      package = pkgs.unstable.gnupg;
+      #package = pkgs.unstable.gnupg;
     };
 
     adb = {
@@ -356,7 +356,7 @@ in
       enable = true;
     };
 
-    dbus.packages = [ pkgs.unstable.hsphfpd ];
+    dbus.packages = [ pkgs.hsphfpd ];
   };
 
   systemd = {
@@ -383,14 +383,14 @@ in
         wantedBy = [ "bluetooth.target" ];
 
         description = "A prototype implementation used for connecting HSP/HFP Bluetooth devices";
-        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/hsphfpd.pl";
+        serviceConfig.ExecStart = "${pkgs.hsphfpd}/bin/hsphfpd.pl";
       };
 
       telephony_client = {
         wantedBy = [ "default.target" ];
 
         description = "telephony_client for hsphfpd";
-        serviceConfig.ExecStart = "${pkgs.unstable.hsphfpd}/bin/telephony_client.pl";
+        serviceConfig.ExecStart = "${pkgs.hsphfpd}/bin/telephony_client.pl";
       };
     };
   };
@@ -472,7 +472,7 @@ in
     tor = {
       enable = true;
       client.enable = true;
-      package = pkgs.unstable-small.tor;
+      package = pkgs.tor;
     };
 
     gpm.enable = true;
@@ -505,10 +505,10 @@ in
         pkgs.yubico-piv-tool
         pkgs.yubikey-manager
         pkgs.pcsctools
-        pkgs.unstable.opensc
+        pkgs.opensc
         #pkgs.bash
-        pkgs.unstable.usb-modeswitch-data
-        pkgs.unstable.ledger-udev-rules
+        pkgs.usb-modeswitch-data
+        pkgs.ledger-udev-rules
       ];
 
 
