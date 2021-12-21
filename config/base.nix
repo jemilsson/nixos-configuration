@@ -24,6 +24,7 @@
       enable = true;
       channel = https://nixos.org/channels/nixos-21.11;
       dates = "03:00";
+      randomizedDelaySec = "2 h";
     };
   };
 
