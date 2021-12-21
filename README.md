@@ -14,3 +14,9 @@ sudo nix-channel --update
 sudo nixos-rebuild switch --upgrade
 
 ```
+
+## Using flakes
+
+```
+sudo nixos-rebuild switch --upgrade --flake github:jemilsson/nixos-configuration
+```
