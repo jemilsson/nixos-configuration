@@ -7,7 +7,7 @@
 
   outputs = { self, nixpkgs }: {
     nixosConfigurations = {
-      jester = pkgs.callPackage ./machines/jester/configuration.nix;
+      jester = nixpkgs.callPackage ./machines/jester/configuration.nix;
     };
   };
 }
