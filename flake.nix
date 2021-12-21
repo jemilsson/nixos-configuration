@@ -7,9 +7,7 @@
 
   outputs = { self, nixpkgs }:
     let
-      system = "x86_64-linux";
       pkgs = import nixpkgs {
-        inherit system;
         config.allowUnfree = true;
         overlays = [
           #(import inputs.emacs-overlay)
@@ -18,8 +16,11 @@
     in
     {
       nixosConfigurations = {
-        jester = pkgs.callPackage ./machines/jester/configuration.nix;
+        jester = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./machines/jester/configuration.nix ];
+        };
+
       };
     };
-
 }
