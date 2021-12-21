@@ -9,6 +9,8 @@ let
     ms-python.vscode-pylance
     jnoortheen.nix-ide
     github.github-vscode-theme
+    eamodio.gitlens
+    yzhang.markdown-all-in-one
   ]);
   vscode-with-extensions = pkgs.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
