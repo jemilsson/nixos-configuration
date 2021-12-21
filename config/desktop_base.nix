@@ -5,10 +5,10 @@ let
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
   vscode-extensions = (with pkgs.vscode-extensions; [
-      #bbenoist.Nix
       ms-python.python
-      #ms-azuretools.vscode-docker
-      #ms-vscode-remote.remote-ssh
+      ms-python.vscode-pylance
+
+      jnoortheen.nix-ide
     ]);
   vscode-with-extensions = pkgs.vscode-with-extensions.override {
       vscodeExtensions = vscode-extensions;
