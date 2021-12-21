@@ -135,6 +135,7 @@ environment = {
 
     #DNS
     stubby
+
   ];
 
   shellAliases = {

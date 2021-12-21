@@ -135,12 +135,13 @@ in
     insomnia
     emacs
     aws-sam-cli
-    /*
-    (python37Packages.opencv4.override{
-    enableGtk2 = true;
-    enableFfmpeg=true;
-  })
-    */
+
+    ## Nix
+    
+    nixpkgs-fmt
+    rnix-lsp
+    
+    ## Pony
     unstable.ponyc
     unstable.pony-corral
 
