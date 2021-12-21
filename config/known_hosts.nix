@@ -1,6 +1,4 @@
 { config, lib, pkgs, ... }:
 {
-  programs.ssh.knownHosts = {
-
-  };
+  programs.ssh.knownHosts = { };
 }

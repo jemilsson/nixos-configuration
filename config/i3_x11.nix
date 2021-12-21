@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
-/*
-  taffybar = pkgs.unstable.haskellPackages.ghcWithPackages (self: [
+  /*
+    taffybar = pkgs.unstable.haskellPackages.ghcWithPackages (self: [
     self.taffybar
     pkgs.hicolor-icon-theme
     pkgs.paper-icon-theme
@@ -10,9 +10,9 @@ let
     pkgs.pantheon.elementary-icon-theme
     pkgs.gtk3
     pkgs.bash
-     ]);
-*/
-#taffybar = pkgs.unstable-small.taffybar;
+    ]);
+  */
+  #taffybar = pkgs.unstable-small.taffybar;
 
 in
 {
@@ -73,8 +73,8 @@ in
         };
 
         sessionCommands = ''
-        systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS NO_AT_BRIDGE
-      '';
+          systemctl --user import-environment XDG_DATA_DIRS DBUS_SESSION_BUS_ADDRESS NO_AT_BRIDGE
+        '';
       };
 
     };
@@ -88,31 +88,31 @@ in
       fade = true;
       vSync = true;
       /*
-      settings = {
+        settings = {
         unredir-if-possible = true;
         no-fading-openclose = true;
         glx-swap-method = "copy";
-      };
+        };
       */
     };
 
   };
 
   programs = {
-      sway = {
-        enable = true;
-        extraSessionCommands = ''
-          export WLR_DRM_NO_MODIFIERS=1
-        '';
-      };
-      slock.enable = true;
+    sway = {
+      enable = true;
+      extraSessionCommands = ''
+        export WLR_DRM_NO_MODIFIERS=1
+      '';
+    };
+    slock.enable = true;
 
-      xss-lock = {
-        enable = true;
-        lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
-      };
+    xss-lock = {
+      enable = true;
+      lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
+    };
 
-      system-config-printer.enable = true;
+    system-config-printer.enable = true;
   };
 
   systemd = {
@@ -120,7 +120,7 @@ in
 
       services = {
         /*
-        "status-notifier-watcher" = {
+          "status-notifier-watcher" = {
           enable = true;
           description = "SNI watcher";
           wantedBy = [ "graphical-session.target" "taffybar.service" ];
@@ -128,15 +128,15 @@ in
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.haskellPackages.status-notifier-item}/bin/status-notifier-watcher";
 
-        };
+          };
 
-        "taffybar" = {
+          "taffybar" = {
           enable = true;
           description = "Taffybar";
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${taffybar}/bin/taffybar";
-        };
+          };
         */
         "pasystray" = {
           enable = true;
@@ -152,13 +152,13 @@ in
           description = "Network manager applet";
           wantedBy = [ "graphical-session.target" ];
           wants = [ "taffybar.service" ];
-          after = ["status-notifier-watcher.service" ];
+          after = [ "status-notifier-watcher.service" ];
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
 
         };
         /*
-        "blueman-applet" = {
+          "blueman-applet" = {
           enable = true;
           description = "Bluetooth manager applet";
           wantedBy = [ "graphical-session.target" ];
@@ -166,7 +166,7 @@ in
           after = ["status-notifier-watcher.service" ];
           partOf = [ "graphical-session.target" ];
           serviceConfig.ExecStart = "${pkgs.blueman}/bin/blueman-applet";
-        };
+          };
         */
 
       };

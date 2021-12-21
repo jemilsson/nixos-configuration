@@ -6,8 +6,7 @@
       layout = "se";
       xkbOptions = "eurosign:e";
 
-      windowManager = {
-      };
+      windowManager = { };
 
 
 

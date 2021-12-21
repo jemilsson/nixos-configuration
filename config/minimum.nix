@@ -1,41 +1,41 @@
 { config, lib, pkgs, ... }:
 {
 
-programs = {
-  zsh = {
-    enable = true;
-    autosuggestions = {
+  programs = {
+    zsh = {
       enable = true;
+      autosuggestions = {
+        enable = true;
+      };
+      syntaxHighlighting = {
+        enable = true;
+      };
+      promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
     };
-    syntaxHighlighting = {
-      enable = true;
-    };
-    promptInit = "source ${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k.zsh-theme";
   };
-};
 
-users.defaultUserShell = "/run/current-system/sw/bin/zsh";
+  users.defaultUserShell = "/run/current-system/sw/bin/zsh";
 
-environment = {
-  systemPackages = with pkgs; [
-    #System tools
-    htop
-    wget
-    curl
-    git
+  environment = {
+    systemPackages = with pkgs; [
+      #System tools
+      htop
+      wget
+      curl
+      git
 
-    file
-    usbutils
+      file
+      usbutils
 
-    #Network tools
-    tcpdump
-    whois
-    traceroute
-  ];
-};
+      #Network tools
+      tcpdump
+      whois
+      traceroute
+    ];
+  };
 
-networking = {
-  search = [ "jonas.systems" ];
-};
+  networking = {
+    search = [ "jonas.systems" ];
+  };
 
 }

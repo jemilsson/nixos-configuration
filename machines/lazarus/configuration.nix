@@ -2,7 +2,7 @@
 let
   dpi = 120;
 
-  vpp = pkgs.callPackage pkgs.callPackage ../packages/vpp/default.nix {};
+  vpp = pkgs.callPackage pkgs.callPackage ../packages/vpp/default.nix { };
 in
 {
   imports = [
@@ -25,7 +25,7 @@ in
 
   #boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
- users.extraUsers = {
+  users.extraUsers = {
     wanida = {
       isNormalUser = true;
       uid = 1001;
@@ -36,42 +36,42 @@ in
     };
   };
 
- services = {
-   xserver = {
-     videoDrivers = [ "intel" "modesetting" ];
+  services = {
+    xserver = {
+      videoDrivers = [ "intel" "modesetting" ];
 
-     desktopManager.gnome3.enable = true;
-     dpi = dpi;
+      desktopManager.gnome3.enable = true;
+      dpi = dpi;
 
-     /*
-     displayManager.sessionCommands = ''
-      ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
+      /*
+        displayManager.sessionCommands = ''
+        ${pkgs.xorg.xrdb}/bin/xrdb -merge <<EOF
         Xft.dpi: ${toString dpi}
-       EOF
-      '';
-    */
-   };
-   undervolt = {
-     enable = false;
-   };
+        EOF
+        '';
+      */
+    };
+    undervolt = {
+      enable = false;
+    };
 
- };
-
-/*
- docker-containers = {
-   "bpi-build" = {
-  image = "sinovoip/bpi-build-linux-4.4";
-  environment = {
   };
-  volumes = [  ];
-  extraDockerOptions = [  ];
-};
- };
- */
 
- #programs.adb.enable = true;
+  /*
+    docker-containers = {
+    "bpi-build" = {
+    image = "sinovoip/bpi-build-linux-4.4";
+    environment = {
+    };
+    volumes = [  ];
+    extraDockerOptions = [  ];
+    };
+    };
+  */
 
- environment.systemPackages = with pkgs; [
+  #programs.adb.enable = true;
+
+  environment.systemPackages = with pkgs; [
 
     # On screen keyboard
     gnome3.caribou
@@ -81,17 +81,17 @@ in
     #heimdall-gui
 
     vpp
- ];
+  ];
 
- nix = {
-   extraOptions = ''
-   extra-platforms = aarch64-linux arm-linux
-   '';
- };
- boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  nix = {
+    extraOptions = ''
+      extra-platforms = aarch64-linux arm-linux
+    '';
+  };
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
- virtualisation.libvirtd = {
-   enable = true;
- };
+  virtualisation.libvirtd = {
+    enable = true;
+  };
 
 }

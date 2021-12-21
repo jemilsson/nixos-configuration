@@ -46,15 +46,15 @@
     wireguard = {
       interfaces = {
         wg0 = {
-          ips = ["10.50.0.38/32"];
+          ips = [ "10.50.0.38/32" ];
           peers = [
-              {
-                publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
-                allowedIPs = [
-                  "10.50.0.0/16"
-                ];
-                endpoint = "13.48.43.75:123";
-              }
+            {
+              publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
+              allowedIPs = [
+                "10.50.0.0/16"
+              ];
+              endpoint = "13.48.43.75:123";
+            }
 
           ];
         };
@@ -88,8 +88,8 @@
       videoDrivers = [ "amdgpu" ];
 
       deviceSection = ''
-      Option "DRI3" "1"
-      Option "TearFree" "on"
+        Option "DRI3" "1"
+        Option "TearFree" "on"
       '';
     };
     xrdp = {
@@ -122,43 +122,43 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
- environment.systemPackages = with pkgs; [
-  #teamspeak_client
-  vscode
-  virtmanager
+  environment.systemPackages = with pkgs; [
+    #teamspeak_client
+    vscode
+    virtmanager
 
-  taskwarrior
+    taskwarrior
 
-  elmPackages.elm
+    elmPackages.elm
 
-  freerdp
+    freerdp
 
-  unstable.minecraft
+    unstable.minecraft
 
-  xca
+    xca
 
-  unstable.wasabiwallet
- ];
+    unstable.wasabiwallet
+  ];
 
- nixpkgs.overlays = [
-     (self: super: {
-       #mesa = pkgs.unstable.mesa;
-       #mesa_glu = pkgs.unstable.mesa_glu;
-       #mesa_noglu = pkgs.unstable.mesa_noglu;
-       #mesa_drivers = pkgs.unstable.mesa_drivers;
-       #xorg.xf86videoamdgpu = pkgs.unstable.xorg.xf86videoamdgpu;
-       #steam-run = pkgs.unstable.steam-run;
-       #steam = pkgs.unstable.steam;
-       #steam-runtime = pkgs.unstable.steam-runtime;
-       #steam-runtime-wrapped = pkgs.unstable.steam-runtime-wrapped;
-       #steam-fonts = pkgs.unstable.steam-fonts;
-       #steam-chrootenv = pkgs.unstable.steam-chrootenv;
-       #vulkan-loader = pkgs.unstable.vulkan-loader;
-       zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
-       handbrake = super.handbrake.override { useGtk = true;};
-     }
-     )
-   ];
+  nixpkgs.overlays = [
+    (self: super: {
+      #mesa = pkgs.unstable.mesa;
+      #mesa_glu = pkgs.unstable.mesa_glu;
+      #mesa_noglu = pkgs.unstable.mesa_noglu;
+      #mesa_drivers = pkgs.unstable.mesa_drivers;
+      #xorg.xf86videoamdgpu = pkgs.unstable.xorg.xf86videoamdgpu;
+      #steam-run = pkgs.unstable.steam-run;
+      #steam = pkgs.unstable.steam;
+      #steam-runtime = pkgs.unstable.steam-runtime;
+      #steam-runtime-wrapped = pkgs.unstable.steam-runtime-wrapped;
+      #steam-fonts = pkgs.unstable.steam-fonts;
+      #steam-chrootenv = pkgs.unstable.steam-chrootenv;
+      #vulkan-loader = pkgs.unstable.vulkan-loader;
+      zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
+      handbrake = super.handbrake.override { useGtk = true; };
+    }
+    )
+  ];
 
 
 

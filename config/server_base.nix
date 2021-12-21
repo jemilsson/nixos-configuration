@@ -13,7 +13,7 @@
       allowedTCPPorts = [ 22 ];
       allowedUDPPorts = [ ];
 
-      };
+    };
 
   };
 }

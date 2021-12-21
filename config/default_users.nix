@@ -4,17 +4,17 @@ let
 in
 {
   users.users.jonas = {
-     createHome = true;
-     isNormalUser = true;
-     home = "/home/jonas";
-     group = "users";
-     uid = 1000;
-     isSystemUser = false;
-     extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "plugdev" "tss" ];
-     shell = "/run/current-system/sw/bin/zsh";
-     openssh.authorizedKeys.keys = sshKeys.jonas;
+    createHome = true;
+    isNormalUser = true;
+    home = "/home/jonas";
+    group = "users";
+    uid = 1000;
+    isSystemUser = false;
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "plugdev" "tss" ];
+    shell = "/run/current-system/sw/bin/zsh";
+    openssh.authorizedKeys.keys = sshKeys.jonas;
   };
 
-  users.groups.plugdev = {};
+  users.groups.plugdev = { };
 
 }

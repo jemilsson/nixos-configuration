@@ -1,8 +1,8 @@
 { config, lib, pkgs, stdenv, ... }:
 let
-  containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
-  cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix {};
-  vpp = pkgs.callPackage ../../packages/vpp/default.nix {};
+  containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
+  cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix { };
+  vpp = pkgs.callPackage ../../packages/vpp/default.nix { };
 in
 {
   imports = [
@@ -24,33 +24,33 @@ in
     };
     #kernelPackages = pkgs.unstable.linuxPackages_latest;
 
-    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux"];
-    };
+    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
+  };
 
   networking = {
     hostName = "jester";
 
     bridges = {
       br0 = {
-        interfaces = [];
+        interfaces = [ ];
       };
       br1 = {
-        interfaces = [];
+        interfaces = [ ];
       };
     };
 
     wireguard = {
       interfaces = {
         wg0 = {
-          ips = ["10.50.0.37/32"];
+          ips = [ "10.50.0.37/32" ];
           peers = [
-              {
-                publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
-                allowedIPs = [
-                  "10.50.0.0/16"
-                ];
-                endpoint = "13.48.43.75:123";
-              }
+            {
+              publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
+              allowedIPs = [
+                "10.50.0.0/16"
+              ];
+              endpoint = "13.48.43.75:123";
+            }
 
           ];
         };
@@ -58,23 +58,23 @@ in
         wg1 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
           generatePrivateKeyFile = true;
-          ips = ["10.111.255.253/32" "10.112.255.253/32"];
+          ips = [ "10.111.255.253/32" "10.112.255.253/32" ];
           peers = [
-              {
-                publicKey = "zYgI7WYsKHNh70oZvdHDPKCeqKeEdsQbAIxtlNGSw2c=";
-                allowedIPs = [
-                  "10.111.0.0/16"
-                ];
-                endpoint = "18.198.12.235:123";
-              }
+            {
+              publicKey = "zYgI7WYsKHNh70oZvdHDPKCeqKeEdsQbAIxtlNGSw2c=";
+              allowedIPs = [
+                "10.111.0.0/16"
+              ];
+              endpoint = "18.198.12.235:123";
+            }
 
-              {
-                publicKey = "Uv6JEWpVPBAt44WBRWmyGRYtF0k7mYm2vRKmkOArtUw=";
-                allowedIPs = [
-                  "10.112.0.0/16"
-                ];
-                endpoint = "54.75.127.255:123";
-              }
+            {
+              publicKey = "Uv6JEWpVPBAt44WBRWmyGRYtF0k7mYm2vRKmkOArtUw=";
+              allowedIPs = [
+                "10.112.0.0/16"
+              ];
+              endpoint = "54.75.127.255:123";
+            }
 
           ];
         };
@@ -83,16 +83,16 @@ in
 
         wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
-          ips = ["10.128.2.3/24" "2a12:5800:0:5::3/64"];
+          ips = [ "10.128.2.3/24" "2a12:5800:0:5::3/64" ];
           peers = [
-              {
-                publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
-                allowedIPs = [
-                  "0.0.0.0/0"
-                  "0::/0"
-                ];
-                endpoint = "194.26.208.1:51820";
-              }
+            {
+              publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
+              allowedIPs = [
+                "0.0.0.0/0"
+                "0::/0"
+              ];
+              endpoint = "194.26.208.1:51820";
+            }
           ];
         };
 
@@ -102,97 +102,97 @@ in
     };
   };
 
- services = {
-   xserver = {
-     videoDrivers = [ "intel" "modesetting" ];
-   };
-   undervolt = {
-     enable = false;
-   };
+  services = {
+    xserver = {
+      videoDrivers = [ "intel" "modesetting" ];
+    };
+    undervolt = {
+      enable = false;
+    };
 
-   fprintd = {
-     enable = true;
-   };
+    fprintd = {
+      enable = true;
+    };
 
-   ofono.enable = true; 
+    ofono.enable = true;
 
- };
-
- environment.systemPackages = with pkgs; [
-  docker
-  docker-compose
-  ffmpeg
-  #python37Packages.imutils
-  #python37Packages.scipy
-  #python37Packages.shapely
-  opencl-headers
-  labelImg
-
-  pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
-
-  cardano-node
-
-  #vpp
-
-  (chromium.override {
-    commandLineArgs = [
-      "--enable-features=UseOzonePlatform"
-      "--ozone-platform=wayland"
-      ];
-  })
-
-  
- ];
-
- nix = {
-   extraOptions = ''
-   extra-platforms = aarch64-linux arm-linux
-   '';
- };
-
- hardware = {
-  pulseaudio.extraConfig = ''
-    load-module module-alsa-sink   device=hw:0,0 channels=4
-    load-module module-alsa-source device=hw:0,6 channels=4
-  '';
-
-  opengl = {
-    extraPackages = with pkgs; [ intel-ocl ];
   };
 
- };
+  environment.systemPackages = with pkgs; [
+    docker
+    docker-compose
+    ffmpeg
+    #python37Packages.imutils
+    #python37Packages.scipy
+    #python37Packages.shapely
+    opencl-headers
+    labelImg
+
+    pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
+
+    cardano-node
+
+    #vpp
+
+    (chromium.override {
+      commandLineArgs = [
+        "--enable-features=UseOzonePlatform"
+        "--ozone-platform=wayland"
+      ];
+    })
+
+
+  ];
+
+  nix = {
+    extraOptions = ''
+      extra-platforms = aarch64-linux arm-linux
+    '';
+  };
+
+  hardware = {
+    pulseaudio.extraConfig = ''
+      load-module module-alsa-sink   device=hw:0,0 channels=4
+      load-module module-alsa-source device=hw:0,6 channels=4
+    '';
+
+    opengl = {
+      extraPackages = with pkgs; [ intel-ocl ];
+    };
+
+  };
 
 
 
 
 
-/*
-security = {
-  tpm2 = {
+  /*
+    security = {
+    tpm2 = {
     enable = true;
     applyUdevRules = true;
     abrmd = {
-      enable = true;
+    enable = true;
     };
     pkcs11 = {
-      enable = true;
+    enable = true;
     };
-  };
-};
-*/
+    };
+    };
+  */
 
 
-/*
- docker-containers = {
-   dataturks = {
-     image = "klimentij/dataturks";
-     ports = [
-       "8080:9090"
-     ];
-   };
- };
- */
+  /*
+    docker-containers = {
+    dataturks = {
+    image = "klimentij/dataturks";
+    ports = [
+    "8080:9090"
+    ];
+    };
+    };
+  */
 
- inherit containers;
+  inherit containers;
 
 }

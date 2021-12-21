@@ -20,14 +20,14 @@
 
   boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
- services = {
-   xserver = {
-     videoDrivers = [ "intel" ];
-   };
- };
+  services = {
+    xserver = {
+      videoDrivers = [ "intel" ];
+    };
+  };
 
- environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
 
- ];
+  ];
 
 }

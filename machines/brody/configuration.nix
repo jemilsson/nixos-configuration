@@ -1,9 +1,9 @@
 { config, lib, pkgs, stdenv, ... }:
 let
-    containers = import ./containers/containers.nix { pkgs = pkgs; config=config; stdenv=stdenv; };
-    deconz-full = pkgs.callPackage ../../packages/deconz/default.nix {};
-    deconz = deconz-full.deCONZ;
-    kernel = config.boot.kernelPackages;
+  containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
+  deconz-full = pkgs.callPackage ../../packages/deconz/default.nix { };
+  deconz = deconz-full.deCONZ;
+  kernel = config.boot.kernelPackages;
 in
 {
   imports = [
@@ -40,57 +40,57 @@ in
       allowedTCPPorts = [ 22 5201 ]; # 8080 8088 19999 1999 ];
       allowedUDPPorts = [ ];
       checkReversePath = false;
-      
+
       extraCommands = ''
-      iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
-      iptables -A FORWARD -i wg1 -o br1020 -j DROP
-      iptables -A FORWARD -i br2 -o br1020 -j DROP
-      iptables -A FORWARD -i br1020 -o br2 -j ACCEPT
-      iptables -A FORWARD -i br1020 -o wg1 -j ACCEPT
-      iptables -P FORWARD DROP
-      ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
-      ip6tables -A FORWARD -i wg1 -o br1020 -j DROP
-      ip6tables -A FORWARD -i br2 -o br1020 -j DROP
-      ip6tables -A FORWARD -i br1020 -o br2 -j ACCEPT
-      ip6tables -A FORWARD -i br1020 -o wg1 -j ACCEPT
-      ip6tables -P FORWARD DROP
+        iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
+        iptables -A FORWARD -i wg1 -o br1020 -j DROP
+        iptables -A FORWARD -i br2 -o br1020 -j DROP
+        iptables -A FORWARD -i br1020 -o br2 -j ACCEPT
+        iptables -A FORWARD -i br1020 -o wg1 -j ACCEPT
+        iptables -P FORWARD DROP
+        ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
+        ip6tables -A FORWARD -i wg1 -o br1020 -j DROP
+        ip6tables -A FORWARD -i br2 -o br1020 -j DROP
+        ip6tables -A FORWARD -i br1020 -o br2 -j ACCEPT
+        ip6tables -A FORWARD -i br1020 -o wg1 -j ACCEPT
+        ip6tables -P FORWARD DROP
       '';
 
       extraStopCommands = ''
-      iptables -D FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
-      iptables -D FORWARD -i wg1 -o br1020 -j DROP
-      iptables -D FORWARD -i br2 -o br1020 -j DROP
-      iptables -D FORWARD -i br1020 -o br2 -j ACCEPT
-      iptables -D FORWARD -i br1020 -o wg1 -j ACCEPT
-      ip6tables -D FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
-      ip6tables -D FORWARD -i wg1 -o br1020 -j DROP
-      ip6tables -D FORWARD -i br2 -o br1020 -j DROP
-      ip6tables -D FORWARD -i br1020 -o br2 -j ACCEPT
-      ip6tables -D FORWARD -i br1020 -o wg1 -j ACCEPT
+        iptables -D FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+        iptables -D FORWARD -i wg1 -o br1020 -j DROP
+        iptables -D FORWARD -i br2 -o br1020 -j DROP
+        iptables -D FORWARD -i br1020 -o br2 -j ACCEPT
+        iptables -D FORWARD -i br1020 -o wg1 -j ACCEPT
+        ip6tables -D FORWARD -m state --state ESTABLISHED,RELATED -j nixos-fw-accept
+        ip6tables -D FORWARD -i wg1 -o br1020 -j DROP
+        ip6tables -D FORWARD -i br2 -o br1020 -j DROP
+        ip6tables -D FORWARD -i br1020 -o br2 -j ACCEPT
+        ip6tables -D FORWARD -i br1020 -o wg1 -j ACCEPT
       '';
-      
-      
+
+
     };
 
     nat = {
-        enable = false;
-        externalInterface = "br2";
-        internalInterfaces = [ "br1020" ];
-        #forwardPorts = [
-        #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
-        #];
-        #extraCommands = ''
-        #  iptables -t nat -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
-        #'';
-     };
+      enable = false;
+      externalInterface = "br2";
+      internalInterfaces = [ "br1020" ];
+      #forwardPorts = [
+      #  { destination = "10.0.0.180:22"; proto = "tcp"; sourcePort = 22; }
+      #];
+      #extraCommands = ''
+      #  iptables -t nat -A nixos-nat-post -o enp0s22u1u2 -m mark --mark 0x1 -j MASQUERADE
+      #'';
+    };
 
     interfaces = {
       br2.ipv4.routes = [
-            {
-              address = "194.26.208.1";
-              prefixLength = 32;
+        {
+          address = "194.26.208.1";
+          prefixLength = 32;
 
-            }
+        }
       ];
 
 
@@ -115,9 +115,9 @@ in
           addresses = [
             { address = "192.168.8.10"; prefixLength = 24; }
           ];
-          
+
           routes = [
-             {
+            {
               "address" = "0.0.0.0";
               "prefixLength" = 0;
               "via" = "192.168.8.1";
@@ -126,7 +126,7 @@ in
               };
             }
           ];
-          
+
         };
       };
 
@@ -151,15 +151,15 @@ in
 
         wg1 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
-          ips = [ 
+          ips = [
             "10.128.2.4/24"
             "2a12:5800:0:5::4/64"
-           ];
+          ];
           peers = [
             {
               publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
               endpoint = "194.26.208.1:51820";
-              allowedIPs = [ 
+              allowedIPs = [
                 "10.128.2.0/24"
                 "2a12:5800:0:5::/64"
                 "0::/0"
@@ -192,14 +192,14 @@ in
 
     '';
     # ip addr add 10.5.254.2 peer 10.5.254.3 dev gretap1
-  #  vswitches = {
-  #    "vs-wan" = {
-#
-#      };
-#    };
-#  };
+    #  vswitches = {
+    #    "vs-wan" = {
+    #
+    #      };
+    #    };
+    #  };
 
-  #virtualisation = {
+    #virtualisation = {
     #vswitch = {
     #  enable = true;
     #  resetOnStart = true;
@@ -208,76 +208,76 @@ in
     #  set Bridge <switch_name> stp_enable=true
     #
     #      '';
-  #  };
+    #  };
   };
 
   services = {
-    
+
     radvd = {
       enable = true;
       config = ''
-      interface br1020 { 
-        AdvSendAdvert on;
-        MinRtrAdvInterval 3; 
-        MaxRtrAdvInterval 10;
-        prefix 2a12:5800:4:4::/64 { 
-                AdvOnLink on; 
-                AdvAutonomous on; 
-                AdvRouterAddr on; 
+        interface br1020 { 
+          AdvSendAdvert on;
+          MinRtrAdvInterval 3; 
+          MaxRtrAdvInterval 10;
+          prefix 2a12:5800:4:4::/64 { 
+                  AdvOnLink on; 
+                  AdvAutonomous on; 
+                  AdvRouterAddr on; 
+          };
+          RDNSS 2001:4860:4860::8888 2001:4860:4860::8844
+          {
+                  # AdvRDNSSLifetime 3600;
+          };
         };
-        RDNSS 2001:4860:4860::8888 2001:4860:4860::8844
-        {
-                # AdvRDNSSLifetime 3600;
-        };
-      };
       '';
     };
-    
+
 
     lldpd = {
       enable = true;
     };
-    
+
     dhcpd4 = {
-    enable = true;
-    interfaces = [ "br1020" ];
-    extraConfig = ''
-      option domain-name-servers 1.1.1.1;
+      enable = true;
+      interfaces = [ "br1020" ];
+      extraConfig = ''
+        option domain-name-servers 1.1.1.1;
 
-      subnet 100.65.4.0 netmask 255.255.255.0 {
-        range 100.65.4.100 100.65.4.200;
-        option broadcast-address 100.65.4.255;
-        option routers 100.65.4.1;
-        option subnet-mask 255.255.255.0;
-      }
-    '';
-  };
-  
+        subnet 100.65.4.0 netmask 255.255.255.0 {
+          range 100.65.4.100 100.65.4.200;
+          option broadcast-address 100.65.4.255;
+          option routers 100.65.4.1;
+          option subnet-mask 255.255.255.0;
+        }
+      '';
+    };
+
   };
 
-  
+
 
   containers = containers;
   /*
-  virtualisation = {
+    virtualisation = {
     oci-containers = {
-      containers = {
-        "ring-mqtt" = {
-          autoStart = true;
-          image = "tsightler/ring-mqtt";
-          environment = {
-            #DEBUG = "*";
-          };
-          ports = [
-              "55123:55123"
-          ];
-          volumes = [
-            "/var/lib/ring-mqtt:/data"
-          ];
-        };
-      };
+    containers = {
+    "ring-mqtt" = {
+    autoStart = true;
+    image = "tsightler/ring-mqtt";
+    environment = {
+    #DEBUG = "*";
     };
-  };
+    ports = [
+    "55123:55123"
+    ];
+    volumes = [
+    "/var/lib/ring-mqtt:/data"
+    ];
+    };
+    };
+    };
+    };
   */
 
 
@@ -290,43 +290,43 @@ in
   #boot.extraModulePackages = [ kernel.wireguard ];
   boot.kernelModules = [ "wireguard" ];
 
- environment.systemPackages = with pkgs; [
-  dnsutils
-  deconz
+  environment.systemPackages = with pkgs; [
+    dnsutils
+    deconz
 
-  unstable.pmacct
+    unstable.pmacct
 
- ];
+  ];
 
- /*
+  /*
 
- users.users."deconz" = {
-  createHome = true;
-  isSystemUser = true;
-  group = "dialout";
-  home = "/home/deconz";
- };
+    users.users."deconz" = {
+    createHome = true;
+    isSystemUser = true;
+    group = "dialout";
+    home = "/home/deconz";
+    };
 
- systemd.services.deconz = {
-       enable = true;
-       description = "deconz";
-       after = [ "network.target" ];
-       wantedBy = [ "multi-user.target" ];
-       stopIfChanged = false;
-       serviceConfig = {
-         ExecStart = "${deconz}/bin/deCONZ -platform minimal --http-listen=0.0.0.0";
-         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-         Restart = "always";
-         RestartSec = "10s";
-         StartLimitInterval = "1min";
-         #StateDirectory = "/var/lib/deconz";
-         User = "deconz";
-         #DeviceAllow = "char-ttyUSB rwm";
-         #DeviceAllow = "char-usb_device rwm";
-         #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
-       };
-     };
+    systemd.services.deconz = {
+    enable = true;
+    description = "deconz";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    stopIfChanged = false;
+    serviceConfig = {
+    ExecStart = "${deconz}/bin/deCONZ -platform minimal --http-listen=0.0.0.0";
+    ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+    Restart = "always";
+    RestartSec = "10s";
+    StartLimitInterval = "1min";
+    #StateDirectory = "/var/lib/deconz";
+    User = "deconz";
+    #DeviceAllow = "char-ttyUSB rwm";
+    #DeviceAllow = "char-usb_device rwm";
+    #AmbientCapabilities="CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME";
+    };
+    };
 
-*/
+  */
 
 }
