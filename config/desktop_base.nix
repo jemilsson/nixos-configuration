@@ -7,8 +7,8 @@ let
   vscode-extensions = (with pkgs.vscode-extensions; [
     ms-python.python
     ms-python.vscode-pylance
-
     jnoortheen.nix-ide
+    github.github-vscode-theme
   ]);
   vscode-with-extensions = pkgs.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
