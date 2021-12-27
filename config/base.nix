@@ -32,9 +32,6 @@
   security = {
     pam = {
       enableSSHAgentAuth = true;
-      #p11 = {
-      #  enable = true;
-      #};
     };
   };
 
@@ -47,10 +44,6 @@
     mingetty = {
       helpLine = "test";
     };
-    emacs = {
-      enable = true;
-      defaultEditor = true;
-    };
     journald = {
       extraConfig = "MaxFileSec=1year";
     };
@@ -60,19 +53,6 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      /*
-        packageOverrides = pkgs: {
-        unstable = import <nixos-unstable> {
-        config = config.nixpkgs.config;
-        };
-        unstable-small = import <nixos-unstable-small> {
-        config = config.nixpkgs.config;
-        };
-        small = import <nixos-small> {
-        config = config.nixpkgs.config;
-        };
-        };
-      */
     };
   };
 
@@ -125,16 +105,8 @@
       vimPlugins.deoplete-nvim
       vimPlugins.deoplete-jedi
 
-      #remote
-      rxvt_unicode.terminfo
-
       #Tunneling
       wireguard
-
-      #fun
-      fortune
-      cowsay
-      figlet
 
       #DNS
       stubby

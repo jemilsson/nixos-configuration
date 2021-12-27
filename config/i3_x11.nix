@@ -105,12 +105,6 @@ in
         export WLR_DRM_NO_MODIFIERS=1
       '';
     };
-    slock.enable = true;
-
-    xss-lock = {
-      enable = true;
-      lockerCommand = "${pkgs.i3lock-fancy}/bin/i3lock-fancy -p test";
-    };
 
     system-config-printer.enable = true;
   };
@@ -175,14 +169,14 @@ in
 
 
   environment.systemPackages = with pkgs; [
-    betterlockscreen
-    compton
+    #betterlockscreen
+    #compton
     xorg.xev
     #plasma5.sddm-kcm
-    i3lock
-    xmobar
+    #i3lock
+    #xmobar
     #taffybar
-    i3lock-fancy
+    #i3lock-fancy
     gnome3.networkmanagerapplet
   ];
 
