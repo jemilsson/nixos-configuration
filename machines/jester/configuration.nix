@@ -20,7 +20,11 @@ in
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot =
+        {
+          enable = true;
+          graceful = true;
+        };
       efi.canTouchEfiVariables = true;
     };
     #kernelPackages = pkgs.unstable.linuxPackages_latest;
