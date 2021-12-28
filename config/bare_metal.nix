@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 {
   services = {
+    smartd.enable = true;
+
     fstrim.enable = true;
 
     fwupd = {
