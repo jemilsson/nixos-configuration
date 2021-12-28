@@ -29,6 +29,7 @@
     {
       device = "/dev/disk/by-uuid/283709fb-3ef0-460b-9ccd-17add4da8f21";
       fsType = "ext4";
+      neededForBoot = true;
     };
 
   swapDevices = [ ];
