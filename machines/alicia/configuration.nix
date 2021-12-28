@@ -6,6 +6,7 @@
     ../../config/emilsson.nix
     ../../config/language/swedish.nix
     ../../config/location/sejkg01/configuration.nix
+    ./hardware-configuration.nix
   ];
 
   system.stateVersion = "18.09";
