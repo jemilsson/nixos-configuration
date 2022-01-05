@@ -19,6 +19,7 @@ in
   system.stateVersion = "19.03";
 
   boot = {
+    extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
     loader = {
       systemd-boot =
         {

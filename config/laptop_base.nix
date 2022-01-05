@@ -13,7 +13,7 @@
   };
   services = {
     illum.enable = true;
-    #localtime.enable = true;
+    localtime.enable = true;
 
     geoclue2 = {
       enable = true;
@@ -29,6 +29,14 @@
         "redshift" = {
           isSystem = true;
           isAllowed = true;
+        };
+      };
+
+      appConfig = {
+        "localtime" = {
+          isSystem = true;
+          isAllowed = true;
+          desktopID = "998";
         };
       };
     };

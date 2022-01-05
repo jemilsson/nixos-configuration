@@ -22,7 +22,10 @@
   system = {
     autoUpgrade = {
       enable = true;
-      channel = https://nixos.org/channels/nixos-21.11;
+      #channel = https://nixos.org/channels/nixos-21.11;
+      flake = "github:jemilsson/nixos-configuration";
+      flags = [
+      ];
       dates = "03:00";
       randomizedDelaySec = "2 h";
     };
