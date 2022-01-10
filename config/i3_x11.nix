@@ -121,11 +121,19 @@ in
           wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
 
+          environment = {
+            XDG_CURRENT_DESKTOP = "sway";
+            XDG_SESSION_TYPE = "wayland";
+            XDG_RUNTIME_DIR = "/run/user/1000";
+            WAYLAND_DISPLAY = "wayland-1";
+            WLR_DRM_NO_MODIFIERS = "1";
+          };
           serviceConfig = {
             Type = "simple";
             ExecStart = "${pkgs.kanshi}/bin/kanshi";
             Restart = "always";
           };
+
         };
         /*
           "status-notifier-watcher" = {

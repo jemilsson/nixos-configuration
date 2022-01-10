@@ -76,6 +76,11 @@ in
       enable = true;
       powerOnBoot = true;
       package = pkgs.bluezFull;
+      settings = {
+        General = {
+          Experimental = true;
+        };
+      };
     };
 
     opengl = {
@@ -260,7 +265,7 @@ in
 
     ledger-live-desktop
 
-    hsphfpd
+    #hsphfpd
 
     vulkan-loader
     vulkan-validation-layers
@@ -277,7 +282,7 @@ in
   ];
 
   /*environment.extraSetup = ''
-    ln -s ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0 $out/share
+    ln - s ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0 $out/share
     '';*/
 
   programs = {
@@ -289,7 +294,7 @@ in
         CanonicalDomains jonas.systems internal.jonas.systems
 
         Host *.jonas.systems
-          ForwardAgent yes
+        ForwardAgent yes
       '';
     };
 
@@ -367,7 +372,7 @@ in
       enable = true;
     };
 
-    dbus.packages = [ pkgs.hsphfpd ];
+    #dbus.packages = [ pkgs.hsphfpd ];
 
     pipewire = {
       enable = true;
@@ -380,6 +385,58 @@ in
       # use the example session manager (no others are packaged yet so this is enabled by default,
       # no need to redefine it in your config for now)
       #media-session.enable = true;
+
+      media-session.config.bluez-monitor = {
+        rules = [
+          {
+            matches = [
+              {
+                # This matches all cards.
+                device.name = "~bluez_card.*";
+              }
+            ];
+            actions = {
+              update-props = {
+                bluez5.auto-connect = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
+                bluez5.autoswitch-profile = true;
+              };
+            };
+          }
+
+          {
+            matches = [
+              {
+                # Matches all sources.
+                node.name = "~bluez_input.*";
+              }
+              {
+                # Matches all sinks.
+                node.name = "~bluez_output.*";
+              }
+            ];
+
+            actions = {
+              update-props = {
+                #node.nick            = "My Node"
+                #node.nick            = null
+                #priority.driver      = 100
+                #priority.session     = 100
+                node.pause-on-idle = true;
+                #resample.quality     = 4
+                #channelmix.normalize = false
+                #channelmix.mix-lfe   = false
+                #session.suspend-timeout-seconds = 5      # 0 disables suspend
+                #monitor.channel-volumes = false
+
+                # A2DP source role, "input" or "playback"
+                # Defaults to "playback", playing stream to speakers
+                # Set to "input" to use as an input for apps
+                #bluez5.a2dp-source-role = input
+              };
+            };
+          }
+        ];
+      };
     };
   };
 
