@@ -32,7 +32,17 @@ in
     # cpuFreqGovernor = "ondemand";
   };
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  xdg =
+    {
+      portal = {
+        enable = true;
+        wlr.enable = true;
+        gtkUsePortal = true;
+      };
+    };
+
+  boot.extraModulePackages = with config.boot.kernelPackages;
+    [ v4l2loopback ];
 
   gtk.iconCache.enable = true;
 
@@ -41,9 +51,9 @@ in
   hardware = {
     enableAllFirmware = true;
     pulseaudio = {
-      enable = true;
+      enable = false;
       support32Bit = true;
-      package = pkgs.pulseaudio-hsphfpd;
+      #package = pkgs.pulseaudio-hsphfpd;
 
       extraModules = [
         #pkgs.unstable.pulseaudio-modules-bt
@@ -177,7 +187,7 @@ in
     gnome3.file-roller
     gparted
     file
-    keepassSecurity
+    keepass
     libreoffice
     mupdf
     #adobe-reader
@@ -260,6 +270,8 @@ in
     grim
     wl-clipboard
     slurp
+
+    obs-studio
 
 
   ];
@@ -371,41 +383,6 @@ in
     };
   };
 
-  systemd = {
-    user = {
-
-      services = {
-
-        "urxvtd" = {
-          enable = true;
-          description = "rxvt unicode daemon";
-          wantedBy = [ "default.target" ];
-          path = [ pkgs.rxvt_unicode ];
-          serviceConfig.Restart = "always";
-          serviceConfig.RestartSec = 2;
-          serviceConfig.ExecStart = "${pkgs.rxvt_unicode}/bin/urxvtd -q -o";
-        };
-      };
-    };
-
-    services = {
-      hsphfpd = {
-        after = [ "bluetooth.service" ];
-        requires = [ "bluetooth.service" ];
-        wantedBy = [ "bluetooth.target" ];
-
-        description = "A prototype implementation used for connecting HSP/HFP Bluetooth devices";
-        serviceConfig.ExecStart = "${pkgs.hsphfpd}/bin/hsphfpd.pl";
-      };
-
-      telephony_client = {
-        wantedBy = [ "default.target" ];
-
-        description = "telephony_client for hsphfpd";
-        serviceConfig.ExecStart = "${pkgs.hsphfpd}/bin/telephony_client.pl";
-      };
-    };
-  };
 
 
   /*

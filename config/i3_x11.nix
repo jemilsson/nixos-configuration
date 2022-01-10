@@ -113,6 +113,20 @@ in
     user = {
 
       services = {
+
+        kanshi = {
+          enable = true;
+          description = "kanshi";
+
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.kanshi}/bin/kanshi";
+            Restart = "always";
+          };
+        };
         /*
           "status-notifier-watcher" = {
           enable = true;
@@ -178,7 +192,18 @@ in
     #taffybar
     #i3lock-fancy
     gnome3.networkmanagerapplet
+
+
+    xdg-desktop-portal
+    xdg-desktop-portal-wlr
   ];
+
+
+  #environment.sessionVariables = {
+  #  MOZ_ENABLE_WAYLAND = "1";
+  #  XDG_CURRENT_DESKTOP = "sway";
+  #  XDG_SESSION_TYPE = "wayland";
+  ##};
 
   i18n.consoleUseXkbConfig = true;
 
