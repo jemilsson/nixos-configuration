@@ -370,6 +370,14 @@ in
     avahi = {
       nssmdns = true;
       enable = true;
+      publish = {
+        enable = true;
+        addresses = true;
+        domain = true;
+        hinfo = true;
+        userServices = true;
+        workstation = true;
+      };
     };
 
     #dbus.packages = [ pkgs.hsphfpd ];
@@ -514,6 +522,7 @@ in
   services = {
 
     #upower.enable = true;
+    nscd.enable = true;
 
     tor = {
       enable = true;

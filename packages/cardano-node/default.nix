@@ -1,29 +1,29 @@
 # https://hydra.iohk.io/job/Cardano/cardano-node/cardano-node-linux
-{ stdenv, fetchurl}:
+{ stdenv, fetchurl }:
 #with import <nixpkgs> {};
 let
   inherit (stdenv.lib) optional;
-  hydra_build = "9808501";
+  hydra_build = "11955068";
 in
 stdenv.mkDerivation rec {
-    version = "1.32.1";
-    pname = "cardano-node";
+  version = "1.33.0";
+  pname = "cardano-node";
 
-    src = fetchurl {
-      url = "https://hydra.iohk.io/build/${hydra_build}/download/1/${pname}-${version}-linux.tar.gz";
-      sha256 = "b1d58b06daa011875098d9bc96ee5b42cf2ad9732c4e7b8254cd44b4ada46466";
-    };
-    dontConfigure = true;
-    dontBuild = true;
-    dontStrip = true;
+  src = fetchurl {
+    url = "https://hydra.iohk.io/build/${hydra_build}/download/1/${pname}-${version}-linux.tar.gz";
+    sha256 = "1d357a8be28b157ef9e02c64fc0295259e1f2694cbb7316099edabb285c5a514";
+  };
+  dontConfigure = true;
+  dontBuild = true;
+  dontStrip = true;
 
-    sourceRoot = ".";
-    buildInputs = [ ];
+  sourceRoot = ".";
+  buildInputs = [ ];
 
-    installPhase = ''
-      mkdir -p $out/bin/
-      mv configuration/ $out/
-      cp -r .  $out/bin/
-    '';
+  installPhase = ''
+    mkdir -p $out/bin/
+    mv configuration/ $out/
+    cp -r .  $out/bin/
+  '';
 
-  }
+}

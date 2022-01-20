@@ -19,6 +19,7 @@
     systemPackages = with pkgs; [
       ethtool
       wol
+      pciutils
     ];
   };
 }
