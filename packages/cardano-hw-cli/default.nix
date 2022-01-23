@@ -1,4 +1,4 @@
-{ stdenv, fetchurl }:
+{ stdenv, fetchurl, autoPatchelfHook, gcc-unwrapped, libusb }:
 #with import <nixpkgs> { };
 let
   inherit (stdenv.lib) optional;
