@@ -94,19 +94,4 @@ in
     enable = true;
   };
 
-  networking = {
-    interfaces = {
-      "enp0s31f6.102" = {
-        useDHCP = true;
-      };
-    };
-
-    vlans = {
-      "enp0s31f6.102" = {
-        id = 102;
-        interface = "enp0s31f6";
-      };
-    };
-  };
-
 }

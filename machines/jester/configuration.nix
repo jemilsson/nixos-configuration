@@ -108,6 +108,26 @@ in
 
       };
     };
+
+    interfaces = {
+      #"enp48s0u2u1.102" = {
+      #  useDHCP = true;
+      #};
+      "enp48s0u2u1.150" = {
+        useDHCP = true;
+      };
+    };
+
+    vlans = {
+      #"enp48s0u2u1.102" = {
+      #  id = 102;
+      #  interface = "enp48s0u2u1u2";
+      #};
+      "enp48s0u2u1.150" = {
+        id = 150;
+        interface = "enp48s0u2u1u2";
+      };
+    };
   };
 
   services = {
