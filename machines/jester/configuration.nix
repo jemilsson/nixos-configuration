@@ -186,7 +186,7 @@ in
     '';
 
     opengl = {
-      extraPackages = with pkgs; [ intel-ocl ];
+      #extraPackages = with pkgs; [ intel-ocl ];
     };
 
   };
