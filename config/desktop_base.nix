@@ -88,6 +88,7 @@ in
       driSupport32Bit = true;
       #s3tcSupport = true;
       extraPackages = with pkgs; [
+        intel-compute-runtime
         rocm-opencl-icd
         rocm-opencl-runtime
         intel-media-driver
@@ -96,6 +97,8 @@ in
         (vaapiIntel.override { enableHybridCodec = true; })
       ];
       extraPackages32 = with pkgs; [
+        intel-compute-runtime
+        rocm-opencl-icd
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
