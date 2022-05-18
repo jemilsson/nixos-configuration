@@ -514,14 +514,15 @@ in
   fonts = {
     enableFontDir = true;
     enableGhostscriptFonts = true;
+    enableDefaultFonts = true;
     fonts = with pkgs; [
+      corefonts
       google-fonts
       hack-font
       font-awesome-ttf
       powerline-fonts
-      dejavu_fonts
-      liberation_ttf
       emacs-all-the-icons-fonts
+      winePackages.fonts
     ];
   };
   services = {

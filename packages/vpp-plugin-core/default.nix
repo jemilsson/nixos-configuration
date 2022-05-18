@@ -1,5 +1,5 @@
-#{ config, pkgs, stdenv, dpkg, fetchurl, autoPatchelfHook, gcc-unwrapped}:
-with import <nixpkgs> {};
+{ config, pkgs, stdenv, dpkg, fetchurl, autoPatchelfHook, gcc-unwrapped, openssl, elfutils, mbedtls}:
+#with import <nixpkgs> {};
 let
 version = "21.10";
 name = "vpp-plugin-core_${version}";
@@ -21,7 +21,10 @@ stdenv.mkDerivation {
 
     nativeBuildInputs = [
     autoPatchelfHook
+    
   ];
+  autoPatchelfIgnoreMissingDeps=true;
+
 
 
     buildInputs = [ dpkg gcc-unwrapped openssl elfutils mbedtls] ; # qt5.qtbase qt5.qtserialport qt5.qtwebsockets  ];

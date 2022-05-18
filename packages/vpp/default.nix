@@ -1,9 +1,10 @@
-{ config, pkgs, stdenv, fetchurl, dpkg, gcc, libnl, libuuid, autoPatchelfHook, glibc, gcc-unwrapped}:
-#with import <nixpkgs> {};
+#{ config, pkgs, stdenv, fetchurl, dpkg, gcc, libnl, libuuid, autoPatchelfHook, glibc, gcc-unwrapped}:
+with import <nixpkgs> {};
 let
 version = "21.10";
 name = "vpp-${version}";
 libvppinfra = pkgs.callPackage ../libvppinfra/default.nix {};
+vpp-plugin-core = pkgs.callPackage ../vpp-plugin-core/default.nix {};
 in
 stdenv.mkDerivation {
     #builder = ./builder.sh;
@@ -29,7 +30,7 @@ stdenv.mkDerivation {
       gcc 
       #libvppinfra 
     ];
-    buildInputs = [ dpkg  gcc libnl libuuid  glibc gcc-unwrapped libvppinfra] ; # qt5.qtbase qt5.qtserialport qt5.qtwebsockets ];
+    buildInputs = [ dpkg  gcc libnl libuuid  glibc gcc-unwrapped libvppinfra vpp-plugin-core] ; # qt5.qtbase qt5.qtserialport qt5.qtwebsockets ];
 
     unpackPhase = "dpkg-deb -x $src .";
     installPhase = ''

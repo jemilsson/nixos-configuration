@@ -31,7 +31,7 @@ in
     };
     #kernelPackages = pkgs.unstable.linuxPackages_latest;
 
-    binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
+    binfmt.emulatedSystems = [ ];
   };
 
   networking = {
@@ -156,7 +156,7 @@ in
     opencl-headers
     labelImg
 
-    pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
+    #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 
     cardano-node
     cardano-hw-cli
@@ -173,11 +173,7 @@ in
 
   ];
 
-  nix = {
-    extraOptions = ''
-      extra-platforms = aarch64-linux arm-linux
-    '';
-  };
+  nix = { };
 
   hardware = {
     pulseaudio.extraConfig = ''
@@ -185,9 +181,9 @@ in
       load-module module-alsa-source device=hw:0,6 channels=4
     '';
 
-    opengl = {
-      #extraPackages = with pkgs; [ intel-ocl ];
-    };
+    #opengl = {
+    #extraPackages = with pkgs; [ intel-ocl ];
+    #};
 
   };
 
