@@ -48,45 +48,46 @@ in
 
     wireguard = {
       interfaces = {
-        wg0 = {
+        /*
+          wg0 = {
           ips = [ "10.50.0.37/32" ];
           peers = [
-            {
-              publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
-              allowedIPs = [
-                "10.50.0.0/16"
-              ];
-              endpoint = "13.48.43.75:123";
-            }
+          {
+          publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
+          allowedIPs = [
+          "10.50.0.0/16"
+          ];
+          endpoint = "13.48.43.75:123";
+          }
 
           ];
-        };
-
-        wg1 = {
+          };
+        
+          wg1 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
           generatePrivateKeyFile = true;
           ips = [ "10.111.255.253/32" "10.112.255.253/32" ];
           peers = [
-            {
-              publicKey = "zYgI7WYsKHNh70oZvdHDPKCeqKeEdsQbAIxtlNGSw2c=";
-              allowedIPs = [
-                "10.111.0.0/16"
-              ];
-              endpoint = "18.198.12.235:123";
-            }
+          {
+          publicKey = "zYgI7WYsKHNh70oZvdHDPKCeqKeEdsQbAIxtlNGSw2c=";
+          allowedIPs = [
+          "10.111.0.0/16"
+          ];
+          endpoint = "18.198.12.235:123";
+          }
 
-            {
-              publicKey = "Uv6JEWpVPBAt44WBRWmyGRYtF0k7mYm2vRKmkOArtUw=";
-              allowedIPs = [
-                "10.112.0.0/16"
-              ];
-              endpoint = "54.75.127.255:123";
-            }
+          {
+          publicKey = "Uv6JEWpVPBAt44WBRWmyGRYtF0k7mYm2vRKmkOArtUw=";
+          allowedIPs = [
+          "10.112.0.0/16"
+          ];
+          endpoint = "54.75.127.255:123";
+          }
 
           ];
-        };
+          };
 
-
+        */
         /*      
           wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
