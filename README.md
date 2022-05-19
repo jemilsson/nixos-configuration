@@ -19,4 +19,6 @@ sudo nixos-rebuild switch --upgrade
 
 ```
 sudo nixos-rebuild switch --upgrade --flake github:jemilsson/nixos-configuration
+
+sudo nixos-rebuild switch --upgrade --flake '.#'
 ```
