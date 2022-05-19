@@ -44,9 +44,6 @@
       permitRootLogin = "no";
       passwordAuthentication = false;
     };
-    mingetty = {
-      helpLine = "test";
-    };
     journald = {
       extraConfig = "MaxFileSec=1year";
     };
