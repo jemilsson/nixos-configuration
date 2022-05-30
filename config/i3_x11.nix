@@ -170,7 +170,7 @@ in
           wants = [ "taffybar.service" ];
           after = [ "status-notifier-watcher.service" ];
           partOf = [ "graphical-session.target" ];
-          serviceConfig.ExecStart = "${pkgs.gnome3.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
+          serviceConfig.ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --sm-disable --indicator";
 
         };
         /*
@@ -199,7 +199,7 @@ in
     #xmobar
     #taffybar
     #i3lock-fancy
-    gnome3.networkmanagerapplet
+    pkgs.networkmanagerapplet
 
 
     xdg-desktop-portal

@@ -97,7 +97,7 @@
       #Network tools
       tcpdump
       whois
-      telnet
+      inetutils
       traceroute
 
       #Neovim
@@ -106,7 +106,7 @@
       vimPlugins.deoplete-jedi
 
       #Tunneling
-      wireguard
+      wireguard-tools
 
       #DNS
       stubby

@@ -214,7 +214,7 @@ in
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
     #(unstable.winetricks.override { wine = unstable.wine.override { wineBuild = "wineWow"; };} )
     #(unstable.wine.override { wineBuild = "wineWow"; })
-    multimc
+    polymc
     minecraft
     virtualgl
     xboxdrv
@@ -522,7 +522,7 @@ in
       corefonts
       google-fonts
       hack-font
-      font-awesome-ttf
+      font-awesome
       powerline-fonts
       emacs-all-the-icons-fonts
       winePackages.fonts
