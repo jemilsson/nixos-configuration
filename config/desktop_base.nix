@@ -94,7 +94,7 @@ in
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
-        (vaapiIntel.override { enableHybridCodec = true; })
+        vaapiIntel
       ];
       extraPackages32 = with pkgs; [
         intel-compute-runtime
@@ -102,7 +102,7 @@ in
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
-        (vaapiIntel.override { enableHybridCodec = true; })
+        vaapiIntel
       ];
       setLdLibraryPath = true;
     };
@@ -358,6 +358,9 @@ in
       #enableAdobeFlash = true;
       enableWideVine = true;
       #enableVLC = true;
+    };
+    packageOverrides = pkgs: {
+      vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
     };
 
   };
