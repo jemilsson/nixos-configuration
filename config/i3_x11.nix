@@ -213,6 +213,6 @@ in
   #  XDG_SESSION_TYPE = "wayland";
   ##};
 
-  i18n.consoleUseXkbConfig = true;
+  console.useXkbConfig = true;
 
 }

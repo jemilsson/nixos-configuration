@@ -116,8 +116,10 @@ in
     };
 
     logitech = {
-      enable = true;
-      enableGraphical = true;
+      wireless = {
+        enable = true;
+        enableGraphical = true;
+      };
     };
 
   };
@@ -515,7 +517,7 @@ in
     };
   };
   fonts = {
-    enableFontDir = true;
+    fontDir.enable = true;
     enableGhostscriptFonts = true;
     enableDefaultFonts = true;
     fonts = with pkgs; [
