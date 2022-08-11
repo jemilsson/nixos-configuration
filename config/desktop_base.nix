@@ -126,7 +126,7 @@ in
 
   networking.networkmanager.enable = true;
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  #environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   environment.systemPackages = with pkgs; [
     #Browsers
@@ -173,6 +173,7 @@ in
 
     #Interface
     alacritty
+    albert
     rxvt_unicode
     synapse
     feh
@@ -392,70 +393,21 @@ in
 
     #dbus.packages = [ pkgs.hsphfpd ];
 
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
+    pipewire =
+      {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+        # If you want to use JACK applications, uncomment this
+        jack.enable = true;
 
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
+        wireplumber = {
+          enable = true;
+        };
 
-      media-session.config.bluez-monitor = {
-        rules = [
-          {
-            matches = [
-              {
-                # This matches all cards.
-                device.name = "~bluez_card.*";
-              }
-            ];
-            actions = {
-              update-props = {
-                bluez5.auto-connect = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-                bluez5.autoswitch-profile = true;
-              };
-            };
-          }
-
-          {
-            matches = [
-              {
-                # Matches all sources.
-                node.name = "~bluez_input.*";
-              }
-              {
-                # Matches all sinks.
-                node.name = "~bluez_output.*";
-              }
-            ];
-
-            actions = {
-              update-props = {
-                #node.nick            = "My Node"
-                #node.nick            = null
-                #priority.driver      = 100
-                #priority.session     = 100
-                node.pause-on-idle = true;
-                #resample.quality     = 4
-                #channelmix.normalize = false
-                #channelmix.mix-lfe   = false
-                #session.suspend-timeout-seconds = 5      # 0 disables suspend
-                #monitor.channel-volumes = false
-
-                # A2DP source role, "input" or "playback"
-                # Defaults to "playback", playing stream to speakers
-                # Set to "input" to use as an input for apps
-                #bluez5.a2dp-source-role = input
-              };
-            };
-          }
-        ];
       };
-    };
+
   };
 
 
@@ -515,6 +467,9 @@ in
       #    --storage-opt dm.basesize=20G
       #  '';
     };
+    waydroid = {
+      enable = true;
+    };
   };
   fonts = {
     fontDir.enable = true;
@@ -532,7 +487,7 @@ in
   };
   services = {
 
-    #upower.enable = true;
+    upower.enable = true;
     nscd.enable = true;
 
     tor = {

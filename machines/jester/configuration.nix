@@ -114,9 +114,9 @@ in
       #"enp48s0u2u1.102" = {
       #  useDHCP = true;
       #};
-      "enp48s0u2u1.150" = {
-        useDHCP = true;
-      };
+      #"enp48s0u2u1.150" = {
+      #  useDHCP = true;
+      #};
     };
 
     vlans = {
@@ -124,10 +124,10 @@ in
       #  id = 102;
       #  interface = "enp48s0u2u1u2";
       #};
-      "enp48s0u2u1.150" = {
-        id = 150;
-        interface = "enp48s0u2u1u2";
-      };
+      #"enp48s0u2u1.150" = {
+      #  id = 150;
+      #  interface = "enp48s0u2u1u2";
+      #};
     };
   };
 
@@ -187,6 +187,12 @@ in
     #};
 
   };
+
+  virtualisation.lxc = {
+    enable = true;
+    lxcfs.enable = true;
+  };
+  virtualisation.lxd.enable = true;
 
 
 
