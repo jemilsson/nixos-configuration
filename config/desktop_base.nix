@@ -159,7 +159,7 @@ in
     vscode-with-extensions
     insomnia
     emacs
-    aws-sam-cli
+    #aws-sam-cli
 
     ## Nix
 
