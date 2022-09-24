@@ -134,7 +134,7 @@
       "194.58.200.20"
       "2a01:3f7::1"
     ];
-    search = [ "jonas.systems" ];
+    #search = [ "jonas.systems" ];
 
   };
 

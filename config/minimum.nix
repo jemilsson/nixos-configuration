@@ -35,7 +35,7 @@
   };
 
   networking = {
-    search = [ "jonas.systems" ];
+    #search = [ "jonas.systems" ];
   };
 
 }

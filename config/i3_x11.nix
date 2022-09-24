@@ -106,6 +106,8 @@ in
       '';
     };
 
+    xwayland.enable = true;
+
     system-config-printer.enable = true;
   };
 
