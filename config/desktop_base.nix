@@ -220,7 +220,7 @@ in
     #(unstable.steam.override {  extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ alsaLib alsaPlugins libpulseaudio ]; })
     #(unstable.winetricks.override { wine = unstable.wine.override { wineBuild = "wineWow"; };} )
     #(unstable.wine.override { wineBuild = "wineWow"; })
-    polymc
+    #polymc
     #minecraft
     virtualgl
     xboxdrv
