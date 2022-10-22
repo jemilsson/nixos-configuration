@@ -210,6 +210,7 @@ in
     signal-desktop
     tdesktop
     teams
+    discord
     #skype
 
     (steam.override { extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
