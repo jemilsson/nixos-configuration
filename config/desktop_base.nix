@@ -491,7 +491,7 @@ in
   };
   services = {
 
-    upower.enable = true;
+    #upower.enable = true;
     nscd.enable = true;
 
     tor = {
