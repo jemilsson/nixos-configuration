@@ -9,7 +9,7 @@
     ./hardware-configuration.nix
   ];
 
-  system.stateVersion = "18.09";
+  system.stateVersion = "22.05";
 
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
