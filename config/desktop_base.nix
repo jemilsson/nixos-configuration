@@ -289,6 +289,8 @@ in
     wireshark
 
     qFlipper
+
+    prismlauncher
   ];
 
   /*environment.extraSetup = ''
