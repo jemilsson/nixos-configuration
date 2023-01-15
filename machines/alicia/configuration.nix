@@ -41,7 +41,7 @@
       };
     };
     xrdp = {
-      enable = true;
+      enable = false;
       #defaultWindowManager = "startkde";
     };
 
