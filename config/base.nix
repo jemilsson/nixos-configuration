@@ -143,7 +143,7 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    autoOptimiseStore = true;
+    auto-optimise-store = true;
     gc = {
       automatic = true;
       dates = "03:15";
