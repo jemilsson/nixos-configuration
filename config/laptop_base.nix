@@ -33,7 +33,7 @@
       };
 
       appConfig = {
-        "localtime" = {
+        "localtimed" = {
           isSystem = true;
           isAllowed = true;
           desktopID = "998";
