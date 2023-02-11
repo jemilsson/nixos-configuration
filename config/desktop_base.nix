@@ -413,6 +413,7 @@ in
 
       };
 
+    passSecretService.enable = true;
   };
 
 
