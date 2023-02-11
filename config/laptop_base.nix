@@ -13,32 +13,35 @@
   };
   services = {
     illum.enable = true;
-    localtimed.enable = true;
+    #localtimed.enable = true;
+    automatic-timezoned.enable = true;
+
 
     geoclue2 = {
       enable = true;
-
-      appConfig = {
+      /*
+        appConfig = {
         "chromium" = {
-          isSystem = true;
-          isAllowed = true;
+        isSystem = true;
+        isAllowed = true;
         };
-      };
+        };
 
-      appConfig = {
+        appConfig = {
         "redshift" = {
-          isSystem = true;
-          isAllowed = true;
+        isSystem = true;
+        isAllowed = true;
         };
-      };
+        };
 
-      appConfig = {
+        appConfig = {
         "localtimed" = {
-          isSystem = true;
-          isAllowed = true;
-          desktopID = "998";
+        isSystem = true;
+        isAllowed = true;
+        #desktopID = "998";
         };
-      };
+        };
+      */
     };
 
 
