@@ -13,8 +13,8 @@
   };
   services = {
     illum.enable = true;
-    #localtimed.enable = true;
-    automatic-timezoned.enable = true;
+    localtimed.enable = true;
+    #automatic-timezoned.enable = true;
 
 
     geoclue2 = {
