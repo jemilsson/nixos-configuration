@@ -27,10 +27,10 @@
           system = "x86_64-linux";
           modules = [ ./machines/alicia/configuration.nix ];
         };
-        battlestation = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./machines/battlestation/configuration.nix ];
-        };
+        #battlestation = nixpkgs.lib.nixosSystem {
+        #  system = "x86_64-linux";
+        #  modules = [ ./machines/battlestation/configuration.nix ];
+        #};
         brody = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./machines/brody/configuration.nix ];
