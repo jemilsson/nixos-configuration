@@ -31,22 +31,22 @@
         #  system = "x86_64-linux";
         #  modules = [ ./machines/battlestation/configuration.nix ];
         #};
-        brody = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./machines/brody/configuration.nix ];
-        };
+        #brody = nixpkgs.lib.nixosSystem {
+        # system = "x86_64-linux";
+        #  modules = [ ./machines/brody/configuration.nix ];
+        #};
         jester = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./machines/jester/configuration.nix ];
         };
-        lazarus = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./machines/lazarus/configuration.nix ];
-        };
-        thor = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./machines/thor/configuration.nix ];
-        };
+        #lazarus = nixpkgs.lib.nixosSystem {
+        #  system = "x86_64-linux";
+        #  modules = [ ./machines/lazarus/configuration.nix ];
+        #};
+        #thor = nixpkgs.lib.nixosSystem {
+        #  system = "x86_64-linux";
+        #  modules = [ ./machines/thor/configuration.nix ];
+        #};
       };
     };
 }
