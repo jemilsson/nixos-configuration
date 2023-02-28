@@ -46,7 +46,6 @@
     optimise = {
       automatic = true;
       dates = "Mon..Fri 04:00";
-      randomizedDelaySec = "1 h";
     };
   };
 
