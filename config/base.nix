@@ -45,7 +45,7 @@
     };
     optimise = {
       automatic = true;
-      dates = "Mon..Fri 04:00";
+      dates = [ "Mon..Fri 04:00" ];
     };
   };
 
