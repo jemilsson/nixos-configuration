@@ -20,7 +20,7 @@
         desktop_base = import ./config/desktop_base.nix;
         laptopBase = import ./config/laptop_base.nix;
         bareMetal = import ./config/bare_metal.nix;
-        pkgs = pkgs;
+        #pkgs = pkgs;
       };
       nixosConfigurations = {
         alicia = nixpkgs.lib.nixosSystem {
