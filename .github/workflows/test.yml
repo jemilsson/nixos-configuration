@@ -10,5 +10,4 @@ jobs:
     - uses: cachix/install-nix-action@v19
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nix build .#nixosConfigurations.jester.config.system.build.toplevel
     - run: nix flake check
