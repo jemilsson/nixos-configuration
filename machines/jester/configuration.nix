@@ -159,8 +159,8 @@ in
 
     #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 
-    cardano-node
-    cardano-hw-cli
+    #cardano-node
+    #cardano-hw-cli
 
     #vpp
 
