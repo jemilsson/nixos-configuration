@@ -22,14 +22,41 @@
   system = {
     autoUpgrade = {
       enable = true;
-      #channel = https://nixos.org/channels/nixos-21.11;
       flake = "github:jemilsson/nixos-configuration";
       flags = [
       ];
-      dates = "03:00";
-      randomizedDelaySec = "2 h";
+      dates = "Mon..Fri 02:00";
+      randomizedDelaySec = "1 h";
+      persistent = true;
     };
   };
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+      dates = "Mon..Fri 03:00";
+      randomizedDelaySec = "1 h";
+      persistent = true;
+    };
+    optimise = {
+      automatic = true;
+      dates = "Mon..Fri 04:00";
+      randomizedDelaySec = "1 h";
+    };
+  };
+
+  systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
+
+  systemd.timers.nix-gc.after = [ "nixos-upgrade.timer" ];
+
+  systemd.timers.nix-optimise.timerConfig.Persistent = true;
+  systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
+
 
 
   security = {
@@ -138,29 +165,6 @@
 
   };
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    gc = {
-      automatic = true;
-      dates = "03:15";
-      options = "--delete-older-than 30d";
-    };
-    optimise = {
-      automatic = true;
-      dates = [ "03:30" ];
-    };
-  };
-
-  systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
-
-  systemd.timers.nix-gc.timerConfig.Persistent = true;
-  systemd.timers.nix-gc.after = [ "nixos-upgrade.timer" ];
-
-  systemd.timers.nix-optimise.timerConfig.Persistent = true;
-  systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
 
   i18n = {
     #consoleFont = "Lat2-Hack16";
