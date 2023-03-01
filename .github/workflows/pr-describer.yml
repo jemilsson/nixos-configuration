@@ -1,6 +1,7 @@
 name: "PR Describer"
 on:
   pull_request:
+  workflow_dispatch:
 jobs:
   describe:
     runs-on: ubuntu-latest
