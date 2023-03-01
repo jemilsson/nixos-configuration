@@ -20,12 +20,12 @@ jobs:
       run: nix store diff-closures github:${{ GITHUB_ACTION_REPOSITORY }}/${{ GITHUB_BASE_REF }}#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel .#nixosConfiguration.${{ matrix.target }}.config.system.build.toplevel >> "$GITHUB_OUTPUT"
 
     - name: Comment report in pr
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: "{{ matrix.target }}"
-          message: |
-            ### Report for `${{ matrix.target }}`
-            <details>
-            <summary> Version changes </summary> <br>
-            <pre> ${{ steps.nix_diff.outputs }} </pre>
-            </details>
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: "{{ matrix.target }}"
+        message: |
+          ### Report for `${{ matrix.target }}`
+          <details>
+          <summary> Version changes </summary> <br>
+          <pre> ${{ steps.nix_diff.outputs }} </pre>
+          </details>
