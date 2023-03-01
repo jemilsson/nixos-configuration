@@ -18,7 +18,7 @@ jobs:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Nix derivation diff
       id: nix_diff
-      run: nix store diff-closures github:${{ vars.GITHUB_ACTION_REPOSITORY }}/${{ vars.GITHUB_BASE_REF }}#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel .#nixosConfiguration.${{ matrix.target }}.config.system.build.toplevel >> "$GITHUB_OUTPUT"
+      run: nix store diff-closures github:${{ vars.GITHUB_REPOSITORY }}/${{ vars.GITHUB_BASE_REF }}#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel .#nixosConfiguration.${{ matrix.target }}.config.system.build.toplevel >> "$GITHUB_OUTPUT"
 
     - name: Comment report in pr
       uses: marocchino/sticky-pull-request-comment@v2
