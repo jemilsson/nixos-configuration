@@ -141,8 +141,8 @@
       #steam-fonts = pkgs.unstable.steam-fonts;
       #steam-chrootenv = pkgs.unstable.steam-chrootenv;
       #vulkan-loader = pkgs.unstable.vulkan-loader;
-      zsh-powerlevel9k = pkgs.zsh-powerlevel9k;
-      handbrake = super.handbrake.override { useGtk = true; };
+      #zsh-powerlevel9k = pkgs.zsh-powerlevel9k;
+      #handbrake = super.handbrake.override { useGtk = true; };
     }
     )
   ];
