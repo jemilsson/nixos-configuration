@@ -6,6 +6,7 @@
     ../../config/i3_x11.nix
     ../../config/location/sesto01/configuration.nix
     ../../config/language/english.nix
+    ./hardware-configuration.nix
   ];
 
   system.stateVersion = "18.09";
@@ -71,9 +72,9 @@
   #boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
   services = {
-    wakeonlan.interfaces = [
-      { interface = "enp8s0"; method = "password"; password = "00:11:22:33:44:55"; }
-    ];
+    #wakeonlan.interfaces = [
+    #  { interface = "enp8s0"; method = "password"; password = "00:11:22:33:44:55"; }
+    #];
 
 
     #Logitech G29
@@ -99,18 +100,6 @@
 
     lldpd = {
       enable = true;
-    };
-
-    avahi = {
-      enable = true;
-      nssmdns = true;
-      ipv6 = true;
-      ipv4 = true;
-      interfaces = [ "lan" ];
-
-      publish = {
-        enable = false;
-      };
     };
 
   };
