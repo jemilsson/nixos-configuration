@@ -122,11 +122,9 @@
 
     freerdp
 
-    unstable.minecraft
-
     xca
 
-    unstable.wasabiwallet
+    wasabiwallet
   ];
 
   nixpkgs.overlays = [
@@ -143,7 +141,7 @@
       #steam-fonts = pkgs.unstable.steam-fonts;
       #steam-chrootenv = pkgs.unstable.steam-chrootenv;
       #vulkan-loader = pkgs.unstable.vulkan-loader;
-      zsh-powerlevel9k = pkgs.unstable.zsh-powerlevel9k;
+      zsh-powerlevel9k = pkgs.zsh-powerlevel9k;
       handbrake = super.handbrake.override { useGtk = true; };
     }
     )
