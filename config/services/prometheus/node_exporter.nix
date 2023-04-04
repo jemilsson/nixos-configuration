@@ -23,11 +23,13 @@
         "interrupts"
         "ksmd"
       ];
+
+      extraFlags = [
+        "--collector.textfile.directory /etc/prometheus/textfile/"
+      ];
     };
 
-    extraFlags = [
-      "--collector.textfile.directory /etc/prometheus/textfile/"
-    ];
+
     systemd = {
       enable = true;
     };
