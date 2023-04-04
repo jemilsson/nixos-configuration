@@ -22,7 +22,7 @@
   system = {
     autoUpgrade = {
       enable = true;
-      flake = "github:jemilsson/nixos-configuration";
+      flake = lib.mkDefault "github:jemilsson/nixos-configuration";
       flags = [
       ];
       dates = "Mon..Fri 02:00";
