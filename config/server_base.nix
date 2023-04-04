@@ -3,6 +3,7 @@
 {
   imports = [
     ./base.nix
+    ./services/prometheus/node_exporter.nix
   ];
 
   security.sudo.wheelNeedsPassword = false;
