@@ -46,7 +46,7 @@
     nixosVersion.text = "${config.system.nixos.version}";
     nixosRelease.text = "${config.system.nixos.release}";
     nixosCodeName.text = "${config.system.nixos.codeName}";
-    nixosConfigurationRevision.text = "${config.system.configurationRevision || ""}";
+    nixosConfigurationRevision.text = "${toString config.system.configurationRevision}";
   };
 
 }
