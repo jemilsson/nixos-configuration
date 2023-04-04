@@ -26,7 +26,7 @@
     };
 
     extraFlags = [
-      "--collector.textfile.directory /run/prometheus-node-exporter/"
+      "--collector.textfile.directory /etc/prometheus/textfile/"
     ];
     systemd = {
       enable = true;
