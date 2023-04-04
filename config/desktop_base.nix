@@ -319,6 +319,9 @@ in
         "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
         "kajibbejlbohfaggdiogboambcijhkke" # Mailvelope
         "naepdomgkenhinolocfifgehidddafch" # Browserpass
+        "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
+
+
       ];
       defaultSearchProviderSearchURL = "https://duckduckgo.com/?q=%s";
       defaultSearchProviderSuggestURL = "https://duckduckgo.com/?q=%s";
