@@ -42,12 +42,11 @@
     config.system.configurationRevision
   */
 
-  environment.etc.prometheus.textfile = {
-    nixosVersion.text = "${config.system.nixos.version}";
-    nixosRelease.text = "${config.system.nixos.release}";
-    nixosCodeName.text = "${config.system.nixos.codeName}";
-    nixosConfigurationRevision.text = "${toString config.system.configurationRevision}";
-  };
+
+  environment.etc."/prometheus/textfile/nixosVersion".text = "${config.system.nixos.version}";
+  environment.etc."/prometheus/textfile/nixosRelease".text = "${config.system.nixos.release}";
+  environment.etc."/prometheus/textfile/nixosCodeName".text = "${config.system.nixos.codeName}";
+  environment.etc."/prometheus/textfile/nixosConfigurationRevision".text = "${toString config.system.configurationRevision}";
 
 }
 
