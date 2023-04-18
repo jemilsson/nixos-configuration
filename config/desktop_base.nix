@@ -389,6 +389,7 @@ in
     gvfs.enable = true;
     printing = {
       enable = true;
+      drivers = with pkgs; [ cups-toshiba-estudio ];
     };
     avahi = {
       nssmdns = true;

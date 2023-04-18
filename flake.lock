@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bambu-studio": {
+      "locked": {
+        "lastModified": 1680985506,
+        "narHash": "sha256-SqBbX0r1ftKfCSkTk1dBV/49PNiWo0+wt4LYSC0Ibuc=",
+        "owner": "zhaofengli",
+        "repo": "nixpkgs",
+        "rev": "e2f3ffe9d593412fd48bbf4ed382e4b5f219a523",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zhaofengli",
+        "ref": "bambu-studio",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1679748960,
@@ -16,9 +32,27 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1681737997,
+        "narHash": "sha256-pHhjgsIkRMu80LmVe8QoKIZB6VZGRRxFmIvsC5S89k4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f00994e78cd39e6fc966f0c4103f908e63284780",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "bambu-studio": "bambu-studio",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
   },

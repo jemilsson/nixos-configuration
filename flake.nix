@@ -3,15 +3,26 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-22.11";
     };
+    nixpkgs-unstable = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
+    bambu-studio = {
+      url = "github:zhaofengli/nixpkgs/bambu-studio";
+    };
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, bambu-studio }:
     let
-      pkgs = import nixpkgs {
-        config.allowUnfree = true;
-        overlays = [
-          #(import inputs.emacs-overlay)
-        ];
+      system = "x86_64-linux";
+      overlay-unstable = final: prev: {
+        unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        bambu-studio = import bambu-studio {
+          inherit system;
+          config.allowUnfree = true;
+        };
       };
     in
     {
@@ -37,7 +48,11 @@
         #};
         jester = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/jester/configuration.nix ];
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ./machines/jester/configuration.nix
+          ];
+
         };
         #lazarus = nixpkgs.lib.nixosSystem {
         #  system = "x86_64-linux";
