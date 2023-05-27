@@ -294,6 +294,7 @@ in
     qFlipper
 
     prismlauncher
+    libsecret
   ];
 
   /*environment.extraSetup = ''
@@ -339,7 +340,7 @@ in
     gnupg = {
       agent = {
         enable = true;
-        pinentryFlavor = "gnome3";
+        pinentryFlavor = "qt";
         #enableBrowserSocket = true;
         enableExtraSocket = true;
         enableSSHSupport = true;
