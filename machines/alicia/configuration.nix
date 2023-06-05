@@ -64,6 +64,7 @@
   environment.systemPackages = with pkgs; [
     #unstable.tuxtyping
     gcompris
+    blender
   ];
 
   nixpkgs.overlays = [

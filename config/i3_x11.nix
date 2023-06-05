@@ -40,6 +40,9 @@ in
         i3 = {
           enable = false;
         };
+        hypr = {
+          enable = true;
+        };
         xmonad = {
           enable = false;
           extraPackages = haskellPackages: [
@@ -107,6 +110,15 @@ in
     };
 
     xwayland.enable = true;
+
+    hyprland = {
+      enable = true;
+      xwayland = {
+        enable = true;
+      };
+    };
+
+    waybar.enable = true;
 
     system-config-printer.enable = true;
   };
@@ -203,17 +215,29 @@ in
     #i3lock-fancy
     pkgs.networkmanagerapplet
 
+    hyprland
+
 
     xdg-desktop-portal
     xdg-desktop-portal-wlr
   ];
 
 
-  #environment.sessionVariables = {
+  nixpkgs.overlays = [
+    (self: super: {
+      waybar = super.waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      });
+    })
+  ];
+
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
   #  MOZ_ENABLE_WAYLAND = "1";
   #  XDG_CURRENT_DESKTOP = "sway";
   #  XDG_SESSION_TYPE = "wayland";
-  ##};
+  };
 
   console.useXkbConfig = true;
 
