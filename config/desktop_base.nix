@@ -585,7 +585,8 @@ in
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
-    "p7zip-16.02"
+    #"p7zip-16.02"
+    #"openssl-1.1.1u"
   ];
 
 }

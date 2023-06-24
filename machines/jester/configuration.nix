@@ -157,7 +157,7 @@ in
     opencl-headers
     labelImg
 
-    bambu-studio.bambu-studio
+    #bambu-studio.bambu-studio
 
     #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 
