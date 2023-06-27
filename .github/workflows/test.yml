@@ -3,15 +3,151 @@ on:
   pull_request:
   push:
 jobs:
-  tests:
+  check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@main
-      - name: Install Nix
-        uses: cachix/install-nix-action@master
+    - name: Checkout repository
+      uses: actions/checkout@main
+    - name: Checkout PR if called from PR-workflow
+      if: ${{ inputs.pull-request-number != '' }}
+      run: git pull origin pull/${{ inputs.pull-request-number }}/head
+    - name: Install Nix
+      uses: cachix/install-nix-action@master
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@main
+    - run: nix flake check --no-update-lock-file --show-trace
+  
+  
+  construct_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@main
+    - name: Checkout PR if called from PR-workflow
+      if: ${{ inputs.pull-request-number != '' }}
+      run: git pull origin pull/${{ inputs.pull-request-number }}/head
+    - name: Install Nix
+      uses: cachix/install-nix-action@master
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@main
+    - id: matrix
+      name: matrix
+      run: |
+        echo "matrix<<EOF" >> $GITHUB_OUTPUT
+        nix flake show --json | jq '[ {"target": .nixosConfigurations | keys[]}]' >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: echo matrix
+      if: steps.matrix.conclusion == 'success' && steps.matrix.outputs.matrix != '""'
+      run: echo '${{ steps.matrix.outputs.matrix }}'
+      
+  
+  build:
+    needs:
+      - check
+      - construct_matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.construct_matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@main
+    - name: Checkout PR if called from PR-workflow
+      if: ${{ inputs.pull-request-number != '' }}
+      run: git pull origin pull/${{ inputs.pull-request-number }}/head
+    - name: Install Nix
+      uses: cachix/install-nix-action@master
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Magic Nix Cache
+
+    - name: Checkout PR if called from PR-workflow
+      if: ${{ inputs.pull-request-number != '' }}
+      run: git pull origin pull/${{ inputs.pull-request-number }}/head
+
+    - name: Build target
+      run: nix build .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel --no-update-lock-file --show-trace
+
+    - name: Nix derivation diff
+      id: nix_diff
+      # TODO remove pipe to sed when NixOS/nix#4626 is fixed
+      # https://stackoverflow.com/questions/74137120/how-to-fix-or-avoid-error-unable-to-process-file-command-output-successfully/74232400#74232400
+      run: |
+        echo "diff_closure<<EOF" >> $GITHUB_OUTPUT
+        nix store diff-closures github:${{ github.repository }}/${{ github.base_ref }}#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel \
+          .#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel | sed 's/\x1b\[[0-9;]*m//g' \
+          | jq . -sRM >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: echo diff
+      if: steps.nix_diff.conclusion == 'success' && steps.nix_diff.outputs.diff_closure != '""'
+      run: echo '${{ steps.nix_diff.outputs.diff_closure }}'
+  
+    - name: prepare output
+      if: steps.nix_diff.conclusion == 'success' && steps.nix_diff.outputs.diff_closure != '""'
+      id: upload_diff
+      run: |
+        printf '{ "target": "${{ matrix.target }}", "output": "%s" }' ${{ steps.nix_diff.outputs.diff_closure }} > ${{ matrix.target }}.output
+
+    - name: upload artifact
+      if: steps.nix_diff.conclusion == 'success' && steps.nix_diff.outputs.diff_closure != '""'
+      uses: actions/upload-artifact@main
+      with:
+        name: ${{ matrix.target }}
+        path: ${{ matrix.target }}.output
+        if-no-files-found: warn
+
+  report:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: download outputs
+        uses: actions/download-artifact@main
+
+      - name: format matrix-outputs
+        run: |
+          echo "markdown<<EOF" >> $GITHUB_OUTPUT
+          cat */*.output | jq -r --slurp \
+            'map("
+            ### report for `\(.target)`
+            <details>
+            <summary> Version changes </summary> <br>
+            <pre>\(.output)</pre>
+            </details>
+            ")[]' >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+        id: format
+
+      - name: check output var
+        run: |
+          echo '${{ steps.format.outputs.markdown }}'
+
+      # if changes, comment them in pr
+      - name: Comment report in pr (changes)
+        uses: marocchino/sticky-pull-request-comment@main
+        if: steps.format.outputs.markdown != ''
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-      - run: nix flake check --no-update-lock-file
+          number: ${{ inputs.pull-request-number || '' }}
+          header: "diff-closures"
+          message: |
+            ## nix diff reports
+            ${{ steps.format.outputs.markdown }}
+
+      # if no changes, only comment in pr if previously comment is found
+      - name: Comment report in pr (no changes)
+        uses: marocchino/sticky-pull-request-comment@main
+        if: steps.format.outputs.markdown == ''
+        with:
+          number: ${{ inputs.pull-request-number || '' }}
+          header: "diff-closures"
+          only_update: true
+          message: |
+            ## nix diff reports no changes
