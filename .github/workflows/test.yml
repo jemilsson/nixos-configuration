@@ -6,8 +6,12 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v19
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Install Nix
+        uses: cachix/install-nix-action@master
+      - name: Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nix flake check --no-build
+    - run: nix flake check --no-update-lock-file
