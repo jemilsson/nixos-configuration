@@ -10,8 +10,8 @@ jobs:
         uses: actions/checkout@main
       - name: Install Nix
         uses: cachix/install-nix-action@master
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
-      with:
-        github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nix flake check --no-update-lock-file
+      - run: nix flake check --no-update-lock-file
