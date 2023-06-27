@@ -8,12 +8,12 @@ jobs:
   lockfile:
     runs-on: ubuntu-latest
     steps:
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Install Nix
         uses: cachix/install-nix-action@master
+      - name: Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
