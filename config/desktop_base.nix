@@ -216,7 +216,7 @@ in
     discord
     #skype
 
-    (steam.override { extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
+    #(steam.override { extraPkgs = pkgs: with pkgs.pkgsi686Linux; [ libva ]; })
 
     #Games
     #unstable-small.steam
@@ -313,6 +313,8 @@ in
         ForwardAgent yes
       '';
     };
+
+    steam.enable = true;
 
     wireshark.enable = true;
 
