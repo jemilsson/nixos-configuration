@@ -31,11 +31,11 @@
             { address = "10.5.20.18"; prefixLength = 24; }
           ];
         };
-        ipv6 = {
-          addresses = [
-            { address = "2a0e:b107:330::18"; prefixLength = 64; }
-          ];
-        };
+        #ipv6 = {
+        #  addresses = [
+        #    { address = "2a0e:b107:330::18"; prefixLength = 64; }
+        #  ];
+        #};
       };
     };
 
