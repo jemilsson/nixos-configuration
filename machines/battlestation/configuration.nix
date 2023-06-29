@@ -21,11 +21,11 @@
 
     defaultGateway = {
       address = "10.5.20.1";
-      interface = "br0";
+      interface = "enp8s0";
     };
 
     interfaces = {
-      "br0" = {
+      "enp8s0" = {
         ipv4 = {
           addresses = [
             { address = "10.5.20.18"; prefixLength = 24; }
@@ -39,7 +39,7 @@
       };
     };
 
-    bridges."br0".interfaces = [ "enp8s0" ];
+    #bridges."br0".interfaces = [ "enp8s0" ];
 
     #useNetworkd = true;
 
