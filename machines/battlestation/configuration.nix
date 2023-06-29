@@ -93,10 +93,6 @@
         Option "TearFree" "on"
       '';
     };
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "i3";
-    };
 
     lldpd = {
       enable = true;
