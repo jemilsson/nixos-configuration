@@ -15,53 +15,8 @@
 
   networking = {
     hostName = "battlestation";
-
     firewall.allowedTCPPorts = [ 3389 ];
     firewall.allowedUDPPorts = [ 59802 ];
-
-    defaultGateway = {
-      address = "10.5.20.1";
-      interface = "enp8s0";
-    };
-
-    interfaces = {
-      "enp8s0" = {
-        ipv4 = {
-          addresses = [
-            { address = "10.5.20.18"; prefixLength = 24; }
-          ];
-        };
-        #ipv6 = {
-        #  addresses = [
-        #    { address = "2a0e:b107:330::18"; prefixLength = 64; }
-        #  ];
-        #};
-      };
-    };
-
-    #bridges."br0".interfaces = [ "enp8s0" ];
-
-    #useNetworkd = true;
-
-    /*
-    wireguard = {
-      interfaces = {
-        wg0 = {
-          ips = [ "10.50.0.38/32" ];
-          peers = [
-            {
-              publicKey = "IR9lBjFR2qX4UmgML5oBykUgrAzqOzhaNpF+xjD8L3k=";
-              allowedIPs = [
-                "10.50.0.0/16"
-              ];
-              endpoint = "13.48.43.75:123";
-            }
-
-          ];
-        };
-      };
-    };
-  */
   };
   
 
