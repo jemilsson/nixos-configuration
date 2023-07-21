@@ -2,11 +2,11 @@
   "nodes": {
     "bambu-studio": {
       "locked": {
-        "lastModified": 1686249895,
-        "narHash": "sha256-up+fUKE0bZ/5cRGI14/KJux+AWJg+/HBoiG1cI0MA+U=",
+        "lastModified": 1689454414,
+        "narHash": "sha256-SU1Ymji1oDmBti2wwAbQ3d7bDvNnsLYmFyWMxNE+jJU=",
         "owner": "zhaofengli",
         "repo": "nixpkgs",
-        "rev": "fb3cca0aa1f240de37da7a3567b38b2961416394",
+        "rev": "f6d266029cfe86a27c7417be80a2ed1cb85cd79e",
         "type": "github"
       },
       "original": {
@@ -18,11 +18,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1688868408,
-        "narHash": "sha256-RR9N5XTAxSBhK8MCvLq9uxfdkd7etC//seVXldy0k48=",
+        "lastModified": 1689885880,
+        "narHash": "sha256-2ikAcvHKkKh8J/eUrwMA+wy1poscC+oL1RkN1V3RmT8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "510d721ce097150ae3b80f84b04b13b039186571",
+        "rev": "fa793b06f56896b7d1909e4b69977c7bf842b2f0",
         "type": "github"
       },
       "original": {
@@ -34,11 +34,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1688918189,
-        "narHash": "sha256-f8ZlJ67LgEUDnN7ZsAyd1/Fyby1VdOXWg4XY/irSGrQ=",
+        "lastModified": 1689850295,
+        "narHash": "sha256-fUYf6WdQlhd2H+3aR8jST5dhFH1d0eE22aes8fNIfyk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "408c0e8c15a1c9cf5c3226931b6f283c9867c484",
+        "rev": "5df4d78d54f7a34e9ea1f84a22b4fd9baebc68d0",
         "type": "github"
       },
       "original": {
