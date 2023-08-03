@@ -144,7 +144,7 @@ in
           };
           serviceConfig = {
             Type = "simple";
-            ExecStart = "${pkgs.kanshi}/bin/kanshi";
+            ExecStart = "${pkgs.unstable.kanshi}/bin/kanshi";
             Restart = "always";
           };
 

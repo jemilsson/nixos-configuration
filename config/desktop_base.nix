@@ -4,7 +4,7 @@ let
   #python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
-  vscode-extensions = (with pkgs.vscode-extensions; [
+  vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     ms-python.python
     ms-python.vscode-pylance
     jnoortheen.nix-ide
@@ -161,7 +161,7 @@ in
     #Programming
     #atom
     (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib ]))
-    vscode-with-extensions
+    unstable.vscode-with-extensions
     insomnia
     emacs
     #aws-sam-cli
