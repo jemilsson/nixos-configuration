@@ -12,7 +12,7 @@ let
     eamodio.gitlens
     yzhang.markdown-all-in-one
   ]);
-  vscode-with-extensions = pkgs.vscode-with-extensions.override {
+  my-vscode-with-extensions = pkgs.unstable.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
   };
 
@@ -161,7 +161,7 @@ in
     #Programming
     #atom
     (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib ]))
-    unstable.vscode-with-extensions
+    my-vscode-with-extensions
     insomnia
     emacs
     #aws-sam-cli
@@ -212,7 +212,7 @@ in
     pidgin
     signal-desktop
     tdesktop
-    teams
+    unstable.teams-for-linux
     discord
     #skype
 
@@ -386,7 +386,7 @@ in
 
   services = {
     samba = {
-      enable = true;
+      enable = false;
       package = pkgs.samba4Full;
     };
     gvfs.enable = true;
@@ -398,7 +398,7 @@ in
       nssmdns = true;
       enable = true;
       publish = {
-        enable = true;
+        enable = false;
         addresses = true;
         domain = true;
         hinfo = true;
