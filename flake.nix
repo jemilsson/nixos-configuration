@@ -28,7 +28,7 @@
     {
       nixosModules = {
         serverBase = import ./config/server_base.nix;
-        desktop_base = import ./config/desktop_base.nix;
+        desktopBase = import ./config/desktop_base.nix;
         laptopBase = import ./config/laptop_base.nix;
         bareMetal = import ./config/bare_metal.nix;
         #pkgs = pkgs;
