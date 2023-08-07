@@ -9,9 +9,14 @@
     bambu-studio = {
       url = "github:zhaofengli/nixpkgs/bambu-studio";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, bambu-studio }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, bambu-studio, hyprland }:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -34,18 +39,14 @@
         #pkgs = pkgs;
       };
       nixosConfigurations = {
-        alicia = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./machines/alicia/configuration.nix ];
-        };
         battlestation = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/battlestation/configuration.nix ];
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ./machines/battlestation/configuration.nix 
+            ];
         };
-        #brody = nixpkgs.lib.nixosSystem {
-        # system = "x86_64-linux";
-        #  modules = [ ./machines/brody/configuration.nix ];
-        #};
+        
         jester = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
