@@ -9,6 +9,24 @@
     ./hardware-configuration.nix
   ];
 
+  age.rekey = {
+    # Obtain this using `ssh-keyscan` or by looking it up in your ~/.ssh/known_hosts
+    hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtJIhxEVsyKN/7fUBN4DYFoU6wgMJZbC8+hZk7Rv4Cx";
+    # The path to the master identity used for decryption. See the option's description for more information.
+    masterIdentities = [ ../../age/jonas-yubikey-7447013.pub ];
+    #masterIdentities = [ "/home/myuser/master-key" ]; # External master key
+    #masterIdentities = [ "/home/myuser/master-key.age" ]; # Password protected external master key
+
+    generatedSecretsDir = ./secrets;
+  };
+
+  #age.secrets.secret1.rekeyFile = ./secrets/secret1.age;
+  age.secrets.secret1.generator.script = "alnum";
+
+  environment.etc."secret1" = {
+    source = config.age.secrets.secret1.path;
+  };
+
   system.stateVersion = "18.09";
 
   hardware.cpu.amd.updateMicrocode = true;

@@ -1,0 +1,14 @@
+keys:
+  - &admin_jonas 0x1E0D6FAEB4C419661D0158ACC0068D436D07F0EE
+  - &machines_jester age1weh5c7cgk2jzdztgcd2tu7svwts5mz8ygdfrm4cf5f3qzlh7ps8sasqtp8
+creation_rules:
+  - path_regex: secrets/.+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *admin_jonas
+      age:
+      - *machines_jester
+  - path_regex: secrets/jester/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *machines_jester
