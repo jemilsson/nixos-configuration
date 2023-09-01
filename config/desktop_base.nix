@@ -160,7 +160,7 @@ in
 
     #Programming
     #atom
-    (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib ]))
+    (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib pymeeus ]))
     my-vscode-with-extensions
     insomnia
     emacs

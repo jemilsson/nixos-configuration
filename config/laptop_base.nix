@@ -8,7 +8,7 @@
 
   powerManagement = {
     powertop = {
-      enable = true;
+      enable = false;
     };
   };
   services = {

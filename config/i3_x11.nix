@@ -25,6 +25,11 @@ in
       enable = true;
     };
 
+    greetd = {
+      enable = true;
+    };
+    
+
     system-config-printer.enable = true;
 
     xserver = {
@@ -61,7 +66,7 @@ in
           wayland = true;
         };
         sddm = {
-          enable = true;
+          enable = false;
           #theme = "breeze";
           autoNumlock = true;
 
@@ -102,6 +107,9 @@ in
   };
 
   programs = {
+    regreet = {
+      enable = true;
+    };
     sway = {
       enable = true;
       extraSessionCommands = ''
@@ -132,8 +140,10 @@ in
           enable = true;
           description = "kanshi";
 
-          wantedBy = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
+          requires = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
 
           environment = {
             XDG_CURRENT_DESKTOP = "sway";
