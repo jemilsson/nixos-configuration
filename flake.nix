@@ -17,6 +17,7 @@
     #  url = "github:Mic92/sops-nix";
     #  inputs.nixpkgs.follows = "nixpkgs";
     #};
+    /*
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,9 +26,10 @@
       url = "github:oddlama/agenix-rekey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, bambu-studio, hyprland, sops-nix, agenix, agenix-rekey }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, bambu-studio, hyprland, sops-nix}: # , agenix, agenix-rekey }:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -62,8 +64,8 @@
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
-            agenix.nixosModules.default
-            agenix-rekey.nixosModules.default
+            #agenix.nixosModules.default
+            #agenix-rekey.nixosModules.default
             ./machines/battlestation/configuration.nix 
             ];
         };
@@ -72,8 +74,8 @@
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
-            agenix.nixosModules.default
-            agenix-rekey.nixosModules.default
+            #agenix.nixosModules.default
+            #agenix-rekey.nixosModules.default
             ./machines/jester/configuration.nix
           ];
 
@@ -89,7 +91,7 @@
       };
 
       apps = {
-        "x86_64-linux" = agenix-rekey.defineApps self pkgs self.nixosConfigurations;
+        #"x86_64-linux" = agenix-rekey.defineApps self pkgs self.nixosConfigurations;
       };
     };
 }

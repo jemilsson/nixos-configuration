@@ -18,7 +18,7 @@ in
 
   ];
 
-
+  /*
   age.rekey = {
     # Obtain this using `ssh-keyscan` or by looking it up in your ~/.ssh/known_hosts
     hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtJIhxEVsyKN/7fUBN4DYFoU6wgMJZbC8+hZk7Rv4Cx";
@@ -34,7 +34,8 @@ in
   environment.etc."secret1" = {
     source = config.age.secrets.secret1.path;
   };
-
+  */
+  
   #users.users.user1.passwordFile = config.age.secrets.secret1.path;
 
   system.stateVersion = "19.03";
