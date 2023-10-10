@@ -42,6 +42,9 @@ in
 
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
+    kernelParams = [
+      "snd_hda_intel.dmic_detect=0"
+    ];
     loader = {
       systemd-boot =
         {
