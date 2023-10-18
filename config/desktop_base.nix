@@ -540,6 +540,7 @@ in
         #pkgs.bash
         pkgs.usb-modeswitch-data
         pkgs.ledger-udev-rules
+        pkgs.android-udev-rules
       ];
 
 
