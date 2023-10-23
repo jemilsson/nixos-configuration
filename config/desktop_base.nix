@@ -76,12 +76,12 @@ in
     };
 
     bluetooth = {
-      enable = true;
+      enable = false;
       powerOnBoot = true;
       package = pkgs.bluezFull;
       settings = {
         General = {
-          Experimental = true;
+          #Experimental = true;
         };
       };
     };
@@ -265,7 +265,7 @@ in
     gsettings-desktop-schemas
 
     #virtualisation
-    virtmanager
+    #virtmanager
 
 
     ltwheelconf
