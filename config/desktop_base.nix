@@ -588,6 +588,7 @@ in
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
+    "electron-24.8.6"
     #"p7zip-16.02"
     #"openssl-1.1.1u"
   ];
