@@ -18,6 +18,10 @@ in
 
   ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+                "electron-24.8.6"
+              ];
+
   /*
   age.rekey = {
     # Obtain this using `ssh-keyscan` or by looking it up in your ~/.ssh/known_hosts
@@ -193,8 +197,8 @@ in
 
     (chromium.override {
       commandLineArgs = [
-        "--enable-features=UseOzonePlatform"
-        "--ozone-platform=wayland"
+        #"--enable-features=UseOzonePlatform"
+        #"--ozone-platform=wayland"
       ];
     })
 

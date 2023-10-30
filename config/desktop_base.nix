@@ -5,8 +5,8 @@ let
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
   vscode-extensions = (with pkgs.vscode-extensions; [
-    ms-python.python
-    ms-python.vscode-pylance
+    #ms-python.python
+    #ms-python.vscode-pylance
     jnoortheen.nix-ide
     github.github-vscode-theme
     eamodio.gitlens
@@ -160,9 +160,10 @@ in
 
     #Programming
     #atom
-    (python3.withPackages (ps: with ps; [ yapf jedi flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib pymeeus ]))
+    (python3.withPackages (ps: with ps; [ yapf flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib pymeeus ])) #jedi
     my-vscode-with-extensions
     insomnia
+    vscodium
     emacs
     #aws-sam-cli
 
@@ -212,7 +213,7 @@ in
     pidgin
     signal-desktop
     tdesktop
-    unstable.teams-for-linux
+    teams-for-linux
     discord
     #skype
 
@@ -271,7 +272,7 @@ in
     ltwheelconf
     awscli
 
-    samba4Full
+    #samba4Full
     cifs-utils
 
     ledger-live-desktop
@@ -588,7 +589,7 @@ in
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
-    "electron-24.8.6"
+    "electron_24"
     #"p7zip-16.02"
     #"openssl-1.1.1u"
   ];
