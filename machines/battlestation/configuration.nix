@@ -8,7 +8,7 @@
     ../../config/language/english.nix
     ./hardware-configuration.nix
   ];
-
+  /*
   age.rekey = {
     # Obtain this using `ssh-keyscan` or by looking it up in your ~/.ssh/known_hosts
     hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEtJIhxEVsyKN/7fUBN4DYFoU6wgMJZbC8+hZk7Rv4Cx";
@@ -26,7 +26,7 @@
   environment.etc."secret1" = {
     source = config.age.secrets.secret1.path;
   };
-
+  */
   system.stateVersion = "18.09";
 
   hardware.cpu.amd.updateMicrocode = true;
