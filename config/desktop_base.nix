@@ -573,7 +573,7 @@ in
     };
 
     redshift = {
-      enable = true;
+      enable = false;
     };
 
   };

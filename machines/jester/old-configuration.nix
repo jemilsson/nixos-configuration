@@ -42,13 +42,13 @@ in
   
   #users.users.user1.passwordFile = config.age.secrets.secret1.path;
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "19.03";
 
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
     kernelParams = [
-      "snd_hda_intel.dmic_detect=0"
-      "i915.enable_psr=0"
+      #"snd_hda_intel.dmic_detect=0"
+      #"i915.enable_psr=0"
     ];
     loader = {
       systemd-boot =
