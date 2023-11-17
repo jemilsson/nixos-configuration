@@ -80,6 +80,18 @@
           ];
 
         };
+
+
+        alicia = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            #agenix.nixosModules.default
+            #agenix-rekey.nixosModules.default
+            ./machines/alicia/configuration.nix
+          ];
+
+        };
         #lazarus = nixpkgs.lib.nixosSystem {
         #  system = "x86_64-linux";
         #  modules = [ ./machines/lazarus/configuration.nix ];
