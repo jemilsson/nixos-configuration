@@ -44,6 +44,9 @@ in
 
   system.stateVersion = "23.05";
 
+  hardware.ipu6.enable = true;
+  hardware.ipu6.platform = "ipu6ep";
+
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
     kernelParams = [
@@ -58,7 +61,7 @@ in
         };
       efi.canTouchEfiVariables = true;
     };
-    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_1;
 
     binfmt.emulatedSystems = [ ];
   };
