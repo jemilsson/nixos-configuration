@@ -67,8 +67,10 @@
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "no";
-      passwordAuthentication = false;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
     };
     journald = {
       extraConfig = "MaxFileSec=1year";

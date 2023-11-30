@@ -492,8 +492,8 @@ in
   fonts = {
     fontDir.enable = true;
     enableGhostscriptFonts = true;
-    enableDefaultFonts = true;
-    fonts = with pkgs; [
+    enableDefaultPackages = true;
+    packages = with pkgs; [
       corefonts
       google-fonts
       hack-font
@@ -516,7 +516,7 @@ in
 
     gpm.enable = true;
 
-    openssh.forwardX11 = true;
+    openssh.settings.X11Forwarding = true;
 
     #udisks2.enable = true;
     devmon.enable = true;
