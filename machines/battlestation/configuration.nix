@@ -85,7 +85,7 @@
   environment.systemPackages = with pkgs; [
     #teamspeak_client
     vscode
-    virtmanager
+    virt-manager
 
     taskwarrior
 
