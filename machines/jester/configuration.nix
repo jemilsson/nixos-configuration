@@ -165,7 +165,7 @@ in
 
   services = {
     xserver = {
-      videoDrivers = [ "intel" "modesetting" ];
+      videoDrivers = [ "amdgpu" "intel" "modesetting" ];
     };
     undervolt = {
       enable = false;
