@@ -22,6 +22,35 @@ in
                 "electron-24.8.6"
               ];
 
+  #programs.sway.extraOptions = [
+  #  "WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0"
+  #];
+
+  #programs.sway.extraSessionCommands = ''
+  #  WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0
+  #'';
+
+
+  environment.variables = {
+    WLR_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
+    #WLR_BACKEND = "vulkan";
+
+  };
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+
+  hardware.opengl.extraPackages = with pkgs; [
+  amdvlk
+  ];
+  # For 32 bit applications 
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
   /*
   age.rekey = {
     # Obtain this using `ssh-keyscan` or by looking it up in your ~/.ssh/known_hosts
@@ -195,6 +224,8 @@ in
 
     #cardano-node
     #cardano-hw-cli
+
+    vulkan-validation-layers
 
     #vpp
 
