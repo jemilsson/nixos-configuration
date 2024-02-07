@@ -20,7 +20,9 @@ in
 
   nixpkgs.config.permittedInsecurePackages = [
                 "electron-24.8.6"
-              ];
+];
+
+
 
   #programs.sway.extraOptions = [
   #  "WLR_DRM_DEVICES=/dev/dri/card1:/dev/dri/card0"
@@ -157,10 +159,13 @@ in
           {
           publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
           allowedIPs = [
-          "10.0.0.0/8"
-	  "100.64.0.0/10"
-          #"0::/0"
-          ];
+                "10.128.2.0/24"
+                "2a12:5800:0:5::/64"
+                #"0::/0"
+                "10.0.0.0/8"
+                #"0.0.0.0/0"
+                "100.64.0.0/10"
+              ];
           endpoint = "194.26.208.1:53";
           }
           ];
@@ -179,6 +184,14 @@ in
       #"enp48s0u2u1.150" = {
       #  useDHCP = true;
       #};
+
+      wlp0s20f3.ipv4.routes = [
+        {
+            address = "194.26.208.1";
+            prefixLength = 32;
+
+          }
+      ];
     };
 
     vlans = {
@@ -219,7 +232,7 @@ in
     opencl-headers
     labelImg
 
-    #bambu-studio.bambu-studio
+    unstable.bambu-studio
 
     #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 

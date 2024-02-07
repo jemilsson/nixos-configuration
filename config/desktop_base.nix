@@ -4,7 +4,7 @@ let
   #python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
-  vscode-extensions = (with pkgs.vscode-extensions; [
+  vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     #ms-python.python
     #ms-python.vscode-pylance
     jnoortheen.nix-ide
@@ -12,7 +12,7 @@ let
     eamodio.gitlens
     yzhang.markdown-all-in-one
   ]);
-  my-vscode-with-extensions = pkgs.vscode-with-extensions.override {
+  my-vscode-with-extensions = pkgs.unstable.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
   };
 
