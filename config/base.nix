@@ -1,4 +1,7 @@
 { config, lib, pkgs, ... }:
+let 
+  nixPath = "/etc/nixPath";
+in
 {
   imports = [
     #../../hardware-configuration.nix
@@ -31,6 +34,10 @@
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "L+ ${nixPath} - - - - ${pkgs.path}"
+  ];
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -47,6 +54,8 @@
       automatic = true;
       dates = [ "Mon..Fri 04:00" ];
     };
+
+    nixPath = [ "nixpkgs=${nixPath}" ];
   };
 
   systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
