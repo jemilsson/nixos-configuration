@@ -92,7 +92,7 @@ in
         };
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_6;
 
     binfmt.emulatedSystems = [ ];
   };
