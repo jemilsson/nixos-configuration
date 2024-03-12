@@ -170,7 +170,7 @@ in
     ## Nix
 
     nixpkgs-fmt
-    rnix-lsp
+    #rnix-lsp
 
     ## Pony
     ponyc
