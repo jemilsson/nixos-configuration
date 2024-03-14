@@ -76,9 +76,9 @@ in
     };
 
     bluetooth = {
-      enable = false;
+      enable = true;
       powerOnBoot = true;
-      package = pkgs.bluezFull;
+      #package = pkgs.bluezFull;
       settings = {
         General = {
           #Experimental = true;
@@ -173,8 +173,8 @@ in
     #rnix-lsp
 
     ## Pony
-    ponyc
-    pony-corral
+    #ponyc
+    #pony-corral
 
 
     #Interface
@@ -198,7 +198,7 @@ in
     lxappearance
 
     #Graphical System tools
-    gnome3.gedit
+    gedit
     gnome3.nautilus
     gnome3.sushi
     gnome3.file-roller

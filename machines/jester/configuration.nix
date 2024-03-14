@@ -220,6 +220,8 @@ in
 
     ofono.enable = true;
 
+    teamviewer.enable =true;
+
   };
 
   environment.systemPackages = with pkgs; [
@@ -306,5 +308,15 @@ in
   */
 
   inherit containers;
+
+  nixpkgs.overlays = [
+    (self: super: {
+      unstable.mesa = pkgs.mesa;
+      unstable.mesa_glu = pkgs.mesa_glu;
+      unstable.mesa_noglu = pkgs.mesa_noglu;
+      unstable.mesa_drivers = pkgs.mesa_drivers;
+    }
+    )
+  ];
 
 }

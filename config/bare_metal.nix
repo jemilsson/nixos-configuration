@@ -7,7 +7,6 @@
 
     fwupd = {
       enable = true;
-      enableTestRemote = true;
       package = pkgs.fwupd;
     };
   };
