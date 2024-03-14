@@ -235,7 +235,7 @@ in
     labelImg
 
     #unstable.bambu-studio
-    unstable.orca-slicer
+    #unstable.orca-slicer
 
     #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 
