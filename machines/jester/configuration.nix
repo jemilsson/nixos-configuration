@@ -15,6 +15,7 @@ in
     #../../config/software/tensorflow.nix
     #../../packages/vpp/vpp.nix
     ./hardware-configuration.nix
+    ./camera.nix
 
   ];
 
@@ -92,7 +93,8 @@ in
         };
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_6_6;
+    #kernelPackages = pkgs.linuxPackages_6_6;
+    kernelPackages = pkgs.linuxPackages_latest;
 
     binfmt.emulatedSystems = [ ];
   };
@@ -259,6 +261,12 @@ in
   nix = { };
 
   hardware = {
+
+    #firmware = [
+    #  pkgs.unstable.ivsc-firmware
+    #];
+
+
     pulseaudio.extraConfig = ''
       load-module module-alsa-sink   device=hw:0,0 channels=4
       load-module module-alsa-source device=hw:0,6 channels=4
