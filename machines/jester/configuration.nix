@@ -94,7 +94,7 @@ in
       efi.canTouchEfiVariables = true;
     };
     #kernelPackages = pkgs.linuxPackages_6_6;
-    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages_latest;
 
     binfmt.emulatedSystems = [ ];
   };
@@ -236,8 +236,8 @@ in
     opencl-headers
     labelImg
 
-    #unstable.bambu-studio
-    #unstable.orca-slicer
+    unstable.bambu-studio
+    unstable.orca-slicer
 
     #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 
@@ -319,12 +319,18 @@ in
 
   nixpkgs.overlays = [
     (self: super: {
-      unstable.mesa = pkgs.mesa;
-      unstable.mesa_glu = pkgs.mesa_glu;
-      unstable.mesa_noglu = pkgs.mesa_noglu;
-      unstable.mesa_drivers = pkgs.mesa_drivers;
+      #unstable.mesa = pkgs.mesa;
+      #unstable.mesa_glu = pkgs.mesa_glu;
+      #unstable.mesa_noglu = pkgs.mesa_noglu;
+      #unstable.mesa_drivers = pkgs.mesa_drivers;
     }
     )
   ];
+  /*
+  system.replaceRuntimeDependencies = [
+    ({ original = pkgs.mesa; replacement = pkgs.unstable.mesa; })
+    ({ original = pkgs.mesa.drivers; replacement = pkgs.unstable.mesa.drivers; })
+  ];
+  */
 
 }
