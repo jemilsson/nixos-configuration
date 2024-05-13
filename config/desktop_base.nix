@@ -344,6 +344,7 @@ in
       agent = {
         enable = true;
         #pinentryFlavor = "qt";
+        pinentryPackage = pkgs.pinentry-qt;
         #enableBrowserSocket = true;
         enableExtraSocket = true;
         enableSSHSupport = true;
