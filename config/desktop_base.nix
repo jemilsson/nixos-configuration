@@ -162,7 +162,8 @@ in
     #atom
     (python3.withPackages (ps: with ps; [ yapf flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib pymeeus ])) #jedi
     my-vscode-with-extensions
-    insomnia
+    #insomnia
+    bruno
     vscodium
     emacs
     #aws-sam-cli
