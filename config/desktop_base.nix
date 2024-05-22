@@ -395,18 +395,14 @@ in
     gvfs.enable = true;
     printing = {
       enable = true;
-      drivers = with pkgs; [ cups-toshiba-estudio ];
+      drivers = with pkgs; [ postscript-lexmark ];
     };
     avahi = {
-      nssmdns = true;
+      nssmdns4 = true;
+      nssmdns6 = true;
       enable = true;
       publish = {
         enable = false;
-        addresses = true;
-        domain = true;
-        hinfo = true;
-        userServices = true;
-        workstation = true;
       };
     };
 
