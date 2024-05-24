@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-23.11";
+      url = "github:NixOS/nixpkgs/nixos-24.05";
     };
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -70,7 +70,7 @@
             ];
         };
         
-        jester = nixpkgs-unstable.lib.nixosSystem {
+        jester = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
