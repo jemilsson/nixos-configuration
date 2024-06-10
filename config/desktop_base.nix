@@ -304,6 +304,16 @@ in
     '';*/
 
   programs = {
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        gtk3
+        libnotify
+        nss
+        libsecret
+
+      ];
+    };
     ssh = {
       startAgent = false;
 
