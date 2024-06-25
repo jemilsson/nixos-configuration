@@ -315,6 +315,7 @@ in
       ];
     };
     ssh = {
+      package = pkgs.openssh.override { dsaKeysSupport = true; };
       startAgent = false;
 
       extraConfig = ''
