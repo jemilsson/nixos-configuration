@@ -79,6 +79,9 @@ in
       settings = {
         PermitRootLogin = "no";
         PasswordAuthentication = false;
+
+        # https://blog.qualys.com/vulnerabilities-threat-research/2024/07/01/regresshion-remote-unauthenticated-code-execution-vulnerability-in-openssh-server
+        LoginGraceTime = 0;
       };
     };
     journald = {
