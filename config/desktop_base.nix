@@ -11,6 +11,8 @@ let
     github.github-vscode-theme
     eamodio.gitlens
     yzhang.markdown-all-in-one
+    danielsanmedium.dscodegpt
+    continue.continue
   ]);
   my-vscode-with-extensions = pkgs.unstable.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
@@ -154,8 +156,13 @@ in
     exiftool
     playerctl
     deluge
+
+    #3D design
     openscad
     cura
+    meshlab
+
+
     ffmpeg-full
     #v4l-utils
     imagemagick

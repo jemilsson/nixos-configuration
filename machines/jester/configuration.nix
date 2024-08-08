@@ -236,8 +236,8 @@ in
     opencl-headers
     labelImg
 
-    unstable.bambu-studio
-    unstable.orca-slicer
+    #bambu-studio
+    #orca-slicer
 
     #pkgsCross.armv7l-hf-multiplatform.buildPackages.targetPackages.glibc
 

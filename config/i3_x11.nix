@@ -87,6 +87,8 @@ in
 
     };
 
+    hypridle.enable = true;
+
     blueman.enable = true;
 
 
@@ -125,6 +127,8 @@ in
         enable = true;
       };
     };
+
+    hyprlock.enable = true;
 
     waybar.enable = true;
 
@@ -226,6 +230,8 @@ in
     pkgs.networkmanagerapplet
 
     hyprland
+
+    mako
 
 
     xdg-desktop-portal
