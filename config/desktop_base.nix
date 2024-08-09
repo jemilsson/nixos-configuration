@@ -5,14 +5,22 @@ let
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
-    #ms-python.python
-    #ms-python.vscode-pylance
+    #Python support
+    ms-python.python
+    ms-python.vscode-pylance
+
+    #Nix support
     jnoortheen.nix-ide
-    github.github-vscode-theme
-    eamodio.gitlens
-    yzhang.markdown-all-in-one
-    danielsanmedium.dscodegpt
+
+    #General tools
     continue.continue
+    eamodio.gitlens
+
+    #Data formats
+    yzhang.markdown-all-in-one
+
+    #Themes
+    github.github-vscode-theme
   ]);
   my-vscode-with-extensions = pkgs.unstable.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
