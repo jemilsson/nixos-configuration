@@ -19,8 +19,8 @@ in
 
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-                "electron-24.8.6"
+  nixpkgs.config.permittedInsecurePackarges = [
+                #"electron-24.8.6"
 ];
 
 
@@ -266,11 +266,12 @@ in
     #  pkgs.unstable.ivsc-firmware
     #];
 
-
+    /*
     pulseaudio.extraConfig = ''
       load-module module-alsa-sink   device=hw:0,0 channels=4
       load-module module-alsa-source device=hw:0,6 channels=4
     '';
+    */
 
     #opengl = {
     #extraPackages = with pkgs; [ intel-ocl ];

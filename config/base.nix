@@ -69,7 +69,7 @@ in
 
   security = {
     pam = {
-      enableSSHAgentAuth = true;
+      sshAgentAuth.enable = true;
     };
   };
 

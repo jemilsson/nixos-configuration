@@ -197,6 +197,7 @@ in
 
     #Interface
     alacritty
+    foot
     albert
     rxvt_unicode
     synapse
