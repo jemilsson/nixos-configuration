@@ -34,7 +34,7 @@
         Option "TearFree" "on"
       '';
 
-      displayManager.sddm.autoLogin = {
+      displayManager.autoLogin = {
         user = "alicia";
         enable = true;
 
