@@ -4,6 +4,8 @@ let
   #python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
+  continue = pkgs.callPackage ../packages/continue/default.nix {};
+
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     #Python support
     ms-python.python
@@ -13,7 +15,8 @@ let
     jnoortheen.nix-ide
 
     #General tools
-    continue.continue
+    # continue.continue commenting it because it's too old in nixpkgs
+    continue
     eamodio.gitlens
 
     #Data formats
