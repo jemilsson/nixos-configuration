@@ -112,6 +112,8 @@ in
           "mosh"
           "python"
           "wd"
+          "per-directory-history"
+          "zsh_codex"
         ];
       };
     };
