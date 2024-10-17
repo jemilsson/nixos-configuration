@@ -48,6 +48,7 @@ in
 
   hardware.opengl.extraPackages = with pkgs; [
   amdvlk
+  onevpl-intel-gpu
   ];
   # For 32 bit applications 
   hardware.opengl.extraPackages32 = with pkgs; [
@@ -82,8 +83,10 @@ in
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
     kernelParams = [
+      "i915.force_probe=a7a1"
       #"snd_hda_intel.dmic_detect=0"
       #"i915.enable_psr=0"
+
     ];
     loader = {
       systemd-boot =

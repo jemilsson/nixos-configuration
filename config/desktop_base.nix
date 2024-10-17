@@ -113,6 +113,7 @@ in
         libvdpau-va-gl
         vaapiVdpau
         vaapiIntel
+        onevpl-intel-gpu
       ];
       extraPackages32 = with pkgs; [
         intel-compute-runtime
@@ -121,6 +122,7 @@ in
         libvdpau-va-gl
         vaapiVdpau
         vaapiIntel
+        onevpl-intel-gpu
       ];
       setLdLibraryPath = true;
     };
