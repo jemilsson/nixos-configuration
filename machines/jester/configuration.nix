@@ -97,7 +97,7 @@ in
       efi.canTouchEfiVariables = true;
     };
     #kernelPackages = pkgs.linuxPackages_6_6;
-    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.unstable.linuxPackages_latest;
 
     binfmt.emulatedSystems = [ ];
   };
@@ -209,6 +209,15 @@ in
       #  interface = "enp48s0u2u1u2";
       #};
     };
+
+  dhcpcd = {
+    enable = true;
+    extraConfig = "
+    define 108 uint32 ipv6only_preferred
+    request ipv6only_preferred
+    ";
+  };
+
   };
 
   services = {
@@ -226,6 +235,13 @@ in
     ofono.enable = true;
 
     teamviewer.enable =true;
+
+    clatd = {
+      enable = true;
+      settings = {
+        plat-prefix = "64:ff9b::/96";
+      };
+    };
 
   };
 
