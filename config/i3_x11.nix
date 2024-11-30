@@ -3,7 +3,7 @@ let
 
 in
 {
-  sound.mediaKeys.enable = true;
+  #sound.mediaKeys.enable = true;
 
 
   services = {
@@ -52,7 +52,7 @@ in
   programs = {
     regreet = {
       enable = true;
-      settings = ./regreet.toml;
+      #settings = ./regreet.toml;
     };
     xwayland.enable = true;
 

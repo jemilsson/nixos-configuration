@@ -107,8 +107,6 @@ in
       #s3tcSupport = true;
       extraPackages = with pkgs; [
         intel-compute-runtime
-        rocm-opencl-icd
-        rocm-opencl-runtime
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
@@ -117,14 +115,13 @@ in
       ];
       extraPackages32 = with pkgs; [
         intel-compute-runtime
-        rocm-opencl-icd
         intel-media-driver
         libvdpau-va-gl
         vaapiVdpau
         vaapiIntel
         onevpl-intel-gpu
       ];
-      setLdLibraryPath = true;
+      #setLdLibraryPath = true;
     };
 
     steam-hardware = {
@@ -172,7 +169,7 @@ in
 
     #3D design
     openscad
-    cura
+    #cura
     meshlab
 
 
@@ -204,7 +201,6 @@ in
     alacritty
     foot
     albert
-    rxvt_unicode
     synapse
     feh
     (freerdp.override { pcsclite = pcsclite; libpulseaudio = libpulseaudio; })
@@ -214,8 +210,7 @@ in
     #Ricing
     paper-icon-theme
     hicolor-icon-theme
-    gnome2.gnome_icon_theme
-    gnome3.adwaita-icon-theme
+    gnome.adwaita-icon-theme
     pantheon.elementary-icon-theme
     #gtk3
     #gtk-engine-murrine
@@ -223,9 +218,9 @@ in
 
     #Graphical System tools
     gedit
-    gnome3.nautilus
-    gnome3.sushi
-    gnome3.file-roller
+    gnome.nautilus
+    gnome.sushi
+    gnome.file-roller
     gparted
     file
     keepass
@@ -285,7 +280,7 @@ in
     lm_sensors
     picocom
 
-    gnome3.gvfs
+    gnome.gvfs
     gtk3
     gsettings-desktop-schemas
 
@@ -457,7 +452,7 @@ in
 
       };
 
-    passSecretService.enable = true;
+    #passSecretService.enable = true;
   };
 
 

@@ -26,7 +26,7 @@ in
 {
   # Load also non-free firmwares in the kernel
   hardware.enableRedistributableFirmware = lib.mkDefault true;
-  sound.enable = true; # This starts alsactl store, this is needed not to run alsactl init everytime we reboot (otherwise we do not have a working microphone)pipewire
+  #sound.enable = true; # This starts alsactl store, this is needed not to run alsactl init everytime we reboot (otherwise we do not have a working microphone)pipewire
   # for sake of ipu6-camera-bins
   nixpkgs.config.allowUnfree = true;
 
