@@ -15,7 +15,7 @@ in
     #../../config/software/tensorflow.nix
     #../../packages/vpp/vpp.nix
     ./hardware-configuration.nix
-    ./camera.nix
+    #./camera.nix
 
   ];
 
@@ -46,12 +46,12 @@ in
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
   amdvlk
-  onevpl-intel-gpu
+  vpl-gpu-rt
   ];
   # For 32 bit applications 
-  hardware.opengl.extraPackages32 = with pkgs; [
+  hardware.graphics.extraPackages32 = with pkgs; [
     driversi686Linux.amdvlk
   ];
 
@@ -77,8 +77,8 @@ in
 
   system.stateVersion = "23.05";
 
-  hardware.ipu6.enable = true;
-  hardware.ipu6.platform = "ipu6ep";
+  #hardware.ipu6.enable = true;
+  #hardware.ipu6.platform = "ipu6ep";
 
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
@@ -97,7 +97,7 @@ in
       efi.canTouchEfiVariables = true;
     };
     #kernelPackages = pkgs.linuxPackages_6_6;
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    #kernelPackages = pkgs.unstable.linuxPackages_latest;
 
     binfmt.emulatedSystems = [ ];
   };
@@ -274,10 +274,29 @@ in
       ];
     })
 
+    devenv
+
 
   ];
 
-  nix = { };
+  programs = {
+    direnv = {
+      enable = true;
+  
+
+    };
+  };
+
+  nix = { 
+    extraOptions = ''
+        trusted-users = root jonas
+
+        extra-substituters = https://devenv.cachix.org
+        extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+    '';
+    settings.experimental-features = [ "nix-command" ];
+
+  };
 
   hardware = {
 

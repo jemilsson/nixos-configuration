@@ -101,10 +101,9 @@ in
 
     rtl-sdr.enable = true;
 
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
-      #s3tcSupport = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
         intel-compute-runtime
         intel-media-driver
@@ -121,7 +120,6 @@ in
         vaapiIntel
         onevpl-intel-gpu
       ];
-      #setLdLibraryPath = true;
     };
 
     steam-hardware = {
@@ -210,7 +208,7 @@ in
     #Ricing
     paper-icon-theme
     hicolor-icon-theme
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     pantheon.elementary-icon-theme
     #gtk3
     #gtk-engine-murrine
@@ -218,9 +216,9 @@ in
 
     #Graphical System tools
     gedit
-    gnome.nautilus
-    gnome.sushi
-    gnome.file-roller
+    nautilus
+    sushi
+    file-roller
     gparted
     file
     keepass
