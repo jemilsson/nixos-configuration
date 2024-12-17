@@ -282,8 +282,7 @@ in
   programs = {
     direnv = {
       enable = true;
-  
-
+      nix-direnv.enable = true;
     };
   };
 
@@ -294,7 +293,7 @@ in
         extra-substituters = https://devenv.cachix.org
         extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
-    settings.experimental-features = [ "nix-command" ];
+    settings.experimental-features = [ "nix-command" "flakes" ];
 
   };
 
