@@ -335,11 +335,7 @@ in
       startAgent = false;
 
       extraConfig = ''
-        CanonicalizeHostname yes
-        CanonicalDomains jonas.systems internal.jonas.systems
-
-        Host *.jonas.systems
-        ForwardAgent yes
+        
       '';
     };
 
