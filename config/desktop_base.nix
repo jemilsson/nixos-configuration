@@ -5,6 +5,7 @@ let
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
   continue = pkgs.callPackage ../packages/continue/default.nix {};
+  quarto = pkgs.callPackage ../packages/quarto/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     #Python support
@@ -24,6 +25,8 @@ let
 
     #Themes
     github.github-vscode-theme
+
+    quarto
   ]);
   my-vscode-with-extensions = pkgs.unstable.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
@@ -177,7 +180,20 @@ in
 
     #Programming
     #atom
-    (python3.withPackages (ps: with ps; [ yapf flake8 autopep8 uvicorn numpy pillow pylint scipy numpy matplotlib pymeeus ])) #jedi
+    (python3.withPackages (ps: with ps; [
+      yapf
+      flake8
+      autopep8
+      uvicorn
+      numpy
+      pillow
+      pylint
+      scipy
+      matplotlib
+      pymeeus
+      jupyter
+      plotly
+    ]))
     my-vscode-with-extensions
     #insomnia
     bruno
@@ -224,6 +240,7 @@ in
     keepass
     libreoffice
     mupdf
+    unstable.quarto
     #adobe-reader
 
     #Communication
