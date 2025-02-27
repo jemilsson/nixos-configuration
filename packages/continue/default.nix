@@ -6,14 +6,14 @@ pkgs.vscode-utils.buildVscodeMarketplaceExtension {
       sources = {
         "x86_64-linux" = {
           arch = "linux-x64";
-          hash = "sha256-lCtNmv+x5rXhCGmtU9lpUu3apACY6eORVGvTDliWPvg=";
+          hash = "sha256-yX+v7y0iwg7wpud9yi3ClhkUKMdlR4JBwKsFuEyBSUw=";
         };
       };
     in
     {
       name = "continue";
       publisher = "Continue";
-      version = "0.9.245";
+      version = "0.9.271";
     }
     // sources.${stdenv.system};
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];

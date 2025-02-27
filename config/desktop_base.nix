@@ -6,14 +6,13 @@ let
 
   continue = pkgs.callPackage ../packages/continue/default.nix {};
   quarto = pkgs.callPackage ../packages/quarto/default.nix {};
+  djlint = pkgs.callPackage ../packages/djlint/default.nix {};
+  cloudformation-yaml-validator = pkgs.callPackage ../packages/cloudformation-yaml-validator/default.nix {};
+  boto3-ide = pkgs.callPackage ../packages/boto3-ide/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     #Python support
     ms-python.python
-    ms-python.vscode-pylance
-
-    #Nix support
-    jnoortheen.nix-ide
 
     #General tools
     # continue.continue commenting it because it's too old in nixpkgs
@@ -27,6 +26,25 @@ let
     github.github-vscode-theme
 
     quarto
+
+    #Glecom vscode recommendations
+    editorconfig.editorconfig
+    tamasfe.even-better-toml
+    charliermarsh.ruff
+    redhat.vscode-yaml
+    jnoortheen.nix-ide
+    github.vscode-github-actions
+    timonwong.shellcheck
+    foxundermoon.shell-format
+    davidanson.vscode-markdownlint
+    djlint
+    astro-build.astro-vscode
+    cloudformation-yaml-validator
+    bradlc.vscode-tailwindcss
+    boto3-ide
+    ms-python.vscode-pylance
+    esbenp.prettier-vscode
+    mkhl.direnv
   ]);
   my-vscode-with-extensions = pkgs.unstable.vscode-with-extensions.override {
     vscodeExtensions = vscode-extensions;
