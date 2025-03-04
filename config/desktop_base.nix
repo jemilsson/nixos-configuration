@@ -348,6 +348,9 @@ in
 
     prismlauncher
     libsecret
+
+    nixd
+    ruff
   ];
 
   /*environment.extraSetup = ''

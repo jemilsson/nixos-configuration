@@ -156,7 +156,7 @@ in
           };
 
         */
-              
+          
           wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
           ips = [ "10.128.2.3/24" "2a12:5800:0:5::3/64" ];
@@ -175,7 +175,34 @@ in
           }
           ];
           };
-        	
+          
+
+          /*
+          wg3 = {
+          privateKeyFile = "/var/lib/wireguard/privatekey";
+          ips = [ "10.128.12.3/24" "2a12:5800:0:27::3/64" ];
+          peers = [
+          {
+          publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
+          allowedIPs = [
+                "10.128.12.0/24"
+                "2a12:5800:0:27::/64"
+                "10.0.0.0/8"
+                "172.16.0.0/12"
+                "192.168.0.0/16"
+                "100.64.0.0/10"
+                "192.121.29.0/24"
+                "194.26.208.0/24"
+                "2a12:5800::/29"
+                #"0::/0"
+                #"0.0.0.0/0"
+                
+              ];
+          endpoint = "194.26.208.43:53";
+          }
+          ];
+          };
+        	*/
 
 
 
@@ -195,7 +222,12 @@ in
             address = "194.26.208.1";
             prefixLength = 32;
 
-          }
+        }
+        {
+            address = "194.26.208.43";
+            prefixLength = 32;
+
+        }
       ];
     };
 
