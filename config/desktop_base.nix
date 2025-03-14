@@ -4,7 +4,7 @@ let
   #python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
-  continue = pkgs.callPackage ../packages/continue/default.nix {};
+  #continue = pkgs.callPackage ../packages/continue/default.nix {};
   quarto = pkgs.callPackage ../packages/quarto/default.nix {};
   djlint = pkgs.callPackage ../packages/djlint/default.nix {};
   cloudformation-yaml-validator = pkgs.callPackage ../packages/cloudformation-yaml-validator/default.nix {};
@@ -17,7 +17,7 @@ let
 
     #General tools
     # continue.continue commenting it because it's too old in nixpkgs
-    continue
+    continue.continue
     eamodio.gitlens
 
     #Data formats
