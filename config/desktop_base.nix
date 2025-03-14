@@ -9,6 +9,7 @@ let
   djlint = pkgs.callPackage ../packages/djlint/default.nix {};
   cloudformation-yaml-validator = pkgs.callPackage ../packages/cloudformation-yaml-validator/default.nix {};
   boto3-ide = pkgs.callPackage ../packages/boto3-ide/default.nix {};
+  tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     #Python support
@@ -560,6 +561,7 @@ in
       powerline-fonts
       emacs-all-the-icons-fonts
       winePackages.fonts
+      tratex-font
     ];
   };
   services = {

@@ -156,6 +156,8 @@ in
           };
 
         */
+
+        
           
           wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
@@ -175,9 +177,10 @@ in
           }
           ];
           };
-          
+        
+        /*
 
-          /*
+          
           wg3 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
           ips = [ "10.128.12.3/24" "2a12:5800:0:27::3/64" ];
@@ -202,7 +205,9 @@ in
           }
           ];
           };
-        	*/
+
+          */
+        	
 
 
 
