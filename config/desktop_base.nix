@@ -6,6 +6,7 @@ let
 
   #continue = pkgs.callPackage ../packages/continue/default.nix {};
   roo-code = pkgs.callPackage ../packages/roo-code/default.nix {};
+  vscode-3d-preview = pkgs.callPackage ../packages/vscode-3d-preview/default.nix {};
   quarto = pkgs.callPackage ../packages/quarto/default.nix {};
   djlint = pkgs.callPackage ../packages/djlint/default.nix {};
   cloudformation-yaml-validator = pkgs.callPackage ../packages/cloudformation-yaml-validator/default.nix {};
@@ -15,6 +16,9 @@ let
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     #Python support
     ms-python.python
+
+    antyos.openscad
+    vscode-3d-preview
 
     #General tools
     # continue.continue commenting it because it's too old in nixpkgs
@@ -354,6 +358,8 @@ in
 
     nixd
     ruff
+
+    handlr
   ];
 
   /*environment.extraSetup = ''
