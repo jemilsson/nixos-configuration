@@ -5,7 +5,7 @@ let
   #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
 
   #continue = pkgs.callPackage ../packages/continue/default.nix {};
-  roo-code = pkgs.callPackage ../packages/roo-code/default.nix {};
+  #roo-code = pkgs.callPackage ../packages/roo-code/default.nix {};
   vscode-3d-preview = pkgs.callPackage ../packages/vscode-3d-preview/default.nix {};
   quarto = pkgs.callPackage ../packages/quarto/default.nix {};
   djlint = pkgs.callPackage ../packages/djlint/default.nix {};
@@ -22,7 +22,7 @@ let
 
     #General tools
     # continue.continue commenting it because it's too old in nixpkgs
-    roo-code
+    rooveterinaryinc.roo-cline
     continue.continue
     eamodio.gitlens
 

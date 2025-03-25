@@ -6,14 +6,14 @@ pkgs.vscode-utils.buildVscodeMarketplaceExtension {
       sources = {
         "x86_64-linux" = {
           #arch = "linux-x64";
-          hash = "sha256-t3QUqe0qYizrJQcsEmYYmNYS/cpYiHQXJHtzHk9MGS8="; # Replace with actual hash
+          #hash = "sha256-t3QUqe0qYizrJQcsEmYYmNYS/cpYiHQXJHtzHk9MGS8="; # Replace with actual hash
         };
       };
     in
     {
       name = "roo-cline";
       publisher = "RooVeterinaryInc";
-      version = "3.8.6";
+      version = "3.10.3";
     }
     // sources.${stdenv.system};
   
