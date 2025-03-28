@@ -195,6 +195,7 @@ in
 
     #3D design
     openscad
+    unstable.bambu-studio
     #cura
     meshlab
 
