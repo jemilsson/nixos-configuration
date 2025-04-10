@@ -105,6 +105,30 @@ in
           };
 
         };
+
+        shikane = {
+          enable = true;
+          description = "shikane";
+
+          partOf = [ "graphical-session.target" ];
+          requires = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+
+          environment = {
+            XDG_CURRENT_DESKTOP = "sway";
+            XDG_SESSION_TYPE = "wayland";
+            XDG_RUNTIME_DIR = "/run/user/1000";
+            WAYLAND_DISPLAY = "wayland-1";
+            WLR_DRM_NO_MODIFIERS = "1";
+          };
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.unstable.shikane}/bin/shikane";
+            Restart = "always";
+          };
+
+        };
         
         "pasystray" = {
           enable = true;
@@ -131,6 +155,8 @@ in
 
     xdg-desktop-portal
     xdg-desktop-portal-wlr
+
+    unstable.shikane
   ];
 
 

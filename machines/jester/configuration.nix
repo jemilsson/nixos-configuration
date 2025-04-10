@@ -77,8 +77,23 @@ in
 
   system.stateVersion = "23.05";
 
-  #hardware.ipu6.enable = true;
-  #hardware.ipu6.platform = "ipu6ep";
+  hardware.ipu6.enable = true;
+  hardware.ipu6.platform = "ipu6ep";
+
+    boot.kernelPackages = pkgs.linuxPackages_latest.extend ( self: super: {
+    ipu6-drivers = super.ipu6-drivers.overrideAttrs (
+        final: previous: rec {
+          src = builtins.fetchGit {
+            url = "https://github.com/intel/ipu6-drivers.git";
+            ref = "master";
+            rev = "b4ba63df5922150ec14ef7f202b3589896e0301a";
+          };
+          patches = [
+            "${src}/patches/0001-v6.10-IPU6-headers-used-by-PSYS.patch"
+          ] ;
+        }
+    );
+  } );
 
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
@@ -161,6 +176,7 @@ in
           
           wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
+          metric = 100;
           ips = [ "10.128.2.3/24" "2a12:5800:0:5::3/64" ];
           peers = [
           {
@@ -168,10 +184,10 @@ in
           allowedIPs = [
                 "10.128.2.0/24"
                 "2a12:5800:0:5::/64"
-                #"0::/0"
                 "10.0.0.0/8"
-                #"0.0.0.0/0"
                 "100.64.0.0/10"
+                #"0::/0"
+                #"0.0.0.0/0"
               ];
           endpoint = "194.26.208.1:53";
           }
