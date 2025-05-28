@@ -287,7 +287,6 @@ in
     #polymc
     #minecraft
     virtualgl
-    xboxdrv
 
     #Security
     libu2f-host
@@ -329,7 +328,6 @@ in
     #virtmanager
 
 
-    ltwheelconf
     awscli
 
     #samba4Full
