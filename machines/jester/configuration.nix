@@ -370,10 +370,10 @@ in
   };
 
   virtualisation.lxc = {
-    enable = true;
-    lxcfs.enable = true;
+    enable = false;
+    lxcfs.enable = false;
   };
-  virtualisation.lxd.enable = true;
+  virtualisation.lxd.enable = false;
 
 
 
