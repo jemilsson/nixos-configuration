@@ -553,7 +553,7 @@ in
       #  '';
     };
     waydroid = {
-      enable = true;
+      enable = false;
     };
   };
   fonts = {
