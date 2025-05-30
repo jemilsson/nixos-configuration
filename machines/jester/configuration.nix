@@ -1,6 +1,6 @@
 { config, lib, pkgs, stdenv, ... }:
 let
-  containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
+  #containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
   cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix { };
   cardano-hw-cli = pkgs.callPackage ../../packages/cardano-hw-cli/default.nix { };
   vpp = pkgs.callPackage ../../packages/vpp/default.nix { };
@@ -406,7 +406,7 @@ in
     };
   */
 
-  inherit containers;
+  #inherit containers;
 
   nixpkgs.overlays = [
     (self: super: {
