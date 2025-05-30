@@ -76,7 +76,7 @@ in
   #users.users.user1.passwordFile = config.age.secrets.secret1.path;
 
   system.stateVersion = "23.05";
-
+  /*
   hardware.ipu6.enable = true;
   hardware.ipu6.platform = "ipu6ep";
 
@@ -95,6 +95,7 @@ in
     );
   } );
 
+  */
   boot = {
     #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
     kernelParams = [
