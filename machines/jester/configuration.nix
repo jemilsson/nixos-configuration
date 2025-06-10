@@ -76,6 +76,9 @@ in
   #users.users.user1.passwordFile = config.age.secrets.secret1.path;
 
   system.stateVersion = "23.05";
+  
+  hardware.ipu6.enable = true;
+  hardware.ipu6.platform = "ipu6ep";
   /*
   hardware.ipu6.enable = true;
   hardware.ipu6.platform = "ipu6ep";
@@ -178,19 +181,23 @@ in
           wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
           metric = 100;
-          ips = [ "10.128.2.3/24" "2a12:5800:0:5::3/64" ];
+          ips = [ "10.128.12.3/24" "2a12:5800:0:27::3/64" ];
           peers = [
           {
-          publicKey = "Z712joOcYZDyiJrynswegnIlRsebKrIskvw2rOIBX2Y=";
+          publicKey = "kCvTCiqn4/mhkbWF9eKaTycAp7yHfkMYu3uEuuneFFc=";
           allowedIPs = [
-                "10.128.2.0/24"
-                "2a12:5800:0:5::/64"
+                "10.128.12.0/24"
+                "2a12:5800:0:27::/64"
+                "2a12:5800::/29"
+                "2a05:d016:865:7a00::/56"
                 "10.0.0.0/8"
                 "100.64.0.0/10"
-                #"0::/0"
-                #"0.0.0.0/0"
+                "192.168.0.0/16"
+                "172.16.0.0/12"
+                #"194.26.208.0/24"
+                "192.121.29.0/24"
               ];
-          endpoint = "194.26.208.1:53";
+          endpoint = "194.26.208.1:51822";
           }
           ];
           };
