@@ -359,6 +359,9 @@ in
     ruff
 
     handlr
+
+    masterpdfeditor
+    poppler-utils
   ];
 
   /*environment.extraSetup = ''
@@ -569,6 +572,13 @@ in
       emacs-all-the-icons-fonts
       winePackages.fonts
       tratex-font
+
+      dejavu_fonts
+      liberation_ttf
+      ubuntu_font_family
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
     ];
   };
   services = {
