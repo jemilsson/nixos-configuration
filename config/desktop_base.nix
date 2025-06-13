@@ -362,6 +362,12 @@ in
 
     masterpdfeditor
     poppler-utils
+
+    wine
+    winetricks
+
+    unstable.claude-code
+    gh
   ];
 
   /*environment.extraSetup = ''
