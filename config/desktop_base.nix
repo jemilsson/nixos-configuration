@@ -266,7 +266,7 @@ in
     keepass
     libreoffice
     mupdf
-    unstable.quarto
+    quarto
     #adobe-reader
 
     #Communication
