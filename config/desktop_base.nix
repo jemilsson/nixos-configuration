@@ -6,6 +6,7 @@ let
 
   #continue = pkgs.callPackage ../packages/continue/default.nix {};
   #roo-code = pkgs.callPackage ../packages/roo-code/default.nix {};
+  vscode-claude-code = pkgs.callPackage ../packages/vscode-claude-code/default.nix {};
   vscode-3d-preview = pkgs.callPackage ../packages/vscode-3d-preview/default.nix {};
   quarto = pkgs.callPackage ../packages/quarto/default.nix {};
   djlint = pkgs.callPackage ../packages/djlint/default.nix {};
@@ -14,6 +15,8 @@ let
   tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
+    vscode-claude-code
+
     #Python support
     ms-python.python
 
@@ -367,6 +370,7 @@ in
     winetricks
 
     unstable.claude-code
+    nodejs
     gh
   ];
 
