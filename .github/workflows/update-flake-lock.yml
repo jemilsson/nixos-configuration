@@ -1,3 +1,4 @@
+.github/workflows/update-flake-lock.yml
 name: update-flake-lock
 on:
   workflow_dispatch: # allows manual triggering
@@ -26,3 +27,14 @@ jobs:
             automated
           pr-reviewers: jemilsson
           pr-assignees: jemilsson
+      - name: Run flake check
+        run: nix flake check --no-build
+      - name: Auto-merge PR
+        if: success()
+        uses: pascalgn/merge-action@v0.15.6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          merge_method: squash
+          merge_labels: "dependencies,automated"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
