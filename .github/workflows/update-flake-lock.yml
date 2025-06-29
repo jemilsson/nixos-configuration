@@ -1,4 +1,4 @@
-name: update-flake-lock
+name: Update Flake Inputs
 on:
   workflow_dispatch: # allows manual triggering
   schedule:
@@ -7,18 +7,21 @@ on:
 jobs:
   lockfile:
     runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
       - name: Install Nix
-        uses: cachix/install-nix-action@master
+        uses: cachix/install-nix-action@v31
       - name: Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@main
+        id: update
+        uses: DeterminateSystems/update-flake-lock@v25
         with:
           pr-title: "Update flake.lock" # Title of PR to be created
           pr-labels: |                  # Labels to be set on the PR
@@ -26,14 +29,87 @@ jobs:
             automated
           pr-reviewers: jemilsson
           pr-assignees: jemilsson
-      - name: Run flake check
-        run: nix flake check --no-build
-      - name: Auto-merge PR
-        if: success()
-        uses: pascalgn/merge-action@v0.15.6
+
+  check-and-merge:
+    needs: lockfile
+    runs-on: ubuntu-latest
+    if: ${{ needs.lockfile.outputs.pull-request-number }}
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          merge_method: squash
-          merge_labels: "dependencies,automated"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: refs/pull/${{ needs.lockfile.outputs.pull-request-number }}/head
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - name: Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      - name: Run flake check
+        id: flake_check
+        run: |
+          if nix flake check --no-build; then
+            echo "check_passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "check_passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      - name: Auto-merge PR
+        if: steps.flake_check.outputs.check_passed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};
+            try {
+              // Merge the PR directly
+              const mergeResponse = await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                merge_method: 'squash',
+                commit_title: 'chore: update flake.lock',
+                commit_message: 'Automated update of flake.lock dependencies\n\nFlake check passed successfully.'
+              });
+              
+              if (mergeResponse.data.merged) {
+                console.log(`Successfully merged PR #${prNumber}`);
+                // Add a success comment
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: '🎉 **Auto-merge successful!**\n\nFlake.lock has been updated and flake check passed. The changes have been automatically merged.'
+                });
+              } else {
+                throw new Error('Merge was not successful');
+              }
+            } catch (error) {
+              console.error('Failed to merge PR:', error);
+              // Comment about the failure
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: `⚠️ **Auto-merge failed**\n\nError: ${error.message}\n\nPlease review and merge manually if appropriate.`
+              });
+              // Don't fail the workflow, just log the error
+              core.warning(`Failed to auto-merge PR #${prNumber}: ${error.message}`);
+            }
+      - name: Comment on failed check
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: '❌ **Auto-merge skipped**\n\nFlake check failed. Please review the failing checks and merge manually if appropriate.'
+            });
+            console.log(`Commented on PR #${prNumber} about failed flake check`);
