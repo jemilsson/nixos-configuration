@@ -1,4 +1,3 @@
-.github/workflows/update-flake-lock.yml
 name: update-flake-lock
 on:
   workflow_dispatch: # allows manual triggering
