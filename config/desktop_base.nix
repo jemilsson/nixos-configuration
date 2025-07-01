@@ -222,6 +222,7 @@ in
       pymeeus
       jupyter
       plotly
+      markitdown
     ]))
     my-vscode-with-extensions
     #insomnia
@@ -372,6 +373,8 @@ in
     unstable.claude-code
     nodejs
     gh
+
+    unstable.goose-cli
   ];
 
   /*environment.extraSetup = ''
