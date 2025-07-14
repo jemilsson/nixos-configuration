@@ -375,6 +375,7 @@ in
     gh
 
     unstable.goose-cli
+    devenv
   ];
 
   /*environment.extraSetup = ''
