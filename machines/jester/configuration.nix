@@ -15,6 +15,8 @@ in
     #../../config/software/tensorflow.nix
     #../../packages/vpp/vpp.nix
     ./hardware-configuration.nix
+    ./graphiti.nix
+    ./mcpo.nix
     #./camera.nix
 
   ];
