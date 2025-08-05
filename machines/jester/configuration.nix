@@ -309,6 +309,12 @@ in
 
   };
 
+  networking.firewall.extraCommands = ''
+    # Allow IPv6 forwarding for clatd
+    ip6tables -I FORWARD -i clat -j ACCEPT
+    ip6tables -I FORWARD -o clat -j ACCEPT
+  '';
+
   environment.systemPackages = with pkgs; [
     docker
     docker-compose
