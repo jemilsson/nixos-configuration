@@ -61,6 +61,8 @@ in
   systemd.timers.nix-optimise.timerConfig.Persistent = true;
   systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
 
+  systemd.oomd.enable = true;
+
 
 
   security = {
