@@ -4,8 +4,8 @@ pkgs.vscode-utils.buildVscodeMarketplaceExtension {
   mktplcRef = {
     name = "claude-code";
     publisher = "anthropic";
-    version = "1.0.31";
-    hash = "sha256-3brSSb6ERY0In5QRmv5F0FKPm7Ka/0wyiudLNRSKGBg=";
+    version = "1.0.72";
+    hash = "sha256-ILdS4HpDUntpU3fI9+OTbxQA9iINsd5iQt6lK5yDjw4=";
   };
 
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
