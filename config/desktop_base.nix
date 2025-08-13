@@ -13,6 +13,7 @@ let
   cloudformation-yaml-validator = pkgs.callPackage ../packages/cloudformation-yaml-validator/default.nix {};
   boto3-ide = pkgs.callPackage ../packages/boto3-ide/default.nix {};
   tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
+  tmuxai = pkgs.callPackage ../packages/tmuxai/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
@@ -66,6 +67,7 @@ in
     ./base.nix
     ./wallpapers.nix
     ./bare_metal.nix
+    ./bedrock-access-gateway.nix
     #./systemd_user/gpg-agent.nix
     #./x11.nix
 
@@ -376,6 +378,8 @@ in
 
     unstable.goose-cli
     devenv
+    tmux
+    tmuxai
   ];
 
   /*environment.extraSetup = ''
