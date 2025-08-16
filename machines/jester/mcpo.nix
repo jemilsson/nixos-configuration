@@ -2,33 +2,11 @@
 
 let
   mcpo = pkgs.python3Packages.callPackage ../../packages/mcpo { };
-  graphiti = pkgs.callPackage ../../packages/graphiti/default.nix { };
 
-  # Graphiti MCP server wrapper script
-  graphitiScript = pkgs.writeShellApplication {
-    name = "graphiti-mcp";
-    runtimeInputs = [ graphiti pkgs.coreutils ];
-    text = ''
-      # Source environment variables from secrets file
-      if [ -f /var/lib/mcpo/graphiti-env ]; then
-        set -a
-        # shellcheck disable=SC1091
-        source /var/lib/mcpo/graphiti-env
-        set +a
-      fi
-      
-      # Use the built Graphiti MCP server directly
-      exec ${graphiti}/bin/graphiti-mcp-server
-    '';
-  };
-
-  # MCPO configuration with Graphiti MCP server using SSE transport
+  # MCPO configuration without graphiti
   mcpoConfig = pkgs.writeText "mcpo-config.json" (builtins.toJSON {
     mcpServers = {
-      graphiti = {
-        type = "sse";
-        url = "http://localhost:8000/sse";
-      };
+      # Add other MCP servers here as needed
     };
   });
 in
@@ -36,7 +14,6 @@ in
   # Install required packages
   environment.systemPackages = [
     mcpo
-    graphiti
   ];
 
   # Create mcpo service
