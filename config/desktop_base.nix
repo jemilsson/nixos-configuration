@@ -14,6 +14,12 @@ let
   boto3-ide = pkgs.callPackage ../packages/boto3-ide/default.nix {};
   tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
   tmuxai = pkgs.callPackage ../packages/tmuxai/default.nix {};
+  claude-aws = pkgs.callPackage ../packages/claude-aws/default.nix {};
+  claude-code-router = pkgs.callPackage ../packages/claude-code-router/default.nix {};
+  claude-router = pkgs.callPackage ../packages/claude-router/default.nix { 
+    claude-code-router = claude-code-router;
+  };
+  ccr-configure-venice = pkgs.callPackage ../packages/ccr-configure-venice/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
@@ -373,6 +379,10 @@ in
     winetricks
 
     unstable.claude-code
+    claude-aws
+    claude-code-router
+    claude-router
+    ccr-configure-venice
     nodejs
     gh
 
