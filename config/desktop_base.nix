@@ -74,6 +74,7 @@ in
     ./wallpapers.nix
     ./bare_metal.nix
     ./bedrock-access-gateway.nix
+    ./fonts_ibm_plex.nix
     #./systemd_user/gpg-agent.nix
     #./x11.nix
 
@@ -231,6 +232,7 @@ in
       jupyter
       plotly
       markitdown
+      copier
     ]))
     my-vscode-with-extensions
     #insomnia
@@ -595,7 +597,6 @@ in
       corefonts
       google-fonts
       hack-font
-      font-awesome
       powerline-fonts
       emacs-all-the-icons-fonts
       winePackages.fonts
@@ -604,9 +605,7 @@ in
       dejavu_fonts
       liberation_ttf
       ubuntu_font_family
-      noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
     ];
   };
   services = {

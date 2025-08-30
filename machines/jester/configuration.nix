@@ -4,6 +4,7 @@ let
   cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix { };
   cardano-hw-cli = pkgs.callPackage ../../packages/cardano-hw-cli/default.nix { };
   vpp = pkgs.callPackage ../../packages/vpp/default.nix { };
+  claudia = pkgs.callPackage ../../packages/claudia/default.nix { };
 in
 {
   imports = [
@@ -336,6 +337,8 @@ in
     vulkan-validation-layers
 
     #vpp
+    
+    claudia
 
     (chromium.override {
       commandLineArgs = [
