@@ -74,7 +74,7 @@ in
     ./wallpapers.nix
     ./bare_metal.nix
     ./bedrock-access-gateway.nix
-    ./fonts_ibm_plex.nix
+    ./appearance.nix
     #./systemd_user/gpg-agent.nix
     #./x11.nix
 
@@ -100,33 +100,12 @@ in
   };
 
 
-  gtk.iconCache.enable = true;
+  # GTK icon cache moved to appearance.nix
 
   security.rtkit.enable = true;
 
   hardware = {
     enableAllFirmware = true;
-    pulseaudio = {
-      enable = false;
-      support32Bit = true;
-      #package = pkgs.pulseaudio-hsphfpd;
-
-      extraModules = [
-        #pkgs.unstable.pulseaudio-modules-bt
-      ];
-
-      daemon = {
-        config = {
-          "flat-volumes" = "no";
-          "resample-method" = "speex-float-5";
-          "realtime-scheduling" = "yes";
-          "high-priority" = "yes";
-          "realtime-priority" = 8;
-          "default-fragments" = 5;
-          "default-fragment-size-msec" = 2;
-        };
-      };
-    };
 
     bluetooth = {
       enable = true;
@@ -150,7 +129,7 @@ in
         libvdpau-va-gl
         vaapiVdpau
         vaapiIntel
-        onevpl-intel-gpu
+        vpl-gpu-rt
       ];
       extraPackages32 = with pkgs; [
         intel-compute-runtime
@@ -158,7 +137,7 @@ in
         libvdpau-va-gl
         vaapiVdpau
         vaapiIntel
-        onevpl-intel-gpu
+        vpl-gpu-rt
       ];
     };
 
@@ -177,11 +156,14 @@ in
       };
     };
 
+    flipperzero.enable=true;
+
   };
 
   networking.networkmanager.enable = true;
 
   #environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
 
   environment.systemPackages = with pkgs; [
     ghostscript
@@ -261,14 +243,7 @@ in
     rdesktop
     appimage-run
 
-    #Ricing
-    paper-icon-theme
-    hicolor-icon-theme
-    adwaita-icon-theme
-    pantheon.elementary-icon-theme
-    #gtk3
-    #gtk-engine-murrine
-    lxappearance
+    #Ricing packages moved to appearance.nix
 
     #Graphical System tools
     gedit
@@ -418,7 +393,7 @@ in
       '';
     };
 
-    steam.enable = true;
+    steam.enable = false;  # Temporarily disabled due to inode exhaustion
 
     wireshark.enable = true;
 
@@ -428,7 +403,6 @@ in
         "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
         "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
-        "kajibbejlbohfaggdiogboambcijhkke" # Mailvelope
         "naepdomgkenhinolocfifgehidddafch" # Browserpass
         "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
 
@@ -437,6 +411,9 @@ in
       defaultSearchProviderSearchURL = "https://duckduckgo.com/?q=%s";
       defaultSearchProviderSuggestURL = "https://duckduckgo.com/?q=%s";
       homepageLocation = "about:blank";
+      extraOpts = {
+        CommandLineFlagSecurityWarningsEnabled = false;
+      };
     };
 
     browserpass = {
@@ -530,53 +507,7 @@ in
 
 
 
-  /*
-    # GTK3 global theme (widget and icon theme)
-    environment.etc."gtk-3.0/settings.ini" = {
-    text = ''
-    gtk-theme-name=Adapta-Nokto
-    gtk-icon-theme-name="elementary"
-    gtk-font-name=Sans 10
-    gtk-cursor-theme-size=0
-    gtk-toolbar-style=GTK_TOOLBAR_BOTH
-    gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-    gtk-button-images=1
-    gtk-menu-images=1
-    gtk-enable-event-sounds=1
-    gtk-enable-input-feedback-sounds=1
-    gtk-xft-antialias=1
-    gtk-xft-hinting=1
-    gtk-xft-hintstyle=hintfull
-    gtk-xft-rgba=rgb
-    '';
-    mode = "444";
-    };
-
-    environment.etc."gtk-2.0/gtkrc" = {
-    text = ''
-    gtk-theme-name="Adapta-Nokto"
-    gtk-icon-theme-name="elementary"
-    gtk-font-name="Sans 10"
-    gtk-cursor-theme-size=0
-    gtk-toolbar-style=GTK_TOOLBAR_BOTH
-    gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-    gtk-button-images=1
-    gtk-menu-images=1
-    gtk-enable-event-sounds=1
-    gtk-enable-input-feedback-sounds=1
-    gtk-xft-antialias=1
-    gtk-xft-hinting=1
-    gtk-xft-hintstyle="hintfull"
-    gtk-xft-rgba="rgb"
-    '';
-    mode = "444";
-    };
-
-    environment.variables = {
-    #GTK_DATA_PREFIX = "/run/current-system/sw";
-
-    };
-  */
+  # GTK theming configuration moved to appearance.nix
 
   virtualisation = {
     docker = {
@@ -589,25 +520,22 @@ in
       enable = false;
     };
   };
-  fonts = {
-    fontDir.enable = true;
-    enableGhostscriptFonts = true;
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      corefonts
-      google-fonts
-      hack-font
-      powerline-fonts
-      emacs-all-the-icons-fonts
-      winePackages.fonts
-      tratex-font
-
-      dejavu_fonts
-      liberation_ttf
-      ubuntu_font_family
-      noto-fonts-cjk-sans
-    ];
-  };
+  # Additional fonts beyond the main appearance configuration
+  fonts.packages = with pkgs; [
+    corefonts
+    google-fonts
+    hack-font
+    powerline-fonts
+    emacs-all-the-icons-fonts
+    winePackages.fonts
+    tratex-font
+    dejavu_fonts
+    liberation_ttf
+    ubuntu_font_family
+    noto-fonts-cjk-sans
+    ibm-plex
+    nerd-fonts.fira-code
+  ];
   services = {
 
     #upower.enable = true;

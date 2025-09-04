@@ -10,7 +10,6 @@
 , libxkbcommon
 , libdrm
 , xorg
-, webkitgtk
 , webkitgtk_4_1
 , gtk3
 , glib
@@ -18,7 +17,7 @@
 , pango
 , atk
 , gdk-pixbuf
-, libsoup
+, libsoup_2_4
 , libsoup_3
 , openssl
 , nspr
@@ -48,7 +47,6 @@ stdenv.mkDerivation rec {
     libdrm
     wayland
     libxkbcommon
-    webkitgtk
     webkitgtk_4_1
     gtk3
     glib
@@ -56,7 +54,7 @@ stdenv.mkDerivation rec {
     pango
     atk
     gdk-pixbuf
-    libsoup
+    libsoup_2_4
     libsoup_3
     openssl
     nspr
