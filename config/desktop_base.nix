@@ -189,7 +189,7 @@ in
 
     #3D design
     openscad
-    unstable.bambu-studio
+    #unstable.bambu-studio
     #cura
     meshlab
 
@@ -236,7 +236,7 @@ in
     #Interface
     alacritty
     foot
-    albert
+    #albert  # Temporarily disabled due to submodule authentication issues
     synapse
     feh
     (freerdp.override { pcsclite = pcsclite; libpulseaudio = libpulseaudio; })
@@ -556,7 +556,7 @@ in
 
     pcscd = {
       enable = true;
-      #plugins = [ pkgs.unstable.ccid ];
+      plugins = [ pkgs.ccid ];
     };
 
     ratbagd = {

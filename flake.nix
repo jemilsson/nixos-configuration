@@ -6,9 +6,9 @@
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
-    bambu-studio = {
-      url = "github:zhaofengli/nixpkgs/bambu-studio";
-    };
+    # bambu-studio = {
+    #   url = "github:zhaofengli/nixpkgs/bambu-studio";
+    # };
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +29,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, bambu-studio, hyprland, sops-nix}: # , agenix, agenix-rekey }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, sops-nix}: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -37,10 +37,10 @@
           inherit system;
           config.allowUnfree = true;
         };
-        bambu-studio = import bambu-studio {
-          inherit system;
-          config.allowUnfree = true;
-        };
+        # bambu-studio = import bambu-studio {
+        #   inherit system;
+        #   config.allowUnfree = true;
+        # };
         
       };
 
