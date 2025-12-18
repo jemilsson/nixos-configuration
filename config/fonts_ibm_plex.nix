@@ -5,7 +5,7 @@
   fonts.packages = with pkgs; [
     ibm-plex
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     font-awesome
   ];
 

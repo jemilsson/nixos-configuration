@@ -14,7 +14,7 @@ in
     vegur
     ibm-plex
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     font-awesome
     # WhiteSur theme packages
     whitesur-gtk-theme

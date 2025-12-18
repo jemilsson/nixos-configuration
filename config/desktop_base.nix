@@ -127,16 +127,16 @@ in
         intel-compute-runtime
         intel-media-driver
         libvdpau-va-gl
-        vaapiVdpau
-        vaapiIntel
+        libva-vdpau-driver
+        intel-vaapi-driver
         vpl-gpu-rt
       ];
       extraPackages32 = with pkgs; [
         intel-compute-runtime
         intel-media-driver
         libvdpau-va-gl
-        vaapiVdpau
-        vaapiIntel
+        libva-vdpau-driver
+        intel-vaapi-driver
         vpl-gpu-rt
       ];
     };
@@ -261,7 +261,7 @@ in
     #Communication
     pidgin
     signal-desktop
-    tdesktop
+    telegram-desktop
     teams-for-linux
     discord
     #skype
@@ -281,7 +281,7 @@ in
     libu2f-host
     yubikey-personalization
     yubico-piv-tool
-    pcsctools
+    pcsc-tools
     opensc
     yubikey-manager
     openssl
@@ -531,7 +531,7 @@ in
     tratex-font
     dejavu_fonts
     liberation_ttf
-    ubuntu_font_family
+    ubuntu-classic
     noto-fonts-cjk-sans
     ibm-plex
     nerd-fonts.fira-code
@@ -569,12 +569,12 @@ in
         pkgs.yubikey-personalization
         pkgs.yubico-piv-tool
         pkgs.yubikey-manager
-        pkgs.pcsctools
+        pkgs.pcsc-tools
         pkgs.opensc
         #pkgs.bash
         pkgs.usb-modeswitch-data
         pkgs.ledger-udev-rules
-        pkgs.android-udev-rules
+        # pkgs.android-udev-rules # Removed - superseded by built-in systemd uaccess rules
       ];
 
 

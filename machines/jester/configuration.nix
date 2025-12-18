@@ -50,13 +50,12 @@ in
   ];
 
   hardware.graphics.extraPackages = with pkgs; [
-  amdvlk
   vpl-gpu-rt
   ];
   # For 32 bit applications 
-  hardware.graphics.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
+  # hardware.graphics.extraPackages32 = with pkgs; [
+  #   # RADV is used by default, no need for amdvlk
+  # ];
 
   /*
   age.rekey = {
@@ -340,7 +339,7 @@ in
 
     #vpp
     
-    claudia
+    #claudia
 
     (chromium.override {
       commandLineArgs = [
@@ -391,11 +390,6 @@ in
 
   };
 
-  virtualisation.lxc = {
-    enable = false;
-    lxcfs.enable = false;
-  };
-  virtualisation.lxd.enable = false;
 
 
 

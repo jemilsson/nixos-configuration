@@ -17,6 +17,8 @@ in
       restart = true;
     };
 
+    hypridle.enable = true;
+
     libinput = {
       enable = true;
     };
