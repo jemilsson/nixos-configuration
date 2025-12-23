@@ -15,10 +15,11 @@ let
   tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
   tmuxai = pkgs.callPackage ../packages/tmuxai/default.nix {};
   claude-aws = pkgs.callPackage ../packages/claude-aws/default.nix {};
-  claude-code-router = pkgs.callPackage ../packages/claude-code-router/default.nix {};
-  claude-router = pkgs.callPackage ../packages/claude-router/default.nix { 
-    claude-code-router = claude-code-router;
-  };
+  #claude-code-router = pkgs.callPackage ../packages/claude-code-router/default.nix {};
+  #claude-router = pkgs.callPackage ../packages/claude-router/default.nix { 
+  #  claude-code-router = claude-code-router;
+  #};
+
   ccr-configure-venice = pkgs.callPackage ../packages/ccr-configure-venice/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
@@ -80,10 +81,6 @@ in
 
   ];
 
-  powerManagement = {
-    enable = false;
-    # cpuFreqGovernor = "ondemand";
-  };
 
   xdg =
     {
@@ -357,8 +354,7 @@ in
 
     unstable.claude-code
     claude-aws
-    claude-code-router
-    claude-router
+    unstable.claude-code-router
     ccr-configure-venice
     nodejs
     gh

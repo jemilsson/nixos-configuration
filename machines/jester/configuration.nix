@@ -102,12 +102,14 @@ in
 
   */
   boot = {
-    #extraModulePackages = with config.boot.kernelPackages; [ xmm7360-pci ];
+    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+    kernelModules = [ "acpi_call" ];
     kernelParams = [
       "i915.force_probe=a7a1"
+      "mem_sleep_default=s2idle"  # Better suspend for modern laptops
+      "pci=nommconf"              # Help with USB-C issues
       #"snd_hda_intel.dmic_detect=0"
       #"i915.enable_psr=0"
-
     ];
     loader = {
       systemd-boot =

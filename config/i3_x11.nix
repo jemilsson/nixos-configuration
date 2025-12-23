@@ -12,6 +12,8 @@ in
       enable = true;
     };
 
+    hypridle.enable = true;
+
     greetd = {
       enable = true;
       restart = true;
@@ -63,6 +65,7 @@ in
       xwayland = {
         enable = true;
       };
+      package = pkgs.unstable.hyprland;
     };
 
     nm-applet = {
@@ -149,8 +152,8 @@ in
 
     pkgs.networkmanagerapplet
 
-    hyprland
-    hyprlock
+    unstable.hyprland
+    unstable.hyprlock
     brightnessctl
 
     mako

@@ -7,8 +7,21 @@
   location.provider = "geoclue2";
 
   powerManagement = {
+    enable = true;
+    # Let TLP handle CPU frequency scaling on laptops
     powertop = {
       enable = false;
+    };
+  };
+
+  # Laptop suspend/power button configuration
+  services.logind = {
+    settings = {
+      Login = {
+        HandlePowerKey = "suspend";
+        HandleLidSwitch = "suspend";
+        IdleAction = "ignore";
+      };
     };
   };
   services = {
