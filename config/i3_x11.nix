@@ -12,8 +12,6 @@ in
       enable = true;
     };
 
-    hypridle.enable = true;
-
     greetd = {
       enable = true;
       restart = true;
