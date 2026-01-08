@@ -87,7 +87,7 @@
     vscode
     virt-manager
 
-    taskwarrior
+    taskwarrior2
 
     elmPackages.elm
 

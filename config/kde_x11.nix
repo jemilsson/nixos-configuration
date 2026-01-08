@@ -3,25 +3,26 @@
   services = {
     xserver = {
       enable = true;
-      layout = "se";
-      xkbOptions = "eurosign:e";
+      xkb = {
+        layout = "se";
+        options = "eurosign:e";
+      };
+    };
 
-      libinput = {
+    libinput = {
+      enable = true;
+    };
+
+    desktopManager = {
+      plasma6 = {
         enable = true;
       };
+    };
 
-      desktopManager = {
-        plasma5 = {
-          enable = true;
-        };
+    displayManager = {
+      sddm = {
+        enable = true;
       };
-
-      displayManager = {
-        sddm = {
-          enable = true;
-        };
-      };
-
     };
   };
 
@@ -29,5 +30,5 @@
 
   ];
 
-  i18n.consoleUseXkbConfig = true;
+  console.useXkbConfig = true;
 }

@@ -33,12 +33,11 @@
         Option "DRI3" "1"
         Option "TearFree" "on"
       '';
+    };
 
-      displayManager.autoLogin = {
-        user = "alicia";
-        enable = true;
-
-      };
+    displayManager.autoLogin = {
+      user = "alicia";
+      enable = true;
     };
     xrdp = {
       enable = false;
