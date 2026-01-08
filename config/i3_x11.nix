@@ -17,7 +17,19 @@ in
       restart = true;
     };
 
-    hypridle.enable = true;
+    hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          lock_cmd = "pidof hyprlock || hyprlock";
+          unlock_cmd = "pkill -USR1 hyprlock";
+          before_sleep_cmd = "loginctl lock-session";
+          after_sleep_cmd = "hyprctl dispatch dpms on && pkill -USR1 hypridle && pidof hyprlock || hyprlock";
+          ignore_dbus_inhibit = false;
+          ignore_systemd_inhibit = false;
+        };
+      };
+    };
 
     libinput = {
       enable = true;
@@ -84,6 +96,17 @@ in
     user = {
 
       services = {
+
+        hypridle-resume = {
+          enable = true;
+          description = "Ensure hyprlock runs after resume";
+          after = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+          wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 2; ${pkgs.procps}/bin/pidof hyprlock || ${pkgs.unstable.hyprlock}/bin/hyprlock'";
+          };
+        };
 
         kanshi = {
           enable = true;

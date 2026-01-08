@@ -21,6 +21,7 @@ let
   #};
 
   ccr-configure-venice = pkgs.callPackage ../packages/ccr-configure-venice/default.nix {};
+  goose-desktop = pkgs.callPackage ../packages/goose-desktop/default.nix {};
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
@@ -360,6 +361,7 @@ in
     gh
 
     unstable.goose-cli
+    goose-desktop
     devenv
     tmux
     tmuxai

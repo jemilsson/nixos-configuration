@@ -328,6 +328,7 @@ in
     #python37Packages.shapely
     opencl-headers
     labelImg
+    tesseract5  # OCR tool with all language support
 
     #bambu-studio
     #orca-slicer
