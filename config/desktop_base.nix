@@ -354,9 +354,9 @@ in
     winetricks
 
     unstable.claude-code
-    claude-aws
-    unstable.claude-code-router
-    ccr-configure-venice
+    #claude-aws
+    #unstable.claude-code-router
+    #ccr-configure-venice
     nodejs
     gh
 
