@@ -9,10 +9,6 @@
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
     # };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     #sops-nix = {
     #  url = "github:Mic92/sops-nix";
     #  inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +25,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, hyprland, sops-nix}: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable}: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
