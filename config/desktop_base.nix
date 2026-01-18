@@ -355,7 +355,7 @@ in
 
     unstable.claude-code
     #claude-aws
-    #unstable.claude-code-router
+    unstable.claude-code-router
     #ccr-configure-venice
     nodejs
     gh
