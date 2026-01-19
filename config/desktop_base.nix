@@ -15,7 +15,7 @@ let
   tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
   tmuxai = pkgs.callPackage ../packages/tmuxai/default.nix {};
   claude-aws = pkgs.callPackage ../packages/claude-aws/default.nix {};
-  #claude-code-router = pkgs.callPackage ../packages/claude-code-router/default.nix {};
+  claude-code-router = pkgs.callPackage ../packages/claude-code-router/default.nix {};
   #claude-router = pkgs.callPackage ../packages/claude-router/default.nix { 
   #  claude-code-router = claude-code-router;
   #};
@@ -355,7 +355,7 @@ in
 
     unstable.claude-code
     #claude-aws
-    unstable.claude-code-router
+    claude-code-router
     #ccr-configure-venice
     nodejs
     gh
