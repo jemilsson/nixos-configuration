@@ -353,6 +353,8 @@ in
     wine
     winetricks
 
+
+    unstable.opencode
     unstable.claude-code
     #claude-aws
     claude-code-router
