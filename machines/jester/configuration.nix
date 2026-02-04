@@ -22,7 +22,7 @@ in
 
   ];
 
-  nixpkgs.config.permittedInsecurePackarges = [
+  nixpkgs.config.permittedInsecurePackages = [
                 #"electron-24.8.6"
 ];
 
@@ -427,15 +427,15 @@ in
 
   #inherit containers;
 
-  nixpkgs.overlays = [
-    (self: super: {
-      #unstable.mesa = pkgs.mesa;
-      #unstable.mesa_glu = pkgs.mesa_glu;
-      #unstable.mesa_noglu = pkgs.mesa_noglu;
-      #unstable.mesa_drivers = pkgs.mesa_drivers;
-    }
-    )
-  ];
+  #nixpkgs.overlays = [
+  #  (self: super: {
+  #    #unstable.mesa = pkgs.mesa;
+  #    #unstable.mesa_glu = pkgs.mesa_glu;
+  #    #unstable.mesa_noglu = pkgs.mesa_noglu;
+  #    #unstable.mesa_drivers = pkgs.mesa_drivers;
+  #  }
+  #  )
+  #];
   /*
   system.replaceRuntimeDependencies = [
     ({ original = pkgs.mesa; replacement = pkgs.unstable.mesa; })
