@@ -5,6 +5,8 @@ let
   cardano-hw-cli = pkgs.callPackage ../../packages/cardano-hw-cli/default.nix { };
   vpp = pkgs.callPackage ../../packages/vpp/default.nix { };
   claudia = pkgs.callPackage ../../packages/claudia/default.nix { };
+  fit-web = pkgs.callPackage ../../packages/fit-web/default.nix { };
+  fit-entire-website = pkgs.callPackage ../../packages/fit-entire-website/default.nix { };
 in
 {
   imports = [
@@ -343,6 +345,9 @@ in
     #vpp
     
     #claudia
+    
+    fit-web
+    fit-entire-website
 
     (chromium.override {
       commandLineArgs = [
