@@ -7,6 +7,8 @@ let
   claudia = pkgs.callPackage ../../packages/claudia/default.nix { };
   fit-web = pkgs.callPackage ../../packages/fit-web/default.nix { };
   fit-entire-website = pkgs.callPackage ../../packages/fit-entire-website/default.nix { };
+  fit-main = pkgs.callPackage ../../packages/fit-main/default.nix { };
+  forensic-webcapture = pkgs.callPackage ../../packages/forensic-webcapture/default.nix { };
 in
 {
   imports = [
@@ -346,8 +348,10 @@ in
     
     #claudia
     
-    fit-web
-    fit-entire-website
+    # fit-web  # Needs additional dependencies
+    # fit-entire-website  # Needs additional dependencies
+    # fit-main  # Main FIT GUI application (needs work)
+    forensic-webcapture  # Command-line forensic web capture tool
 
     (chromium.override {
       commandLineArgs = [
