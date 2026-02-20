@@ -280,15 +280,25 @@ class ForensicCapture:
             if self.parsed_url.path and self.parsed_url.path != '/':
                 self.session.headers['Referer'] = f"{self.parsed_url.scheme}://{self.parsed_url.netloc}/"
             
-            # Make request with timeout
-            response = self.session.get(self.url, timeout=30, verify=certifi.where())
+            # Make request with timeout and disable auto decompression for forensic integrity
+            response = self.session.get(self.url, timeout=30, verify=certifi.where(), stream=True)
             
-            # Save raw HTML
-            with open(self.output_dir / 'page.html', 'w', encoding='utf-8') as f:
-                f.write(response.text)
+            # Get headers first
+            headers = dict(response.headers)
+            
+            # Save raw content exactly as received (including compression)
+            with open(self.output_dir / 'page.html', 'wb') as f:
+                f.write(response.content)
+            
+            # Also save decompressed version for analysis
+            decompressed_content = response.text  # This will decompress if needed
+            with open(self.output_dir / 'page_readable.html', 'w', encoding='utf-8') as f:
+                f.write(decompressed_content)
+            
+            if 'content-encoding' in headers:
+                print(f"  ℹ Content preserved with {headers['content-encoding']} compression")
             
             # Save response headers
-            headers = dict(response.headers)
             with open(self.output_dir / 'response_headers.json', 'w') as f:
                 json.dump(headers, f, indent=2)
             
@@ -390,33 +400,9 @@ class ForensicCapture:
         self.metadata['assets_captured'] = asset_count
     
     def take_screenshot(self):
-        """Take screenshot using headless browser"""
-        print("[5/7] Taking screenshot...")
-        
-        try:
-            # Try with chromium
-            result = subprocess.run([
-                'chromium',
-                '--headless',
-                '--disable-gpu',
-                '--no-sandbox',
-                f'--screenshot={self.output_dir}/screenshot.png',
-                '--window-size=1920,1080',
-                '--hide-scrollbars',
-                '--virtual-time-budget=5000',
-                self.url
-            ], capture_output=True, text=True, timeout=30)
-            
-            if result.returncode == 0:
-                print("  ✓ Screenshot captured")
-                self.metadata['screenshot'] = True
-            else:
-                print("  ⚠ Screenshot failed")
-                self.metadata['screenshot'] = False
-                
-        except Exception as e:
-            print(f"  ⚠ Screenshot failed: {e}")
-            self.metadata['screenshot'] = False
+        """Skip screenshot - not needed for forensic evidence"""
+        print("[5/7] Skipping screenshot (not required for forensic integrity)")
+        self.metadata['screenshot'] = False
     
     def generate_hashes(self):
         """Generate cryptographic hashes of all captured files"""

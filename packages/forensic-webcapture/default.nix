@@ -6,7 +6,6 @@
 , openssl
 , dnsutils
 , traceroute
-, chromium
 , util-linux
 }:
 
@@ -47,7 +46,6 @@ stdenv.mkDerivation rec {
         openssl
         dnsutils
         traceroute
-        chromium
         util-linux
       ]} \
       --set PYTHONPATH "${pythonEnv}/${python3.sitePackages}"
@@ -70,11 +68,11 @@ stdenv.mkDerivation rec {
       - Certificate fingerprints (SHA256/SHA1) for verification
       - Certificate validity and OCSP checking
       - DNS resolution documentation
-      - Complete page capture with assets
-      - Screenshots using headless browser
+      - Complete page capture with assets (preserves original compression)
       - Dual hashing (SHA256 + SHA512) for integrity
       - Comprehensive chain of custody documentation
       - Realistic browser headers to bypass anti-bot measures
+      - Local web server for browsing captured sites
       
       The TLS certificate provides cryptographic proof that:
       - Content originated from the legitimate server

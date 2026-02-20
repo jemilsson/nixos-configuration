@@ -46,7 +46,7 @@ class ForensicCaptureHandler(SimpleHTTPRequestHandler):
             super().do_GET()
     
     def _serve_compressed_html(self):
-        """Serve the HTML with original compression and headers"""
+        """Serve the HTML exactly as captured with original compression"""
         html_file = self.capture_dir / 'page.html'
         
         if not html_file.exists():
@@ -60,7 +60,7 @@ class ForensicCaptureHandler(SimpleHTTPRequestHandler):
         content_type = self.response_headers.get('content-type', 'text/html; charset=utf-8')
         self.send_header('Content-Type', content_type)
         
-        # Preserve compression
+        # Preserve original compression - serve exactly as captured
         if 'content-encoding' in self.response_headers:
             encoding = self.response_headers['content-encoding']
             self.send_header('Content-Encoding', encoding)
@@ -69,14 +69,14 @@ class ForensicCaptureHandler(SimpleHTTPRequestHandler):
         file_size = html_file.stat().st_size
         self.send_header('Content-Length', str(file_size))
         
-        # Add forensic headers
+        # Add forensic headers  
         self.send_header('X-Forensic-Capture', 'true')
         self.send_header('X-Frame-Options', 'SAMEORIGIN')
         self.send_header('X-Original-Date', self.response_headers.get('Date', 'Unknown'))
         
         self.end_headers()
         
-        # Send the file content as-is (compressed)
+        # Send the raw content exactly as captured (compressed)
         with open(html_file, 'rb') as f:
             self.wfile.write(f.read())
     
