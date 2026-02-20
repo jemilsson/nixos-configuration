@@ -6,6 +6,7 @@
 , openssl
 , dnsutils
 , traceroute
+, chromium
 , util-linux
 }:
 
@@ -32,13 +33,9 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/bin
     
-    # Install Python forensic capture tool
+    # Install Python forensic capture tool with integrated browsing
     cp ${./forensic-capture.py} $out/bin/forensic-webcapture
     chmod +x $out/bin/forensic-webcapture
-    
-    # Install local web server for browsing captures
-    cp ${./serve-capture.py} $out/bin/forensic-serve
-    chmod +x $out/bin/forensic-serve
 
     wrapProgram $out/bin/forensic-webcapture \
       --prefix PATH : ${lib.makeBinPath [
@@ -46,13 +43,8 @@ stdenv.mkDerivation rec {
         openssl
         dnsutils
         traceroute
+        chromium
         util-linux
-      ]} \
-      --set PYTHONPATH "${pythonEnv}/${python3.sitePackages}"
-    
-    wrapProgram $out/bin/forensic-serve \
-      --prefix PATH : ${lib.makeBinPath [
-        coreutils
       ]} \
       --set PYTHONPATH "${pythonEnv}/${python3.sitePackages}"
   '';
@@ -81,15 +73,14 @@ stdenv.mkDerivation rec {
       - No man-in-the-middle attack occurred
       
       Usage:
-        forensic-webcapture capture <URL>                 - Capture with Chrome profile
-        forensic-webcapture capture -b firefox <URL>      - Use Firefox profile
-        forensic-webcapture capture -b googlebot <URL>    - Use Googlebot profile
-        forensic-webcapture capture -b random <URL>       - Random user agent
-        forensic-webcapture verify <dir>                  - Verify capture integrity
-        forensic-webcapture report <dir>                  - Display forensic report
-        
-        forensic-serve <capture-dir>                      - Browse capture locally
-        forensic-serve --info-only <capture-dir>          - Show capture info only
+        forensic-webcapture capture <URL>                    - Capture with Chrome profile
+        forensic-webcapture capture -b firefox <URL>         - Use Firefox profile  
+        forensic-webcapture capture -b googlebot <URL>       - Use Googlebot profile
+        forensic-webcapture capture -b random <URL>          - Random user agent
+        forensic-webcapture verify <dir>                     - Verify capture integrity
+        forensic-webcapture report <dir>                     - Display forensic report
+        forensic-webcapture browse <dir>                     - Browse capture locally
+        forensic-webcapture browse --spoof-domain <dir>      - Browse with domain spoofing
       
       Designed for legal proceedings requiring cryptographic proof of web content origin.
     '';

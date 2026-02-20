@@ -609,6 +609,98 @@ def verify_capture(capture_dir):
     print("\n✓ VERIFICATION COMPLETE - INTEGRITY CONFIRMED")
     return True
 
+def browse_capture(capture_dir, port=8000, spoof_domain=False):
+    """Browse a forensic capture locally"""
+    from http.server import HTTPServer, SimpleHTTPRequestHandler
+    import webbrowser
+    import json
+    import subprocess
+    import shutil
+    from urllib.parse import urlparse
+    
+    capture_dir = Path(capture_dir)
+    
+    if not capture_dir.exists():
+        print(f"Error: Directory {capture_dir} not found")
+        return False
+    
+    # Get original domain
+    original_domain = None
+    metadata_file = capture_dir / 'capture_metadata.json'
+    if metadata_file.exists():
+        try:
+            with open(metadata_file) as f:
+                metadata = json.load(f)
+            url = metadata.get('url', '')
+            if url.startswith('http'):
+                parsed = urlparse(url)
+                original_domain = parsed.netloc
+        except:
+            pass
+    
+    print(f"\n=== BROWSING FORENSIC CAPTURE ===")
+    print(f"Directory: {capture_dir}")
+    print(f"Port: {port}")
+    if spoof_domain and original_domain:
+        print(f"Domain spoofing: {original_domain} → localhost:{port}")
+    
+    # Custom handler for forensic captures
+    class ForensicHandler(SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=str(capture_dir), **kwargs)
+            
+        def do_GET(self):
+            if self.path == '/' or self.path == '/index.html':
+                self.path = '/page.html'
+            super().do_GET()
+    
+    try:
+        with HTTPServer(('localhost', port), ForensicHandler) as httpd:
+            url = f"http://localhost:{port}"
+            
+            print(f"\n🌐 Serving capture at: {url}")
+            
+            # Launch browser with domain spoofing if requested
+            if spoof_domain and original_domain:
+                browser_cmd = None
+                for cmd in ['chromium', 'google-chrome', 'chrome']:
+                    if shutil.which(cmd):
+                        browser_cmd = cmd
+                        break
+                
+                if browser_cmd:
+                    try:
+                        subprocess.Popen([
+                            browser_cmd,
+                            f'--host-rules=MAP {original_domain} localhost:{port}',
+                            '--disable-web-security',
+                            '--user-data-dir=/tmp/forensic-browser',
+                            f'http://{original_domain}/'
+                        ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        print(f"🎭 Browser launched with domain spoofing: {original_domain}")
+                    except:
+                        print("⚠ Domain spoofing failed, opening regular browser")
+                        webbrowser.open(url)
+                else:
+                    print("⚠ Chromium not found, opening regular browser")
+                    webbrowser.open(url)
+            else:
+                webbrowser.open(url)
+                print("🔗 Browser opened")
+            
+            print("\nPress Ctrl+C to stop the server")
+            httpd.serve_forever()
+            
+    except KeyboardInterrupt:
+        print("\n\n🛑 Server stopped")
+        return True
+    except OSError as e:
+        if e.errno == 98:
+            print(f"\n❌ Port {port} already in use")
+        else:
+            print(f"\n❌ Server error: {e}")
+        return False
+
 def main():
     parser = argparse.ArgumentParser(
         description='Forensic Web Capture Tool with TLS Certificates and Browser Spoofing'
@@ -633,6 +725,12 @@ def main():
     report_parser = subparsers.add_parser('report', help='Generate report from capture')
     report_parser.add_argument('directory', help='Capture directory')
     
+    # Browse command
+    browse_parser = subparsers.add_parser('browse', help='Browse captured website locally')
+    browse_parser.add_argument('directory', help='Capture directory to browse')
+    browse_parser.add_argument('-p', '--port', type=int, default=8000, help='Port to serve on (default: 8000)')
+    browse_parser.add_argument('--spoof-domain', action='store_true', help='Launch browser with domain spoofing')
+    
     args = parser.parse_args()
     
     if args.command == 'capture':
@@ -650,6 +748,9 @@ def main():
                 print(f.read())
         else:
             print(f"No report found in {args.directory}")
+    
+    elif args.command == 'browse':
+        browse_capture(args.directory, args.port, args.spoof_domain)
     
     else:
         parser.print_help()
