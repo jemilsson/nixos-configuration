@@ -88,22 +88,19 @@ python3.pkgs.buildPythonApplication rec {
   postInstall = ''
     mkdir -p $out/bin
     
-    # Main FIT application launcher
+    # Create a wrapper that runs the main fit.py script
     cat > $out/bin/fit <<EOF
     #!${python3.interpreter}
     import sys
     import os
-    os.chdir("$out/lib/python${python3.pythonVersion}/site-packages")
-    sys.path.insert(0, "$out/lib/python${python3.pythonVersion}/site-packages")
     
-    from PyQt6 import QtWidgets, QtGui
-    from view.wizard import Wizard
+    # Add the package directory to Python path
+    site_packages = "$out/lib/python${python3.pythonVersion}/site-packages"
+    sys.path.insert(0, site_packages)
+    os.chdir(site_packages)
     
-    if __name__ == "__main__":
-        app = QtWidgets.QApplication(sys.argv)
-        wizard = Wizard()
-        wizard.show()
-        sys.exit(app.exec())
+    # Import and run the main application
+    exec(open(os.path.join(site_packages, "fit.py")).read())
     EOF
     chmod +x $out/bin/fit
   '';
