@@ -51,7 +51,6 @@ in
     activationScripts.showSSHKey = ''
       echo "================================="
       echo "Machine's SSH public key for GitHub deploy key:"
-      echo "Hostname: $(hostname)"
       cat /etc/ssh/ssh_host_ed25519_key.pub
       echo "================================="
     '';
