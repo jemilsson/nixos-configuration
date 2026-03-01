@@ -32,6 +32,29 @@ in
       randomizedDelaySec = "1 h";
       persistent = true;
     };
+
+    # Configure SSH to use machine's host key for GitHub fetching
+    activationScripts.setupGithubSSH = ''
+      mkdir -p /root/.ssh
+      cat > /root/.ssh/config <<EOF
+      Host github.com
+        HostName github.com
+        User git
+        IdentityFile /etc/ssh/ssh_host_ed25519_key
+        IdentitiesOnly yes
+        StrictHostKeyChecking accept-new
+      EOF
+      chmod 600 /root/.ssh/config
+    '';
+
+    # Display the public key for easy copying to GitHub
+    activationScripts.showSSHKey = ''
+      echo "================================="
+      echo "Machine's SSH public key for GitHub deploy key:"
+      echo "Hostname: $(hostname)"
+      cat /etc/ssh/ssh_host_ed25519_key.pub
+      echo "================================="
+    '';
   };
 
   systemd.tmpfiles.rules = [
