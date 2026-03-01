@@ -7,7 +7,22 @@ on:
     branches: [ master ]
 
 jobs:
+  check:
+    runs-on: [self-hosted, nixos]
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check flake
+      run: |
+        nix --extra-experimental-features 'nix-command flakes' flake check --no-build
+      env:
+        NIX_CONFIG: |
+          experimental-features = nix-command flakes
+          substituters = https://cache.nixos.org/
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+
   build:
+    needs: check
     runs-on: [self-hosted, nixos]
     strategy:
       matrix:
