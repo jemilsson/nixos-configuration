@@ -8,7 +8,6 @@ let
   fit-web = pkgs.jemilsson.fit-web;
   fit-entire-website = pkgs.jemilsson.fit-entire-website;
   fit-main = pkgs.jemilsson.fit-main;
-  forensic-webcapture = pkgs.jemilsson.forensic-webcapture;
 in
 {
   imports = [
@@ -351,7 +350,6 @@ in
     # fit-web  # Needs additional dependencies
     # fit-entire-website  # Needs additional dependencies
     # fit-main  # Main FIT GUI application (needs work)
-    forensic-webcapture  # Command-line forensic web capture tool
 
     (chromium.override {
       commandLineArgs = [

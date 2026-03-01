@@ -109,9 +109,6 @@
         #};
       };
 
-      packages.${system} = {
-        forensic-webcapture = pkgs.callPackage ./packages/forensic-webcapture {};
-      };
 
       apps = {
         #"x86_64-linux" = agenix-rekey.defineApps self pkgs self.nixosConfigurations;
