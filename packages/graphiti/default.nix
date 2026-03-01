@@ -2,14 +2,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "graphiti-mcp";
-  version = "0.17.11";
+  version = "0.28.1";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "getzep";
     repo = "graphiti";
     rev = "v${version}";
-    hash = "sha256-qI5HVPJ8ZpU++b0/qkaOwB8ifECQwpKcgOsFvirkyTU=";
+    hash = "";  # Will be filled by nix
   };
 
   nativeBuildInputs = with pkgs; [
