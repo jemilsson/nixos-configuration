@@ -30,37 +30,75 @@ jobs:
           pr-reviewers: jemilsson
           pr-assignees: jemilsson
 
-  check-and-merge:
+  check-and-build:
     needs: lockfile
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, nixos]
     if: ${{ needs.lockfile.outputs.pull-request-number }}
+    outputs:
+      check_passed: ${{ steps.flake_check.outputs.check_passed }}
+      build_passed: ${{ steps.build_check.outputs.build_passed }}
+      machines: ${{ steps.get-machines.outputs.machines }}
     steps:
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: refs/pull/${{ needs.lockfile.outputs.pull-request-number }}/head
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Run flake check
         id: flake_check
         run: |
-          if nix flake check --no-build; then
+          if nix --extra-experimental-features 'nix-command flakes' flake check --no-build; then
             echo "check_passed=true" >> $GITHUB_OUTPUT
           else
             echo "check_passed=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-      - name: Auto-merge PR
+        env:
+          NIX_CONFIG: |
+            experimental-features = nix-command flakes
+            substituters = https://cache.nixos.org/
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+      - name: Get machine list
         if: steps.flake_check.outputs.check_passed == 'true'
+        id: get-machines
+        run: |
+          machines=$(nix --extra-experimental-features 'nix-command flakes' eval --json '.#nixosConfigurations' --apply 'builtins.attrNames')
+          echo "machines=$machines" >> $GITHUB_OUTPUT
+          echo "Found machines: $machines"
+      - name: Build all machines
+        if: steps.flake_check.outputs.check_passed == 'true'
+        id: build_check
+        run: |
+          machines=$(echo '${{ steps.get-machines.outputs.machines }}' | jq -r '.[]')
+          all_passed=true
+          for machine in $machines; do
+            echo "Building $machine..."
+            if ! nix --extra-experimental-features 'nix-command flakes' build \
+              ".#nixosConfigurations.$machine.config.system.build.toplevel" \
+              --no-link \
+              --print-build-logs; then
+              echo "Build failed for $machine"
+              all_passed=false
+            fi
+          done
+          if [ "$all_passed" = true ]; then
+            echo "build_passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "build_passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+        env:
+          NIX_CONFIG: |
+            experimental-features = nix-command flakes
+            substituters = https://cache.nixos.org/
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+  
+  merge:
+    needs: [lockfile, check-and-build]
+    runs-on: ubuntu-latest
+    if: ${{ needs.check-and-build.outputs.check_passed == 'true' && needs.check-and-build.outputs.build_passed == 'true' }}
+    steps:
+      - name: Auto-merge PR
         uses: actions/github-script@v7
         with:
           script: |
@@ -73,7 +111,7 @@ jobs:
                 pull_number: prNumber,
                 merge_method: 'squash',
                 commit_title: 'chore: update flake.lock',
-                commit_message: 'Automated update of flake.lock dependencies\n\nFlake check passed successfully.'
+                commit_message: 'Automated update of flake.lock dependencies\n\nFlake check and all machine builds passed successfully.'
               });
               
               if (mergeResponse.data.merged) {
@@ -83,7 +121,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: prNumber,
-                  body: '🎉 **Auto-merge successful!**\n\nFlake.lock has been updated and flake check passed. The changes have been automatically merged.'
+                  body: '🎉 **Auto-merge successful!**\n\nFlake.lock has been updated. All checks and builds passed:\n- ✅ Flake check passed\n- ✅ All machine builds succeeded\n\nThe changes have been automatically merged.'
                 });
               } else {
                 throw new Error('Merge was not successful');
@@ -100,16 +138,33 @@ jobs:
               // Don't fail the workflow, just log the error
               core.warning(`Failed to auto-merge PR #${prNumber}: ${error.message}`);
             }
-      - name: Comment on failed check
-        if: failure()
+  
+  comment-on-failure:
+    needs: [lockfile, check-and-build]
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.lockfile.outputs.pull-request-number && (needs.check-and-build.outputs.check_passed != 'true' || needs.check-and-build.outputs.build_passed != 'true') }}
+    steps:
+      - name: Comment on failed check or build
         uses: actions/github-script@v7
         with:
           script: |
             const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};
+            const checkPassed = '${{ needs.check-and-build.outputs.check_passed }}' === 'true';
+            const buildPassed = '${{ needs.check-and-build.outputs.build_passed }}' === 'true';
+            
+            let message = '❌ **Auto-merge skipped**\n\n';
+            if (!checkPassed) {
+              message += '- Flake check failed\n';
+            }
+            if (checkPassed && !buildPassed) {
+              message += '- One or more machine builds failed\n';
+            }
+            message += '\nPlease review the failing checks and merge manually if appropriate.';
+            
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: '❌ **Auto-merge skipped**\n\nFlake check failed. Please review the failing checks and merge manually if appropriate.'
+              body: message
             });
-            console.log(`Commented on PR #${prNumber} about failed flake check`);
+            console.log(`Commented on PR #${prNumber} about failed checks`);
