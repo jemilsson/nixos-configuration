@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  graphiti = pkgs.callPackage ../../packages/graphiti/default.nix { };
+  graphiti = pkgs.jemilsson.graphiti;
 in
 {
   services = {

@@ -6,6 +6,11 @@
     nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
+    nixpkgs-jemilsson = {
+      url = "github:jemilsson-org/nixpkgs-jemilsson";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
     # };
@@ -25,7 +30,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable}: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson }: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -40,6 +45,11 @@
         
       };
 
+      # Overlay that imports packages from nixpkgs-jemilsson
+      overlay-jemilsson = final: prev: {
+        jemilsson = nixpkgs-jemilsson.packages.${system};
+      };
+
       pkgs = import nixpkgs {
         config.allowUnfree = true;
         inherit system;
@@ -47,6 +57,8 @@
       };
     in
     {
+      overlays.default = overlay-jemilsson;
+      
       nixosModules = {
         serverBase = import ./config/server_base.nix;
         desktopBase = import ./config/desktop_base.nix;
@@ -58,7 +70,7 @@
         battlestation = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             #agenix.nixosModules.default
             #agenix-rekey.nixosModules.default
             ./machines/battlestation/configuration.nix 
@@ -68,7 +80,7 @@
         jester = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             #agenix.nixosModules.default
             #agenix-rekey.nixosModules.default
             ./machines/jester/configuration.nix
@@ -80,7 +92,7 @@
         alicia = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             #agenix.nixosModules.default
             #agenix-rekey.nixosModules.default
             ./machines/alicia/configuration.nix

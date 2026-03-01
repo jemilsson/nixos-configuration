@@ -2,8 +2,8 @@
 let
   serviceName = "bedrock-access-gateway";
   port = 8001;
-  package = pkgs.callPackage ../packages/bedrock-access-gateway { };
-  mangum = pkgs.python3.pkgs.callPackage ../packages/python-mangum { };
+  package = pkgs.jemilsson.bedrock-access-gateway;
+  mangum = pkgs.jemilsson.python-mangum;
 in
 {
   # Add package to system packages so users can access it

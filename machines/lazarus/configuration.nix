@@ -2,7 +2,7 @@
 let
   dpi = 120;
 
-  vpp = pkgs.callPackage pkgs.callPackage ../packages/vpp/default.nix { };
+  vpp = pkgs.callPackage pkgs.jemilsson.vpp;
 in
 {
   imports = [

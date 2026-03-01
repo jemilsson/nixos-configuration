@@ -1,14 +1,14 @@
 { config, lib, pkgs, stdenv, ... }:
 let
   #containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
-  cardano-node = pkgs.callPackage ../../packages/cardano-node/default.nix { };
-  cardano-hw-cli = pkgs.callPackage ../../packages/cardano-hw-cli/default.nix { };
-  vpp = pkgs.callPackage ../../packages/vpp/default.nix { };
-  claudia = pkgs.callPackage ../../packages/claudia/default.nix { };
-  fit-web = pkgs.callPackage ../../packages/fit-web/default.nix { };
-  fit-entire-website = pkgs.callPackage ../../packages/fit-entire-website/default.nix { };
-  fit-main = pkgs.callPackage ../../packages/fit-main/default.nix { };
-  forensic-webcapture = pkgs.callPackage ../../packages/forensic-webcapture/default.nix { };
+  #cardano-node = removed - no longer needed
+  #cardano-hw-cli = removed - no longer needed  
+  vpp = pkgs.jemilsson.vpp;
+  claudia = pkgs.jemilsson.claudia;
+  fit-web = pkgs.jemilsson.fit-web;
+  fit-entire-website = pkgs.jemilsson.fit-entire-website;
+  fit-main = pkgs.jemilsson.fit-main;
+  forensic-webcapture = pkgs.jemilsson.forensic-webcapture;
 in
 {
   imports = [

@@ -16,6 +16,29 @@
         "type": "github"
       }
     },
+    "nixpkgs-jemilsson": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772397202,
+        "narHash": "sha256-Pr/02xBssbdH7LQVuyEeqkFg3cPW45kHFSYP0fNFhQ0=",
+        "owner": "jemilsson-org",
+        "repo": "nixpkgs-jemilsson",
+        "rev": "867341e0194447bacb19c27b45f4a69a2bdd4b0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jemilsson-org",
+        "repo": "nixpkgs-jemilsson",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1771848320,
@@ -35,6 +58,7 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
+        "nixpkgs-jemilsson": "nixpkgs-jemilsson",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }

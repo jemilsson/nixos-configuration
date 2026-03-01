@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 let
-  # Custom WhiteSur packages
-  whitesur-wallpapers = pkgs.callPackage ../packages/whitesur-wallpapers/default.nix { };
-  whitesur-firefox-theme = pkgs.callPackage ../packages/whitesur-firefox-theme/default.nix { };
+  # Custom WhiteSur packages from nixpkgs-jemilsson
+  whitesur-wallpapers = pkgs.jemilsson.whitesur-wallpapers;
+  whitesur-firefox-theme = pkgs.jemilsson.whitesur-firefox-theme;
 in
 {
   # Unified appearance configuration for consistent theming across all applications

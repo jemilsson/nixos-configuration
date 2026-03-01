@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  mcpo = pkgs.python3Packages.callPackage ../../packages/mcpo { };
+  mcpo = pkgs.jemilsson.mcpo;
 
   # MCPO configuration without graphiti
   mcpoConfig = pkgs.writeText "mcpo-config.json" (builtins.toJSON {

@@ -1,27 +1,25 @@
 { config, lib, pkgs, ... }:
 let
-  #scd-pkcs11 = pkgs.callPackage ../packages/scd-pkcs11/default.nix {};
-  #python3-edgetpu = pkgs.callPackage ../packages/python3-edgetpu/default.nix {};
-  #python3-tflite = pkgs.callPackage ../packages/python3-tflite/default.nix {};
+  #scd-pkcs11 = pkgs.jemilsson.scd-pkcs11;
+  #python3-edgetpu = pkgs.jemilsson.python3-edgetpu;
+  #python3-tflite = pkgs.jemilsson.python3-tflite;
 
-  #continue = pkgs.callPackage ../packages/continue/default.nix {};
-  #roo-code = pkgs.callPackage ../packages/roo-code/default.nix {};
-  vscode-claude-code = pkgs.callPackage ../packages/vscode-claude-code/default.nix {};
-  vscode-3d-preview = pkgs.callPackage ../packages/vscode-3d-preview/default.nix {};
-  quarto = pkgs.callPackage ../packages/quarto/default.nix {};
-  djlint = pkgs.callPackage ../packages/djlint/default.nix {};
-  cloudformation-yaml-validator = pkgs.callPackage ../packages/cloudformation-yaml-validator/default.nix {};
-  boto3-ide = pkgs.callPackage ../packages/boto3-ide/default.nix {};
-  tratex-font = pkgs.callPackage ../packages/tratex-font/default.nix {};
-  tmuxai = pkgs.callPackage ../packages/tmuxai/default.nix {};
-  claude-aws = pkgs.callPackage ../packages/claude-aws/default.nix {};
-  claude-code-router = pkgs.callPackage ../packages/claude-code-router/default.nix {};
-  #claude-router = pkgs.callPackage ../packages/claude-router/default.nix { 
-  #  claude-code-router = claude-code-router;
-  #};
+  #continue = pkgs.jemilsson.continue;
+  #roo-code = pkgs.jemilsson.roo-code;
+  vscode-claude-code = pkgs.jemilsson.vscode-claude-code;
+  vscode-3d-preview = pkgs.jemilsson.vscode-3d-preview;
+  quarto = pkgs.jemilsson.quarto;
+  djlint = pkgs.jemilsson.djlint;
+  cloudformation-yaml-validator = pkgs.jemilsson.cloudformation-yaml-validator;
+  boto3-ide = pkgs.jemilsson.boto3-ide;
+  tratex-font = pkgs.jemilsson.tratex-font;
+  tmuxai = pkgs.jemilsson.tmuxai;
+  claude-aws = pkgs.jemilsson.claude-aws;
+  claude-code-router = pkgs.jemilsson.claude-code-router;
+  #claude-router = pkgs.jemilsson.claude-router;
 
-  ccr-configure-venice = pkgs.callPackage ../packages/ccr-configure-venice/default.nix {};
-  goose-desktop = pkgs.callPackage ../packages/goose-desktop/default.nix {};
+  ccr-configure-venice = pkgs.jemilsson.ccr-configure-venice;
+  goose-desktop = pkgs.jemilsson.goose-desktop;
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
