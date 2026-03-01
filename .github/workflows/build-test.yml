@@ -1,0 +1,30 @@
+name: Build Test - All Machines
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: [self-hosted, nixos]
+    strategy:
+      matrix:
+        machine: [battlestation, jester, alicia]
+      fail-fast: false
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build ${{ matrix.machine }}
+      run: |
+        nix --extra-experimental-features 'nix-command flakes' build \
+          '.#nixosConfigurations.${{ matrix.machine }}.config.system.build.toplevel' \
+          --no-link \
+          --print-build-logs
+      env:
+        NIX_CONFIG: |
+          experimental-features = nix-command flakes
+          substituters = https://cache.nixos.org/
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
