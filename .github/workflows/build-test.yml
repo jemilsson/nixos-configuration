@@ -9,6 +9,8 @@ on:
 jobs:
   check:
     runs-on: [self-hosted, nixos]
+    outputs:
+      machines: ${{ steps.get-machines.outputs.machines }}
     steps:
     - uses: actions/checkout@v4
     
@@ -20,13 +22,20 @@ jobs:
           experimental-features = nix-command flakes
           substituters = https://cache.nixos.org/
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+    
+    - name: Get machine list
+      id: get-machines
+      run: |
+        machines=$(nix --extra-experimental-features 'nix-command flakes' eval --json '.#nixosConfigurations' --apply 'builtins.attrNames')
+        echo "machines=$machines" >> $GITHUB_OUTPUT
+        echo "Found machines: $machines"
 
   build:
     needs: check
     runs-on: [self-hosted, nixos]
     strategy:
       matrix:
-        machine: [battlestation, jester, alicia]
+        machine: ${{ fromJson(needs.check.outputs.machines) }}
       fail-fast: false
     
     steps:
