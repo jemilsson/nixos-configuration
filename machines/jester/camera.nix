@@ -66,8 +66,8 @@ in
     platform = "ipu6ep";
   };
 
-  # Use latest external IPU6 drivers (2025 version) for better auto-exposure
-  boot.kernelPackages = pkgs.linuxPackages_latest.extend ( self: super: {
+  # Use stable kernel with external IPU6 drivers
+  boot.kernelPackages = pkgs.linuxPackages.extend ( self: super: {
     ipu6-drivers = super.ipu6-drivers.overrideAttrs (
         final: previous: rec {
           src = builtins.fetchGit {

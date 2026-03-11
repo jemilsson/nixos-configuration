@@ -14,11 +14,8 @@ let
   boto3-ide = pkgs.jemilsson.boto3-ide;
   tratex-font = pkgs.jemilsson.tratex-font;
   tmuxai = pkgs.jemilsson.tmuxai;
-  claude-aws = pkgs.jemilsson.claude-aws;
-  claude-code-router = pkgs.jemilsson.claude-code-router;
   #claude-router = pkgs.jemilsson.claude-router;
 
-  ccr-configure-venice = pkgs.jemilsson.ccr-configure-venice;
   goose-desktop = pkgs.jemilsson.goose-desktop;
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
@@ -257,7 +254,6 @@ in
     #Communication
     pidgin
     signal-desktop
-    telegram-desktop
     teams-for-linux
     discord
     #skype
@@ -354,9 +350,6 @@ in
 
     unstable.opencode
     unstable.claude-code
-    #claude-aws
-    claude-code-router
-    #ccr-configure-venice
     nodejs
     gh
 
