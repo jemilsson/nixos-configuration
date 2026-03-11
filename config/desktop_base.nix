@@ -365,6 +365,9 @@ in
     devenv
     tmux
     tmuxai
+
+    syncthing
+    obsidian
   ];
 
   /*environment.extraSetup = ''
@@ -605,6 +608,12 @@ in
 
     redshift = {
       enable = false;
+    };
+
+    syncthing = {
+      enable = true;
+      user = "jonas";
+      dataDir = "/home/jonas/syncthing";
     };
 
   };
