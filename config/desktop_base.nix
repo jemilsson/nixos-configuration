@@ -6,7 +6,7 @@ let
 
   #continue = pkgs.jemilsson.continue;
   #roo-code = pkgs.jemilsson.roo-code;
-  vscode-claude-code = pkgs.jemilsson.vscode-claude-code;
+  vscode-claude-code = pkgs.unstable.vscode-extensions.anthropic.claude-code;
   vscode-3d-preview = pkgs.jemilsson.vscode-3d-preview;
   quarto = pkgs.jemilsson.quarto;
   djlint = pkgs.jemilsson.djlint;

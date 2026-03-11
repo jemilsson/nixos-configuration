@@ -21,7 +21,7 @@ in
     ./hardware-configuration.nix
     #./graphiti.nix
     #./mcpo.nix
-    #./camera.nix
+    ./camera.nix
 
   ];
 
@@ -81,29 +81,6 @@ in
   #users.users.user1.passwordFile = config.age.secrets.secret1.path;
 
   system.stateVersion = "23.05";
-  
-  hardware.ipu6.enable = true;
-  hardware.ipu6.platform = "ipu6ep";
-  /*
-  hardware.ipu6.enable = true;
-  hardware.ipu6.platform = "ipu6ep";
-
-    boot.kernelPackages = pkgs.linuxPackages_latest.extend ( self: super: {
-    ipu6-drivers = super.ipu6-drivers.overrideAttrs (
-        final: previous: rec {
-          src = builtins.fetchGit {
-            url = "https://github.com/intel/ipu6-drivers.git";
-            ref = "master";
-            rev = "b4ba63df5922150ec14ef7f202b3589896e0301a";
-          };
-          patches = [
-            "${src}/patches/0001-v6.10-IPU6-headers-used-by-PSYS.patch"
-          ] ;
-        }
-    );
-  } );
-
-  */
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" ];
