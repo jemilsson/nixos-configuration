@@ -47,6 +47,7 @@ in
   };
 
   boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
 
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
@@ -334,6 +335,8 @@ in
         #"--ozone-platform=wayland"
       ];
     })
+
+    telegram-desktop
 
     #devenv
 
