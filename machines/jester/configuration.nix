@@ -336,7 +336,7 @@ in
       ];
     })
 
-    telegram-desktop
+    unstable.telegram-desktop
 
     #devenv
 
