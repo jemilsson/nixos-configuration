@@ -349,7 +349,6 @@ in
 
 
     unstable.opencode
-    unstable.claude-code
     nodejs
     gh
 

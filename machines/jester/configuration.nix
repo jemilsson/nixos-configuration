@@ -339,6 +339,8 @@ in
     unstable.telegram-desktop
     whatsapp-electron
 
+    bun
+
     #devenv
 
 
