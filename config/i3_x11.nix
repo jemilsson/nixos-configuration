@@ -144,6 +144,14 @@ in
 
         };
         
+        "waybar" = {
+          overrideStrategy = "asDropin";
+          serviceConfig = {
+            Restart = "always";
+            RestartSec = 1;
+          };
+        };
+
         "pasystray" = {
           enable = true;
           description = "Pulse audio systray";

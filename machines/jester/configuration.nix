@@ -292,6 +292,11 @@ in
       };
     };
 
+    surrealdb = {
+      enable = true;
+      dbPath = "file:///var/lib/surrealdb/db";
+    };
+
   };
 
   networking.firewall.extraCommands = ''
@@ -340,6 +345,7 @@ in
     whatsapp-electron
 
     bun
+    sox
 
     #devenv
 
