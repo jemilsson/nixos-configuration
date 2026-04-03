@@ -219,7 +219,8 @@ in
     ## Nix
 
     nixpkgs-fmt
-    #rnix-lsp
+    nil
+    nixd
 
     ## Pony
     #ponyc
@@ -336,8 +337,21 @@ in
     prismlauncher
     libsecret
 
+    ## LSP servers for opencode and other LLMs
+
+    bash-language-server
+    nil
     nixd
+    pyright
     ruff
+    rust-analyzer
+    typescript
+    vscode-extensions.vscode-eslint
+    vscode-extensions.vscode-astro
+    vscode-extensions.vscode-vue
+    vscode-extensions.vscode-yaml
+    vscode-extensions.vscode-shellcheck
+    vscode-extensions.vscode-tailwindcss
 
     handlr
 

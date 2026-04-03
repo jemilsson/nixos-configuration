@@ -49,6 +49,14 @@ in
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
 
+  systemd.services.restart-fprintd-on-resume = {
+    description = "Restart fprintd after resume from sleep";
+    wantedBy = [ "post-resume.target" ];
+    after = [ "post-resume.target" ];
+    script = "systemctl restart fprintd";
+    serviceConfig.Type = "oneshot";
+  };
+
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
