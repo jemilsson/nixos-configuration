@@ -346,12 +346,6 @@ in
     ruff
     rust-analyzer
     typescript
-    vscode-extensions.vscode-eslint
-    vscode-extensions.vscode-astro
-    vscode-extensions.vscode-vue
-    vscode-extensions.vscode-yaml
-    vscode-extensions.vscode-shellcheck
-    vscode-extensions.vscode-tailwindcss
 
     handlr
 
