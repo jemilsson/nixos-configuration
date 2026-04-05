@@ -6,6 +6,7 @@ let
   nsenter-cg = pkgs.runCommandCC "nsenter-claude-glecom" { } ''
     mkdir -p $out/bin
     cat > main.c << 'EOF'
+#define _GNU_SOURCE
 #include <sched.h>
 #include <fcntl.h>
 #include <unistd.h>
