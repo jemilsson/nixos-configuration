@@ -22,6 +22,7 @@ in
     #./graphiti.nix
     #./mcpo.nix
     ./camera.nix
+    ./netns-claude-glecom.nix
 
   ];
 
