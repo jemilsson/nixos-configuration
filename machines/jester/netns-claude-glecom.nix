@@ -51,16 +51,24 @@ in
 
   # wg2: move Claude Code CIDRs out of main table into table 200
   # so regular processes use the default route for those destinations
-  networking.wireguard.interfaces.wg2.postSetup = lib.mkAfter ''
-    ${ip} route del 160.79.104.0/23 dev wg2 2>/dev/null || true
-    ${ip} -6 route del 2607:6bc0::/48 dev wg2 2>/dev/null || true
-    ${ip} route add 160.79.104.0/23 dev wg2 table 200
-    ${ip} -6 route add 2607:6bc0::/48 dev wg2 table 200
-  '';
   networking.wireguard.interfaces.wg2.postShutdown = lib.mkAfter ''
     ${ip} route del 160.79.104.0/23 dev wg2 table 200 2>/dev/null || true
     ${ip} -6 route del 2607:6bc0::/48 dev wg2 table 200 2>/dev/null || true
   '';
+
+  # The peer service runs after wireguard-wg2.service and adds all allowedIP routes
+  # to the main table via `ip route replace`. Override it to move the Claude Code
+  # CIDRs out of main and into table 200 immediately after.
+  systemd.services."wireguard-wg2-peer-kCvTCiqn4-mhkbWF9eKaTycAp7yHfkMYu3uEuuneFFc=" = {
+    serviceConfig.ExecStartPost = [
+      (pkgs.writeShellScript "wg2-move-claude-routes" ''
+        ${ip} route del 160.79.104.0/23 dev wg2 table main 2>/dev/null || true
+        ${ip} -6 route del 2607:6bc0::/48 dev wg2 table main 2>/dev/null || true
+        ${ip} route replace 160.79.104.0/23 dev wg2 table 200
+        ${ip} -6 route replace 2607:6bc0::/48 dev wg2 table 200
+      '')
+    ];
+  };
 
   # Network namespace setup
   systemd.services.netns-claude-glecom = {
