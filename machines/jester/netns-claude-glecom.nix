@@ -56,18 +56,31 @@ in
     ${ip} -6 route del 2607:6bc0::/48 dev wg2 table 200 2>/dev/null || true
   '';
 
-  # The peer service runs after wireguard-wg2.service and adds all allowedIP routes
-  # to the main table via `ip route replace`. Override it to move the Claude Code
-  # CIDRs out of main and into table 200 immediately after.
-  systemd.services."wireguard-wg2-peer-kCvTCiqn4-mhkbWF9eKaTycAp7yHfkMYu3uEuuneFFc=" = {
-    serviceConfig.ExecStartPost = [
-      (pkgs.writeShellScript "wg2-move-claude-routes" ''
+  # Move Claude Code CIDRs out of main routing table into table 200.
+  # The wireguard peer service runs concurrently with this and re-adds all
+  # allowedIP routes (including the Claude CIDRs) to main. We poll briefly
+  # until the route appears, then move it to table 200.
+  # Note: the peer service name contains '=' which NixOS's type checker rejects
+  # in systemd.services keys, so we cannot use After/BindsTo on it directly.
+  systemd.services.wg2-move-claude-routes = {
+    description = "Move Claude Code CIDRs from main routing table to table 200";
+    after = [ "wireguard-wg2.service" ];
+    wantedBy = [ "wireguard-wg2.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "wg2-move-claude-routes" ''
+        # Wait up to 10s for the peer service to add the route to main
+        for i in $(seq 10); do
+          ${ip} route show table main | ${pkgs.gnugrep}/bin/grep -q 160.79.104.0/23 && break
+          sleep 1
+        done
         ${ip} route del 160.79.104.0/23 dev wg2 table main 2>/dev/null || true
         ${ip} -6 route del 2607:6bc0::/48 dev wg2 table main 2>/dev/null || true
         ${ip} route replace 160.79.104.0/23 dev wg2 table 200
         ${ip} -6 route replace 2607:6bc0::/48 dev wg2 table 200
-      '')
-    ];
+      '';
+    };
   };
 
   # Network namespace setup
