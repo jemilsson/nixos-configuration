@@ -180,6 +180,9 @@ in
   # GTK theming configuration
   programs.dconf.enable = true;
 
+  # Accessibility: enable AT-SPI2 bus for window content access
+  services.gnome.at-spi2-core.enable = true;
+
   # WhiteSur Dark theme with Nord color palette
   environment.etc."gtk-3.0/settings.ini" = {
     text = ''
