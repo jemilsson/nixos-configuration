@@ -230,6 +230,7 @@ in
     #Interface
     alacritty
     foot
+    kitty
     #albert  # Temporarily disabled due to submodule authentication issues
     synapse
     feh
