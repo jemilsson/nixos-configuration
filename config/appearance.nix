@@ -13,6 +13,9 @@ in
   fonts.packages = with pkgs; [
     vegur
     ibm-plex
+    lmodern
+    lmmath
+    th-sarabun-new
     noto-fonts
     noto-fonts-color-emoji
     font-awesome

@@ -42,7 +42,7 @@
         #   inherit system;
         #   config.allowUnfree = true;
         # };
-        
+        th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
       };
 
       # Overlay that imports packages from nixpkgs-jemilsson
