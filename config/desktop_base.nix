@@ -163,7 +163,11 @@ in
 
     #Browsers
     firefox
-    chromium
+    (chromium.override {
+      commandLineArgs = [
+        "--remote-debugging-port=9222"
+      ];
+    })
     google-chrome
     #unstable-small.tor-browser-bundle-bin
 

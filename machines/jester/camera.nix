@@ -35,7 +35,7 @@ in
     v4l-utils
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" "i915" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" "xe" "i915" ];
   boot.initrd.kernelModules = [];
   boot.kernelModules = [ "kvm-intel" ];
  
@@ -44,7 +44,7 @@ in
   # https://discourse.nixos.org/t/i915-driver-has-bug-for-iris-xe-graphics/25006/10
   # resolved: i915 0000:00:02.0: [drm] Selective fetch area calculation failed in pipe A
   boot.kernelParams = [
-    "i915.enable_psr=0"
+    "xe.enable_display=1"         # Ensure xe handles display output
     # Disable auto-exposure oscillation by forcing manual mode
     "ov2740.disable_auto_exposure=1"
     "intel_ipu6_isys.auto_exposure=0"
@@ -66,8 +66,8 @@ in
     platform = "ipu6ep";
   };
 
-  # Use stable kernel with external IPU6 drivers
-  boot.kernelPackages = pkgs.linuxPackages.extend ( self: super: {
+  # Use latest kernel for better xe driver and MST support
+  boot.kernelPackages = pkgs.linuxPackages_latest.extend ( self: super: {
     ipu6-drivers = super.ipu6-drivers.overrideAttrs (
         final: previous: rec {
           src = builtins.fetchGit {
@@ -94,6 +94,9 @@ in
   # To see the properties of a device, just run something like
   # udevadm info -q all -a /dev/video9
   services.udev.extraRules = ''
+    # Prevent Thunderbolt controller from runtime-suspending, which drops DP tunnels
+    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{power/control}="on"
+
     SUBSYSTEM!="video4linux", GOTO="hide_cam_end"
     #ATTR{name}=="Intel MIPI Camera", GOTO="hide_cam_end"
     ATTR{name}!="Dummy video device (0x0000)", GOTO="hide_cam_end"

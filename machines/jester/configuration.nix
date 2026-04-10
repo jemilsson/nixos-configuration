@@ -8,6 +8,40 @@ let
   fit-web = pkgs.jemilsson.fit-web;
   fit-entire-website = pkgs.jemilsson.fit-entire-website;
   fit-main = pkgs.jemilsson.fit-main;
+
+  wg2IPv4Prefixes = [
+    { prefix = "10.128.12.0/24"; }
+    { prefix = "10.0.0.0/8"; }
+    { prefix = "100.64.0.0/10"; }
+    { prefix = "192.168.0.0/16"; }
+    { prefix = "172.16.0.0/12"; }
+    { prefix = "160.79.104.0/23"; }  # Claude code
+  ];
+
+  wg2IPv6Prefixes = [
+    { prefix = "2a12:5800:0:27::/64"; }
+    { prefix = "2a12:5800::/29"; }
+    { prefix = "2a05:d016:865:7a00::/56"; }
+    { prefix = "2607:6bc0::/48"; }   # Claude code
+    { prefix = "::/0"; metric = 9999; }
+  ];
+
+  parsePrefix = s: let
+    parts = lib.splitString "/" s;
+  in {
+    address = builtins.elemAt parts 0;
+    prefixLength = lib.toInt (builtins.elemAt parts 1);
+  };
+
+  prefixToRoute = p: let
+    parsed = parsePrefix p.prefix;
+  in parsed // lib.optionalAttrs (p ? metric) {
+    options.metric = toString p.metric;
+  };
+
+  wg2AllowedIPs = map (p: p.prefix) (wg2IPv4Prefixes ++ wg2IPv6Prefixes);
+  wg2IPv4Routes = map prefixToRoute wg2IPv4Prefixes;
+  wg2IPv6Routes = map prefixToRoute wg2IPv6Prefixes;
 in
 {
   imports = [
@@ -95,11 +129,10 @@ in
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" ];
     kernelParams = [
-      "i915.force_probe=a7a1"
+      "xe.force_probe=a7a1"       # Use xe driver (recommended for Raptor Lake)
+      "i915.force_probe=!a7a1"    # Tell i915 to skip this GPU
       "mem_sleep_default=s2idle"  # Better suspend for modern laptops
       "pci=nommconf"              # Help with USB-C issues
-      #"snd_hda_intel.dmic_detect=0"
-      #"i915.enable_psr=0"
     ];
     loader = {
       systemd-boot =
@@ -117,6 +150,7 @@ in
 
   networking = {
     hostName = "jester";
+    getaddrinfo.enable = false;
 
     bridges = {
       br0 = {
@@ -174,26 +208,13 @@ in
           
           wg2 = {
           privateKeyFile = "/var/lib/wireguard/privatekey";
+          allowedIPsAsRoutes = false;
           metric = 100;
           ips = [ "10.128.12.3/24" "2a12:5800:0:27::3/64" ];
           peers = [
           {
           publicKey = "kCvTCiqn4/mhkbWF9eKaTycAp7yHfkMYu3uEuuneFFc=";
-          allowedIPs = [
-                "10.128.12.0/24"
-                "2a12:5800:0:27::/64"
-                "2a12:5800::/29"
-                "2a05:d016:865:7a00::/56"
-                "10.0.0.0/8"
-                "100.64.0.0/10"
-                "192.168.0.0/16"
-                "172.16.0.0/12"
-                "160.79.104.0/23" # Claude code
-                "2607:6bc0::/48" # Claude code
-                #"194.26.208.0/24"
-                #"192.121.29.0/24"
-                #"::0/0"
-              ];
+          allowedIPs = wg2AllowedIPs;
           endpoint = "194.26.208.1:51822";
           }
           ];
@@ -255,6 +276,8 @@ in
 
         }
       ];
+      wg2.ipv4.routes = wg2IPv4Routes;
+      wg2.ipv6.routes = wg2IPv6Routes;
     };
 
     vlans = {
@@ -275,6 +298,16 @@ in
     request ipv6only_preferred
     ";
   };
+
+  networkmanager.dispatcherScripts = [
+    {
+      type = "basic";
+      source = pkgs.replaceVars ./prefer-ipv4-fallback.sh {
+        iproute2 = pkgs.iproute2;
+        gnugrep = pkgs.gnugrep;
+      };
+    }
+  ];
 
   };
 
@@ -343,12 +376,7 @@ in
     # fit-entire-website  # Needs additional dependencies
     # fit-main  # Main FIT GUI application (needs work)
 
-    (chromium.override {
-      commandLineArgs = [
-        #"--enable-features=UseOzonePlatform"
-        #"--ozone-platform=wayland"
-      ];
-    })
+    # chromium is in desktop_base.nix with --remote-debugging-port=9222
 
     unstable.telegram-desktop
     whatsapp-electron
@@ -403,20 +431,26 @@ in
 
 
 
-  /*
-    security = {
-    tpm2 = {
+  security.tpm2 = {
     enable = true;
-    applyUdevRules = true;
-    abrmd = {
-    enable = true;
+    abrmd.enable = true;
+  };
+
+  # tpm-fido: emulate a FIDO2/U2F device using the TPM
+  systemd.user.services.tpm-fido = {
+    description = "TPM FIDO2/U2F device";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.tpm-fido}/bin/tpm-fido";
+      Restart = "on-failure";
+      RestartSec = 5;
     };
-    pkcs11 = {
-    enable = true;
-    };
-    };
-    };
-  */
+  };
+
+  services.udev.extraRules = lib.mkAfter ''
+    # Allow tss group access to /dev/uhid for tpm-fido
+    KERNEL=="uhid", SUBSYSTEM=="misc", GROUP="tss", MODE="0660"
+  '';
 
 
   /*
