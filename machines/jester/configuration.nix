@@ -81,8 +81,8 @@ in
 
   };
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
+  boot.initrd.kernelModules = [ ];
+  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "xe" ];
 
   systemd.services.restart-fprintd-on-resume = {
     description = "Restart fprintd after resume from sleep";
@@ -129,10 +129,7 @@ in
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" "uhid" ];
     kernelParams = [
-      "xe.force_probe=a7a1"       # Use xe driver (recommended for Raptor Lake)
-      "i915.force_probe=!a7a1"    # Tell i915 to skip this GPU
-      "i915.modeset=0"            # Make i915 fully inert (xe owns the GPU)
-      "mem_sleep_default=s2idle"  # Better suspend for modern laptops
+      "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
       "pci=nommconf"              # Help with USB-C issues
     ];
     loader = {
@@ -314,7 +311,7 @@ in
 
   services = {
     xserver = {
-      videoDrivers = [ "amdgpu" "intel" "modesetting" ];
+      videoDrivers = [ "modesetting" ];
     };
     undervolt = {
       enable = false;
@@ -558,34 +555,5 @@ in
     KERNEL=="uhid", SUBSYSTEM=="misc", GROUP="tss", MODE="0660"
   '';
 
-
-  /*
-    docker-containers = {
-    dataturks = {
-    image = "klimentij/dataturks";
-    ports = [
-    "8080:9090"
-    ];
-    };
-    };
-  */
-
-  #inherit containers;
-
-  #nixpkgs.overlays = [
-  #  (self: super: {
-  #    #unstable.mesa = pkgs.mesa;
-  #    #unstable.mesa_glu = pkgs.mesa_glu;
-  #    #unstable.mesa_noglu = pkgs.mesa_noglu;
-  #    #unstable.mesa_drivers = pkgs.mesa_drivers;
-  #  }
-  #  )
-  #];
-  /*
-  system.replaceRuntimeDependencies = [
-    ({ original = pkgs.mesa; replacement = pkgs.unstable.mesa; })
-    ({ original = pkgs.mesa.drivers; replacement = pkgs.unstable.mesa.drivers; })
-  ];
-  */
 
 }
