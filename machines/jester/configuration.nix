@@ -131,6 +131,7 @@ in
     kernelParams = [
       "xe.force_probe=a7a1"       # Use xe driver (recommended for Raptor Lake)
       "i915.force_probe=!a7a1"    # Tell i915 to skip this GPU
+      "i915.modeset=0"            # Make i915 fully inert (xe owns the GPU)
       "mem_sleep_default=s2idle"  # Better suspend for modern laptops
       "pci=nommconf"              # Help with USB-C issues
     ];

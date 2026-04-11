@@ -35,7 +35,7 @@ in
     v4l-utils
   ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" "xe" "i915" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" "xe" ];
   boot.initrd.kernelModules = [];
   boot.kernelModules = [ "kvm-intel" ];
  
@@ -44,7 +44,6 @@ in
   # https://discourse.nixos.org/t/i915-driver-has-bug-for-iris-xe-graphics/25006/10
   # resolved: i915 0000:00:02.0: [drm] Selective fetch area calculation failed in pipe A
   boot.kernelParams = [
-    "xe.enable_display=1"         # Ensure xe handles display output
     # Disable auto-exposure oscillation by forcing manual mode
     "ov2740.disable_auto_exposure=1"
     "intel_ipu6_isys.auto_exposure=0"

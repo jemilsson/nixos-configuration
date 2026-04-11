@@ -7,7 +7,7 @@ boot = {
 };
 virtualisation = {
  kvmgt = {
-   enable = true;
+   enable = false;  # GVT-g is incompatible with xe driver, causes freeze on s2idle resume
  };
  libvirtd = {
    enable = true;
