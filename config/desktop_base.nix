@@ -288,6 +288,9 @@ in
     #kdeApplications.kleopatra
 
     pass
+    passage
+    age
+    age-plugin-fido2-hmac
     qtpass
     pwgen
 
