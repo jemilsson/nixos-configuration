@@ -127,7 +127,7 @@ in
   system.stateVersion = "23.05";
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
-    kernelModules = [ "acpi_call" ];
+    kernelModules = [ "acpi_call" "uhid" ];
     kernelParams = [
       "xe.force_probe=a7a1"       # Use xe driver (recommended for Raptor Lake)
       "i915.force_probe=!a7a1"    # Tell i915 to skip this GPU
@@ -436,19 +436,124 @@ in
     abrmd.enable = true;
   };
 
-  # tpm-fido: emulate a FIDO2/U2F device using the TPM
-  systemd.user.services.tpm-fido = {
-    description = "TPM FIDO2/U2F device";
+  # linux-id: emulate a FIDO2/U2F device using the TPM (CTAP2 support)
+  systemd.user.services.linux-id = {
+    description = "TPM FIDO2/U2F device (CTAP2)";
+    wantedBy = [ "default.target" ];
+    path = [ pkgs.pinentry-qt ];
+    serviceConfig = {
+      ExecStart = "${pkgs.linux-id}/bin/linux-id --auth fprintd";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
+
+  # Allow fprintd-notify to monitor fprintd method calls on system bus
+  services.dbus.packages = [
+    (pkgs.writeTextDir "share/dbus-1/system.d/fprintd-notify.conf" ''
+      <!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+       "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+      <busconfig>
+        <policy user="jonas">
+          <allow eavesdrop="true"
+                 send_destination="net.reactivated.Fprint"
+                 send_interface="net.reactivated.Fprint.Device"/>
+        </policy>
+      </busconfig>
+    '')
+  ];
+
+  # Notify when fprintd is waiting for a fingerprint scan
+  systemd.user.services.fprintd-notify = {
+    description = "Fingerprint scan notification";
     wantedBy = [ "default.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.tpm-fido}/bin/tpm-fido";
+      ExecStart = pkgs.writeShellScript "fprintd-notify" ''
+        resolve_app() {
+          local sender="$1"
+          if [ -z "$sender" ]; then
+            echo ""
+            return
+          fi
+          local pid
+          pid=$(${pkgs.dbus}/bin/dbus-send --system --print-reply \
+            --dest=org.freedesktop.DBus /org/freedesktop/DBus \
+            org.freedesktop.DBus.GetConnectionUnixProcessID \
+            string:"$sender" 2>/dev/null | ${pkgs.gawk}/bin/awk '/uint32/{print $2}')
+          if [ -z "$pid" ]; then
+            echo ""
+            return
+          fi
+          # Try cmdline first for a more descriptive name, fall back to comm
+          local cmdline
+          cmdline=$(tr '\0' ' ' < /proc/"$pid"/cmdline 2>/dev/null | ${pkgs.gawk}/bin/awk '{print $1}')
+          if [ -n "$cmdline" ]; then
+            basename "$cmdline"
+          else
+            cat /proc/"$pid"/comm 2>/dev/null
+          fi
+        }
+
+        notify_id=""
+        sender=""
+        current_app=""
+
+        ${pkgs.dbus}/bin/dbus-monitor --system \
+          "interface='net.reactivated.Fprint.Device'" |
+        while read -r line; do
+          case "$line" in
+            *"method call"*"sender="*"member=VerifyStart"*)
+              sender=$(echo "$line" | ${pkgs.gnused}/bin/sed -n 's/.*sender=\([^ ]*\).*/\1/p')
+              ;;
+          esac
+
+          if echo "$line" | grep -q "member=VerifyFingerSelected"; then
+            current_app=$(resolve_app "$sender")
+            sender=""
+            msg="Place your finger on the reader"
+            if [ -n "$current_app" ]; then
+              msg="$current_app is requesting fingerprint authentication"
+            fi
+            notify_id=$(${pkgs.libnotify}/bin/notify-send -a fprintd -i fingerprint-gui \
+              -t 15000 -p "Fingerprint" "$msg")
+          fi
+
+          # Match verify-match or verify-no-match from VerifyStatus signal
+          if echo "$line" | grep -q '"verify-match"'; then
+            label="Authentication successful"
+            if [ -n "$current_app" ]; then
+              label="$current_app: $label"
+            fi
+            ${pkgs.libnotify}/bin/notify-send -a fprintd -i emblem-ok-symbolic \
+              -t 3000 ''${notify_id:+-r "$notify_id"} "Fingerprint" "$label"
+            current_app=""
+            notify_id=""
+          elif echo "$line" | grep -q '"verify-no-match"'; then
+            label="No match, try again"
+            if [ -n "$current_app" ]; then
+              label="$current_app: $label"
+            fi
+            ${pkgs.libnotify}/bin/notify-send -a fprintd -i emblem-important-symbolic \
+              -t 5000 ''${notify_id:+-r "$notify_id"} "Fingerprint" "$label"
+            notify_id=""
+          elif echo "$line" | grep -q '"verify-retry-scan"'; then
+            label="Scan unclear, try again"
+            if [ -n "$current_app" ]; then
+              label="$current_app: $label"
+            fi
+            ${pkgs.libnotify}/bin/notify-send -a fprintd -i emblem-important-symbolic \
+              -t 5000 ''${notify_id:+-r "$notify_id"} "Fingerprint" "$label"
+            notify_id=""
+          fi
+        done
+      '';
       Restart = "on-failure";
       RestartSec = 5;
     };
   };
 
   services.udev.extraRules = lib.mkAfter ''
-    # Allow tss group access to /dev/uhid for tpm-fido
+    # Allow tss group access to /dev/uhid for linux-id
     KERNEL=="uhid", SUBSYSTEM=="misc", GROUP="tss", MODE="0660"
   '';
 

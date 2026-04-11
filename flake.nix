@@ -43,6 +43,7 @@
         #   config.allowUnfree = true;
         # };
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
+        linux-id = prev.callPackage ./packages/linux-id { };
       };
 
       # Overlay that imports packages from nixpkgs-jemilsson
