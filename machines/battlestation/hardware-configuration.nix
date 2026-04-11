@@ -17,6 +17,7 @@
     {
       device = "/dev/disk/by-uuid/c877856a-b1e1-4b1a-be1e-980f8187745b";
       fsType = "f2fs";
+      options = [ "noatime" ];
     };
   /*
     fileSystems."/home/" = {
@@ -29,6 +30,7 @@
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/159273dd-3f19-4645-b8bd-6416fee6008e";
     fsType = "ext4";
+    options = [ "noatime" ];
     mountPoint = "/mnt/data";
   };
 

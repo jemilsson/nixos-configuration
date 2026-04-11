@@ -34,18 +34,17 @@
 
   security = {
     pam = {
-      enableSSHAgentAuth = true;
-      #p11 = {
-      #  enable = true;
-      #};
+      sshAgentAuth.enable = true;
     };
   };
 
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "no";
-      passwordAuthentication = false;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
     };
     journald = {
       extraConfig = "MaxFileSec=1year";
@@ -85,7 +84,7 @@
       neovim
 
       #Tunneling
-      wireguard
+      wireguard-tools
     ];
 
     shellAliases = {
@@ -112,7 +111,7 @@
   };
 
   nix = {
-    autoOptimiseStore = true;
+    settings.auto-optimise-store = true;
     gc = {
       automatic = true;
       dates = "03:15";

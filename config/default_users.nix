@@ -11,7 +11,7 @@ in
     uid = 1000;
     isSystemUser = false;
     extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" "plugdev" "tss" "tty" "dialout" "lxd" "wireshark" ];
-    shell = "/run/current-system/sw/bin/zsh";
+    shell = pkgs.zsh;
     openssh.authorizedKeys.keys = sshKeys.jonas;
   };
 

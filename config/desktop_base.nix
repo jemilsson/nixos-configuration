@@ -1,11 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  #scd-pkcs11 = pkgs.jemilsson.scd-pkcs11;
-  #python3-edgetpu = pkgs.jemilsson.python3-edgetpu;
-  #python3-tflite = pkgs.jemilsson.python3-tflite;
-
-  #continue = pkgs.jemilsson.continue;
-  #roo-code = pkgs.jemilsson.roo-code;
   vscode-claude-code = pkgs.unstable.vscode-extensions.anthropic.claude-code;
   vscode-3d-preview = pkgs.jemilsson.vscode-3d-preview;
   quarto = pkgs.jemilsson.quarto;
@@ -14,8 +8,6 @@ let
   boto3-ide = pkgs.jemilsson.boto3-ide;
   tratex-font = pkgs.jemilsson.tratex-font;
   tmuxai = pkgs.jemilsson.tmuxai;
-  #claude-router = pkgs.jemilsson.claude-router;
-
   goose-desktop = pkgs.jemilsson.goose-desktop;
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
@@ -625,16 +617,6 @@ in
     };
 
   };
-
-  #sound.mediaKeys.enable = true;
-
-  nixpkgs.overlays = [
-    (self: super: {
-      #steam = pkgs.steam
-      #pcsclite = pkgs.unstable.pcsclite;
-    }
-    )
-  ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron_24"

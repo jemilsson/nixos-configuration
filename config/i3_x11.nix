@@ -90,9 +90,6 @@ in
           description = "Ensure hyprlock runs after resume";
           after = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
           wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" ];
-          environment = {
-            XDG_RUNTIME_DIR = "/run/user/1000";
-          };
           serviceConfig = {
             Type = "oneshot";
             ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/sleep 1 && export HYPRLAND_INSTANCE_SIGNATURE=$(${pkgs.coreutils}/bin/ls -t /tmp/hypr/ 2>/dev/null | ${pkgs.coreutils}/bin/head -1) && export WAYLAND_DISPLAY=wayland-1 && ${pkgs.unstable.hyprland}/bin/hyprctl dispatch dpms on && ${pkgs.procps}/bin/pidof hyprlock || ${pkgs.unstable.hyprlock}/bin/hyprlock'";
@@ -111,7 +108,6 @@ in
           environment = {
             XDG_CURRENT_DESKTOP = "sway";
             XDG_SESSION_TYPE = "wayland";
-            XDG_RUNTIME_DIR = "/run/user/1000";
             WAYLAND_DISPLAY = "wayland-1";
             WLR_DRM_NO_MODIFIERS = "1";
           };
@@ -135,7 +131,6 @@ in
           environment = {
             XDG_CURRENT_DESKTOP = "sway";
             XDG_SESSION_TYPE = "wayland";
-            XDG_RUNTIME_DIR = "/run/user/1000";
             WAYLAND_DISPLAY = "wayland-1";
             WLR_DRM_NO_MODIFIERS = "1";
           };
