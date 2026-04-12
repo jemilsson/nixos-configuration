@@ -129,7 +129,6 @@ in
     kernelModules = [ "acpi_call" "uhid" ];
     kernelParams = [
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
-      "pci=nommconf"              # Help with USB-C issues
     ];
     loader = {
       systemd-boot =
