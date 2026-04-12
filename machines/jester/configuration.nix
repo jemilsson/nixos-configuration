@@ -78,7 +78,6 @@ in
   environment.variables = {
     WLR_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
     #WLR_BACKEND = "vulkan";
-
   };
 
   boot.initrd.kernelModules = [ ];
