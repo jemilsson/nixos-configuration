@@ -104,6 +104,8 @@ in
       ${ip} addr add 10.200.200.1/30 dev veth-cg
       ${ip} addr add fd00:200::1/64 dev veth-cg
       ${ip} link set veth-cg up
+      # Allow DNAT to 127.0.0.1 from veth-cg (must be set after interface exists)
+      ${pkgs.procps}/bin/sysctl -w net.ipv4.conf.veth-cg.route_localnet=1
 
       # Namespace side
       ${ip} -n claude-glecom addr add 10.200.200.2/30 dev veth-cg-ns
@@ -117,11 +119,26 @@ in
       ${ip} -n claude-glecom route add default via 10.200.200.1
       ${ip} -n claude-glecom -6 route add default via fd00:200::1
 
+      # DNAT inside namespace: redirect localhost:3001 -> host veth IP
+      # so muninn (listening on host 127.0.0.1:3001) is reachable via the bridge
+      ${ip} netns exec claude-glecom \
+        ${pkgs.iptables}/bin/iptables -t nat -A OUTPUT \
+          -d 127.0.0.1 -p tcp --dport 3001 \
+          -j DNAT --to-destination 10.200.200.1:3001
+
       # Policy rule: traffic from veth-cg uses table 200 (routes to wg2)
       ${ip} rule add iif veth-cg lookup 200 priority 100
       ${ip} -6 rule add iif veth-cg lookup 200 priority 100
+
+      # DNAT on host: forward traffic arriving on veth IP:3001 to muninn on localhost
+      ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING \
+        -d 10.200.200.1 -p tcp --dport 3001 \
+        -j DNAT --to-destination 127.0.0.1:3001
     '';
     preStop = ''
+      ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING \
+        -d 10.200.200.1 -p tcp --dport 3001 \
+        -j DNAT --to-destination 127.0.0.1:3001 2>/dev/null || true
       ${ip} rule del iif veth-cg lookup 200 priority 100 2>/dev/null || true
       ${ip} -6 rule del iif veth-cg lookup 200 priority 100 2>/dev/null || true
       ${ip} link del veth-cg 2>/dev/null || true
