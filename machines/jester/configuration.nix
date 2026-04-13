@@ -81,7 +81,7 @@ in
   };
 
   boot.initrd.kernelModules = [ ];
-  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "xe" ];
+  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
 
   systemd.services.restart-fprintd-on-resume = {
     description = "Restart fprintd after resume from sleep";
@@ -128,6 +128,9 @@ in
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" "uhid" ];
     kernelParams = [
+      "xe.force_probe=a7a1"       # Use xe driver for Raptor Lake Iris Xe
+      "i915.force_probe=!a7a1"    # Tell i915 to skip this GPU
+      "i915.modeset=0"            # Make i915 fully inert (xe owns the GPU)
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
     ];
     loader = {
