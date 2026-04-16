@@ -66,6 +66,7 @@ in
     ./appearance.nix
     #./systemd_user/gpg-agent.nix
     ./systemd_user/ssh-agent-mux.nix
+    ./systemd_user/claude-log-cleanup.nix
     #./x11.nix
 
   ];
@@ -159,6 +160,7 @@ in
     (chromium.override {
       commandLineArgs = [
         "--remote-debugging-port=9222"
+        "--disk-cache-size=536870912"
       ];
     })
     google-chrome
