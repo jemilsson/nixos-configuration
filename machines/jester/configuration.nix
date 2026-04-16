@@ -83,6 +83,8 @@ in
   boot.initrd.kernelModules = [ ];
   boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
 
+  boot.kernel.sysctl."net.ipv4.tcp_mtu_probing" = 1;
+
   systemd.services.restart-fprintd-on-resume = {
     description = "Restart fprintd after resume from sleep";
     wantedBy = [ "post-resume.target" ];
