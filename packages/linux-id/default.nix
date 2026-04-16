@@ -6,13 +6,13 @@
 
 buildGoModule {
   pname = "linux-id";
-  version = "0-unstable-2026-04-11";
+  version = "0-unstable-2026-04-17";
 
   src = fetchFromGitHub {
     owner = "jemilsson";
     repo = "linux-id";
-    rev = "9fe8143d59e420403116113967d5839da02c9189";
-    hash = "sha256-kldjAlU+qLcpEqfwVlFQp7y0Wv25nmVm6cOqdseqBEs=";
+    rev = "dae70b83796592fa9b11c505baeb34a236cfb6f0";
+    hash = "sha256-oPwFFixkzEpvNA91/vFOT+YUAZ8tDYvSRQXHlGya3zo=";
   };
 
   vendorHash = "sha256-HwLcsjzaFqc0aQrTCoSUdes6ZlnsNZJCdtjwucFyOQ4=";

@@ -41,7 +41,9 @@
     wantedBy = [ "default.target" ];
   };
 
-  # Auto-load FIDO key into ssh-agent on login
+  # Auto-load FIDO key into ssh-agent on login. After= only orders unit
+  # startup; ssh-agent's socket may not exist yet when ssh-add runs, so
+  # poll until it appears before attempting to connect.
   systemd.user.services.ssh-add-fido = {
     unitConfig = {
       Description = "Load FIDO SSH key into agent";
@@ -51,6 +53,7 @@
     serviceConfig = {
       Type = "oneshot";
       Environment = "SSH_AUTH_SOCK=%t/ssh-agent.sock";
+      ExecStartPre = "${pkgs.bash}/bin/bash -c 'for i in $(seq 1 50); do [ -S %t/ssh-agent.sock ] && exit 0; sleep 0.1; done; exit 1'";
       ExecStart = "${pkgs.openssh}/bin/ssh-add /home/jonas/.ssh/id_ecdsa_sk";
     };
     wantedBy = [ "default.target" ];
