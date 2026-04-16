@@ -10,5 +10,7 @@
 
     "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBKhI3SmStg2S3j9IBvVY8NuBPV8fTZkHVcBuLpAoIZyDY/jmFoSRzFtVdW0JU0z1Oou45IL+LFULHGaEd5d0qNEAAAAEc3NoOg== jonas@jester-tpm"
 
+    "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBA5OvcNnTolp+OOi5tMFr2sDNRPNkEsAABpoTuuDlU8NhKkaC72fR/SbDIQmk28aRh6nTjLNZLjte56Ulr/zGf0AAAAEc3NoOg== jonas@s3c49"
+
   ];
 }

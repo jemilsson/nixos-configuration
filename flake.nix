@@ -44,6 +44,7 @@
         # };
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
         linux-id = prev.callPackage ./packages/linux-id { };
+        ssh-agent-mux = prev.callPackage ./packages/ssh-agent-mux { };
       };
 
       # Overlay that imports packages from nixpkgs-jemilsson

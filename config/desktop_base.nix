@@ -65,6 +65,7 @@ in
     ./bedrock-access-gateway.nix
     ./appearance.nix
     #./systemd_user/gpg-agent.nix
+    ./systemd_user/ssh-agent-mux.nix
     #./x11.nix
 
   ];
@@ -428,7 +429,7 @@ in
         pinentryPackage = pkgs.pinentry-qt;
         #enableBrowserSocket = true;
         enableExtraSocket = true;
-        enableSSHSupport = true;
+        enableSSHSupport = false;
       };
       #package = pkgs.unstable.gnupg;
     };
@@ -551,6 +552,8 @@ in
     gpm.enable = true;
 
     openssh.settings.X11Forwarding = true;
+
+    gnome.gcr-ssh-agent.enable = false;
 
     #udisks2.enable = true;
     devmon.enable = true;
