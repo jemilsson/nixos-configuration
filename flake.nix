@@ -11,6 +11,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
+    ssh-agent-mux = {
+      url = "github:jemilsson/ssh-agent-mux/resilient";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
     # };
@@ -30,7 +34,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson }: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, ssh-agent-mux }: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -44,7 +48,7 @@
         # };
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
         linux-id = prev.callPackage ./packages/linux-id { };
-        ssh-agent-mux = prev.callPackage ./packages/ssh-agent-mux { };
+        ssh-agent-mux = ssh-agent-mux.packages.${system}.default;
       };
 
       # Overlay that imports packages from nixpkgs-jemilsson
