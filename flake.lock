@@ -70,11 +70,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776350867,
-        "narHash": "sha256-w/ILKn8QVs/8UhD1F51AauUapBfqFChHkbVwl1rxrrU=",
+        "lastModified": 1776351416,
+        "narHash": "sha256-GOkW+NWf8tHNkj6vW7vKvSOH35qLhl9LcAN3zI66QBc=",
         "owner": "jemilsson",
         "repo": "ssh-agent-mux",
-        "rev": "2fcb77b272111eb2d8524760fad7e1d1fd2ddca3",
+        "rev": "655f663bd6db4aa8c8b715fb8cf2e1b41ba57f3d",
         "type": "github"
       },
       "original": {
