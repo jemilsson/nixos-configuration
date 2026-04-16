@@ -60,7 +60,15 @@ in
     "L+ ${nixPath} - - - - ${pkgs.path}"
   ];
 
+  boot.loader.systemd-boot.configurationLimit = 3;
+
   nix = {
+    settings = {
+      keep-derivations = false;
+      keep-outputs = false;
+      min-free = 1073741824;   # 1 GiB
+      max-free = 3221225472;   # 3 GiB
+    };
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";

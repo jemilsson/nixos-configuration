@@ -7,8 +7,6 @@ let
   cloudformation-yaml-validator = pkgs.jemilsson.cloudformation-yaml-validator;
   boto3-ide = pkgs.jemilsson.boto3-ide;
   tratex-font = pkgs.jemilsson.tratex-font;
-  tmuxai = pkgs.jemilsson.tmuxai;
-  goose-desktop = pkgs.jemilsson.goose-desktop;
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
@@ -363,11 +361,8 @@ in
     nodejs
     gh
 
-    unstable.goose-cli
-    goose-desktop
     devenv
     tmux
-    tmuxai
 
     syncthing
     obsidian
