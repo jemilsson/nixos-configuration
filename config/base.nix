@@ -97,7 +97,14 @@ in
 
   security = {
     pam = {
-      sshAgentAuth.enable = true;
+      # pam_rssh replaces pam_ssh_agent_auth: it understands sk-ecdsa/sk-ed25519
+      # FIDO keys and sends rsa-sha2-256 flags for RSA keys, which pam_ssh_agent_auth
+      # 0.10.4 cannot do (last released 2019, predates FIDO SK key support).
+      rssh = {
+        enable = true;
+        settings.auth_key_file = "/etc/ssh/authorized_keys.d/\${user}";
+      };
+      services.sudo.rssh = true;
     };
   };
 
