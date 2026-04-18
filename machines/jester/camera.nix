@@ -1,8 +1,8 @@
 { config, inputs, lib, pkgs, modulesPath, ... }:
 
 {
-  # Use latest kernel for better driver support
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use latest kernel from unstable for xe driver DP-MST fixes (needs 6.21+)
+  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
   # Intel IPU6 MIPI camera (OV2740 sensor, Raptor Lake)
   hardware.ipu6 = {
