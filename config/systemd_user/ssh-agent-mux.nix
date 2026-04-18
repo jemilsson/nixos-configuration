@@ -67,12 +67,14 @@
       Requires = [ "gpg-agent-ssh.socket" ];
       Wants = [ "ssh-agent.service" ];
     };
+    path = [ pkgs.libnotify pkgs.dbus ];
     serviceConfig = {
       Type = "simple";
       UMask = "0077";
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %t/ssh-agent-mux";
       ExecStart = lib.concatStringsSep " " [
         "${pkgs.ssh-agent-mux}/bin/ssh-agent-mux"
+        "--log-level info"
         "--listen %t/ssh-agent-mux/ssh-agent-mux.sock"
         "%t/ssh-agent.sock"
         "%t/gnupg/S.gpg-agent.ssh"
