@@ -436,7 +436,7 @@ in
   systemd.user.services.linux-id = {
     description = "TPM FIDO2/U2F device (CTAP2)";
     wantedBy = [ "default.target" ];
-    path = [ pkgs.pinentry-qt pkgs.libnotify ];
+    path = [ pkgs.pinentry-qt ];
     serviceConfig = {
       ExecStart = "${pkgs.linux-id}/bin/linux-id --auth fprintd";
       Restart = "on-failure";
@@ -506,12 +506,24 @@ in
           if echo "$line" | grep -q "member=VerifyFingerSelected"; then
             current_app=$(resolve_app "$sender")
             sender=""
+            # linux-id surfaces fingerprint progress in its own
+            # Signature/Registration request notification; skip the
+            # standalone notifier in that case to avoid duplicates.
+            if [ "$current_app" = "linux-id" ]; then
+              notify_id=""
+              continue
+            fi
             msg="Place your finger on the reader"
             if [ -n "$current_app" ]; then
               msg="$current_app is requesting fingerprint authentication"
             fi
             notify_id=$(${pkgs.libnotify}/bin/notify-send -a fprintd -i fingerprint-gui \
               -t 15000 -p "Fingerprint" "$msg")
+          fi
+
+          # When linux-id is the caller it owns its own notification.
+          if [ "$current_app" = "linux-id" ]; then
+            continue
           fi
 
           # Match verify-match or verify-no-match from VerifyStatus signal
