@@ -333,6 +333,8 @@ in
 
     wireshark
 
+    ghidra
+
     qFlipper
 
     prismlauncher
