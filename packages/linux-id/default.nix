@@ -11,8 +11,8 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "jemilsson";
     repo = "linux-id";
-    rev = "b761a31513d5305f5f2f0d5da5b2ba5551664580";
-    hash = "sha256-f4bQI5MowjWwiE2iyiFABdMeNAMQoFSIAmZFXxCIv24=";
+    rev = "1d8d77bd455706ca41cf718b77c3fa1fefe6b858";
+    hash = "sha256-4mN12QuwkdiXzieDSTSycsvbGcI92Rd+DT1fw+alEQY=";
   };
 
   vendorHash = "sha256-HwLcsjzaFqc0aQrTCoSUdes6ZlnsNZJCdtjwucFyOQ4=";
