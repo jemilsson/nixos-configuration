@@ -436,7 +436,7 @@ in
   systemd.user.services.linux-id = {
     description = "TPM FIDO2/U2F device (CTAP2)";
     wantedBy = [ "default.target" ];
-    path = [ pkgs.pinentry-qt ];
+    path = [ pkgs.pinentry-qt pkgs.libnotify ];
     serviceConfig = {
       ExecStart = "${pkgs.linux-id}/bin/linux-id --auth fprintd";
       Restart = "on-failure";
