@@ -344,7 +344,6 @@ in
   '';
 
   environment.systemPackages = with pkgs; [
-    fafnir
     docker
     docker-compose
     ffmpeg
@@ -433,8 +432,36 @@ in
     abrmd.enable = true;
   };
 
-  # fafnir (config/systemd_user/fafnir.nix) now owns both the SSH agent
-  # and the CTAP2 authenticator. /dev/uhid udev rule lives there too.
+  # fafnir: TPM-backed SSH agent + FIDO authenticator + age plugin.
+  services.fafnir = {
+    enable       = true;
+    approval     = "fprintd";
+    enableRsa    = true;
+    rsaBits      = 2048;
+    powerledPath = "/sys/class/leds/tpacpi::power";
+    agentSockPaths = [ "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh" ];
+  };
 
-
+  # gpg-agent ssh socket — forwarded through fafnir so GPG-auth keys
+  # remain available behind the same SSH_AUTH_SOCK.
+  programs.gnupg.agent.settings = {
+    enable-ssh-support = "";
+  };
+  systemd.user.sockets.gpg-agent-ssh = {
+    unitConfig = {
+      Description = "GnuPG cryptographic agent (ssh-agent emulation)";
+      Documentation = "man:gpg-agent(1) man:ssh-add(1) man:ssh-agent(1) man:ssh(1)";
+    };
+    socketConfig = {
+      ListenStream = "%t/gnupg/S.gpg-agent.ssh";
+      FileDescriptorName = "ssh";
+      Service = "gpg-agent.service";
+      SocketMode = "0600";
+      DirectoryMode = "0700";
+    };
+    wantedBy = [ "sockets.target" ];
+  };
+  programs.ssh.extraConfig = ''
+    Match host * exec "${pkgs.runtimeShell} -c '${config.programs.gnupg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null 2>&1'"
+  '';
 }

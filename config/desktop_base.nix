@@ -63,7 +63,7 @@ in
     ./bedrock-access-gateway.nix
     ./appearance.nix
     #./systemd_user/gpg-agent.nix
-    ./systemd_user/fafnir.nix
+    # fafnir service is configured via services.fafnir in each machine's configuration.nix
     ./systemd_user/claude-log-cleanup.nix
     #./x11.nix
 

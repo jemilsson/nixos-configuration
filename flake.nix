@@ -86,8 +86,7 @@
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
-            #agenix.nixosModules.default
-            #agenix-rekey.nixosModules.default
+            fafnir.nixosModules.default
             ./machines/jester/configuration.nix
           ];
 
