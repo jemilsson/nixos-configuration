@@ -63,7 +63,7 @@ in
     ./bedrock-access-gateway.nix
     ./appearance.nix
     #./systemd_user/gpg-agent.nix
-    ./systemd_user/ssh-agent-mux.nix
+    ./systemd_user/fafnir.nix
     ./systemd_user/claude-log-cleanup.nix
     #./x11.nix
 

@@ -432,22 +432,8 @@ in
     abrmd.enable = true;
   };
 
-  # linux-id: emulate a FIDO2/U2F device using the TPM (CTAP2 support)
-  systemd.user.services.linux-id = {
-    description = "TPM FIDO2/U2F device (CTAP2)";
-    wantedBy = [ "default.target" ];
-    path = [ pkgs.pinentry-qt ];
-    serviceConfig = {
-      ExecStart = "${pkgs.linux-id}/bin/linux-id --auth fprintd";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-  };
-
-  services.udev.extraRules = lib.mkAfter ''
-    # Allow tss group access to /dev/uhid for linux-id
-    KERNEL=="uhid", SUBSYSTEM=="misc", GROUP="tss", MODE="0660"
-  '';
+  # fafnir (config/systemd_user/fafnir.nix) now owns both the SSH agent
+  # and the CTAP2 authenticator. /dev/uhid udev rule lives there too.
 
 
 }
