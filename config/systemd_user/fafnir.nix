@@ -10,6 +10,35 @@
 #
 # Requires programs.gnupg.agent.enableSSHSupport = false (we manage
 # SSH_AUTH_SOCK ourselves).
+#
+# # First-time provisioning (manual, runs once per user)
+#
+#   $ fafnir provision               # passphrase-encrypted, default
+#   $ fafnir provision --no-passphrase   # plaintext seed, auto-unlocks
+#
+# Both write `$XDG_CONFIG_HOME/fafnir/master.seed[.enc]` and print
+# the 24-word BIP39 mnemonic — store that offline.
+# Recovery requires BOTH the mnemonic AND this TPM chip: use
+# `fafnir import-seed` on the same machine after a disk replacement.
+#
+# # Upgrading from a pre-seed-derived install
+#
+#   $ fafnir migrate-evict
+#
+# Idempotent one-shot that walks the TPM and frees the legacy
+# `0x8101_FAF{0,1,2}` persistent slots (no-op if nothing there).
+# After it runs, the SSH/age/FIDO identities advertised by fafnir
+# will have changed (they're now derived from the master seed via
+# CreatePrimary instead of being persisted under fixed handles), so
+# you'll need to re-enroll the new public keys with GitHub etc.
+#
+# # Day-to-day (after upgrade)
+#
+#   $ fafnir status      # locked|unlocked
+#   $ fafnir unlock      # GUI passphrase modal, sends to daemon
+#   $ fafnir lock        # flush handles, drop master seed from RAM
+#
+# Auto-locks after 15 min idle by default ([unlock] auto_lock_idle_secs).
 
 let
   fafnirConfig = pkgs.writeText "fafnir.toml" ''
@@ -57,13 +86,19 @@ in
     serviceConfig = {
       Type = "simple";
       UMask = "0077";
-      # First ExecStartPre creates the runtime dir; second runs
-      # `fafnir provision` which is idempotent (skips already-present
-      # persistent handles) so only newly-enabled algorithms (e.g.
-      # adding RSA later) get created on next boot.
+      # mkdir runtime dir + the seed dir under $XDG_CONFIG_HOME so the
+      # daemon can find ~/.config/fafnir/master.seed[.enc]. Provisioning
+      # the master seed is now a one-shot user action via
+      # `fafnir provision` (writes the seed file + prints the BIP39
+      # mnemonic) — the service no longer auto-provisions on boot.
+      #
+      # On startup the daemon reads the seed file:
+      #   - plaintext seed   → unlock immediately
+      #   - encrypted seed   → start LOCKED, wait for `fafnir unlock`
+      #                        on the control socket
       ExecStartPre = [
         "${pkgs.coreutils}/bin/mkdir -p %t/fafnir"
-        "${pkgs.fafnir}/bin/fafnir --config ${fafnirConfig} provision"
+        "${pkgs.coreutils}/bin/mkdir -p %h/.config/fafnir"
       ];
       ExecStart = "${pkgs.fafnir}/bin/fafnir --config ${fafnirConfig} run";
       Restart = "on-failure";
