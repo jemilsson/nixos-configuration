@@ -344,6 +344,7 @@ in
   '';
 
   environment.systemPackages = with pkgs; [
+    fafnir
     docker
     docker-compose
     ffmpeg
