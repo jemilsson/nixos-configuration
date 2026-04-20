@@ -15,6 +15,9 @@
       url = "path:/home/jonas/workspace/fafnir";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+    };
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
     # };
@@ -34,7 +37,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir }: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, claude-code }: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -48,6 +51,7 @@
         # };
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
         fafnir = fafnir.packages.${system}.default;
+        claude-code = claude-code.packages.${system}.default;
       };
 
       # Overlay that imports packages from nixpkgs-jemilsson

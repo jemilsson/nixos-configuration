@@ -380,6 +380,8 @@ in
     bun
     sox
 
+    claude-code
+
     #devenv
 
 

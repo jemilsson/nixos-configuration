@@ -79,13 +79,15 @@ in
   systemd.user.services.fafnir = {
     unitConfig = {
       Description = "fafnir TPM-backed crypto daemon (SSH agent + FIDO + age)";
-      After = [ "gpg-agent-ssh.socket" ];
+      After = [ "gpg-agent-ssh.socket" "graphical-session.target" ];
       Wants = [ "gpg-agent-ssh.socket" ];
+      PartOf = [ "graphical-session.target" ];
     };
     path = [ pkgs.libnotify pkgs.dbus pkgs.fafnir ];
     serviceConfig = {
       Type = "simple";
       UMask = "0077";
+      PassEnvironment = [ "WAYLAND_DISPLAY" "DISPLAY" "XDG_RUNTIME_DIR" "DBUS_SESSION_BUS_ADDRESS" "XDG_SESSION_TYPE" ];
       # mkdir runtime dir + the seed dir under $XDG_CONFIG_HOME so the
       # daemon can find ~/.config/fafnir/master.seed[.enc]. Provisioning
       # the master seed is now a one-shot user action via
@@ -104,7 +106,7 @@ in
       Restart = "on-failure";
       RestartSec = 5;
     };
-    wantedBy = [ "default.target" ];
+    wantedBy = [ "graphical-session.target" ];
   };
 
   # Point SSH_AUTH_SOCK at fafnir's listen socket.
