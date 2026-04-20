@@ -429,7 +429,12 @@ in
 
   security.tpm2 = {
     enable = true;
-    abrmd.enable = true;
+    # abrmd is a userspace TPM resource manager that competes with the
+    # kernel's /dev/tpmrm0 for session slots. fafnir uses tpmrm0 by
+    # default; running both yields "Esys called in bad sequence"
+    # errors when they independently juggle TPM state. Disable abrmd
+    # unless a legacy app explicitly needs a dbus/socket TCTI.
+    abrmd.enable = false;
   };
 
   # fafnir: TPM-backed SSH agent + FIDO authenticator + age plugin.
