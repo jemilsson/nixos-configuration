@@ -489,6 +489,14 @@ in
   # on somchai via the shared ssh-keys.nix.
   nix.distributedBuilds = true;
   nix.settings.max-jobs = 0;
+  # Pull from somchai's S3 binary cache using a read-only IAM credential.
+  # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
+  nix.settings.substituters = lib.mkAfter [
+    "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
+  ];
+  nix.settings.trusted-public-keys = lib.mkAfter [
+    "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
+  ];
   nix.buildMachines = [{
     hostName = "somchai.jonasem.com";
     sshUser = "nix-builder";
