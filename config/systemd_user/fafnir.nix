@@ -38,7 +38,7 @@
 #   $ fafnir unlock      # GUI passphrase modal, sends to daemon
 #   $ fafnir lock        # flush handles, drop master seed from RAM
 #
-# Auto-locks after 15 min idle by default ([unlock] auto_lock_idle_secs).
+# Auto-locks after 8 h idle ([unlock] auto_lock_idle_secs).
 
 let
   fafnirConfig = pkgs.writeText "fafnir.toml" ''
@@ -54,6 +54,9 @@ let
     # Forward gpg-agent's SSH socket through fafnir; no extra fafnir-side
     # gate (GPG already prompts via its own pinentry).
     agent_sock_paths = [ "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh" ]
+
+    [unlock]
+    auto_lock_idle_secs = 28800
   '';
 in
 {

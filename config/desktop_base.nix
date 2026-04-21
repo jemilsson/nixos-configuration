@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 let
-  vscode-claude-code = pkgs.unstable.vscode-extensions.anthropic.claude-code;
+  vscode-claude-code = pkgs.unstable.vscode-extensions.anthropic.claude-code.overrideAttrs (old: {
+    src = old.src.overrideAttrs (_: {
+      outputHash = "sha256-TfVradC9ZjfLBp8QvZ0AptCS9j2ogzSlsRXxksp+N9I=";
+    });
+  });
   vscode-3d-preview = pkgs.jemilsson.vscode-3d-preview;
   quarto = pkgs.jemilsson.quarto;
   djlint = pkgs.jemilsson.djlint;
@@ -151,6 +155,7 @@ in
 
 
   environment.systemPackages = with pkgs; [
+    android-tools
     ghostscript
 
     #Browsers
@@ -432,11 +437,6 @@ in
       };
       #package = pkgs.unstable.gnupg;
     };
-
-    adb = {
-      enable = true;
-    };
-
 
     #firejail = {
     #  enable = true;

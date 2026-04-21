@@ -86,7 +86,7 @@
             ];
         };
         
-        jester = nixpkgs.lib.nixosSystem {
+        jester = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })

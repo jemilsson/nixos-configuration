@@ -82,6 +82,9 @@ in
     };
 
     nixPath = [ "nixpkgs=${nixPath}" ];
+
+    daemonCPUSchedPolicy = "idle";
+    daemonIOSchedClass = "idle";
   };
 
   systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
@@ -161,12 +164,29 @@ in
     #loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
 
     systemPackages = with pkgs; [
+      (writeShellScriptBin "cargo" ''
+        self_dir="$(cd "$(dirname "$0")" && pwd)"
+        new_path=""
+        IFS=:
+        for d in $PATH; do
+          [ "$d" = "$self_dir" ] && continue
+          new_path="''${new_path:+$new_path:}$d"
+        done
+        unset IFS
+        export PATH="$new_path"
+        real_cargo="$(command -v cargo)"
+        if [ -z "$real_cargo" ]; then
+          echo "cargo wrapper: no real cargo found on PATH" >&2
+          exit 127
+        fi
+        exec ${coreutils}/bin/nice -n 19 ${util-linux}/bin/ionice -c 3 "$real_cargo" "$@"
+      '')
+
       #System tools
       htop
       git
       wget
       curl
-      neofetch
       #unrar
       unzip
       dnsutils

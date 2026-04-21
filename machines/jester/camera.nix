@@ -5,14 +5,21 @@
   boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
   # Intel IPU6 MIPI camera (OV2740 sensor, Raptor Lake).
-  # Apps access the camera via PipeWire's libcamera integration, so the
-  # v4l2-relayd / v4l2loopback compatibility shim isn't needed. This also
-  # keeps the camera LED off until something actually requests the camera.
+  #
+  # Pure libcamera path: kernel ipu6-isys (mainline >=6.10) -> libcamera
+  # "simple" pipeline on the raw CSI node -> pipewire-camera (wireplumber
+  # libcamera monitor) -> apps. No v4l2-relayd, no icamerasrc, no
+  # v4l2loopback. nixpkgs' libcamera lacks an IPU6 IPA, so tuning runs
+  # through ipa_soft_simple with uncalibrated.yaml (image quality is
+  # mediocre but the stream is stable).
   hardware.ipu6 = {
     enable = true;
     platform = "ipu6ep";
   };
-  services.v4l2-relayd.instances.ipu6.enable = lib.mkForce false;
+  # hardware.ipu6 defaults this on; we want the pure libcamera path.
+  services.v4l2-relayd.instances.ipu6.enable = false;
+
+  environment.systemPackages = with pkgs; [ v4l-utils libcamera ];
 
   # Camera access requires the video group
   users.users.jonas.extraGroups = [ "video" ];
