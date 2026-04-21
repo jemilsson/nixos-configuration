@@ -447,7 +447,13 @@ in
     rsaBits      = 2048;
     powerledPath = "/sys/class/leds/tpacpi::power";
     agentSockPaths = [ "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh" ];
+    secretService.enable = true;
   };
+
+  # fafnir-secret-service owns org.freedesktop.secrets on jester,
+  # so disable gnome-keyring's secrets component (default-enabled
+  # in config/appearance.nix) to avoid the D-Bus name race.
+  services.gnome.gnome-keyring.enable = lib.mkForce false;
 
   # gpg-agent ssh socket — forwarded through fafnir so GPG-auth keys
   # remain available behind the same SSH_AUTH_SOCK.
@@ -470,5 +476,29 @@ in
   };
   programs.ssh.extraConfig = ''
     Match host * exec "${pkgs.runtimeShell} -c '${config.programs.gnupg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null 2>&1'"
+
+    Host somchai.jonasem.com
+      User jonas
+      IdentitiesOnly yes
+      IdentityFile /etc/ssh/ssh_host_ed25519_key
   '';
+
+  # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
+  # Root SSHes via the host ed25519 key (jester-tpm), authorized for jonas
+  # on somchai via the shared ssh-keys.nix.
+  nix.distributedBuilds = true;
+  nix.buildMachines = [{
+    hostName = "somchai.jonasem.com";
+    sshUser = "jonas";
+    sshKey = "/etc/ssh/ssh_host_ed25519_key";
+    systems = [ "x86_64-linux" ];
+    maxJobs = 2;
+    speedFactor = 4;
+    supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+    protocol = "ssh-ng";
+  }];
+  programs.ssh.knownHosts.somchai = {
+    hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:e3d:d9f8:9793:fe01" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID8U+6b7KQTUHacLjnk/e8XN5gUGKDZ5ZQEXl33Pck9T";
+  };
 }
