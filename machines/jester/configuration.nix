@@ -478,18 +478,20 @@ in
     Match host * exec "${pkgs.runtimeShell} -c '${config.programs.gnupg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null 2>&1'"
 
     Host somchai.jonasem.com
-      User jonas
+      User nix-builder
       IdentitiesOnly yes
       IdentityFile /etc/ssh/ssh_host_ed25519_key
+      ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
   '';
 
   # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
   # Root SSHes via the host ed25519 key (jester-tpm), authorized for jonas
   # on somchai via the shared ssh-keys.nix.
   nix.distributedBuilds = true;
+  nix.settings.max-jobs = 0;
   nix.buildMachines = [{
     hostName = "somchai.jonasem.com";
-    sshUser = "jonas";
+    sshUser = "nix-builder";
     sshKey = "/etc/ssh/ssh_host_ed25519_key";
     systems = [ "x86_64-linux" ];
     maxJobs = 2;
@@ -498,7 +500,7 @@ in
     protocol = "ssh-ng";
   }];
   programs.ssh.knownHosts.somchai = {
-    hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:e3d:d9f8:9793:fe01" ];
-    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID8U+6b7KQTUHacLjnk/e8XN5gUGKDZ5ZQEXl33Pck9T";
+    hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:ce5e:831b:b719:c940" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEsY31lwQd6bxClPwdH3kGDfKjSEcBmTUoxeP+7aaXMY";
   };
 }
