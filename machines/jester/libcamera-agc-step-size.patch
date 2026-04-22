@@ -1,0 +1,10 @@
+--- a/src/ipa/simple/algorithms/agc.cpp
++++ b/src/ipa/simple/algorithms/agc.cpp
+@@ -47,7 +47,7 @@ void Agc::updateExposure(IPAContext &context, IPAFrameContext &frameContext, dou
+ 	 * kExpDenominator of 10 gives ~10% increment/decrement;
+ 	 * kExpDenominator of 5 - about ~20%
+ 	 */
+-	static constexpr uint8_t kExpDenominator = 10;
++	static constexpr uint8_t kExpDenominator = 30;
+ 	static constexpr uint8_t kExpNumeratorUp = kExpDenominator + 1;
+ 	static constexpr uint8_t kExpNumeratorDown = kExpDenominator - 1;
