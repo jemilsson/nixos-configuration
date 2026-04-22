@@ -12,7 +12,7 @@
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
     fafnir = {
-      url = "path:/home/jonas/workspace/fafnir";
+      url = "github:jemilsson/fafnir";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     claude-code = {

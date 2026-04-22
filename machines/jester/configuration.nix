@@ -402,6 +402,7 @@ in
         extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
     settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.builders-use-substitutes = true;
 
   };
 
@@ -498,6 +499,9 @@ in
       IdentitiesOnly yes
       IdentityFile /etc/ssh/ssh_host_ed25519_key
       ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
+      ControlMaster auto
+      ControlPath /tmp/nix-ssh-%r@%h:%p
+      ControlPersist 120
   '';
 
   # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
@@ -505,6 +509,7 @@ in
   # on somchai via the shared ssh-keys.nix.
   nix.distributedBuilds = true;
   nix.settings.max-jobs = 0;
+  nix.settings.connect-timeout = 10;
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   nix.settings.substituters = lib.mkAfter [
@@ -518,7 +523,7 @@ in
     sshUser = "nix-builder";
     sshKey = "/etc/ssh/ssh_host_ed25519_key";
     systems = [ "x86_64-linux" ];
-    maxJobs = 2;
+    maxJobs = 16;
     speedFactor = 4;
     supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     protocol = "ssh-ng";

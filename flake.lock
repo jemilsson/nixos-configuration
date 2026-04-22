@@ -42,14 +42,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1776779791,
-        "narHash": "sha256-yGlaR/1BAO2DJuUFlrpJ812IFn0ADzkA2VoPCYiJSGI=",
-        "path": "/home/jonas/workspace/fafnir",
-        "type": "path"
+        "lastModified": 1776825540,
+        "narHash": "sha256-cxWGGMObBdGffNeRr15ob9Hao/5SPGkNxHiJUi5Ku4w=",
+        "owner": "jemilsson",
+        "repo": "fafnir",
+        "rev": "0492b1bb2cfd2d7846acce175a5828ea380b14cd",
+        "type": "github"
       },
       "original": {
-        "path": "/home/jonas/workspace/fafnir",
-        "type": "path"
+        "owner": "jemilsson",
+        "repo": "fafnir",
+        "type": "github"
       }
     },
     "flake-utils": {
