@@ -492,11 +492,12 @@ in
     wantedBy = [ "sockets.target" ];
   };
   programs.ssh.extraConfig = ''
-    Match host * exec "${pkgs.runtimeShell} -c '${config.programs.gnupg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null 2>&1'"
+    Match host * User !root exec "${pkgs.runtimeShell} -c '${config.programs.gnupg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null 2>&1'"
 
     Host somchai.jonasem.com
       User nix-builder
       IdentitiesOnly yes
+      IdentityAgent none
       IdentityFile /etc/ssh/ssh_host_ed25519_key
       ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
       ControlMaster auto
