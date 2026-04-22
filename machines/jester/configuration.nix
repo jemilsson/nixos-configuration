@@ -450,6 +450,22 @@ in
     secretService.enable = true;
   };
 
+  # The module defaults to graphical-session.target, but WAYLAND_DISPLAY
+  # is only imported into systemd's environment by the Hyprland exec-once
+  # that starts hyprland-session.target. Binding to that target ensures
+  # fafnir-prompt can connect to the compositor.
+  systemd.user.services.fafnir = {
+    unitConfig.After  = lib.mkForce [ "gpg-agent-ssh.socket" "hyprland-session.target" ];
+    unitConfig.Wants  = lib.mkForce [ "gpg-agent-ssh.socket" ];
+    unitConfig.PartOf = lib.mkForce [ "hyprland-session.target" ];
+    wantedBy          = lib.mkForce [ "hyprland-session.target" ];
+  };
+  systemd.user.services.fafnir-passkey = {
+    unitConfig.After  = lib.mkForce [ "fafnir.service" "hyprland-session.target" ];
+    unitConfig.PartOf = lib.mkForce [ "hyprland-session.target" ];
+    wantedBy          = lib.mkForce [ "hyprland-session.target" ];
+  };
+
   # fafnir-secret-service owns org.freedesktop.secrets on jester,
   # so disable gnome-keyring's secrets component (default-enabled
   # in config/appearance.nix) to avoid the D-Bus name race.
