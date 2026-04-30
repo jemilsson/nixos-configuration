@@ -1,5 +1,14 @@
 --- a/src/ipa/simple/algorithms/agc.cpp
 +++ b/src/ipa/simple/algorithms/agc.cpp
+@@ -35,7 +35,7 @@ static constexpr float kExposureOptimal = kExposureBinsCount / 2.0;
+  * It is small enough to have the exposure close to the optimal, and is big
+  * enough to prevent the exposure from wobbling around the optimal value.
+  */
+-static constexpr float kExposureSatisfactory = 0.2;
++static constexpr float kExposureSatisfactory = 0.5;
+
+ Agc::Agc()
+ {
 @@ -47,7 +47,7 @@ void Agc::updateExposure(IPAContext &context, IPAFrameContext &frameContext, dou
  	 * kExpDenominator of 10 gives ~10% increment/decrement;
  	 * kExpDenominator of 5 - about ~20%
@@ -8,3 +17,19 @@
 +	static constexpr uint8_t kExpDenominator = 30;
  	static constexpr uint8_t kExpNumeratorUp = kExpDenominator + 1;
  	static constexpr uint8_t kExpNumeratorDown = kExpDenominator - 1;
+
+@@ -163,7 +163,13 @@ void Agc::process(IPAContext &context,
+ 	}
+
+ 	float exposureMSV = (denom == 0 ? 0 : static_cast<float>(num) / denom);
+-	updateExposure(context, frameContext, exposureMSV);
++	/*
++	 * OV2740 has ~2 frame exposure-apply latency. Throttle adjustments
++	 * so the sensor pipeline settles between updates; otherwise stacked
++	 * unobserved adjustments overshoot and oscillate (visible blink).
++	 */
++	if (frame % 3 == 0)
++		updateExposure(context, frameContext, exposureMSV);
+ }
+
+ REGISTER_IPA_ALGORITHM(Agc, "Agc")

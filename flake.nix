@@ -12,7 +12,7 @@
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
     fafnir = {
-      url = "github:jemilsson/fafnir";
+      url = "git+ssh://git@github.com/jemilsson/fafnir";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     claude-code = {

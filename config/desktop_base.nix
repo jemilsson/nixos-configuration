@@ -151,6 +151,20 @@ in
 
   networking.networkmanager.enable = true;
 
+  xdg.mime.defaultApplications = {
+    "text/html" = "chromium-browser.desktop";
+    "x-scheme-handler/http" = "chromium-browser.desktop";
+    "x-scheme-handler/https" = "chromium-browser.desktop";
+    "x-scheme-handler/about" = "chromium-browser.desktop";
+    "x-scheme-handler/unknown" = "chromium-browser.desktop";
+  };
+  environment.sessionVariables.BROWSER = "chromium";
+  environment.sessionVariables.DEFAULT_BROWSER = "chromium";
+  networking.networkmanager.settings.connectivity = {
+    uri = "http://connectivitycheck.grapheneos.network/generate_204";
+    interval = "300";
+  };
+
   #environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
 
@@ -163,6 +177,8 @@ in
     (chromium.override {
       commandLineArgs = [
         "--remote-debugging-port=9222"
+        "--remote-debugging-address=127.0.0.1"
+        "--remote-allow-origins=http://127.0.0.1:9222"
         "--disk-cache-size=536870912"
       ];
     })

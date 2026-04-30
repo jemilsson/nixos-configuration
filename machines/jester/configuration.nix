@@ -23,7 +23,7 @@ let
     { prefix = "2a12:5800::/29"; }
     { prefix = "2a05:d016:865:7a00::/56"; }
     { prefix = "2607:6bc0::/48"; }   # Claude code
-    { prefix = "::/0"; metric = 9999; }
+    { prefix = "::/0"; metric = 50000; }
   ];
 
   parsePrefix = s: let
@@ -304,8 +304,7 @@ in
     {
       type = "basic";
       source = pkgs.replaceVars ./prefer-ipv4-fallback.sh {
-        iproute2 = pkgs.iproute2;
-        gnugrep = pkgs.gnugrep;
+        iputils = pkgs.iputils;
       };
     }
   ];
@@ -446,6 +445,7 @@ in
     approval     = "fprintd";
     enableRsa    = true;
     rsaBits      = 2048;
+    autoLockIdleSecs = 28800;
     powerledPath = "/sys/class/leds/tpacpi::power";
     agentSockPaths = [ "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh" ];
     secretService.enable = true;
@@ -503,14 +503,28 @@ in
       ControlMaster auto
       ControlPath /tmp/nix-ssh-%r@%h:%p
       ControlPersist 120
+      ConnectTimeout 60
+      ServerAliveInterval 60
+      ServerAliveCountMax 10
+      TCPKeepAlive yes
   '';
 
   # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
   # Root SSHes via the host ed25519 key (jester-tpm), authorized for jonas
   # on somchai via the shared ssh-keys.nix.
+  # Prevent nix-daemon crash on boot: Settings static initializer dereferences
+  # HOME before nscd is ready. Setting HOME explicitly avoids the race.
+  systemd.services.nix-daemon.environment.HOME = "/root";
+
   nix.distributedBuilds = true;
-  nix.settings.max-jobs = 0;
-  nix.settings.connect-timeout = 10;
+  nix.settings.max-jobs = 1; # 0 breaks preferLocalBuild=true derivations (e.g. /etc/issue)
+  # somchai is an EC2 spot instance woken on demand via Lambda from the
+  # ProxyCommand; cold boot is 60-90s. Keep this generous so nix-daemon
+  # doesn't yank the SSH handshake before the wake completes.
+  nix.settings.connect-timeout = 360;
+  # Prevent "download buffer is full" → daemon crashes when streaming large
+  # NARs from the remote builder / S3 cache. Default 64 MiB is too small.
+  nix.settings.download-buffer-size = 1024 * 1024 * 1024; # 1 GiB
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   nix.settings.substituters = lib.mkAfter [
@@ -524,7 +538,7 @@ in
     sshUser = "nix-builder";
     sshKey = "/etc/ssh/ssh_host_ed25519_key";
     systems = [ "x86_64-linux" ];
-    maxJobs = 16;
+    maxJobs = 8;
     speedFactor = 4;
     supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     protocol = "ssh-ng";
