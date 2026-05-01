@@ -93,6 +93,67 @@ in
     serviceConfig.Type = "oneshot";
   };
 
+  # Reaper for orphaned `ssh nix-builder@somchai.jonasem.com` sessions.
+  #
+  # When `nix build` runs against the somchai remote builder, the local
+  # nix-daemon spawns a child `ssh nix-builder@somchai ... nix-daemon --stdio`
+  # per build. If the parent `nix build` dies abnormally (SIGKILL, terminal
+  # closed without `ssh -O exit`, agent crash), the SSH process is reparented
+  # to nix-daemon (the system service) and never reaped: nix-daemon is still
+  # alive, and SSH's ServerAliveInterval does not fire while the remote end
+  # is healthy. The orphan keeps the per-builder upload lock, so all
+  # subsequent `nix build` invocations queue forever behind it.
+  #
+  # This is the jester-side mirror of the `nix-daemon-stdio-reaper` unit that
+  # runs on somchai itself (which handles the remote-side `nix-daemon --stdio`
+  # zombies). Together they bound the lifetime of abandoned builder sessions.
+  #
+  # Logic: only kill ssh-nix-builder PIDs if there are no active `nix build`,
+  # `nix-build`, or `nix copy` clients on this host (so we never SIGKILL a
+  # legitimate in-flight build's SSH child), and only after the SSH process
+  # has been alive for >30 minutes.
+  systemd.services.nix-ssh-builder-reaper = {
+    description = "Reap orphaned ssh nix-builder@somchai sessions";
+    path = [ pkgs.coreutils pkgs.procps pkgs.util-linux ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      MAX_IDLE_S=1800   # 30 min
+      LOG=/var/log/nix-ssh-builder-reaper.log
+      ts=$(date -Iseconds)
+      killed=0
+      for pid in $(pgrep -f 'ssh nix-builder@somchai\.jonasem\.com' || true); do
+        [ -d "/proc/$pid" ] || continue
+
+        # Live build: any `nix build` process anywhere in the system.
+        # If there are still active nix-build clients, do nothing; those SSH
+        # children may be theirs, even if the wchan looks idle.
+        if pgrep -f 'nix build|nix-build|nix copy' >/dev/null 2>&1; then
+          continue
+        fi
+
+        etime=$(ps -o etimes= -p "$pid" 2>/dev/null | tr -d ' ')
+        [ -n "$etime" ] || continue
+        [ "$etime" -gt "$MAX_IDLE_S" ] || continue
+
+        echo "$ts ORPHAN ssh-nix-builder pid=$pid etime=''${etime}s -> SIGKILL" >>"$LOG"
+        kill -9 "$pid" 2>/dev/null || true
+        killed=$((killed+1))
+      done
+      [ "$killed" -gt 0 ] && echo "$ts reaped $killed orphan ssh session(s)" >>"$LOG"
+      exit 0
+    '';
+  };
+
+  systemd.timers.nix-ssh-builder-reaper = {
+    description = "Periodic reap of orphaned ssh nix-builder@somchai sessions";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "10min";
+      OnUnitActiveSec = "10min";
+      Unit = "nix-ssh-builder-reaper.service";
+    };
+  };
+
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
