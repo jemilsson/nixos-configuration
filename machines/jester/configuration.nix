@@ -210,6 +210,26 @@ in
     binfmt.emulatedSystems = [ ];
   };
 
+  # Disambiguate the two RTK USB-C panels (they ship with identical EDID
+  # serials, which confuses wlroots/Hyprland and prevents distinct
+  # per-output position rules). The kernel-assigned DP connector names
+  # are unstable across reboots (we've seen DP-5/DP-6 and DP-7/DP-8),
+  # but the two panels always land on adjacent connectors. Override every
+  # odd DP-N: exactly one of the two panels picks up the modified EDID,
+  # the other keeps its native one, so they end up with distinct serials.
+  hardware.display.outputs."DP-1".edid = "rtk-dp8.bin";
+  hardware.display.outputs."DP-3".edid = "rtk-dp8.bin";
+  hardware.display.outputs."DP-5".edid = "rtk-dp8.bin";
+  hardware.display.outputs."DP-7".edid = "rtk-dp8.bin";
+  hardware.display.outputs."DP-9".edid = "rtk-dp8.bin";
+  hardware.display.outputs."DP-11".edid = "rtk-dp8.bin";
+  hardware.display.edid.packages = [
+    (pkgs.runCommand "rtk-edid" { } ''
+      mkdir -p "$out/lib/firmware/edid"
+      cp ${./edid/rtk-dp8.bin} "$out/lib/firmware/edid/rtk-dp8.bin"
+    '')
+  ];
+
   networking = {
     hostName = "jester";
     getaddrinfo.enable = false;
@@ -508,8 +528,33 @@ in
     rsaBits      = 2048;
     autoLockIdleSecs = 28800;
     powerledPath = "/sys/class/leds/tpacpi::power";
-    agentSockPaths = [ "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh" ];
+    # YubiKey OpenPGP keys are now reached via fafnir-openpgp's own
+    # ssh-agent socket (scdaemon passthrough). fafnir's main agent
+    # forwards to it, so SSH_AUTH_SOCK on the TPM agent gets both
+    # the TPM identity and the card auth key.
+    agentSockPaths = [ "$XDG_RUNTIME_DIR/fafnir/openpgp-ssh.sock" ];
     secretService.enable = true;
+  };
+
+  # fafnir-keepassxc-bridge: native-messaging host for KeePassXC-Browser
+  # (Chromium/Firefox), serving credentials out of fafnir's vault.
+  services.fafnir-keepassxc-bridge = {
+    enable = true;
+    users  = [ "jonas" ];
+  };
+
+  # fafnir-wallet: Ledger-Nano-emulating Solana HD wallet daemon
+  # (TPM-protected BIP39 seed, exposed as a UHID Ledger device).
+  services.fafnir-wallet = {
+    enable = true;
+    users  = [ "jonas" ];
+  };
+
+  # fafnir-openpgp: gpg-agent replacement, TPM-backed. Mutually exclusive
+  # with the upstream gpg-agent user service for the listed users.
+  services.fafnir-openpgp = {
+    enable = true;
+    users  = [ "jonas" ];
   };
 
   # The module defaults to graphical-session.target, but WAYLAND_DISPLAY
@@ -517,8 +562,8 @@ in
   # that starts hyprland-session.target. Binding to that target ensures
   # fafnir-prompt can connect to the compositor.
   systemd.user.services.fafnir = {
-    unitConfig.After  = lib.mkForce [ "gpg-agent-ssh.socket" "hyprland-session.target" ];
-    unitConfig.Wants  = lib.mkForce [ "gpg-agent-ssh.socket" ];
+    unitConfig.After  = lib.mkForce [ "fafnir-openpgp.service" "hyprland-session.target" ];
+    unitConfig.Wants  = lib.mkForce [ "fafnir-openpgp.service" ];
     unitConfig.PartOf = lib.mkForce [ "hyprland-session.target" ];
     wantedBy          = lib.mkForce [ "hyprland-session.target" ];
   };
@@ -533,27 +578,10 @@ in
   # in config/appearance.nix) to avoid the D-Bus name race.
   services.gnome.gnome-keyring.enable = lib.mkForce false;
 
-  # gpg-agent ssh socket — forwarded through fafnir so GPG-auth keys
-  # remain available behind the same SSH_AUTH_SOCK.
-  programs.gnupg.agent.settings = {
-    enable-ssh-support = "";
-  };
-  systemd.user.sockets.gpg-agent-ssh = {
-    unitConfig = {
-      Description = "GnuPG cryptographic agent (ssh-agent emulation)";
-      Documentation = "man:gpg-agent(1) man:ssh-add(1) man:ssh-agent(1) man:ssh(1)";
-    };
-    socketConfig = {
-      ListenStream = "%t/gnupg/S.gpg-agent.ssh";
-      FileDescriptorName = "ssh";
-      Service = "gpg-agent.service";
-      SocketMode = "0600";
-      DirectoryMode = "0700";
-    };
-    wantedBy = [ "sockets.target" ];
-  };
+  # gpg-agent SSH emulation has been retired — fafnir-openpgp serves
+  # the YubiKey auth subkey directly on its own ssh-agent socket via
+  # scdaemon passthrough, and fafnir's main agent forwards to it.
   programs.ssh.extraConfig = ''
-    Match host * User !root exec "${pkgs.runtimeShell} -c '${config.programs.gnupg.package}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null 2>&1'"
 
     Host somchai.jonasem.com
       User nix-builder
@@ -586,6 +614,19 @@ in
   # Prevent "download buffer is full" → daemon crashes when streaming large
   # NARs from the remote builder / S3 cache. Default 64 MiB is too small.
   nix.settings.download-buffer-size = 1024 * 1024 * 1024; # 1 GiB
+  # Reliability pack (2026-05-01): the somchai remote-build path lost
+  # entire builds to "Nix daemon disconnected unexpectedly" mid-NAR
+  # when the SSH multiplex channel saturated.
+  # Limit substituter parallelism so substituting paths back from
+  # somchai/cache.nixos.org doesn't exhaust SSH channel slots and starve
+  # the build itself. Default 16 is way too aggressive for our link.
+  nix.settings.max-substitution-jobs = 4;
+  # Fall back to local build when somchai is unreachable instead of failing.
+  nix.settings.fallback = true;
+  # Larger TCP backoff on remote-build SSH so the link survives the
+  # post-build-hook S3 push hiccup that briefly blocks somchai's
+  # nix-daemon write side.
+  nix.settings.stalled-download-timeout = 300;
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   nix.settings.substituters = lib.mkAfter [
@@ -599,7 +640,11 @@ in
     sshUser = "nix-builder";
     sshKey = "/etc/ssh/ssh_host_ed25519_key";
     systems = [ "x86_64-linux" ];
-    maxJobs = 8;
+    # Lowered from 8 → 4. Eight parallel `nix-daemon --stdio` channels
+    # over a single SSH connection saturated the multiplex on
+    # large-closure builds (fafnir-ui-apk, decentgaming-contracts).
+    # Four still saturates somchai's CPU but keeps SSH responsive.
+    maxJobs = 4;
     speedFactor = 4;
     supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     protocol = "ssh-ng";

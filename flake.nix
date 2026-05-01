@@ -91,6 +91,9 @@
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             fafnir.nixosModules.default
+            fafnir.nixosModules.fafnir-keepassxc-bridge
+            fafnir.nixosModules.fafnir-wallet
+            fafnir.nixosModules.fafnir-openpgp
             ./machines/jester/configuration.nix
           ];
 

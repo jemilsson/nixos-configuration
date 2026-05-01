@@ -163,6 +163,7 @@ in
   networking.networkmanager.settings.connectivity = {
     uri = "http://connectivitycheck.grapheneos.network/generate_204";
     interval = "300";
+    response = "";
   };
 
   #environment.sessionVariables.NIXOS_OZONE_WL = "1";

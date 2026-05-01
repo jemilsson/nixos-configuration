@@ -42,11 +42,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776851989,
-        "narHash": "sha256-3hlS6MTT2PZFm/e/q4udQJPPr9nePTi3isJebWzLEQE=",
+        "lastModified": 1777600273,
+        "narHash": "sha256-scrm8fGx9jGckU3np/kyw2qqxZRjVTC5p5cD5ODlx1w=",
         "ref": "refs/heads/master",
-        "rev": "54a9f59798db43494fea2e414ff8e336ca4f10d9",
-        "revCount": 127,
+        "rev": "a83b811f9be06e5f45c318b0d02fda1fbcdc2aa9",
+        "revCount": 239,
         "type": "git",
         "url": "ssh://git@github.com/jemilsson/fafnir"
       },
