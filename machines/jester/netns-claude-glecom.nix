@@ -51,7 +51,12 @@ in
         mcp=$(${pkgs.jq}/bin/jq -c .mcpServers "$src" 2>/dev/null)
         if [ -n "$mcp" ] && [ "$mcp" != "null" ]; then
           tmp=$(${pkgs.coreutils}/bin/mktemp "$dst.XXXXXX")
-          if ${pkgs.jq}/bin/jq --argjson mcp "$mcp" '.mcpServers = $mcp' "$dst" > "$tmp"; then
+          if ${pkgs.jq}/bin/jq --argjson mcp "$mcp" '
+              .mcpServers = ($mcp | walk(
+                if type == "string"
+                then gsub("http://127\\.0\\.0\\.1:"; "http://10.200.200.1:")
+                else . end
+              ))' "$dst" > "$tmp"; then
             ${pkgs.coreutils}/bin/mv "$tmp" "$dst"
           else
             ${pkgs.coreutils}/bin/rm -f "$tmp"
