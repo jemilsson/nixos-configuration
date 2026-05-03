@@ -88,7 +88,7 @@ in
   ];
 
   boot.initrd.kernelModules = [ ];
-  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
+  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "xe" ];
 
   boot.kernel.sysctl."net.ipv4.tcp_mtu_probing" = 1;
 
@@ -198,9 +198,6 @@ in
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" "uhid" ];
     kernelParams = [
-      "xe.force_probe=a7a1"       # Use xe driver for Raptor Lake Iris Xe
-      "i915.force_probe=!a7a1"    # Tell i915 to skip this GPU
-      "i915.modeset=0"            # Make i915 fully inert (xe owns the GPU)
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
     ];
     loader = {
@@ -469,6 +466,8 @@ in
 
     claude-code
 
+    nix-tcp-proxy
+
     #devenv
 
 
@@ -564,6 +563,20 @@ in
     users  = [ "jonas" ];
   };
 
+  # Bind fafnir-openpgp to the XDG runtime gnupg socket path so gpg
+  # tools find it at the standard location (gpgconf --list-dirs
+  # agent-socket returns %t/gnupg/S.gpg-agent, not ~/.gnupg/S.gpg-agent).
+  # Disable the competing gpg-agent sockets so they don't lock the
+  # YubiKey first via their own scdaemon.
+  systemd.user.services.fafnir-openpgp = {
+    serviceConfig.ExecStartPre = lib.mkAfter
+      [ "${pkgs.coreutils}/bin/mkdir -p %t/gnupg" ];
+    serviceConfig.Environment  = lib.mkAfter [ "GNUPGHOME=%t/gnupg" ];
+    unitConfig.Conflicts       = "gpg-agent.service";
+  };
+  systemd.user.sockets.gpg-agent.enable       = lib.mkForce false;
+  systemd.user.sockets.gpg-agent-extra.enable = lib.mkForce false;
+
   # Raise per-user systemd default LimitNOFILE so transient units (e.g.
   # `systemd-run --user -p LimitNOFILE=...`) can be granted >524288 fds.
   # Required by magicblock-validator (RocksDB) for ER integration tests.
@@ -606,7 +619,7 @@ in
       ControlMaster auto
       ControlPath /tmp/nix-ssh-%r@%h:%p
       ControlPersist 120
-      ConnectTimeout 60
+      ConnectTimeout 120
       ServerAliveInterval 60
       ServerAliveCountMax 10
       TCPKeepAlive yes
