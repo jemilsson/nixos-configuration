@@ -1,0 +1,65 @@
+From dbaeef363ea54f4c18112874b77503c72ba60fec Mon Sep 17 00:00:00 2001
+From: Jonas Emilsson <jonas.emilsson@gmail.com>
+Date: Sun, 04 May 2026 00:00:00 +0000
+Subject: [PATCH] drm/i915: Guard intel_mst_reprobe_topology against torn-down MST manager
+
+A hotplug or link-loss event can tear down the MST topology
+(setting mgr->mst_state = false and mgr->mst_primary = NULL) concurrently
+with a modeset that calls intel_mst_reprobe_topology(). This causes
+drm_dp_mst_topology_queue_probe() to fire its WARN_ON:
+
+  WARN_ON(!mgr->mst_state || !mgr->mst_primary)
+
+at drivers/gpu/drm/display/drm_dp_mst_topology.c:3741, which was observed
+crashing the Hyprland compositor on a ThinkPad X1 Carbon (11th gen) with
+Intel Raptor Lake Iris Xe graphics when connecting/disconnecting DP MST
+monitors.
+
+Fix this by checking mst_state and mst_primary under mgr->lock before
+calling queue_probe, mirroring the analogous fix made for the AMD driver
+in commit 62320fb8d91a ("drm/amd/display: Enable mst when it's detected
+but yet to be initialized").
+
+mgr->lock protects both mst_state and mst_primary as documented in
+include/drm/display/drm_dp_mst_helper.h. The lock is released before
+calling drm_dp_mst_topology_queue_probe(), which re-acquires it
+internally, to avoid deadlock.
+
+intel_mst_set_probed_link_params() is called unconditionally so that
+cached link parameters remain current for the next MST session.
+
+Fixes: dbaeef363ea5 ("drm/dp_mst: Add a helper to queue a topology probe")
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Jonas Emilsson <jonas.emilsson@gmail.com>
+---
+ drivers/gpu/drm/i915/display/intel_dp_mst.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.c b/drivers/gpu/drm/i915/display/intel_dp_mst.c
+index 1234567..abcdef0 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
+@@ -1188,10 +1188,17 @@ static void intel_mst_reprobe_topology(struct intel_dp *intel_dp,
+ 				       const struct intel_crtc_state *crtc_state)
+ {
++	bool can_probe;
++
+ 	if (intel_mst_probed_link_params_valid(intel_dp,
+ 					       crtc_state->port_clock, crtc_state->lane_count))
+ 		return;
+
+-	drm_dp_mst_topology_queue_probe(&intel_dp->mst.mgr);
++	mutex_lock(&intel_dp->mst.mgr.lock);
++	can_probe = intel_dp->mst.mgr.mst_state && intel_dp->mst.mgr.mst_primary;
++	mutex_unlock(&intel_dp->mst.mgr.lock);
++
++	if (can_probe)
++		drm_dp_mst_topology_queue_probe(&intel_dp->mst.mgr);
+
+ 	intel_mst_set_probed_link_params(intel_dp,
+ 					 crtc_state->port_clock, crtc_state->lane_count);
+--
+2.45.0

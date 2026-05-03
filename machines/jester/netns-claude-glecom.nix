@@ -175,6 +175,10 @@ in
     "net.ipv6.conf.all.forwarding" = 1;
   };
 
+  # Trust veth-cg so firewall accepts DNAT'd traffic from the namespace
+  # (ports 3001/muninn, 8000/venice-api, 9222/chrome-devtools)
+  networking.firewall.trustedInterfaces = [ "veth-cg" ];
+
   # NAT: masquerade namespace traffic leaving via wg2
   networking.firewall.extraCommands = lib.mkAfter ''
     iptables  -t nat -A POSTROUTING -s 10.200.200.0/30 -j MASQUERADE
