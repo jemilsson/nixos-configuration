@@ -80,6 +80,13 @@ in
     #WLR_BACKEND = "vulkan";
   };
 
+  boot.kernelPatches = [
+    {
+      name = "intel-mst-reprobe-fix";
+      patch = ./intel-mst-reprobe-fix.patch;
+    }
+  ];
+
   boot.initrd.kernelModules = [ ];
   boot.blacklistedKernelModules = [ "pn533_usb" "pn533" ];
 
@@ -557,6 +564,13 @@ in
     users  = [ "jonas" ];
   };
 
+  # Raise per-user systemd default LimitNOFILE so transient units (e.g.
+  # `systemd-run --user -p LimitNOFILE=...`) can be granted >524288 fds.
+  # Required by magicblock-validator (RocksDB) for ER integration tests.
+  systemd.user.extraConfig = ''
+    DefaultLimitNOFILE=1048576
+  '';
+
   # The module defaults to graphical-session.target, but WAYLAND_DISPLAY
   # is only imported into systemd's environment by the Hyprland exec-once
   # that starts hyprland-session.target. Binding to that target ensures
@@ -653,4 +667,12 @@ in
     hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:ce5e:831b:b719:c940" ];
     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEsY31lwQd6bxClPwdH3kGDfKjSEcBmTUoxeP+7aaXMY";
   };
+
+  # Software debounce for MX Anywhere 3S which has bouncing left-click switch
+  environment.etc."libinput/local-overrides.quirks".text = ''
+    [Logitech MX Anywhere 3S Bounce Fix]
+    MatchUdevType=mouse
+    MatchName=*Logitech MX Anywhere 3S*
+    ModelLogitechBustypeRollover=1
+  '';
 }
