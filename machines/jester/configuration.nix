@@ -572,8 +572,9 @@ in
   # fafnir-openpgp: gpg-agent replacement, TPM-backed. Mutually exclusive
   # with the upstream gpg-agent user service for the listed users.
   services.fafnir-openpgp = {
-    enable = true;
-    users  = [ "jonas" ];
+    enable   = true;
+    users    = [ "jonas" ];
+    pinentry = pkgs.pinentry-qt;
   };
 
   # Bind fafnir-openpgp to the XDG runtime gnupg socket path so gpg
