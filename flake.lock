@@ -44,11 +44,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1777870824,
-        "narHash": "sha256-WZGjqRMeCpkmHD6drcCaMkThhY0UWEiDUR05sX2FGyI=",
+        "lastModified": 1777877001,
+        "narHash": "sha256-wuSPBDKmQFBJbv3IXCqlh8vdpWstQVFiwDhSq4Ql+64=",
         "ref": "refs/heads/master",
-        "rev": "8ad86699261059521c1ffd1c26c45a4f3dbf8678",
-        "revCount": 376,
+        "rev": "df0c7e032dd86343d5205a65c2f05b55241631af",
+        "revCount": 379,
         "type": "git",
         "url": "ssh://git@github.com/jemilsson/fafnir"
       },

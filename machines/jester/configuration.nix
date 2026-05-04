@@ -516,6 +516,19 @@ in
 
 
 
+  # Allow jonas to restart fprintd without a password (needed to clear stale
+  # D-Bus claims after hyprlock exits without releasing the sensor).
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id == "org.freedesktop.systemd1.manage-units" &&
+          action.lookup("unit") == "fprintd.service" &&
+          action.lookup("verb") == "restart" &&
+          subject.user == "jonas") {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
   security.tpm2 = {
     enable = true;
     # abrmd is a userspace TPM resource manager that competes with the
