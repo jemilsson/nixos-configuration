@@ -1,5 +1,6 @@
 use std::env;
 use std::io::{self, Read, Write};
+use std::mem::ManuallyDrop;
 use std::net::{Shutdown, TcpStream};
 use std::thread;
 use std::time::Duration;
@@ -48,7 +49,11 @@ fn copy_stdin_to_tcp(mut stream: TcpStream) {
 }
 
 fn copy_tcp_to_stdout(mut stream: TcpStream) {
-    let mut stdout = io::stdout().lock();
+    use std::os::unix::io::FromRawFd;
+    // SAFETY: fd 1 is stdout, valid for the process lifetime.
+    // ManuallyDrop prevents closing fd 1 on drop while still freeing File's heap allocations.
+    // File::write_all calls write() directly, bypassing LineWriter's newline-flush buffering.
+    let mut stdout = ManuallyDrop::new(unsafe { std::fs::File::from_raw_fd(1) });
     let mut buf = [0u8; 8192];
     loop {
         match stream.read(&mut buf) {

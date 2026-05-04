@@ -57,6 +57,7 @@ in
     #./mcpo.nix
     ./camera.nix
     ./netns-claude-glecom.nix
+    ./pi-lens.nix
 
   ];
 
@@ -115,10 +116,10 @@ in
   # runs on somchai itself (which handles the remote-side `nix-daemon --stdio`
   # zombies). Together they bound the lifetime of abandoned builder sessions.
   #
-  # Logic: only kill ssh-nix-builder PIDs if there are no active `nix build`,
-  # `nix-build`, or `nix copy` clients on this host (so we never SIGKILL a
-  # legitimate in-flight build's SSH child), and only after the SSH process
-  # has been alive for >30 minutes.
+  # Logic: only kill ssh-nix-builder PIDs if the nix-daemon has no active
+  # temproots entries (the daemon creates these during any build or copy, so
+  # their presence means a legitimate build is in flight), and only after the
+  # SSH process has been alive for >30 minutes.
   systemd.services.nix-ssh-builder-reaper = {
     description = "Reap orphaned ssh nix-builder@somchai sessions";
     path = [ pkgs.coreutils pkgs.procps pkgs.util-linux ];
@@ -131,10 +132,9 @@ in
       for pid in $(pgrep -f 'ssh nix-builder@somchai\.jonasem\.com' || true); do
         [ -d "/proc/$pid" ] || continue
 
-        # Live build: any `nix build` process anywhere in the system.
-        # If there are still active nix-build clients, do nothing; those SSH
-        # children may be theirs, even if the wchan looks idle.
-        if pgrep -f 'nix build|nix-build|nix copy' >/dev/null 2>&1; then
+        # Active build: nix-daemon holds temproots entries during any build/copy.
+        # Checking these is more reliable than matching client process names.
+        if [ -d /nix/var/nix/temproots ] && [ "$(ls -A /nix/var/nix/temproots 2>/dev/null)" ]; then
           continue
         fi
 

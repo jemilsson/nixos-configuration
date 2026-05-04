@@ -50,6 +50,7 @@
         #   config.allowUnfree = true;
         # };
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
+        nix-tcp-proxy = prev.callPackage ./packages/nix-tcp-proxy { };
         fafnir = fafnir.packages.${system}.default;
         claude-code = claude-code.packages.${system}.default;
       };
