@@ -95,6 +95,7 @@
             fafnir.nixosModules.fafnir-keepassxc-bridge
             fafnir.nixosModules.fafnir-wallet
             fafnir.nixosModules.fafnir-openpgp
+            fafnir.nixosModules.fafnir-pkcs11-aggregator
             ./machines/jester/configuration.nix
           ];
 

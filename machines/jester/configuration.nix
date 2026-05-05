@@ -582,6 +582,17 @@ in
     useSystemPcscd  = true;
   };
 
+  # Expose YubiKey PIV slots through fafnir's PKCS#11 aggregator so the
+  # fafnir-openpgp ssh-agent socket advertises PIV identities alongside
+  # the OpenPGP card subkeys. OpenPGP is intentionally disabled here:
+  # fafnir-openpgp already serves the OpenPGP applet via scdaemon, and
+  # routing it through opensc-pkcs11 in parallel would cause PCSC
+  # sharing violations on the YubiKey.
+  services.fafnir.pkcs11.cards = {
+    enable = true;
+    openpgp.enable = false;
+  };
+
   # Bind fafnir-openpgp to the XDG runtime gnupg socket path so gpg
   # tools find it at the standard location (gpgconf --list-dirs
   # agent-socket returns %t/gnupg/S.gpg-agent, not ~/.gnupg/S.gpg-agent).
