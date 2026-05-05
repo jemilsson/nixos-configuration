@@ -16,6 +16,8 @@ let
     { prefix = "192.168.0.0/16"; }
     { prefix = "172.16.0.0/12"; }
     { prefix = "160.79.104.0/23"; }  # Claude code
+    { prefix = "137.61.9.13/32"; }   # skatteverket.se
+    { prefix = "137.61.9.10/32"; }   # www7.skatteverket.se
   ];
 
   wg2IPv6Prefixes = [
@@ -23,6 +25,8 @@ let
     { prefix = "2a12:5800::/29"; }
     { prefix = "2a05:d016:865:7a00::/56"; }
     { prefix = "2607:6bc0::/48"; }   # Claude code
+    { prefix = "2a03:b100:a:9::b/128"; }  # skatteverket.se
+    { prefix = "2a03:b100:a:9::a/128"; }  # www7.skatteverket.se
     { prefix = "::/0"; metric = 50000; }
   ];
 
@@ -572,9 +576,10 @@ in
   # fafnir-openpgp: gpg-agent replacement, TPM-backed. Mutually exclusive
   # with the upstream gpg-agent user service for the listed users.
   services.fafnir-openpgp = {
-    enable   = true;
-    users    = [ "jonas" ];
-    pinentry = pkgs.pinentry-qt;
+    enable          = true;
+    users           = [ "jonas" ];
+    pinentry        = pkgs.pinentry-qt;
+    useSystemPcscd  = true;
   };
 
   # Bind fafnir-openpgp to the XDG runtime gnupg socket path so gpg
