@@ -69,6 +69,19 @@ in
                 #"electron-24.8.6"
 ];
 
+  # Hardware-attested SSH key enforcement. syna installs and gates
+  # authorized_keys for every privileged user from the shared keys file.
+  # See ../../config/syna/attestations/README.md for how to refresh the
+  # fafnir bundle.
+  services.syna = {
+    package = pkgs.syna;
+    ssh = {
+      enable = true;
+      level = "fail";
+      userKeys = import ../../config/syna/keys.nix;
+    };
+  };
+
 
 
   #programs.sway.extraOptions = [

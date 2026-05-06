@@ -15,6 +15,10 @@
       url = "git+ssh://git@github.com/jemilsson/fafnir";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    syna = {
+      url = "git+ssh://git@github.com/jemilsson/syna";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     claude-code = {
       url = "github:sadjow/claude-code-nix";
     };
@@ -37,7 +41,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, claude-code }: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, syna, claude-code }: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -52,6 +56,7 @@
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
         nix-tcp-proxy = prev.callPackage ./packages/nix-tcp-proxy { };
         fafnir = fafnir.packages.${system}.default;
+        syna = syna.packages.${system}.default;
         claude-code = claude-code.packages.${system}.default;
       };
 
@@ -96,6 +101,7 @@
             fafnir.nixosModules.fafnir-wallet
             fafnir.nixosModules.fafnir-openpgp
             fafnir.nixosModules.fafnir-pkcs11-aggregator
+            syna.nixosModules.default
             ./machines/jester/configuration.nix
           ];
 
