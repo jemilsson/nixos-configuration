@@ -47,21 +47,13 @@
         expires = "2026-11-06";
       };
     }
-    # fafnir TPM-backed sk-ecdsa key. Attestation bundle is produced on the
-    # host running fafnir via `syna export fafnir > <path>`. Until that file
-    # is staged in this repo we fall back to a short-lived waiver so
-    # `nixos-rebuild` still evaluates instead of erroring on a missing path.
-    (if builtins.pathExists ./attestations/jester-fafnir.syna
-     then {
-       key = "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBNX97/IVqbpnkMAnCPwP0GFKv4MWzbJu9TtjC9m3lCW4GEk28ZoOUOT0tXu90oA1gsJNkT3wKWZXzpGB3LyLjhUAAAAEc3NoOg== fafnir-tpm@jester [sk]";
-       attestation = ./attestations/jester-fafnir.syna;
-     }
-     else {
-       key = "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBNX97/IVqbpnkMAnCPwP0GFKv4MWzbJu9TtjC9m3lCW4GEk28ZoOUOT0tXu90oA1gsJNkT3wKWZXzpGB3LyLjhUAAAAEc3NoOg== fafnir-tpm@jester [sk]";
-       waiver = {
-         justification = "BOOTSTRAP: run `syna export fafnir > config/syna/attestations/jester-fafnir.syna` on jester and commit, then this entry switches to attested automatically";
-         expires = "2026-07-06";
-       };
-     })
+    {
+      key = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNtsMO333sa68V9uu5CMms6ShITJNpB2NRyyGzcj+7xVcyDvB28w3dKfjdbTmWUfm7CvjMAPd/h92yEkJW5zBQg= YubiKey Nano 4C PIV Slot 82";
+      attestation = ./attestations/yubikey-nano-4c-piv-slot-82.syna;
+    }
+    {
+      key = "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBNX97/IVqbpnkMAnCPwP0GFKv4MWzbJu9TtjC9m3lCW4GEk28ZoOUOT0tXu90oA1gsJNkT3wKWZXzpGB3LyLjhUAAAAEc3NoOg== fafnir-tpm@jester";
+      attestation = ./attestations/jester-fafnir.syna;
+    }
   ];
 }

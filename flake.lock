@@ -1,17 +1,5 @@
 {
   "nodes": {
-    "apple-app-attestation-root": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-hfCjFTimmyZ0MZo24xVQICzT6wMUae/Nj9GWkkJJlgA=",
-        "type": "file",
-        "url": "https://www.apple.com/certificateauthority/Apple_App_Attestation_Root_CA.pem"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://www.apple.com/certificateauthority/Apple_App_Attestation_Root_CA.pem"
-      }
-    },
     "claude-code": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -71,11 +59,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1778063164,
-        "narHash": "sha256-+IMQuF7GpAE0omhVQnbMucJ08L8Sx+YhLpf0etBtaek=",
+        "lastModified": 1778126516,
+        "narHash": "sha256-KE2jMhUL2AwYeOeweEbL7cOlXekB/hG2nCAhSN34ghY=",
         "ref": "refs/heads/master",
-        "rev": "0b479a40f1267af4b61d5f9cd7138d76a82d706e",
-        "revCount": 427,
+        "rev": "68e2fd987807e7bce538925e34b90d96b2f28845",
+        "revCount": 429,
         "type": "git",
         "url": "ssh://git@github.com/jemilsson/fafnir"
       },
@@ -104,30 +92,6 @@
         "owner": "nix-community",
         "repo": "fenix",
         "type": "github"
-      }
-    },
-    "fido-mds-root": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-5k3UxXVVxmA9sGLPbPRYxp6B+dRaUPh6e91fKI0wgxQ=",
-        "type": "file",
-        "url": "https://secure.globalsign.com/cacert/root-r3.crt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://secure.globalsign.com/cacert/root-r3.crt"
-      }
-    },
-    "fido-mds3": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-sPea+ZMtVS6tDLIEGqvat0RgqquqDfIembzBu1gtsZk=",
-        "type": "file",
-        "url": "https://mds3.fidoalliance.org/"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://mds3.fidoalliance.org/"
       }
     },
     "flake-utils": {
@@ -328,25 +292,19 @@
     },
     "syna": {
       "inputs": {
-        "apple-app-attestation-root": "apple-app-attestation-root",
         "crane": "crane_2",
         "fenix": "fenix",
-        "fido-mds-root": "fido-mds-root",
-        "fido-mds3": "fido-mds3",
         "flake-utils": "flake-utils_3",
         "nixpkgs": [
           "nixpkgs-unstable"
-        ],
-        "trusted-tpm-cab": "trusted-tpm-cab",
-        "yubico-fido-u2f-bundle": "yubico-fido-u2f-bundle",
-        "yubico-piv-root": "yubico-piv-root"
+        ]
       },
       "locked": {
-        "lastModified": 1778068742,
-        "narHash": "sha256-0dllvmEKauxv+YLUZzmS2FMZ6zEcAzqUS+kT0WRp4/E=",
+        "lastModified": 1778120042,
+        "narHash": "sha256-GjbB1xOK/4hqh+7iJd5MqikXFIiJDQ53Ou8SjXnD/PM=",
         "ref": "refs/heads/main",
-        "rev": "68b7095bdec3702e0464d4f3a31fe79d2e818a29",
-        "revCount": 68,
+        "rev": "b316cd957dae13559b312f55b240840b49693132",
+        "revCount": 83,
         "type": "git",
         "url": "ssh://git@github.com/jemilsson/syna"
       },
@@ -398,42 +356,6 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
-      }
-    },
-    "trusted-tpm-cab": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-j9uVsMIgwIu8JtVMPsGlCl7pyUMDs+XSizSoB8i6d3w=",
-        "type": "file",
-        "url": "https://download.microsoft.com/download/D/6/5/D65270B2-EAFD-43FD-B9BA-F65CA00B153E/TrustedTpm.cab"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://download.microsoft.com/download/D/6/5/D65270B2-EAFD-43FD-B9BA-F65CA00B153E/TrustedTpm.cab"
-      }
-    },
-    "yubico-fido-u2f-bundle": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-nAOAst0mVFozGw/6fe5nZNi1445Tc2w4H14UGymjf8M=",
-        "type": "file",
-        "url": "https://developers.yubico.com/U2F/yubico-u2f-ca-certs.txt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://developers.yubico.com/U2F/yubico-u2f-ca-certs.txt"
-      }
-    },
-    "yubico-piv-root": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-kOqxxDh/GQC32RxLlhQHoxsPenGFhbQft2Nsf8KEeqE=",
-        "type": "file",
-        "url": "https://developers.yubico.com/PIV/Introduction/piv-attestation-ca.pem"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://developers.yubico.com/PIV/Introduction/piv-attestation-ca.pem"
       }
     }
   },

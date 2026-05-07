@@ -24,3 +24,4 @@ Replay before committing:
 ```
 syna verify config/syna/attestations/jester-fafnir.syna
 ```
+
