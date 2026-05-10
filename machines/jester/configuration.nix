@@ -681,16 +681,16 @@ in
   # ProxyCommand; cold boot is 60-90s. Keep this generous so nix-daemon
   # doesn't yank the SSH handshake before the wake completes.
   nix.settings.connect-timeout = 360;
-  # Prevent "download buffer is full" → daemon crashes when streaming large
-  # NARs from the remote builder / S3 cache. Default 64 MiB is too small.
-  nix.settings.download-buffer-size = 1024 * 1024 * 1024; # 1 GiB
-  # Reliability pack (2026-05-01): the somchai remote-build path lost
-  # entire builds to "Nix daemon disconnected unexpectedly" mid-NAR
-  # when the SSH multiplex channel saturated.
+  # Buffer for NAR downloads from remote builder / S3 cache.
+  # 256 MiB: large enough to stream the biggest store paths (compiled APK,
+  # BoringSSL .a) without hitting "download buffer is full", but small enough
+  # to avoid the SIGABRT that 1 GiB caused (4 concurrent jobs × 1 GiB = 4 GiB
+  # allocation → nix-daemon abort() on internal assertion with Nix 2.31.4).
+  nix.settings.download-buffer-size = 256 * 1024 * 1024; # 256 MiB
   # Limit substituter parallelism so substituting paths back from
   # somchai/cache.nixos.org doesn't exhaust SSH channel slots and starve
   # the build itself. Default 16 is way too aggressive for our link.
-  nix.settings.max-substitution-jobs = 4;
+  nix.settings.max-substitution-jobs = 2;
   # Fall back to local build when somchai is unreachable instead of failing.
   nix.settings.fallback = true;
   # Larger TCP backoff on remote-build SSH so the link survives the
