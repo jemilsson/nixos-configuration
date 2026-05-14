@@ -108,10 +108,12 @@ in
         settings.auth_key_file = "/etc/ssh/authorized_keys.d/\${user}";
       };
       services.sudo.rssh = true;
-      # MagicBlock ephemeral-validator requires 1M open file descriptors.
+      # MagicBlock ephemeral-validator requires >1M open file descriptors
+      # (the exact threshold is hardcoded in the binary; 1M was insufficient,
+      # bumping to 2M).
       loginLimits = [
-        { domain = "*"; type = "hard"; item = "nofile"; value = "1048576"; }
-        { domain = "*"; type = "soft"; item = "nofile"; value = "1048576"; }
+        { domain = "*"; type = "hard"; item = "nofile"; value = "2097152"; }
+        { domain = "*"; type = "soft"; item = "nofile"; value = "2097152"; }
       ];
     };
   };

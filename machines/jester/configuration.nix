@@ -625,7 +625,7 @@ in
   # `systemd-run --user -p LimitNOFILE=...`) can be granted >524288 fds.
   # Required by magicblock-validator (RocksDB) for ER integration tests.
   systemd.user.extraConfig = ''
-    DefaultLimitNOFILE=1048576
+    DefaultLimitNOFILE=2097152
   '';
 
   # The module defaults to graphical-session.target, but WAYLAND_DISPLAY
