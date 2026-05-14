@@ -7,6 +7,10 @@ use std::time::Duration;
 
 use socket2::{Socket, TcpKeepalive};
 
+// 64 KB: reduces syscall overhead on large transfers and lowers the frequency
+// of backpressure stalls that can delay SSH ClientAlive responses.
+const BUF_SIZE: usize = 64 * 1024;
+
 fn connect(host: &str, port: &str) -> io::Result<TcpStream> {
     use std::net::ToSocketAddrs;
 
@@ -24,6 +28,11 @@ fn connect(host: &str, port: &str) -> io::Result<TcpStream> {
         .with_retries(5);
     socket.set_tcp_keepalive(&keepalive)?;
 
+    // 1 MB kernel socket buffers reduce write() blocking under burst traffic.
+    // Linux doubles the value internally; 1 MB hint yields ~2 MB actual buffer.
+    socket.set_send_buffer_size(1024 * 1024)?;
+    socket.set_recv_buffer_size(1024 * 1024)?;
+
     socket.connect(&addr.into())?;
 
     Ok(socket.into())
@@ -31,7 +40,7 @@ fn connect(host: &str, port: &str) -> io::Result<TcpStream> {
 
 fn copy_stdin_to_tcp(mut stream: TcpStream) {
     let mut stdin = io::stdin().lock();
-    let mut buf = [0u8; 8192];
+    let mut buf = [0u8; BUF_SIZE];
     loop {
         match stdin.read(&mut buf) {
             Ok(0) => break,
@@ -54,7 +63,7 @@ fn copy_tcp_to_stdout(mut stream: TcpStream) {
     // ManuallyDrop prevents closing fd 1 on drop while still freeing File's heap allocations.
     // File::write_all calls write() directly, bypassing LineWriter's newline-flush buffering.
     let mut stdout = ManuallyDrop::new(unsafe { std::fs::File::from_raw_fd(1) });
-    let mut buf = [0u8; 8192];
+    let mut buf = [0u8; BUF_SIZE];
     loop {
         match stream.read(&mut buf) {
             Ok(0) => break,

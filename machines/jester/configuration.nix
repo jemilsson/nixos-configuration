@@ -105,8 +105,8 @@ in
     }
   ];
 
-  boot.initrd.kernelModules = [ ];
-  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "xe" ];
+  boot.initrd.kernelModules = [ "xe" ];
+  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "i915" ];
 
   boot.kernel.sysctl."net.ipv4.tcp_mtu_probing" = 1;
 
@@ -216,6 +216,7 @@ in
     kernelModules = [ "acpi_call" "uhid" ];
     kernelParams = [
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
+      "xe.force_probe=*"
     ];
     loader = {
       systemd-boot =
