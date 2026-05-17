@@ -38,26 +38,36 @@ fn connect(host: &str, port: &str) -> io::Result<TcpStream> {
     Ok(socket.into())
 }
 
-fn copy_stdin_to_tcp(mut stream: TcpStream) {
+fn copy_stdin_to_tcp(mut stream: TcpStream) -> io::Result<()> {
     let mut stdin = io::stdin().lock();
     let mut buf = [0u8; BUF_SIZE];
     loop {
         match stdin.read(&mut buf) {
-            Ok(0) => break,
+            Ok(0) => {
+                // True EOF: half-close so the remote drains and closes its side.
+                // Only safe on Ok(0); a half-close on read error would make sshd
+                // log "Connection closed by client" and tear down the session
+                // while nix-daemon is still writing, producing EPIPE.
+                let _ = stream.shutdown(Shutdown::Write);
+                return Ok(());
+            }
             Ok(n) => {
-                if stream.write_all(&buf[..n]).is_err() {
-                    break;
+                if let Err(e) = stream.write_all(&buf[..n]) {
+                    let _ = stream.shutdown(Shutdown::Both);
+                    return Err(e);
                 }
             }
-            Err(_) => break,
+            Err(e) => {
+                // Wake the tcp->stdout thread, which is blocked on read of a
+                // socket fd still kept alive by the other try_clone.
+                let _ = stream.shutdown(Shutdown::Both);
+                return Err(e);
+            }
         }
     }
-    // Half-close: signals the remote end we are done sending, which causes
-    // it to close its end and unblocks the TCP→stdout thread.
-    let _ = stream.shutdown(Shutdown::Write);
 }
 
-fn copy_tcp_to_stdout(mut stream: TcpStream) {
+fn copy_tcp_to_stdout(mut stream: TcpStream) -> io::Result<()> {
     use std::os::unix::io::FromRawFd;
     // SAFETY: fd 1 is stdout, valid for the process lifetime.
     // ManuallyDrop prevents closing fd 1 on drop while still freeing File's heap allocations.
@@ -66,13 +76,17 @@ fn copy_tcp_to_stdout(mut stream: TcpStream) {
     let mut buf = [0u8; BUF_SIZE];
     loop {
         match stream.read(&mut buf) {
-            Ok(0) => break,
+            Ok(0) => return Ok(()),
             Ok(n) => {
-                if stdout.write_all(&buf[..n]).is_err() {
-                    break;
+                if let Err(e) = stdout.write_all(&buf[..n]) {
+                    let _ = stream.shutdown(Shutdown::Both);
+                    return Err(e);
                 }
             }
-            Err(_) => break,
+            Err(e) => {
+                let _ = stream.shutdown(Shutdown::Both);
+                return Err(e);
+            }
         }
     }
 }
@@ -91,8 +105,26 @@ fn main() -> io::Result<()> {
     let t1 = thread::spawn(move || copy_stdin_to_tcp(stream_for_stdin));
     let t2 = thread::spawn(move || copy_tcp_to_stdout(stream_for_stdout));
 
-    t1.join().ok();
-    t2.join().ok();
+    // Join t2 first: the tcp->stdout direction drives session lifetime. When
+    // the server closes (Ok(0)) or our stdout breaks, the session is over and
+    // we exit immediately, abandoning t1 (which would otherwise block forever
+    // on stdin.read with no way to be cancelled from another thread).
+    let r2 = t2.join().unwrap_or_else(|_| {
+        Err(io::Error::new(io::ErrorKind::Other, "tcp->stdout thread panicked"))
+    });
+    if let Err(e) = &r2 {
+        eprintln!("nix-tcp-proxy: tcp->stdout: {e}");
+        std::process::exit(1);
+    }
 
+    // Happy path: server closed cleanly; the parent ssh should now close our
+    // stdin in response, letting t1 see Ok(0) and exit.
+    let r1 = t1.join().unwrap_or_else(|_| {
+        Err(io::Error::new(io::ErrorKind::Other, "stdin->tcp thread panicked"))
+    });
+    if let Err(e) = &r1 {
+        eprintln!("nix-tcp-proxy: stdin->tcp: {e}");
+        std::process::exit(1);
+    }
     Ok(())
 }

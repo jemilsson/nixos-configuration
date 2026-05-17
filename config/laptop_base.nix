@@ -105,6 +105,53 @@
     }
   ];
 
+  # Sticky critical notification when any battery drops below 5% while discharging.
+  # Polls every 60s; 5% → 0% takes minutes, so polling is sufficient and simpler
+  # than wiring into UPower D-Bus signals.
+  systemd.services.low-battery-notify = {
+    description = "Notify when battery is critically low";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      set -eu
+      shopt -s nullglob
+      low=""
+      pct=""
+      for bat in /sys/class/power_supply/BAT*; do
+        status=$(cat "$bat/status" 2>/dev/null || echo Unknown)
+        cap=$(cat "$bat/capacity" 2>/dev/null || echo 100)
+        if [ "$status" = "Discharging" ] && [ "$cap" -lt 5 ]; then
+          low=1
+          pct="$cap"
+          break
+        fi
+      done
+      [ -n "$low" ] || exit 0
+
+      user=$(${pkgs.systemd}/bin/loginctl list-sessions --no-legend \
+        | ${pkgs.gawk}/bin/awk '$3 != "" && $3 != "root" { print $3; exit }')
+      [ -n "''${user:-}" ] || exit 0
+
+      ${pkgs.systemd}/bin/systemd-run --user --machine="$user@" --quiet --collect --pipe -- \
+        ${pkgs.libnotify}/bin/notify-send \
+          -u critical -t 0 \
+          -a Battery \
+          -h string:x-canonical-private-synchronous:low-battery \
+          -h string:synchronous:low-battery \
+          "Battery critically low" "$pct% remaining, plug in now." || true
+    '';
+  };
+
+  systemd.timers.low-battery-notify = {
+    description = "Periodic low-battery check";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "1min";
+      OnUnitActiveSec = "60s";
+      AccuracySec = "10s";
+      Persistent = true;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     wavemon
     #kismet
