@@ -424,6 +424,7 @@ in
         "ldpochfccmkkmhdbclfhpagapcfdljkj" # Decentraleyes
         "naepdomgkenhinolocfifgehidddafch" # Browserpass
         "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
+        "oboonakemofpalcgghocfoadofidjkkk" # KeePassXC-Browser (bridges to fafnir-keepassxc-bridge)
 
 
       ];
@@ -437,6 +438,21 @@ in
 
     browserpass = {
       enable = true;
+    };
+
+    firefox = {
+      enable = true;
+      policies = {
+        ExtensionSettings = {
+          # KeePassXC-Browser, bridges to fafnir-keepassxc-bridge via the
+          # org.keepassxc.keepassxc_browser native-messaging manifest
+          # installed by services.fafnir-keepassxc-bridge.
+          "keepassxc-browser@keepassxc.org" = {
+            installation_mode = "force_installed";
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+          };
+        };
+      };
     };
 
     gnupg = {
