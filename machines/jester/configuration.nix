@@ -698,6 +698,11 @@ in
   # post-build-hook S3 push hiccup that briefly blocks somchai's
   # nix-daemon write side.
   nix.settings.stalled-download-timeout = 300;
+  # Expose /etc/gai.conf to the build sandbox so fixed-output fetchurl
+  # derivations honor the host's prefer-ipv4-fallback dispatcher. Without
+  # this, glibc inside the sandbox uses RFC 3484 default precedence (v6
+  # preferred), and big VSIX/etc fetches over a slow IPv6 path crawl.
+  nix.settings.extra-sandbox-paths = [ "/etc/gai.conf" ];
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   nix.settings.substituters = lib.mkAfter [
