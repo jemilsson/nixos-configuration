@@ -542,6 +542,12 @@ in
   virtualisation = {
     docker = {
       enable = true;
+      # --volumes intentionally omitted: would delete local DB volumes.
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+        flags = [ "--all" ];
+      };
       #extraOptions = ''
       #    --storage-opt dm.basesize=20G
       #  '';

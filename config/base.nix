@@ -130,7 +130,10 @@ in
       };
     };
     journald = {
-      extraConfig = "MaxFileSec=1year";
+      extraConfig = ''
+        MaxFileSec=1year
+        SystemMaxUse=500M
+      '';
     };
 
   };
@@ -190,6 +193,7 @@ in
       '')
 
       #System tools
+      ragenix
       htop
       git
       wget

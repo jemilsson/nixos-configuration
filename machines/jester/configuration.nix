@@ -446,6 +446,7 @@ in
   '';
 
   environment.systemPackages = with pkgs; [
+    cargo-sweep
     docker
     docker-compose
     ffmpeg
@@ -662,7 +663,7 @@ in
       ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
       ControlMaster auto
       ControlPath /tmp/nix-ssh-%r@%h:%p
-      ControlPersist 120
+      ControlPersist 8h
       ConnectTimeout 120
       ServerAliveInterval 60
       ServerAliveCountMax 10
@@ -737,4 +738,44 @@ in
     MatchName=*Logitech MX Anywhere 3S*
     ModelLogitechBustypeRollover=1
   '';
+
+  # Weekly cleanup of stale Rust build artifacts in ~/workspace.
+  # cargo-sweep --time 30 removes artifacts unused for 30 days; entire
+  # target/ dirs whose parent Cargo.toml hasn't been built in 30 days are
+  # wiped wholesale. Stays out of .git, node_modules, .direnv, result.
+  systemd.user.services.cargo-sweep-workspace = {
+    description = "Sweep stale Rust build artifacts in ~/workspace";
+    serviceConfig = {
+      Type = "oneshot";
+      Nice = 19;
+      IOSchedulingClass = "idle";
+    };
+    path = [ pkgs.cargo-sweep pkgs.coreutils pkgs.findutils ];
+    script = ''
+      set -u
+      ws="$HOME/workspace"
+      [ -d "$ws" ] || exit 0
+      # Wipe whole target/ dirs older than 30 days (sibling Cargo.toml).
+      find "$ws" -type d -name target -prune \
+        \( -path '*/node_modules/*' -o -path '*/.git/*' \) -prune -o \
+        -type d -name target -prune -print0 2>/dev/null \
+      | while IFS= read -r -d "" t; do
+          [ -f "$(dirname "$t")/Cargo.toml" ] || continue
+          if [ -z "$(find "$t" -newermt '30 days ago' -print -quit 2>/dev/null)" ]; then
+            rm -rf "$t"
+          fi
+        done
+      # Sweep stale artifacts inside remaining target/ dirs.
+      cargo sweep --recursive --time 30 "$ws" || true
+    '';
+  };
+  systemd.user.timers.cargo-sweep-workspace = {
+    description = "Weekly cargo-sweep of ~/workspace";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+      RandomizedDelaySec = "30m";
+    };
+  };
 }
