@@ -96,6 +96,14 @@ in
   environment.variables = {
     WLR_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
     #WLR_BACKEND = "vulkan";
+    # Interactive cargo only (nix-build sandbox scrubs env, so determinism
+    # of nix-built derivations is unaffected). sccache caches rustc output
+    # to S3 (shared with somchai); mold cuts link time on big Rust workspaces.
+    RUSTC_WRAPPER = "sccache";
+    CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS = "-C link-arg=-fuse-ld=mold";
+    SCCACHE_BUCKET = "sccache-shared-723173433317";
+    SCCACHE_REGION = "ap-southeast-7";
+    SCCACHE_S3_KEY_PREFIX = "v0";
   };
 
   boot.kernelPatches = [
@@ -447,6 +455,13 @@ in
 
   environment.systemPackages = with pkgs; [
     cargo-sweep
+    # Wrapper scopes AWS_PROFILE=sccache-shared to sccache invocations only
+    # so it doesn't bleed into other AWS-aware tools in the shell.
+    (writeShellScriptBin "sccache" ''
+      export AWS_PROFILE=sccache-shared
+      exec ${sccache}/bin/sccache "$@"
+    '')
+    mold
     docker
     docker-compose
     ffmpeg
@@ -717,11 +732,9 @@ in
     sshUser = "nix-builder";
     sshKey = "/etc/ssh/ssh_host_ed25519_key";
     systems = [ "x86_64-linux" ];
-    # Lowered from 8 → 4. Eight parallel `nix-daemon --stdio` channels
-    # over a single SSH connection saturated the multiplex on
-    # large-closure builds (fafnir-ui-apk, decentgaming-contracts).
-    # Four still saturates somchai's CPU but keeps SSH responsive.
-    maxJobs = 4;
+    # Matches somchai's max-jobs=2. Higher values let jester dispatch more
+    # concurrent builds than the remote can run without CPU oversubscription.
+    maxJobs = 2;
     speedFactor = 4;
     supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     protocol = "ssh-ng";
