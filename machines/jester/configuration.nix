@@ -238,6 +238,17 @@ in
     kernelParams = [
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
       "xe.force_probe=*"
+      # Disable Panel Self-Refresh on the xe driver. Hyprland crashes here are
+      # GPU GuC scheduler stalls: kernel logs "xe GT0: Check job timeout ...
+      # not started" -> "Timedout job ... in .Hyprland-wrapp" -> device coredump
+      # -> GPU reset, after which Hyprland's glGetGraphicsResetStatus() returns
+      # GL_GUILTY_CONTEXT_RESET and it aborts. PSR (panel self-refresh) failing
+      # to wake the display pipe is a common trigger for this "jobs not
+      # starting" stall on mobile Iris Xe. A kernel version bump is not a
+      # reliable fix (the signature is reported upstream on 7.0.9 and 6.18 LTS);
+      # disabling PSR is the low-risk, reversible first-line mitigation. Only
+      # cost is slightly higher idle power. Remove if it does not help.
+      "xe.enable_psr=0"
     ];
     loader = {
       systemd-boot =
