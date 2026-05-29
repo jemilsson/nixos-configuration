@@ -118,6 +118,19 @@ in
 
   boot.kernel.sysctl."net.ipv4.tcp_mtu_probing" = 1;
 
+  # Hyprland crashes on this machine are GPU context resets: the xe driver
+  # resets the Iris Xe GPU, glGetGraphicsResetStatus() then returns
+  # GL_GUILTY_CONTEXT_RESET, and Hyprland aborts (it has no GL context
+  # recovery). The kernel-side reset reason (guilty engine / error code) is
+  # what we actually need, but base.nix caps journald at 500M which only
+  # retains ~1 day, so the xe reset message rotates out before it can be read.
+  # mkAfter ensures this SystemMaxUse wins over base.nix's (last key wins in
+  # journald.conf). Bump retention so the next reset's signature is captured.
+  services.journald.extraConfig = lib.mkAfter ''
+    SystemMaxUse=4G
+    MaxRetentionSec=2week
+  '';
+
   systemd.services.restart-fprintd-on-resume = {
     description = "Restart fprintd after resume from sleep";
     wantedBy = [ "post-resume.target" ];
