@@ -62,6 +62,7 @@ in
     ./camera.nix
     ./netns-claude-glecom.nix
     ./pi-lens.nix
+    ./nix-retry.nix
 
   ];
 

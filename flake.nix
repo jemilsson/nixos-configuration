@@ -132,6 +132,20 @@
       apps = {
         #"x86_64-linux" = agenix-rekey.defineApps self pkgs self.nixosConfigurations;
       };
-      
+
+      # Hermetic test of the shared retry body behind the `nix` / `nixos-rebuild`
+      # retry wrappers (machines/jester/nix-retry.nix). shellcheck + a fake-binary
+      # driver, no network/builder. Run: nix build .#checks.x86_64-linux.jester-retry-body
+      checks.x86_64-linux.jester-retry-body =
+        pkgs.runCommand "jester-retry-body-test"
+          { nativeBuildInputs = [ pkgs.bash pkgs.shellcheck ]; } ''
+          cp ${./machines/jester/retry-body.sh} retry-body.sh
+          cp ${./machines/jester/retry-body.test.sh} retry-body.test.sh
+          shellcheck -s bash retry-body.sh
+          shellcheck -s bash -x retry-body.test.sh
+          bash retry-body.test.sh
+          touch $out
+        '';
+
     };
 }
