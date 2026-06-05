@@ -6,19 +6,14 @@ on:
 
 jobs:
   lockfile:
-    runs-on: ubuntu-latest
+    # Self-hosted: the all-inputs update must fetch the private ssh:// inputs
+    # (fafnir/syna), which ubuntu-latest runners cannot access.
+    runs-on: [self-hosted, nixos]
     outputs:
       pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Update flake.lock
         id: update
         uses: DeterminateSystems/update-flake-lock@v25

@@ -2,31 +2,50 @@ name: "PR Describer"
 on:
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   describe:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, nixos]
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - target: jester
-          - target: alicia
+        target: [jester, alicia]
     steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v20
-      with:
-        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v4
+
     - name: Nix derivation diff
       id: nix_diff
-      run: nix store diff-closures github:${{ github.repository }}/${{ github.base_ref }}#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel .#nixosConfiguration.${{ matrix.target }}.config.system.build.toplevel >> "$GITHUB_OUTPUT"
+      run: |
+        base="github:${{ github.repository }}/${{ github.base_ref }}#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel"
+        head=".#nixosConfigurations.${{ matrix.target }}.config.system.build.toplevel"
+        diff=$(nix --extra-experimental-features 'nix-command flakes' \
+          store diff-closures "$base" "$head" 2>&1 || echo "diff-closures failed; see job logs.")
+        {
+          echo "diff<<__NIX_DIFF_EOF__"
+          echo "$diff"
+          echo "__NIX_DIFF_EOF__"
+        } >> "$GITHUB_OUTPUT"
+      env:
+        NIX_CONFIG: |
+          experimental-features = nix-command flakes
+          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          substituters = https://cache.nixos.org/
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 
-    - name: Comment report in pr
+    - name: Comment report in PR
       uses: marocchino/sticky-pull-request-comment@v2
       with:
-        header: "{{ matrix.target }}"
+        header: pr-describer-${{ matrix.target }}
         message: |
-          ### Report for `${{ matrix.target }}`
+          ### Closure diff for `${{ matrix.target }}`
           <details>
-          <summary> Version changes </summary> <br>
-          <pre> ${{ steps.nix_diff.outputs }} </pre>
+          <summary>Version changes</summary>
+
+          ```
+          ${{ steps.nix_diff.outputs.diff }}
+          ```
           </details>
