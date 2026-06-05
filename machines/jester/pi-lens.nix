@@ -5,8 +5,7 @@
 
   environment.systemPackages = with pkgs; [
     # Core runtime
-    nodejs
-    nodePackages.npm
+    nodejs  # provides npm
 
     # LSP servers (Node.js-based)
     typescript-language-server
@@ -18,7 +17,7 @@
     yaml-language-server
     svelte-language-server
     vue-language-server
-    nodePackages.vscode-langservers-extracted  # JSON/HTML/CSS/ESLint LSPs
+    vscode-langservers-extracted  # JSON/HTML/CSS/ESLint LSPs
 
     # LSP servers (native)
     rust-analyzer

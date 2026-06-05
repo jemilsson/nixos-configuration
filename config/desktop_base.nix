@@ -571,6 +571,7 @@ in
     noto-fonts-cjk-sans
     ibm-plex
     nerd-fonts.fira-code
+    nerd-fonts.blex-mono
   ];
   services = {
 
