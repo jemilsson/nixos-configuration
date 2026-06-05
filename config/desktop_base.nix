@@ -8,6 +8,40 @@ let
   boto3-ide = pkgs.jemilsson.boto3-ide;
   tratex-font = pkgs.jemilsson.tratex-font;
 
+  # Chromium, wrapped in a bubblewrap namespace that gives it a fresh minimal
+  # /dev (no /dev/video*). The Intel IPU6 ISYS exposes 32 raw V4L2 capture nodes
+  # that hang on VIDIOC_QUERYCAP; Chromium's V4L2 device factory probes them and
+  # stalls navigator.mediaDevices.enumerateDevices() forever, which breaks the
+  # microphone AND camera in web apps like Teams. There is no Chromium flag to
+  # skip the V4L2 factory, so we hide the nodes from Chromium only. The webcam
+  # still works because --enable-features=WebRtcPipeWireCamera (set via
+  # CHROMIUM_FLAGS in appearance.nix) pulls it over the PipeWire camera portal,
+  # which needs no /dev/video access. /dev/dri and /dev/snd are re-bound for GPU
+  # and audio. Verified: enumerateDevices returns ~50ms and getUserMedia video
+  # yields "Built-in Front Camera".
+  chromiumBase = pkgs.chromium.override {
+    commandLineArgs = [
+      "--remote-debugging-port=9222"
+      "--remote-debugging-address=127.0.0.1"
+      "--remote-allow-origins=http://127.0.0.1:9222"
+      "--disk-cache-size=536870912"
+    ];
+  };
+  chromiumSandboxed = lib.hiPrio (pkgs.writeShellScriptBin "chromium" ''
+    # The Hyprland security wrapper raises CAP_SYS_NICE into the ambient set so
+    # the compositor can use realtime scheduling; ambient caps inherit into every
+    # descendant, so this script inherits it too. bwrap refuses to start when it
+    # holds capabilities while not setuid ("Unexpected capabilities but not
+    # setuid"), which silently breaks Chromium. Drop ambient caps before exec.
+    exec ${pkgs.util-linux}/bin/setpriv --ambient-caps -all -- \
+      ${pkgs.bubblewrap}/bin/bwrap \
+      --bind / / \
+      --dev /dev \
+      --dev-bind /dev/dri /dev/dri \
+      --dev-bind /dev/snd /dev/snd \
+      ${chromiumBase}/bin/chromium "$@"
+  '');
+
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
 
@@ -74,7 +108,10 @@ in
     {
       portal = {
         enable = true;
-        wlr.enable = true;
+        # Screen sharing on Hyprland is provided by xdg-desktop-portal-hyprland.
+        # wlr.enable is intentionally NOT set: the wlr ScreenCast backend would
+        # compete with the hyprland one and break the screen-share picker.
+        # Interface routing lives in appearance.nix (xdg.portal.config.common).
       };
     };
 
@@ -171,14 +208,9 @@ in
 
     #Browsers
     firefox
-    (chromium.override {
-      commandLineArgs = [
-        "--remote-debugging-port=9222"
-        "--remote-debugging-address=127.0.0.1"
-        "--remote-allow-origins=http://127.0.0.1:9222"
-        "--disk-cache-size=536870912"
-      ];
-    })
+    chromiumBase        # provides .desktop entry, icons, mime; bin/chromium is
+    chromiumSandboxed   # shadowed by this bwrap wrapper (lib.hiPrio) so the
+                        # desktop launcher (Exec=chromium) and CLI both sandbox.
     google-chrome
     #unstable-small.tor-browser-bundle-bin
 
@@ -618,7 +650,7 @@ in
 
 
       extraRules = ''
-        	
+
 
         	SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ATTRS{manufacturer}=="Flipper Devices Inc.", TAG+="uaccess"
         #Flipper Zero DFU

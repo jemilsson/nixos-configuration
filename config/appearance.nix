@@ -248,7 +248,11 @@ in
     QT_QPA_PLATFORMTHEME = "gtk2";
     
     # Chromium flags for Nord aesthetic
-    CHROMIUM_FLAGS = "--font-render-hinting=none --font-family='IBM Plex Sans' --gtk-version=3 --enable-features=UseOzonePlatform --ozone-platform=wayland --user-stylesheet-location=/etc/chromium/user-stylesheet.css --force-dark-mode";
+    # WebRtcPipeWireCamera: route the webcam through the PipeWire camera portal
+    # (libcamera) instead of raw V4L2. Combined with the bwrap wrapper in
+    # desktop_base.nix (which hides /dev/video* so Chromium's V4L2 factory can't
+    # hang on the 32 Intel IPU6 ISYS nodes), this gives working mic + camera.
+    CHROMIUM_FLAGS = "--font-render-hinting=none --font-family='IBM Plex Sans' --gtk-version=3 --enable-features=UseOzonePlatform,WebRtcPipeWireCamera --ozone-platform=wayland --user-stylesheet-location=/etc/chromium/user-stylesheet.css --force-dark-mode";
     
     # WhiteSur cursor theme
     XCURSOR_THEME = "WhiteSur-cursors";
@@ -299,9 +303,15 @@ in
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
     ];
+    # gtk handles most interfaces (file chooser, settings, etc.), but it does
+    # NOT implement ScreenCast/Screenshot. Route those to the hyprland backend
+    # explicitly so screen sharing doesn't rely on the deprecated UseIn fallback
+    # (which xdg-desktop-portal warns about and will eventually drop).
     config = {
       common = {
-        default = "gtk";
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
       };
     };
   };
