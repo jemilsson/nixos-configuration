@@ -36,11 +36,13 @@
 
   fileSystems."/home" = {
     device = "/mnt/data/home";
+    fsType = "none";
     options = [ "bind" ];
   };
 
   fileSystems."/tmp" = {
     device = "/mnt/data/tmp";
+    fsType = "none";
     options = [ "bind" ];
   };
 
