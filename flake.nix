@@ -83,9 +83,8 @@
       };
       nixosConfigurations = {
         battlestation = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
+            ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             #agenix.nixosModules.default
             #agenix-rekey.nixosModules.default
             ./machines/battlestation/configuration.nix 
@@ -93,9 +92,8 @@
         };
         
         jester = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
+            ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             fafnir.nixosModules.default
             fafnir.nixosModules.fafnir-keepassxc-bridge
             fafnir.nixosModules.fafnir-wallet
@@ -109,9 +107,8 @@
 
 
         alicia = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           modules = [
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
+            ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             #agenix.nixosModules.default
             #agenix-rekey.nixosModules.default
             ./machines/alicia/configuration.nix

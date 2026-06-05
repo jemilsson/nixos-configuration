@@ -163,7 +163,7 @@ in
 
 
   environment.systemPackages = with pkgs; [
-    xorg.xev
+    xev
 
     pkgs.networkmanagerapplet
 

@@ -11,7 +11,7 @@
     typescript-language-server
     pyright
     prisma-language-server
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     intelephense                           # PHP LSP (unfree)
     bash-language-server
     yaml-language-server
