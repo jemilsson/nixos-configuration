@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1780612054,
-        "narHash": "sha256-wnAbEVl0L9sKy19LhTWj/VZIjSVaurBBv2qckwUsBZw=",
+        "lastModified": 1780640922,
+        "narHash": "sha256-Mc2z1SM/GvzIXsXi8DxaipVV98252r6tp80KQz/LQKc=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "5935c2624eb13701ab2a9fa8fe0c16a30e844bc3",
+        "rev": "dd4b0a31f01cca5ebaaeffa5acdb593ba96df788",
         "type": "github"
       },
       "original": {
