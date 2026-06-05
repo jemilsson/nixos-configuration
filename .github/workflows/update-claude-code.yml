@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 5 * * *' # Runs nightly at 05:00 UTC
 
+permissions:
+  contents: write       # update-flake-lock creates a branch; merge job pushes
+  pull-requests: write  # open + merge the update PR
+  issues: write         # github-script posts PR comments via the issues API
+
 jobs:
   lockfile:
     runs-on: ubuntu-latest

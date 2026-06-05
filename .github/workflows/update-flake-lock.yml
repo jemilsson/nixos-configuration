@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 7 * * 1' # Runs mondays at 07:00 UTC
 
+permissions:
+  contents: write       # update-flake-lock creates a branch; merge job pushes
+  pull-requests: write  # open + merge the update PR
+  issues: write         # github-script posts PR comments via the issues API
+
 jobs:
   lockfile:
     # Self-hosted: the all-inputs update must fetch the private ssh:// inputs
