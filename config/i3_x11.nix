@@ -120,7 +120,10 @@ in
         };
 
         shikane = {
-          enable = true;
+          # Disabled: shikane raced kanshi (both are wlr-output-management
+          # daemons) and fought over monitor positions. kanshi is the single
+          # source of truth for output layout now.
+          enable = false;
           description = "shikane";
 
           partOf = [ "graphical-session.target" ];
