@@ -88,15 +88,6 @@
         #pkgs = pkgs;
       };
       nixosConfigurations = {
-        battlestation = nixpkgs.lib.nixosSystem {
-          modules = [
-            ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
-            #agenix.nixosModules.default
-            #agenix-rekey.nixosModules.default
-            ./machines/battlestation/configuration.nix 
-            ];
-        };
-        
         jester = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit hyprland; };
           modules = [
@@ -113,15 +104,6 @@
         };
 
 
-        alicia = nixpkgs.lib.nixosSystem {
-          modules = [
-            ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
-            #agenix.nixosModules.default
-            #agenix-rekey.nixosModules.default
-            ./machines/alicia/configuration.nix
-          ];
-
-        };
         #lazarus = nixpkgs.lib.nixosSystem {
         #  system = "x86_64-linux";
         #  modules = [ ./machines/lazarus/configuration.nix ];
