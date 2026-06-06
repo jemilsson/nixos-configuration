@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, ... }:
+{ config, lib, pkgs, stdenv, hyprland, ... }:
 let
   #containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
   #cardano-node = removed - no longer needed
@@ -748,10 +748,21 @@ in
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   nix.settings.substituters = lib.mkAfter [
     "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
+    # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
+    "https://hyprland.cachix.org"
   ];
   nix.settings.trusted-public-keys = lib.mkAfter [
     "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
+    "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
   ];
+
+  # Run the compositor (and matching xdg portal) from the upstream Hyprland
+  # flake instead of nixpkgs-unstable. mkForce overrides the package set in the
+  # shared config/i3_x11.nix module. hyprctl/hyprlock stay on nixpkgs-unstable
+  # (only `hyprctl dispatch dpms on` is used; IPC skew is negligible) to avoid a
+  # hyprctl binary collision in environment.systemPackages.
+  programs.hyprland.package = lib.mkForce hyprland.packages.${pkgs.system}.hyprland;
+  programs.hyprland.portalPackage = lib.mkForce hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   nix.buildMachines = [{
     hostName = "somchai.jonasem.com";
     sshUser = "nix-builder";

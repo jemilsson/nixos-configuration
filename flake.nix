@@ -22,6 +22,12 @@
     claude-code = {
       url = "github:sadjow/claude-code-nix";
     };
+    # Upstream Hyprland (jester only). Deliberately NOT following nixpkgs so
+    # hyprland.cachix.org binaries stay usable; overriding nixpkgs would force
+    # a local rebuild of hyprland + aquamarine + hyprutils etc.
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
     # };
@@ -41,7 +47,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, syna, claude-code }: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, syna, claude-code, hyprland }: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -92,6 +98,7 @@
         };
         
         jester = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit hyprland; };
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             fafnir.nixosModules.default
