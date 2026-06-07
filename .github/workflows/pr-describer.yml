@@ -15,7 +15,7 @@ jobs:
       matrix:
         target: [jester]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Nix derivation diff
       id: nix_diff
@@ -37,7 +37,7 @@ jobs:
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 
     - name: Comment report in PR
-      uses: marocchino/sticky-pull-request-comment@v2
+      uses: marocchino/sticky-pull-request-comment@v3
       with:
         header: pr-describer-${{ matrix.target }}
         message: |

@@ -18,10 +18,10 @@ jobs:
       pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Update flake.lock
         id: update
-        uses: DeterminateSystems/update-flake-lock@v25
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
           pr-title: "Update flake.lock" # Title of PR to be created
           pr-labels: |                  # Labels to be set on the PR
@@ -40,7 +40,7 @@ jobs:
       machines: ${{ steps.get-machines.outputs.machines }}
     steps:
       - name: Checkout PR
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: refs/pull/${{ needs.lockfile.outputs.pull-request-number }}/head
@@ -99,7 +99,7 @@ jobs:
     if: ${{ needs.check-and-build.outputs.check_passed == 'true' && needs.check-and-build.outputs.build_passed == 'true' }}
     steps:
       - name: Auto-merge PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};
@@ -145,7 +145,7 @@ jobs:
     if: ${{ always() && needs.lockfile.outputs.pull-request-number && (needs.check-and-build.outputs.check_passed != 'true' || needs.check-and-build.outputs.build_passed != 'true') }}
     steps:
       - name: Comment on failed check or build
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};

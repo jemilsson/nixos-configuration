@@ -10,7 +10,7 @@ jobs:
     outputs:
       machines: ${{ steps.get-machines.outputs.machines }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     
     - name: Check flake
       run: |
@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     
     - name: Build ${{ matrix.machine }}
       run: |

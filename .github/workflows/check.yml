@@ -18,13 +18,11 @@ jobs:
     # left to eval, so the per-machine eval step was removed.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Run hermetic checks
         run: |
           nix --extra-experimental-features 'nix-command flakes' build \

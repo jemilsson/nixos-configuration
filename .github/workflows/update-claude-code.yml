@@ -16,17 +16,14 @@ jobs:
       pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Install Nix
         uses: cachix/install-nix-action@v31
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
         with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update claude-code input
         id: update
-        uses: DeterminateSystems/update-flake-lock@v25
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
           inputs: claude-code
           branch: update-claude-code # distinct from the weekly all-inputs workflow
@@ -47,7 +44,7 @@ jobs:
       machines: ${{ steps.get-machines.outputs.machines }}
     steps:
       - name: Checkout PR
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: refs/pull/${{ needs.lockfile.outputs.pull-request-number }}/head
@@ -106,7 +103,7 @@ jobs:
     if: ${{ needs.check-and-build.outputs.check_passed == 'true' && needs.check-and-build.outputs.build_passed == 'true' }}
     steps:
       - name: Auto-merge PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};
@@ -148,7 +145,7 @@ jobs:
     if: ${{ always() && needs.lockfile.outputs.pull-request-number && (needs.check-and-build.outputs.check_passed != 'true' || needs.check-and-build.outputs.build_passed != 'true') }}
     steps:
       - name: Comment on failed check or build
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const prNumber = ${{ needs.lockfile.outputs.pull-request-number }};
