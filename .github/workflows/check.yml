@@ -9,11 +9,13 @@ permissions:
 
 jobs:
   eval:
-    # GitHub-hosted runner. Validates the public-input machines (battlestation,
-    # alicia) and the hermetic jester-retry check WITHOUT the self-hosted runner
-    # or the private ssh:// inputs (fafnir/syna). This is the fast gate that runs
-    # on every push/PR regardless of self-hosted runner availability; the deep
-    # per-machine builds (incl. jester) live in build-test.yml on [self-hosted].
+    # GitHub-hosted runner. Runs the hermetic flake checks (e.g. jester-retry-body)
+    # WITHOUT the self-hosted runner or the private ssh:// inputs (fafnir/syna).
+    # This is the fast gate that runs on every push/PR regardless of self-hosted
+    # runner availability. jester is the only machine left and it genuinely
+    # requires the private inputs, so it cannot be evaluated here; its full build
+    # lives in build-test.yml on [self-hosted]. There are no public-input machines
+    # left to eval, so the per-machine eval step was removed.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,20 +25,6 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: Evaluate public-input machines (instantiate, do not build)
-        # `nix eval` of the toplevel drvPath forces the full NixOS module system
-        # to evaluate (options + assertions, e.g. fileSystems.*.fsType) without
-        # realising the closure. Verified IFD-free and independent of the private
-        # ssh:// inputs (fafnir/syna), so it runs on a hosted runner with no keys.
-        # jester is excluded: it genuinely requires the private inputs.
-        run: |
-          for m in battlestation alicia; do
-            echo "::group::eval $m"
-            nix --extra-experimental-features 'nix-command flakes' eval --raw \
-              ".#nixosConfigurations.$m.config.system.build.toplevel.drvPath"
-            echo
-            echo "::endgroup::"
-          done
       - name: Run hermetic checks
         run: |
           nix --extra-experimental-features 'nix-command flakes' build \

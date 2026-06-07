@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [jester, alicia]
+        target: [jester]
     steps:
     - uses: actions/checkout@v4
 
