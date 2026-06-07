@@ -51,7 +51,13 @@ jobs:
       - name: Run flake check
         id: flake_check
         run: |
-          if nix --extra-experimental-features 'nix-command flakes' flake check --no-build; then
+          # No --no-build: the runner is allowed to realise IFD/eval-time
+          # sources locally. With --no-build, a freshly-bumped input whose
+          # eval-time source isn't on cache.nixos.org yet fails with
+          # "path '...-source' is not valid / no substituter can build it",
+          # even though the machine builds fine. Letting it build is the
+          # correct gate for a disposable auto-update PR.
+          if nix --extra-experimental-features 'nix-command flakes' flake check; then
             echo "check_passed=true" >> $GITHUB_OUTPUT
           else
             echo "check_passed=false" >> $GITHUB_OUTPUT
