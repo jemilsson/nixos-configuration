@@ -32,6 +32,13 @@ in
       Restart = "on-failure";
       RestartSec = 5;
 
+      # Memory hardening: cap footprint and mark as a preferred OOM victim so a
+      # leak here is reclaimed/killed before the rest of the graphical session
+      # (see machines/jester/configuration.nix "Memory-pressure hardening").
+      MemoryHigh = "5G";
+      MemoryMax = "6G";
+      OOMScoreAdjust = 500;
+
       # Reduced security settings for user service
       NoNewPrivileges = true;
       RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];

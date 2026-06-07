@@ -132,6 +132,53 @@ in
     MaxRetentionSec=2week
   '';
 
+  # Memory-pressure hardening.
+  #
+  # jester has 31 GiB RAM and previously ran with ZERO swap. Under load
+  # (rustc/nix builds + the local AI-gateway services + chromium/electron)
+  # the *kernel* global OOM killer fired (89 oom-kill invocations in the
+  # journal, 80 in a single day) and culled the graphical session wholesale
+  # (pipewire, dbus-broker, the xdg portals), which is what made hyprlock
+  # "sometimes crash" - it dies as collateral when the stack it renders on is
+  # wiped. systemd.oomd (enabled in base.nix) acts on cgroup PSI but the
+  # kernel global OOM, with no swap to provide reclaim runway, fired first.
+  #
+  # Three privilege-correct levers (verified: a user process here CANNOT set a
+  # negative oom_score_adj, so "protect the session" via negative OOMScoreAdjust
+  # on user units is not an option; instead we add swap headroom and bias the
+  # killer toward builds, which are the actual trigger):
+
+  # 1. zram swap: compressed in-RAM swap gives the kernel reclaim headroom so a
+  #    transient spike compresses idle anonymous pages instead of hard-OOMing.
+  #    25% of 31 GiB (~7.7 GiB device); zstd. Kept conservative because zram is
+  #    RAM - incompressible pages cost real memory.
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 25;
+    priority = 100;
+  };
+
+  # 2. VM tuning for zram: favour compressing anonymous pages over evicting the
+  #    page cache, and disable swap readahead (zram is random-access, readahead
+  #    just wastes cycles). overcommit is left at the kernel default (0 here;
+  #    NixOS does not set strict overcommit).
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 100;
+    "vm.page-cluster" = 0;
+  };
+
+  # 3. Bias the OOM killer toward local nix builds, the real trigger. The user
+  #    systemd manager (and thus the whole graphical session) runs at
+  #    oom_score_adj=100, while root nix-daemon runs at 0 - i.e. an unconstrained
+  #    rustc build was LESS killable than the session it was starving. Raise
+  #    nix-daemon so builds are sacrificed first, and add a soft MemoryHigh so
+  #    the kernel reclaims/throttles a fat build before any hard kill.
+  systemd.services.nix-daemon.serviceConfig = {
+    OOMScoreAdjust = 500;
+    MemoryHigh = "20G";
+  };
+
   systemd.services.restart-fprintd-on-resume = {
     description = "Restart fprintd after resume from sleep";
     wantedBy = [ "post-resume.target" ];
