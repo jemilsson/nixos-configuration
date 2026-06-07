@@ -187,6 +187,39 @@ in
     serviceConfig.Type = "oneshot";
   };
 
+  # Self-healing watchdog for stale fprintd sensor claims.
+  #
+  # hyprlock claims the fingerprint sensor via pam_fprintd during unlock.
+  # If it freezes or crashes without releasing, fprintd keeps the claim and
+  # every subsequent native fafnir sign fails with
+  # net.reactivated.Fprint.Error.AlreadyInUse, while OpenPGP-through-fafnir
+  # (no fprintd gate) keeps working. restart-fprintd-on-resume only covers
+  # suspend/resume; this catches the freeze-during-normal-operation case by
+  # watching for the "already claimed" denial in fprintd's journal and
+  # restarting fprintd to drop the orphaned claim. The denial only logs when
+  # a claim is genuinely refused, so a restart here is always corrective.
+  systemd.services.fprintd-stale-claim-reaper = {
+    description = "Restart fprintd when a stale sensor claim is detected";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      if ${pkgs.systemd}/bin/journalctl -u fprintd.service --since "-45s" --no-pager \
+           | ${pkgs.gnugrep}/bin/grep -qi "already claimed"; then
+        echo "stale fprintd claim detected; restarting fprintd"
+        ${pkgs.systemd}/bin/systemctl restart fprintd.service
+      fi
+    '';
+  };
+
+  systemd.timers.fprintd-stale-claim-reaper = {
+    description = "Periodically reap stale fprintd sensor claims";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "1min";
+      OnUnitActiveSec = "20s";
+      AccuracySec = "5s";
+    };
+  };
+
   # Reaper for orphaned `ssh nix-builder@somchai.jonasem.com` sessions.
   #
   # When `nix build` runs against the somchai remote builder, the local
@@ -659,6 +692,15 @@ in
     # the TPM identity and the card auth key.
     agentSockPaths = [ "$XDG_RUNTIME_DIR/fafnir/openpgp-ssh.sock" ];
     secretService.enable = true;
+    # Opt-in LLM auto-approver (Venice.ai). Routine native sign/decrypt
+    # requests skip the fingerprint prompt when they match a
+    # human-approved precedent and the model concurs. Key lives in a
+    # 0600 file outside the nix store.
+    llmApprover = {
+      enable     = true;
+      apiKeyFile = "/home/jonas/.config/fafnir/venice.key";
+      storePath  = "/home/jonas/.local/share/fafnir/approver/decisions.redb";
+    };
   };
 
   # fafnir-keepassxc-bridge: native-messaging host for KeePassXC-Browser
