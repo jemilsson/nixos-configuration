@@ -92,11 +92,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1779042561,
-        "narHash": "sha256-OJ42IPxwZvY4yWCLN7tRhEz/gQ5RcKtxeqW0O+2kT4c=",
+        "lastModified": 1780753514,
+        "narHash": "sha256-BLSposIMdPE2DjpYl5oKkbHRkpftRaYfQm+N4Uceiy4=",
         "ref": "refs/heads/master",
-        "rev": "e445d08d81c88f2c76107ad5f630324119d3f2df",
-        "revCount": 441,
+        "rev": "2cbda23886e837ee86a2c582114eb4b01589c6f0",
+        "revCount": 446,
         "type": "git",
         "url": "ssh://git@github.com/jemilsson/fafnir"
       },
@@ -317,11 +317,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1780694402,
-        "narHash": "sha256-gAnq7tsOsLnu/rR0tKxI5pMCjMps5CYaHU6rUdXHXyE=",
+        "lastModified": 1780768552,
+        "narHash": "sha256-J2gBzBBE9C6LMMJec8buysLAQl7QmqtP/oMrPfVioYc=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "fcbbd6d4d80033c40e3b702518e1a2ba3f479452",
+        "rev": "20ee7553c95dd1fa30a00564561f40f7986ffbc7",
         "type": "github"
       },
       "original": {
@@ -602,11 +602,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1777954456,
-        "narHash": "sha256-hGdgeU2Nk87RAuZyYjyDjFL6LK7dAZN5RE9+hrDTkDU=",
+        "lastModified": 1780243769,
+        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
+        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
         "type": "github"
       },
       "original": {
