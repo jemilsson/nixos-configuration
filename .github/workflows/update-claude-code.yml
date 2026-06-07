@@ -12,6 +12,12 @@ permissions:
 jobs:
   lockfile:
     runs-on: ubuntu-latest
+    # update-flake-lock@v28 still bundles Node 20 actions (write-file/read-file/
+    # handlebars/create-pull-request) we can't bump from here. GitHub forces
+    # Node 24 on 2026-06-16 anyway, so opt in early to clear the deprecation
+    # warnings and surface any incompatibility now rather than on the deadline.
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     outputs:
       pull-request-number: ${{ steps.update.outputs.pull-request-number }}
     steps:
