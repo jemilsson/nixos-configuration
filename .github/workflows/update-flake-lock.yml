@@ -74,8 +74,8 @@ jobs:
         env:
           NIX_CONFIG: |
             experimental-features = nix-command flakes
-            substituters = https://cache.nixos.org/ https://hyprland.cachix.org
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
+            extra-substituters = https://cache.nixos.org/ https://hyprland.cachix.org
+            extra-trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
       - name: Get machine list
         if: steps.flake_check.outputs.check_passed == 'true'
         id: get-machines
@@ -108,8 +108,8 @@ jobs:
         env:
           NIX_CONFIG: |
             experimental-features = nix-command flakes
-            substituters = https://cache.nixos.org/ https://hyprland.cachix.org
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
+            extra-substituters = https://cache.nixos.org/ https://hyprland.cachix.org
+            extra-trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
   
   merge:
     needs: [lockfile, check-and-build]
