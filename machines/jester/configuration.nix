@@ -107,12 +107,16 @@ in
     SCCACHE_S3_KEY_PREFIX = "v0";
   };
 
-  boot.kernelPatches = [
-    {
-      name = "intel-mst-reprobe-fix";
-      patch = ./intel-mst-reprobe-fix.patch;
-    }
-  ];
+  # Disabled: any kernelPatches entry forces a full from-source kernel rebuild
+  # (no binary-cache match), which is slow on jester. Re-enable once the fix is
+  # upstream and in a cached nixpkgs kernel, or serve a prebuilt patched kernel
+  # from a Nix binary cache.
+  # boot.kernelPatches = [
+  #   {
+  #     name = "intel-mst-reprobe-fix";
+  #     patch = ./intel-mst-reprobe-fix.patch;
+  #   }
+  # ];
 
   boot.initrd.kernelModules = [ "xe" ];
   boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "i915" ];
