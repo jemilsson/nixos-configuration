@@ -154,12 +154,15 @@ in
 
   # 1. zram swap: compressed in-RAM swap gives the kernel reclaim headroom so a
   #    transient spike compresses idle anonymous pages instead of hard-OOMing.
-  #    25% of 31 GiB (~7.7 GiB device); zstd. Kept conservative because zram is
-  #    RAM - incompressible pages cost real memory.
+  #    Raised 25 -> 50 (2026-06): at 25% the device sat 100% full (7.6G/7.8G,
+  #    SwapFree ~0) while measured compression was 4.85:1, so a 15.5G device
+  #    costs ~3.2G RAM at this workload for +7.7G reclaim headroom. The
+  #    worst-case-incompressible assumption behind "kept conservative" did not
+  #    hold in practice; monitor `zramctl` mem_used_total after workload changes.
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-    memoryPercent = 25;
+    memoryPercent = 50;
     priority = 100;
   };
 
@@ -170,6 +173,14 @@ in
   boot.kernel.sysctl = {
     "vm.swappiness" = 100;
     "vm.page-cluster" = 0;
+    # Default 10 gives kswapd a ~29MB reclaim span on the 29.6G Normal zone,
+    # causing wake/sleep churn under constant zram pressure; 100 batches
+    # reclaim in ~296MB spans (fewer cycles, helps zstd compression batching).
+    "vm.watermark_scale_factor" = 100;
+    # Bias reclaim toward dropping reclaimable slab (~2G dentry/inode here)
+    # sooner vs page cache; cheap to refill on NVMe. Slab-vs-pagecache only;
+    # anon-vs-file balance is governed by swappiness above. Do not exceed 200.
+    "vm.vfs_cache_pressure" = 200;
   };
 
   # 3. Bias the OOM killer toward local nix builds, the real trigger. The user
@@ -182,6 +193,49 @@ in
     OOMScoreAdjust = 500;
     MemoryHigh = "20G";
   };
+
+  # 4. Wire systemd-oomd to actual cgroups. base.nix enables the daemon but
+  #    NixOS monitors zero slices by default (oomctl showed both
+  #    monitored-cgroup lists empty), so it could never act and the kernel
+  #    global OOM kept firing first (27 oom-kill invocations in 7 days).
+  #    With slices monitored, oomd kills the highest sustained-pressure
+  #    descendant cgroup (chromium/builds) at 80% pressure for 30s, before
+  #    the kernel nukes the session. oomd ignores OOMScoreAdjust (kernel-only
+  #    knob); ManagedOOMPreference is its protection mechanism, so mark the
+  #    credential stack avoid-last.
+  systemd.oomd = {
+    enableSystemSlice = true;
+    enableUserSlices = true;
+  };
+  systemd.user.services.fafnir.serviceConfig.ManagedOOMPreference = "avoid";
+  systemd.user.services.fafnir-openpgp.serviceConfig.ManagedOOMPreference = "avoid";
+
+  # /tmp lives on the root fs and had accumulated 71G/18k entries: a nightly
+  # recursive /tmp scan refreshes atime on every entry (all sampled nix-shell
+  # dirs shared an identical atime to the nanosecond), and under relatime that
+  # defeats systemd-tmpfiles' age check (max of atime/mtime/ctime vs 10d).
+  # noatime freezes atime so age falls back to real mtime/ctime age; f2fs
+  # lazytime already deferred atime writes, so there is no I/O cost.
+  # cleanOnBoot additionally wipes /tmp wholesale on every boot.
+  fileSystems."/".options = [ "noatime" ];
+  boot.tmp.cleanOnBoot = true;
+
+  # Boot spent ~60s in NetworkManager-wait-online (network.target at 4s,
+  # network-online.target at 64s on slow 2.4GHz association), gating docker,
+  # clatd and teamviewerd and thus multi-user/graphical.target. Nothing here
+  # actually needs network-online at boot: wg2's endpoint is a bare IP and
+  # re-handshakes on first packet, and the rest are happy to start degraded.
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  # DPTF-aware thermal management (INT3400 zone present, policy was the crude
+  # step_wise governor): thermald clamps via RAPL proactively, sustaining
+  # turbo longer during compile bursts instead of frequency-cliff throttling.
+  # TLP owns governor/EPP/platform_profile; thermald owns RAPL - no conflict.
+  services.thermald.enable = true;
+
+  # No WWAN modem in this machine; NetworkManager pulls ModemManager in via
+  # mkDefault true. Saves a daemon and a per-boot probe.
+  networking.modemmanager.enable = false;
 
   systemd.services.restart-fprintd-on-resume = {
     description = "Restart fprintd after resume from sleep";
@@ -543,9 +597,10 @@ in
       enable = true;
     };
 
-    ofono.enable = true;
-
-    teamviewer.enable =true;
+    # ofono (telephony) and teamviewer removed 2026-06: ofono had no hardware
+    # to manage (Wi-Fi-only machine, daemon sat inactive) and teamviewer had
+    # zero sessions in the journal while keeping a 37-thread daemon resident.
+    # Re-add services.teamviewer.enable = true if remote support is needed.
 
     clatd = {
       enable = true;
@@ -566,9 +621,12 @@ in
     cargo-sweep
     # Wrapper scopes AWS_PROFILE=sccache-shared to sccache invocations only
     # so it doesn't bleed into other AWS-aware tools in the shell.
+    # nice 10: the sccache server persists in the interactive terminal scope
+    # at nice 0, competing with keystrokes; 10 yields to interactive work
+    # while staying above cargo builds (nice 19 via the base.nix wrapper).
     (writeShellScriptBin "sccache" ''
       export AWS_PROFILE=sccache-shared
-      exec ${sccache}/bin/sccache "$@"
+      exec ${coreutils}/bin/nice -n 10 ${sccache}/bin/sccache "$@"
     '')
     mold
     docker

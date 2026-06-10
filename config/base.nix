@@ -91,6 +91,21 @@ in
 
   systemd.timers.nix-gc.after = [ "nixos-upgrade.timer" ];
 
+  # Persistent catch-up runs fire right after boot and contend with login
+  # (blame showed 3m18s / 2m12s at default priority). Idle scheduling yields
+  # to foreground work while keeping the catch-up semantics; mirrors the
+  # nix-daemon idle policy below. nix-optimise already inherits idle from it.
+  systemd.services.nixos-upgrade.serviceConfig = {
+    Nice = 19;
+    IOSchedulingClass = "idle";
+    CPUSchedulingPolicy = "idle";
+  };
+  systemd.services.nix-gc.serviceConfig = {
+    Nice = 19;
+    IOSchedulingClass = "idle";
+    CPUSchedulingPolicy = "idle";
+  };
+
   systemd.timers.nix-optimise.timerConfig.Persistent = true;
   systemd.timers.nix-optimise.after = [ "nixos-upgrade.timer" "nix-gc.timer" ];
 

@@ -61,8 +61,15 @@
     tlp = {
       enable = true;
       settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        # intel_pstate runs in active mode: the "performance" governor pins
+        # min=max P-state and forces EPP=performance, defeating HWP's
+        # fine-grained frequency management. "powersave" is Intel's
+        # recommended active-mode governor; HWP then honors the EPP hint.
+        CPU_SCALING_GOVERNOR_ON_AC = "powersave";
         CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        # HWP transiently raises EPP under load: snappier compile/LSP bursts
+        # on AC with no battery cost.
+        CPU_HWP_DYN_BOOST_ON_AC = 1;
         USB_AUTOSUSPEND = 0;
 
       };
@@ -72,7 +79,10 @@
       bolt.enable = true;
     };
   };
-  networking.networkmanager.wifi.powersave = true;
+  # false = NM stops re-asserting powersave at every (re)connect, letting
+  # TLP's per-power-source defaults govern instead (WIFI_PWR_ON_AC=off for
+  # lower SSH RTT jitter to the remote builder, WIFI_PWR_ON_BAT=on unchanged).
+  networking.networkmanager.wifi.powersave = false;
 
   # Auto-open captive portal login page when NetworkManager detects one.
   # NM's connectivity check is enabled in desktop_base.nix.

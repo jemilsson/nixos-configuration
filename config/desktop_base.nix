@@ -14,8 +14,8 @@ let
   # stalls navigator.mediaDevices.enumerateDevices() forever, which breaks the
   # microphone AND camera in web apps like Teams. There is no Chromium flag to
   # skip the V4L2 factory, so we hide the nodes from Chromium only. The webcam
-  # still works because --enable-features=WebRtcPipeWireCamera (set via
-  # CHROMIUM_FLAGS in appearance.nix) pulls it over the PipeWire camera portal,
+  # still works because --enable-features=WebRtcPipeWireCamera (in
+  # commandLineArgs below) pulls it over the PipeWire camera portal,
   # which needs no /dev/video access. /dev/dri and /dev/snd are re-bound for GPU
   # and audio. Verified: enumerateDevices returns ~50ms and getUserMedia video
   # yields "Built-in Front Camera".
@@ -25,6 +25,18 @@ let
       "--remote-debugging-address=127.0.0.1"
       "--remote-allow-origins=http://127.0.0.1:9222"
       "--disk-cache-size=536870912"
+      # One combined --enable-features (a later occurrence would override an
+      # earlier one). WebRtcPipeWireCamera is load-bearing for mic+camera (see
+      # bwrap comment above; previously set via CHROMIUM_FLAGS, which the inner
+      # nixpkgs wrapper never reads - it was applying only by chromium's own
+      # default). Vaapi* enables hardware video decode on the iHD driver
+      # (LIBVA_DRIVER_NAME below): ~15-25% of a P-core saved during video
+      # playback/calls. VaapiIgnoreDriverChecks deliberately omitted while xe
+      # GuC stalls are live; verify chrome://gpu shows "Video Decode: Hardware
+      # accelerated" and watch journalctl -k for new xe resets after deploy.
+      "--enable-features=WebRtcPipeWireCamera,VaapiVideoDecodeLinuxGL,VaapiVideoDecoder"
+      "--font-render-hinting=none"
+      "--force-dark-mode"
     ];
   };
   chromiumSandboxed = lib.hiPrio (pkgs.writeShellScriptBin "chromium" ''
@@ -199,7 +211,14 @@ in
     response = "";
   };
 
-  #environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # Makes the nixpkgs chromium/electron wrappers emit --ozone-platform-hint=auto
+  # (Wayland when available, X11 fallback otherwise). Chromium already ran
+  # Wayland via auto-detection; this makes it explicit in the hint form.
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # Intel media driver for VA-API hardware video decode (Iris Xe); reaches
+  # chromium because the bwrap wrapper preserves the environment and
+  # /run/opengl-driver is bind-mounted.
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
 
   environment.systemPackages = with pkgs; [
@@ -537,6 +556,11 @@ in
     printing = {
       enable = true;
       drivers = with pkgs; [ postscript-lexmark ];
+      # cups-browsed pinned cups.service permanently alive via an hourly IPP
+      # Renew-Subscription (the only cups activity in the journal; no print
+      # jobs). Without it cups socket-activates on demand and idles out.
+      # Network printers must be added manually instead of auto-discovered.
+      browsed.enable = false;
     };
     avahi = {
       nssmdns4 = true;
@@ -574,6 +598,11 @@ in
   virtualisation = {
     docker = {
       enable = true;
+      # docker.socket activates dockerd on first `docker` command; keeps
+      # docker.service off the network-online.target boot critical chain.
+      # No containers use restart policies today, so nothing auto-starts
+      # that would be lost.
+      enableOnBoot = false;
       # --volumes intentionally omitted: would delete local DB volumes.
       autoPrune = {
         enable = true;
@@ -610,13 +639,10 @@ in
     #upower.enable = true;
     nscd.enable = true;
 
-    tor = {
-      enable = true;
-      client.enable = true;
-      package = pkgs.tor;
-    };
-
-    gpm.enable = true;
+    # tor removed 2026-06: zero circuits in the journal, SOCKS listener on
+    # 127.0.0.1:9050 had no clients. Re-enable ad-hoc if torsocks is needed.
+    # gpm removed 2026-06: console-mouse daemon is pointless under Wayland
+    # and was a root process with raw /dev/input/mice access.
 
     openssh.settings.X11Forwarding = true;
 

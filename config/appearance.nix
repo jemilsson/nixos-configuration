@@ -247,12 +247,13 @@ in
     # Qt settings to match WhiteSur Dark
     QT_QPA_PLATFORMTHEME = "gtk2";
     
-    # Chromium flags for Nord aesthetic
-    # WebRtcPipeWireCamera: route the webcam through the PipeWire camera portal
-    # (libcamera) instead of raw V4L2. Combined with the bwrap wrapper in
-    # desktop_base.nix (which hides /dev/video* so Chromium's V4L2 factory can't
-    # hang on the 32 Intel IPU6 ISYS nodes), this gives working mic + camera.
-    CHROMIUM_FLAGS = "--font-render-hinting=none --font-family='IBM Plex Sans' --gtk-version=3 --enable-features=UseOzonePlatform,WebRtcPipeWireCamera --ozone-platform=wayland --user-stylesheet-location=/etc/chromium/user-stylesheet.css --force-dark-mode";
+    # CHROMIUM_FLAGS removed 2026-06: dead since the bwrap rewrap - the inner
+    # nixpkgs chromium wrapper never reads $CHROMIUM_FLAGS, so none of the
+    # flags set here were applied. The load-bearing ones now live where they
+    # take effect: WebRtcPipeWireCamera (PipeWire camera portal for mic+camera,
+    # see the bwrap comment in desktop_base.nix), --font-render-hinting=none
+    # and --force-dark-mode are in chromiumBase.commandLineArgs in
+    # desktop_base.nix; Wayland comes from NIXOS_OZONE_WL=1 there.
     
     # WhiteSur cursor theme
     XCURSOR_THEME = "WhiteSur-cursors";
