@@ -102,6 +102,13 @@ in
     # to S3 (shared with somchai); mold cuts link time on big Rust workspaces.
     RUSTC_WRAPPER = "sccache";
     CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS = "-C link-arg=-fuse-ld=mold";
+    # Cap cargo parallelism at 8 of 12 cores so interactive work stays
+    # responsive and 8 concurrent rustc+mold pairs fit in RAM. An env var
+    # (not ~/.cargo/config.toml) so it reaches every cargo: the rustup
+    # toolchain in ~/.cargo/bin shadows the nice'd wrapper from base.nix,
+    # and devenv shells bring their own cargo too. One-off override:
+    # cargo build -j12 (CLI beats env).
+    CARGO_BUILD_JOBS = "8";
     SCCACHE_BUCKET = "sccache-shared-723173433317";
     SCCACHE_REGION = "ap-southeast-7";
     SCCACHE_S3_KEY_PREFIX = "v0";
@@ -374,6 +381,13 @@ in
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" "uhid" ];
+    # The AX211 BT controller autosuspends after ~2s idle; waking it stacks
+    # on top of the MX Anywhere 3S's own sleep-reconnect latency and can eat
+    # the first click after idle. Keep the controller awake (small idle-power
+    # cost). Takes effect on reboot (module load time option).
+    extraModprobeConfig = ''
+      options btusb enable_autosuspend=0
+    '';
     kernelParams = [
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
       "xe.force_probe=*"
@@ -402,6 +416,12 @@ in
 
     binfmt.emulatedSystems = [ ];
   };
+
+  # Shorter page-scan intervals while connectable: the MX Anywhere 3S sleeps
+  # after idle and must reconnect on the next click; FastConnectable narrows
+  # that window so the wake-up click is less likely to be lost. Merges into
+  # the shared bluetooth settings from desktop_base.nix.
+  hardware.bluetooth.settings.General.FastConnectable = true;
 
   # Disambiguate the two RTK USB-C panels (they ship with identical EDID
   # serials, which confuses wlroots/Hyprland and prevents distinct
@@ -870,6 +890,11 @@ in
 
   nix.distributedBuilds = true;
   nix.settings.max-jobs = 1; # 0 breaks preferLocalBuild=true derivations (e.g. /etc/issue)
+  # Cap per-build parallelism for the local fallback path. The default
+  # (cores = 0) means "all 12"; SCHED_IDLE keeps the CPU polite but 12-wide
+  # compile memory can still push the session into MemoryHigh throttling.
+  # Matches CARGO_BUILD_JOBS = 8 above; somchai does the heavy lifting.
+  nix.settings.cores = 8;
   # somchai is an EC2 spot instance woken on demand via Lambda from the
   # ProxyCommand; cold boot is 60-90s. Keep this generous so nix-daemon
   # doesn't yank the SSH handshake before the wake completes.
