@@ -893,8 +893,8 @@ in
   # Cap per-build parallelism for the local fallback path. The default
   # (cores = 0) means "all 12"; SCHED_IDLE keeps the CPU polite but 12-wide
   # compile memory can still push the session into MemoryHigh throttling.
-  # Matches CARGO_BUILD_JOBS = 8 above; somchai does the heavy lifting.
-  nix.settings.cores = 8;
+  # Halved from 8 to reduce resource pressure; somchai does the heavy lifting.
+  nix.settings.cores = 4;
   # somchai is an EC2 spot instance woken on demand via Lambda from the
   # ProxyCommand; cold boot is 60-90s. Keep this generous so nix-daemon
   # doesn't yank the SSH handshake before the wake completes.
