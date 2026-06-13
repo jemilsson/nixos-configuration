@@ -125,17 +125,17 @@ in
   #   }
   # ];
 
-  boot.initrd.kernelModules = [ "xe" ];
-  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "i915" ];
+  boot.initrd.kernelModules = [ "i915" ];
+  boot.blacklistedKernelModules = [ "pn533_usb" "pn533" "xe" ];
 
   boot.kernel.sysctl."net.ipv4.tcp_mtu_probing" = 1;
 
-  # Hyprland crashes on this machine are GPU context resets: the xe driver
+  # Hyprland crashes on this machine are GPU context resets: the GPU driver
   # resets the Iris Xe GPU, glGetGraphicsResetStatus() then returns
   # GL_GUILTY_CONTEXT_RESET, and Hyprland aborts (it has no GL context
   # recovery). The kernel-side reset reason (guilty engine / error code) is
   # what we actually need, but base.nix caps journald at 500M which only
-  # retains ~1 day, so the xe reset message rotates out before it can be read.
+  # retains ~1 day, so the reset message rotates out before it can be read.
   # mkAfter ensures this SystemMaxUse wins over base.nix's (last key wins in
   # journald.conf). Bump retention so the next reset's signature is captured.
   services.journald.extraConfig = lib.mkAfter ''
@@ -216,6 +216,16 @@ in
   };
   systemd.user.services.fafnir.serviceConfig.ManagedOOMPreference = "avoid";
   systemd.user.services.fafnir-openpgp.serviceConfig.ManagedOOMPreference = "avoid";
+  # Protect the Claude Code agent session (runs under teleclaude.service in
+  # app.slice at oom_score~800 with ManagedOOMPreference=none, i.e. a default
+  # oomd candidate). Mark it avoid-last so oomd sacrifices builds/chromium/the
+  # AI gateway first; the agent is the system's control plane. oomd ignores
+  # OOMScoreAdjust and a user service cannot set a negative one, so this
+  # preference is the only available protection lever. Hard-capping nix-daemon
+  # was rejected: MemoryMax on the shared build cgroup SIGKILLs the daemon and
+  # all in-flight builds atomically, wedging the store; the existing
+  # MemoryHigh=20G + OOMScoreAdjust=500 already bias builds as the OOM victim.
+  systemd.user.services.teleclaude.serviceConfig.ManagedOOMPreference = "avoid";
 
   # /tmp lives on the root fs and had accumulated 71G/18k entries: a nightly
   # recursive /tmp scan refreshes atime on every entry (all sampled nix-shell
@@ -390,18 +400,14 @@ in
     '';
     kernelParams = [
       "mem_sleep_default=s2idle"  # Only sleep mode available (firmware has no S3)
-      "xe.force_probe=*"
-      # Disable Panel Self-Refresh on the xe driver. Hyprland crashes here are
-      # GPU GuC scheduler stalls: kernel logs "xe GT0: Check job timeout ...
-      # not started" -> "Timedout job ... in .Hyprland-wrapp" -> device coredump
-      # -> GPU reset, after which Hyprland's glGetGraphicsResetStatus() returns
-      # GL_GUILTY_CONTEXT_RESET and it aborts. PSR (panel self-refresh) failing
-      # to wake the display pipe is a common trigger for this "jobs not
-      # starting" stall on mobile Iris Xe. A kernel version bump is not a
-      # reliable fix (the signature is reported upstream on 7.0.9 and 6.18 LTS);
-      # disabling PSR is the low-risk, reversible first-line mitigation. Only
-      # cost is slightly higher idle power. Remove if it does not help.
-      "xe.enable_psr=0"
+      # Disable Panel Self-Refresh on the i915 driver. Hyprland crashes here
+      # have shown up as GPU context resets after which Hyprland's
+      # glGetGraphicsResetStatus() returns GL_GUILTY_CONTEXT_RESET and it
+      # aborts. PSR (panel self-refresh) failing to wake the display pipe is a
+      # common trigger on mobile Iris Xe. Disabling PSR is the low-risk,
+      # reversible first-line mitigation. Only cost is slightly higher idle
+      # power. Remove if it does not help.
+      "i915.enable_psr=0"
     ];
     loader = {
       systemd-boot =
@@ -872,13 +878,28 @@ in
       IdentityAgent none
       IdentityFile /etc/ssh/ssh_host_ed25519_key
       ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
-      # No ControlMaster mux for somchai: the box idle-shuts-down by design,
-      # which kills the persisted master mid-flight. Mux clients then fail
-      # with "Broken pipe" / "unexpected end-of-file", and because they reuse
-      # the (stale) socket they bypass the ProxyCommand, so the wake Lambda
-      # never fires. Fresh connections are cheap (proxy quick-path nc probe)
-      # and ssh-ng channels are long-lived per build anyway.
-      ControlMaster no
+      # ControlMaster with a SHORT persist. The earlier failure was
+      # ControlPersist 8h: somchai idle-shuts-down after ~5min idle
+      # (idle-shutdown.service: IDLE_CONSECUTIVE=5 × 1min timer), so an 8h
+      # master vastly outlived the box. When the box slept the master TCP
+      # died but the local socket lingered; new channels reused the stale
+      # socket, bypassed the ProxyCommand, and never fired the wake Lambda
+      # ("ControlSocket already exists" / "Broken pipe" / "unexpected
+      # end-of-file"). Removing mux entirely fixed that but regressed the
+      # wake path: with no master, EVERY nix ssh channel (build + each
+      # substitution) re-runs the full ProxyCommand, so a cold-box build
+      # storms the wake Lambda + prefill in parallel, starving the aws CLI
+      # ("Lambda invoke failed") and slowing the boot.
+      #
+      # ControlPersist 120s is the fix: one master serves all of a build's
+      # channels (wake + prefill run once per build, not per channel), and
+      # 120s « the 5min idle window means the master always dies before the
+      # box can sleep, so it can never go stale. Mux idle masters are
+      # explicitly ignored by somchai's idle-shutdown, so a lingering master
+      # never holds the box awake either.
+      ControlMaster auto
+      ControlPath /tmp/nix-ssh-%r@%h:%p
+      ControlPersist 120
       ConnectTimeout 120
       ServerAliveInterval 60
       ServerAliveCountMax 10
