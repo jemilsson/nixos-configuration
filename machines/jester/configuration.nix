@@ -872,9 +872,13 @@ in
       IdentityAgent none
       IdentityFile /etc/ssh/ssh_host_ed25519_key
       ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
-      ControlMaster auto
-      ControlPath /tmp/nix-ssh-%r@%h:%p
-      ControlPersist 8h
+      # No ControlMaster mux for somchai: the box idle-shuts-down by design,
+      # which kills the persisted master mid-flight. Mux clients then fail
+      # with "Broken pipe" / "unexpected end-of-file", and because they reuse
+      # the (stale) socket they bypass the ProxyCommand, so the wake Lambda
+      # never fires. Fresh connections are cheap (proxy quick-path nc probe)
+      # and ssh-ng channels are long-lived per build anyway.
+      ControlMaster no
       ConnectTimeout 120
       ServerAliveInterval 60
       ServerAliveCountMax 10
