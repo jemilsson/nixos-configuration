@@ -204,6 +204,27 @@ in
           echo "cargo wrapper: no real cargo found on PATH" >&2
           exit 127
         fi
+
+        # Hard resource caps for interactive cargo/rustc. Driven by env vars so
+        # base.nix stays machine-agnostic; a machine opts in by setting any of
+        # CARGO_MEMORY_HIGH / CARGO_MEMORY_MAX / CARGO_CPU_QUOTA (systemd
+        # syntax, e.g. 16G, 20G, 800%). We launch into a transient systemd
+        # --user scope so the limits bind the whole cargo+rustc+linker process
+        # tree as one cgroup, not just the top cargo process. Only the env-var
+        # cargo (CARGO_BUILD_JOBS etc.) reaches the rustup/devenv cargos that
+        # shadow this wrapper; the scope caps apply when this wrapper is the
+        # one invoked. Falls back to the plain nice/ionice exec when no caps
+        # are requested or there is no user systemd manager (no $XDG_RUNTIME_DIR,
+        # e.g. nix build sandbox), keeping nix-built derivations unaffected.
+        limit_args=""
+        [ -n "''${CARGO_MEMORY_HIGH:-}" ] && limit_args="$limit_args -p MemoryHigh=$CARGO_MEMORY_HIGH"
+        [ -n "''${CARGO_MEMORY_MAX:-}" ]  && limit_args="$limit_args -p MemoryMax=$CARGO_MEMORY_MAX"
+        [ -n "''${CARGO_CPU_QUOTA:-}" ]   && limit_args="$limit_args -p CPUQuota=$CARGO_CPU_QUOTA"
+        if [ -n "$limit_args" ] && [ -n "''${XDG_RUNTIME_DIR:-}" ] && \
+           ${systemd}/bin/systemctl --user show --property=Version >/dev/null 2>&1; then
+          exec ${systemd}/bin/systemd-run --user --scope --quiet --collect $limit_args \
+            ${coreutils}/bin/nice -n 19 ${util-linux}/bin/ionice -c 3 "$real_cargo" "$@"
+        fi
         exec ${coreutils}/bin/nice -n 19 ${util-linux}/bin/ionice -c 3 "$real_cargo" "$@"
       '')
 

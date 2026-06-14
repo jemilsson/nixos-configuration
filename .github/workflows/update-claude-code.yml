@@ -2,7 +2,7 @@ name: Update claude-code Input
 on:
   workflow_dispatch: # allows manual triggering
   schedule:
-    - cron: '0 5 * * *' # Runs nightly at 05:00 UTC
+    - cron: '0 * * * *' # Hourly, matching upstream sadjow/claude-code-nix's update cadence
 
 permissions:
   contents: write       # update-flake-lock creates a branch; merge job pushes

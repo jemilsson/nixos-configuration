@@ -109,6 +109,19 @@ in
     # and devenv shells bring their own cargo too. One-off override:
     # cargo build -j12 (CLI beats env).
     CARGO_BUILD_JOBS = "8";
+    # Hard resource caps for interactive cargo/rustc, enforced by the base.nix
+    # cargo wrapper which launches into a transient systemd --user scope so the
+    # whole cargo+rustc+mold tree is one bounded cgroup. -j8 + nice 19 only cap
+    # parallelism and priority; these cap actual RAM/CPU so a single fat crate
+    # (LTO, codegen-units=1) can't balloon past the session's headroom on this
+    # 31 GiB / 12-core box. MemoryHigh throttles via reclaim, MemoryMax is the
+    # hard OOM-kill ceiling for the build cgroup; CPUQuota caps at ~8 cores even
+    # if a build spawns more than 8 concurrent rustc. Only reaches this wrapper
+    # (rustup/devenv cargos shadow it, same caveat as CARGO_BUILD_JOBS above);
+    # nix builds are unaffected (no $XDG_RUNTIME_DIR in the sandbox).
+    CARGO_MEMORY_HIGH = "16G";
+    CARGO_MEMORY_MAX = "20G";
+    CARGO_CPU_QUOTA = "800%";
     SCCACHE_BUCKET = "sccache-shared-723173433317";
     SCCACHE_REGION = "ap-southeast-7";
     SCCACHE_S3_KEY_PREFIX = "v0";
@@ -388,6 +401,13 @@ in
   #users.users.user1.passwordFile = config.age.secrets.secret1.path;
 
   system.stateVersion = "23.05";
+
+  # Run nixos-upgrade hourly (overrides base.nix's "Mon..Fri 02:00") to track
+  # the hourly claude-code input bumps. Shrink the randomized delay from base's
+  # 1h so runs don't bunch toward the next hour's window.
+  system.autoUpgrade.dates = lib.mkForce "hourly";
+  system.autoUpgrade.randomizedDelaySec = lib.mkForce "10m";
+
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
     kernelModules = [ "acpi_call" "uhid" ];
@@ -969,9 +989,13 @@ in
     sshUser = "nix-builder";
     sshKey = "/etc/ssh/ssh_host_ed25519_key";
     systems = [ "x86_64-linux" ];
-    # Matches somchai's max-jobs=2. Higher values let jester dispatch more
-    # concurrent builds than the remote can run without CPU oversubscription.
-    maxJobs = 2;
+    # Must match somchai's own nix max-jobs (private-nixos-configuration/
+    # machines/somchai/configuration.nix, NOT this repo) or jester dispatches
+    # more than the remote will run. somchai: 16 physical cores / 32 vCPU (HT).
+    # Profile 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT
+    # oversubscription), trading per-build speed for burst parallelism (the
+    # 6-way cargo-test* check batch). KEEP IN SYNC with somchai max-jobs=4.
+    maxJobs = 4;
     speedFactor = 4;
     supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
     protocol = "ssh-ng";
