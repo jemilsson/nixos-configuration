@@ -947,6 +947,14 @@ in
       ServerAliveInterval 60
       ServerAliveCountMax 10
       TCPKeepAlive yes
+
+    Host eu.nixbuild.net
+      User root
+      PubkeyAcceptedKeyTypes ssh-ed25519
+      IdentitiesOnly yes
+      IdentityAgent none
+      IdentityFile /etc/ssh/ssh_host_ed25519_key
+      ServerAliveInterval 60
   '';
 
   # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
@@ -1007,25 +1015,47 @@ in
   # hyprctl binary collision in environment.systemPackages.
   programs.hyprland.package = lib.mkForce hyprland.packages.${pkgs.system}.hyprland;
   programs.hyprland.portalPackage = lib.mkForce hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
-  nix.buildMachines = [{
-    hostName = "somchai.jonasem.com";
-    sshUser = "nix-builder";
-    sshKey = "/etc/ssh/ssh_host_ed25519_key";
-    systems = [ "x86_64-linux" ];
-    # Must match somchai's own nix max-jobs (private-nixos-configuration/
-    # machines/somchai/configuration.nix, NOT this repo) or jester dispatches
-    # more than the remote will run. somchai: 16 physical cores / 32 vCPU (HT).
-    # Profile 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT
-    # oversubscription), trading per-build speed for burst parallelism (the
-    # 6-way cargo-test* check batch). KEEP IN SYNC with somchai max-jobs=4.
-    maxJobs = 4;
-    speedFactor = 4;
-    supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-    protocol = "ssh-ng";
-  }];
+  nix.buildMachines = [
+    {
+      hostName = "somchai.jonasem.com";
+      sshUser = "nix-builder";
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+      systems = [ "x86_64-linux" ];
+      # Must match somchai's own nix max-jobs (private-nixos-configuration/
+      # machines/somchai/configuration.nix, NOT this repo) or jester dispatches
+      # more than the remote will run. somchai: 16 physical cores / 32 vCPU (HT).
+      # Profile 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT
+      # oversubscription), trading per-build speed for burst parallelism (the
+      # 6-way cargo-test* check batch). KEEP IN SYNC with somchai max-jobs=4.
+      maxJobs = 4;
+      speedFactor = 4;
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      protocol = "ssh-ng";
+    }
+    {
+      # nixbuild.net: managed remote builder, used as overflow/fallback.
+      # speedFactor 1 (« somchai's 4) so nix always prefers somchai and only
+      # dispatches here when somchai's job slots are full or it's unreachable.
+      # Auth: jester's host ed25519 key must be registered on the nixbuild.net
+      # account (https://docs.nixbuild.net -> SSH keys). No "kvm"/"nixos-test"
+      # feature: nixbuild.net doesn't run NixOS VM tests.
+      hostName = "eu.nixbuild.net";
+      sshUser = "root";
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+      systems = [ "x86_64-linux" ];
+      maxJobs = 100;
+      speedFactor = 1;
+      supportedFeatures = [ "big-parallel" "benchmark" ];
+      protocol = "ssh-ng";
+    }
+  ];
   programs.ssh.knownHosts.somchai = {
     hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:ce5e:831b:b719:c940" ];
     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEsY31lwQd6bxClPwdH3kGDfKjSEcBmTUoxeP+7aaXMY";
+  };
+  programs.ssh.knownHosts.nixbuild = {
+    hostNames = [ "eu.nixbuild.net" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
   };
 
   # Software debounce for MX Anywhere 3S which has bouncing left-click switch
