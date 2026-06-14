@@ -216,17 +216,24 @@ in
     # of any --cores/--max-jobs/-j flag a build passes. somchai does the heavy
     # lifting; this keeps a local fallback (or a flag-forced build that slips
     # the hook) from saturating the box and starving the interactive session.
-    # MemoryHigh (soft) reclaims/throttles before MemoryMax (hard) OOM-kills.
+    # Memory: SOFT throttle only. MemoryHigh applies reclaim pressure around
+    # 16 GiB but never kills. A hard MemoryMax here is DELIBERATELY avoided:
+    # the daemon, its remote-build SSH coordination, and all local builds
+    # share this one cgroup, so a memory.max OOM-kill (memory.oom.group=1)
+    # would take out the daemon + every in-flight build atomically and wedge
+    # the store (see the teleclaude note below — same rejected approach). A
+    # true per-build hard cap needs nix use-cgroups + auto-allocate-uids
+    # (experimental); not enabled here.
+    MemoryHigh = "16G";
+    # CPU: hard ceiling of 6 of 12 threads (throttle, never kills — safe on
+    # the shared cgroup), at LOW priority so local builds yield to the
+    # interactive session. CPUWeight is the cgroup-v2 lever (default 100; 10
+    # gives builds ~1/10 of contended share); idle IO class keeps disk
+    # responsive. The daemon already runs SCHED_IDLE (see base config), so no
+    # Nice= is needed. somchai does the heavy lifting; these only bound a
+    # local fallback or a flag-forced build that slips the hook.
     CPUQuota = "600%";
-    MemoryHigh = "14G";
-    MemoryMax = "16G";
-    # Run local builds at LOW priority so they yield to the interactive
-    # session. CPUWeight is the cgroup-v2 lever (default 100; 10 gives builds
-    # ~1/10 of contended CPU share); Nice reinforces thread ordering; idle IO
-    # class keeps disk responsive. The CPUQuota above still caps absolute
-    # usage; these only change who wins under contention.
     CPUWeight = 10;
-    Nice = 19;
     IOSchedulingClass = "idle";
   };
 
