@@ -211,7 +211,23 @@ in
   #    the kernel reclaims/throttles a fat build before any hard kill.
   systemd.services.nix-daemon.serviceConfig = {
     OOMScoreAdjust = 500;
-    MemoryHigh = "20G";
+    # Hard ceiling on LOCAL nix builds: the nix-daemon cgroup (where local
+    # build jobs run) may never exceed 6 of 12 cores nor 16 GiB RAM, regardless
+    # of any --cores/--max-jobs/-j flag a build passes. somchai does the heavy
+    # lifting; this keeps a local fallback (or a flag-forced build that slips
+    # the hook) from saturating the box and starving the interactive session.
+    # MemoryHigh (soft) reclaims/throttles before MemoryMax (hard) OOM-kills.
+    CPUQuota = "600%";
+    MemoryHigh = "14G";
+    MemoryMax = "16G";
+    # Run local builds at LOW priority so they yield to the interactive
+    # session. CPUWeight is the cgroup-v2 lever (default 100; 10 gives builds
+    # ~1/10 of contended CPU share); Nice reinforces thread ordering; idle IO
+    # class keeps disk responsive. The CPUQuota above still caps absolute
+    # usage; these only change who wins under contention.
+    CPUWeight = 10;
+    Nice = 19;
+    IOSchedulingClass = "idle";
   };
 
   # 4. Wire systemd-oomd to actual cgroups. base.nix enables the daemon but
