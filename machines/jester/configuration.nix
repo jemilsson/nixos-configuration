@@ -1021,13 +1021,20 @@ in
       sshUser = "nix-builder";
       sshKey = "/etc/ssh/ssh_host_ed25519_key";
       systems = [ "x86_64-linux" ];
-      # Must match somchai's own nix max-jobs (private-nixos-configuration/
-      # machines/somchai/configuration.nix, NOT this repo) or jester dispatches
-      # more than the remote will run. somchai: 16 physical cores / 32 vCPU (HT).
-      # Profile 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT
-      # oversubscription), trading per-build speed for burst parallelism (the
-      # 6-way cargo-test* check batch). KEEP IN SYNC with somchai max-jobs=4.
-      maxJobs = 4;
+      # This is the DISPATCH cap (how many builds jester hands to somchai), NOT
+      # somchai's local concurrency. somchai's own nix max-jobs=4 (private-nixos-
+      # configuration/machines/somchai/configuration.nix) governs how many it
+      # actually runs at once; surplus dispatched here simply queues on somchai's
+      # daemon. We intentionally dispatch MORE than somchai runs (12 > 4) so that
+      # during somchai's ~20s cold-boot wake, derivations 5-12 queue on somchai
+      # instead of overflowing to eu.nixbuild.net. nix's build-remote scheduler
+      # has no "wait for a warming machine" logic: once somchai's dispatch slots
+      # are full of cold-blocked jobs, every further derivation lands on the
+      # always-on nixbuild.net (speedFactor 1) and stays there, so a cold build
+      # floods the fallback. A larger dispatch cap keeps work stuck to somchai.
+      # somchai sizing for reference: 16 physical cores / 32 vCPU (HT); its local
+      # 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT oversub).
+      maxJobs = 12;
       speedFactor = 4;
       supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
       protocol = "ssh-ng";
