@@ -991,6 +991,19 @@ in
   nix.settings.max-substitution-jobs = 2;
   # Fall back to local build when somchai is unreachable instead of failing.
   nix.settings.fallback = true;
+  # Self-heal the somchai upload-lock deadlock. A build dispatched to somchai
+  # holds an exclusive flock on <builder>.upload-lock for its whole upload
+  # phase; if that build's hook chain (nix __build-remote -> ssh ->
+  # nix-tcp-proxy) wedges mid-upload (client SIGKILL'd by nix-build-retry,
+  # cold-boot blip, somchai-side stdio worker stall), the lock is never
+  # released and EVERY later build blocks forever at "waiting for the upload
+  # lock to ssh-ng://...somchai" — with max-jobs=0 there is no local escape.
+  # max-silent-time bounds that: a build (incl. the stuck lock-holder) emitting
+  # no log output for this long is aborted, which unwinds the hook and releases
+  # the lock automatically. 1800s is generous enough for a legitimately silent
+  # large-NAR upload / heavy compile (BoringSSL .a) yet recovers the deadlock
+  # without manual `systemctl restart nix-daemon`. (2026-06-15 incident.)
+  nix.settings.max-silent-time = 1800;
   # Larger TCP backoff on remote-build SSH so the link survives the
   # post-build-hook S3 push hiccup that briefly blocks somchai's
   # nix-daemon write side.
