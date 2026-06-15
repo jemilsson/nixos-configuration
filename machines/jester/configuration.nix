@@ -182,7 +182,11 @@ in
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-    memoryPercent = 50;
+    # 50 -> 80 (2026-06): device sat 100% full again (15.2G/15.5G, SwapFree ~0)
+    # under concurrent rust-analyzer + solana-test-validator load while measured
+    # compression held at ~4.7:1, so the RAM cost per GB of headroom stays cheap.
+    # 80% gives ~24.8G compressed-swap headroom for ~5.3G real RAM at this ratio.
+    memoryPercent = 80;
     priority = 100;
   };
 
