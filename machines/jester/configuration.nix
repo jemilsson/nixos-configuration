@@ -1054,7 +1054,16 @@ in
       # 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT oversub).
       maxJobs = 12;
       speedFactor = 4;
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      # No "kvm": somchai is an EC2 spot instance with no hardware
+      # virtualization (no /dev/kvm). It CAN still run NixOS VM tests via
+      # software-emulated QEMU (TCG), so "nixos-test" stays. But NixOS test
+      # derivations carry requiredSystemFeatures = [ "kvm" "nixos-test" ], so
+      # any real VM test needs "kvm" and is therefore pinned to jester (the
+      # only machine here with hardware KVM). Advertising "kvm" on somchai
+      # would let nix dispatch those tests onto a box that can't accelerate
+      # them. Bare "nixos-test" work without a kvm requirement may still run
+      # on somchai under software emulation.
+      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
       protocol = "ssh-ng";
     }
     {
