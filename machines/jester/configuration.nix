@@ -63,6 +63,7 @@ in
     ./netns-claude-glecom.nix
     ./pi-lens.nix
     ./nix-retry.nix
+    ../../config/mx-debounce.nix
 
   ];
 
@@ -1082,13 +1083,7 @@ in
     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
   };
 
-  # Software debounce for MX Anywhere 3S which has bouncing left-click switch
-  environment.etc."libinput/local-overrides.quirks".text = ''
-    [Logitech MX Anywhere 3S Bounce Fix]
-    MatchUdevType=mouse
-    MatchName=*Logitech MX Anywhere 3S*
-    ModelLogitechBustypeRollover=1
-  '';
+  # Debounce for MX Anywhere 3S failing switch handled by mx-debounce systemd service.
 
   # Weekly cleanup of stale Rust build artifacts in ~/workspace.
   # cargo-sweep --time 30 removes artifacts unused for 30 days; entire

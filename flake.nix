@@ -61,6 +61,7 @@
         # };
         th-sarabun-new = prev.callPackage ./packages/th-sarabun-new { };
         nix-tcp-proxy = prev.callPackage ./packages/nix-tcp-proxy { };
+        mx-debounce = prev.callPackage ./packages/mx-debounce { };
         fafnir = fafnir.packages.${system}.default;
         syna = syna.packages.${system}.default;
         claude-code = claude-code.packages.${system}.default;
@@ -79,7 +80,9 @@
     in
     {
       overlays.default = overlay-jemilsson;
-      
+
+      packages.${system}.mx-debounce = pkgs.callPackage ./packages/mx-debounce { };
+
       nixosModules = {
         serverBase = import ./config/server_base.nix;
         desktopBase = import ./config/desktop_base.nix;
