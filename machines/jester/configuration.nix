@@ -1125,7 +1125,7 @@ in
       sshUser = "builder";
       sshKey = "/root/.ssh/closure_build_client";
       systems = [ "x86_64-linux" ];
-      maxJobs = 4;
+      maxJobs = 16; # up to 16 parallel ephemeral builders (1 VM per job, scale-to-zero)
       speedFactor = 10; # highest priority: prefer closure.build over somchai(4)/nixbuild(1)
       # kvm intentionally absent: the Fly builder VM does not expose /dev/kvm;
       # advertising it caused routing failures for kvm-requiring derivations.
