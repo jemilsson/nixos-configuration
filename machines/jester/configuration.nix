@@ -1,4 +1,4 @@
-{ config, lib, pkgs, stdenv, hyprland, ... }:
+{ config, lib, pkgs, stdenv, hyprland, nix-build-router, ... }:
 let
   #containers = import ./containers/containers.nix { pkgs = pkgs; config = config; stdenv = stdenv; };
   #cardano-node = removed - no longer needed
@@ -1037,20 +1037,44 @@ in
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   # Pull from the closure-build Tigris cache (S3-compatible) using a read-only
-  # Tigris credential. closure-build-read in /root/.aws/credentials — same
-  # manual mechanism as somchai-nix-read; creds not committed to git.
-  # MANUAL STEP (requires sudo/fingerprint, run once after switch):
-  #   sudo tee -a /root/.aws/credentials <<'EOF'
-  #   [closure-build-read]
-  #   aws_access_key_id     = <TIGRIS_READ_KEY_ID>
-  #   aws_secret_access_key = <TIGRIS_READ_SECRET>
-  #   EOF
   nix.settings.substituters = lib.mkAfter [
     "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
-    "s3://closure-build-cache?endpoint=https://fly.storage.tigris.dev&region=auto&profile=closure-build-read"
+    "http://127.0.0.1:8765"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
   ];
+
+  # cache-daemon: local Nix binary-cache HTTP server reading castore from Tigris.
+  # Secrets (AWS read creds) live in /etc/cache-daemon-env — root-only, not in git.
+  # MANUAL STEP (run once after switch, requires sudo):
+  #   sudo tee /etc/cache-daemon-env <<'EOF'
+  #   AWS_ACCESS_KEY_ID=<TIGRIS_READ_KEY_ID>
+  #   AWS_SECRET_ACCESS_KEY=<TIGRIS_READ_SECRET>
+  #   EOF
+  #   sudo chmod 600 /etc/cache-daemon-env
+  systemd.services.cache-daemon = {
+    description = "Nix binary-cache daemon (castore/Tigris)";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${nix-build-router.packages.x86_64-linux.cache-daemon}/bin/cache-daemon";
+      Restart = "always";
+      RestartSec = "5s";
+      EnvironmentFile = "/etc/cache-daemon-env";
+      Environment = [
+        "CACHE_BIND=127.0.0.1:8765"
+        "AWS_BUCKET=closure-build-cache"
+        "AWS_ENDPOINT_URL=https://fly.storage.tigris.dev"
+        "AWS_REGION=auto"
+      ];
+      # Security hardening (no DynamicUser — needs EnvironmentFile as root)
+      NoNewPrivileges = true;
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      PrivateTmp = true;
+    };
+  };
   nix.settings.trusted-public-keys = lib.mkAfter [
     "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
     "closure-build-cache-1:ZU3pD3lmJ+xSdqrPJOJOUsVYiaHRcWk+A7+fX3kjS8c="

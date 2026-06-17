@@ -28,6 +28,10 @@
     hyprland = {
       url = "github:hyprwm/Hyprland";
     };
+    nix-build-router = {
+      url = "path:/home/jonas/workspace/nix-build-router";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
     # };
@@ -47,7 +51,7 @@
     */
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, syna, claude-code, hyprland }: # , agenix, agenix-rekey }: # bambu-studio,
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-jemilsson, fafnir, syna, claude-code, hyprland, nix-build-router }: # , agenix, agenix-rekey }: # bambu-studio,
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -92,7 +96,7 @@
       };
       nixosConfigurations = {
         jester = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit hyprland; };
+          specialArgs = { inherit hyprland nix-build-router; };
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.hostPlatform = system; nixpkgs.overlays = [ overlay-unstable overlay-jemilsson ]; })
             fafnir.nixosModules.default
