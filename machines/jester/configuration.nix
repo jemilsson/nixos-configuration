@@ -960,6 +960,26 @@ in
       IdentityAgent none
       IdentityFile /etc/ssh/ssh_host_ed25519_key
       ServerAliveInterval 60
+
+    # closure.build remote builder via Fly.io gateway.
+    # Port 2222 is encoded here because nix.buildMachines has no port field;
+    # the alias "closure-build" is used as hostName in buildMachines.
+    # Private key lives at /root/.ssh/closure_build_client (mode 0600, owner root),
+    # outside the Nix store (world-readable). Key was placed there via:
+    #   sudo install -m600 -o root -g root <repo>/closure_build_client /root/.ssh/closure_build_client
+    # This must be re-run manually after a fresh checkout; it is NOT automated
+    # via an activation script because the source path is outside the NixOS config.
+    Host closure-build
+      HostName closure-build-gateway.fly.dev
+      Port 2222
+      User builder
+      IdentitiesOnly yes
+      IdentityAgent none
+      IdentityFile /root/.ssh/closure_build_client
+      StrictHostKeyChecking yes
+      ServerAliveInterval 60
+      ServerAliveCountMax 5
+      ConnectTimeout 30
   '';
 
   # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
@@ -1016,13 +1036,24 @@ in
   nix.settings.extra-sandbox-paths = [ "/etc/gai.conf" ];
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
+  # Pull from the closure-build Tigris cache (S3-compatible) using a read-only
+  # Tigris credential. closure-build-read in /root/.aws/credentials — same
+  # manual mechanism as somchai-nix-read; creds not committed to git.
+  # MANUAL STEP (requires sudo/fingerprint, run once after switch):
+  #   sudo tee -a /root/.aws/credentials <<'EOF'
+  #   [closure-build-read]
+  #   aws_access_key_id     = <TIGRIS_READ_KEY_ID>
+  #   aws_secret_access_key = <TIGRIS_READ_SECRET>
+  #   EOF
   nix.settings.substituters = lib.mkAfter [
     "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
+    "s3://closure-build-cache?endpoint=https://fly.storage.tigris.dev&region=auto&profile=closure-build-read"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
   ];
   nix.settings.trusted-public-keys = lib.mkAfter [
     "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
+    "closure-build-cache-1:ZU3pD3lmJ+xSdqrPJOJOUsVYiaHRcWk+A7+fX3kjS8c="
     "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
   ];
 
@@ -1082,7 +1113,32 @@ in
       supportedFeatures = [ "big-parallel" "benchmark" ];
       protocol = "ssh-ng";
     }
+    {
+      # closure.build remote builder via Fly.io gateway (ssh-ng over port 2222).
+      # "closure-build" resolves via the Host alias in programs.ssh.extraConfig above.
+      # The gateway provisions on-demand Fly performance-4x machines (x86_64-linux).
+      # highest priority: prefer closure.build over somchai(4)/nixbuild(1).
+      # Trade-off: closure.build provisions a fresh VM per build (~9-17s cold start)
+      # vs always-on somchai; top priority means every eligible build pays that
+      # cold-start latency — this is the user's explicit choice.
+      hostName = "closure-build";
+      sshUser = "builder";
+      sshKey = "/root/.ssh/closure_build_client";
+      systems = [ "x86_64-linux" ];
+      maxJobs = 4;
+      speedFactor = 10; # highest priority: prefer closure.build over somchai(4)/nixbuild(1)
+      # kvm intentionally absent: the Fly builder VM does not expose /dev/kvm;
+      # advertising it caused routing failures for kvm-requiring derivations.
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" ];
+      protocol = "ssh-ng";
+    }
   ];
+  programs.ssh.knownHosts."closure-build-gateway" = {
+    # Host key for closure-build-gateway.fly.dev:2222 (closure.build Fly.io gateway).
+    # Obtained via: ssh-keyscan -p 2222 closure-build-gateway.fly.dev
+    hostNames = [ "[closure-build-gateway.fly.dev]:2222" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILiy2Sjb0ZBEXv9tS6LLJ59IZ6bhpKcXw9RB522nC5yJ";
+  };
   programs.ssh.knownHosts.somchai = {
     hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:ce5e:831b:b719:c940" ];
     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEsY31lwQd6bxClPwdH3kGDfKjSEcBmTUoxeP+7aaXMY";
