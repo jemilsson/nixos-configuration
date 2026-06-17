@@ -561,6 +561,23 @@
         "type": "github"
       }
     },
+    "nix-build-router": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781708004,
+        "narHash": "sha256-hSVBxMFgXpCkQ6dIRefoTCPGIXGGRCZLniPMhmGzXzI=",
+        "path": "/home/jonas/workspace/nix-build-router",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/jonas/workspace/nix-build-router",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1781607440,
@@ -676,6 +693,7 @@
         "claude-code": "claude-code",
         "fafnir": "fafnir",
         "hyprland": "hyprland",
+        "nix-build-router": "nix-build-router",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-jemilsson": "nixpkgs-jemilsson",
         "nixpkgs-unstable": "nixpkgs-unstable",
