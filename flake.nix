@@ -29,7 +29,7 @@
       url = "github:hyprwm/Hyprland";
     };
     nix-build-router = {
-      url = "path:/home/jonas/workspace/nix-build-router";
+      url = "git+file:///home/jonas/workspace/nix-build-router";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # bambu-studio = {

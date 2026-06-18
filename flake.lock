@@ -568,14 +568,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1781708004,
-        "narHash": "sha256-hSVBxMFgXpCkQ6dIRefoTCPGIXGGRCZLniPMhmGzXzI=",
-        "path": "/home/jonas/workspace/nix-build-router",
-        "type": "path"
+        "lastModified": 1781741039,
+        "narHash": "sha256-UG7/gox2WMwO1RCO+rq9i7mT+CtCcGgeoxC64sGllqQ=",
+        "ref": "refs/heads/master",
+        "rev": "576898dc7446a8f71d734173c38307184a5df9f0",
+        "revCount": 135,
+        "type": "git",
+        "url": "file:///home/jonas/workspace/nix-build-router"
       },
       "original": {
-        "path": "/home/jonas/workspace/nix-build-router",
-        "type": "path"
+        "type": "git",
+        "url": "file:///home/jonas/workspace/nix-build-router"
       }
     },
     "nixpkgs": {
