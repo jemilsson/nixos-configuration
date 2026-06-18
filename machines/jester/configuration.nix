@@ -1042,8 +1042,6 @@ in
     "http://127.0.0.1:8765"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
-    # NGI0 content-addressed binary cache (for ca-derivations substitution).
-    "https://cache.ngi0.nixos.org/"
   ];
 
   # cache-daemon: local Nix binary-cache HTTP server reading castore from Tigris.
@@ -1081,7 +1079,6 @@ in
     "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
     "closure-build-cache-1:ZU3pD3lmJ+xSdqrPJOJOUsVYiaHRcWk+A7+fX3kjS8c="
     "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
   ];
 
   # Run the compositor (and matching xdg portal) from the upstream Hyprland
