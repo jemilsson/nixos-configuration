@@ -1089,40 +1089,40 @@ in
   programs.hyprland.package = lib.mkForce hyprland.packages.${pkgs.system}.hyprland;
   programs.hyprland.portalPackage = lib.mkForce hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   nix.buildMachines = [
-    # somchai and nixbuild.net remote builders temporarily disabled; closure.build
-    # below is the sole remote builder.
-    # {
-    #   hostName = "somchai.jonasem.com";
-    #   sshUser = "nix-builder";
-    #   sshKey = "/etc/ssh/ssh_host_ed25519_key";
-    #   systems = [ "x86_64-linux" ];
-    #   # This is the DISPATCH cap (how many builds jester hands to somchai), NOT
-    #   # somchai's local concurrency. somchai's own nix max-jobs=4 (private-nixos-
-    #   # configuration/machines/somchai/configuration.nix) governs how many it
-    #   # actually runs at once; surplus dispatched here simply queues on somchai's
-    #   # daemon. We intentionally dispatch MORE than somchai runs (12 > 4) so that
-    #   # during somchai's ~20s cold-boot wake, derivations 5-12 queue on somchai
-    #   # instead of overflowing to eu.nixbuild.net. nix's build-remote scheduler
-    #   # has no "wait for a warming machine" logic: once somchai's dispatch slots
-    #   # are full of cold-blocked jobs, every further derivation lands on the
-    #   # always-on nixbuild.net (speedFactor 1) and stays there, so a cold build
-    #   # floods the fallback. A larger dispatch cap keeps work stuck to somchai.
-    #   # somchai sizing for reference: 16 physical cores / 32 vCPU (HT); its local
-    #   # 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT oversub).
-    #   maxJobs = 12;
-    #   speedFactor = 4;
-    #   # No "kvm": somchai is an EC2 spot instance with no hardware
-    #   # virtualization (no /dev/kvm). It CAN still run NixOS VM tests via
-    #   # software-emulated QEMU (TCG), so "nixos-test" stays. But NixOS test
-    #   # derivations carry requiredSystemFeatures = [ "kvm" "nixos-test" ], so
-    #   # any real VM test needs "kvm" and is therefore pinned to jester (the
-    #   # only machine here with hardware KVM). Advertising "kvm" on somchai
-    #   # would let nix dispatch those tests onto a box that can't accelerate
-    #   # them. Bare "nixos-test" work without a kvm requirement may still run
-    #   # on somchai under software emulation.
-    #   supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
-    #   protocol = "ssh-ng";
-    # }
+    # nixbuild.net remote builder temporarily disabled; somchai and closure.build
+    # below are the active remote builders.
+    {
+      hostName = "somchai.jonasem.com";
+      sshUser = "nix-builder";
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+      systems = [ "x86_64-linux" ];
+      # This is the DISPATCH cap (how many builds jester hands to somchai), NOT
+      # somchai's local concurrency. somchai's own nix max-jobs=4 (private-nixos-
+      # configuration/machines/somchai/configuration.nix) governs how many it
+      # actually runs at once; surplus dispatched here simply queues on somchai's
+      # daemon. We intentionally dispatch MORE than somchai runs (12 > 4) so that
+      # during somchai's ~20s cold-boot wake, derivations 5-12 queue on somchai
+      # instead of overflowing to eu.nixbuild.net. nix's build-remote scheduler
+      # has no "wait for a warming machine" logic: once somchai's dispatch slots
+      # are full of cold-blocked jobs, every further derivation lands on the
+      # always-on nixbuild.net (speedFactor 1) and stays there, so a cold build
+      # floods the fallback. A larger dispatch cap keeps work stuck to somchai.
+      # somchai sizing for reference: 16 physical cores / 32 vCPU (HT); its local
+      # 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT oversub).
+      maxJobs = 12;
+      speedFactor = 4;
+      # No "kvm": somchai is an EC2 spot instance with no hardware
+      # virtualization (no /dev/kvm). It CAN still run NixOS VM tests via
+      # software-emulated QEMU (TCG), so "nixos-test" stays. But NixOS test
+      # derivations carry requiredSystemFeatures = [ "kvm" "nixos-test" ], so
+      # any real VM test needs "kvm" and is therefore pinned to jester (the
+      # only machine here with hardware KVM). Advertising "kvm" on somchai
+      # would let nix dispatch those tests onto a box that can't accelerate
+      # them. Bare "nixos-test" work without a kvm requirement may still run
+      # on somchai under software emulation.
+      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+      protocol = "ssh-ng";
+    }
     # {
     #   # nixbuild.net: managed remote builder, used as overflow/fallback.
     #   # speedFactor 1 (« somchai's 4) so nix always prefers somchai and only
