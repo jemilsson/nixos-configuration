@@ -1,6 +1,19 @@
 --- a/src/ipa/simple/algorithms/agc.cpp
 +++ b/src/ipa/simple/algorithms/agc.cpp
-@@ -35,7 +35,7 @@ static constexpr float kExposureOptimal = kExposureBinsCount / 2.0;
+@@ -26,16 +26,18 @@
+
+ /*
+  * The exposure is optimal when the mean sample value of the histogram is
+- * in the middle of the range.
++ * slightly below the middle of the range. The OV2740 + soft-ISP tends to
++ * overexpose (washed-out / too-white image) when aiming for the exact
++ * middle, so bias the target darker.
+  */
+-static constexpr float kExposureOptimal = kExposureBinsCount / 2.0;
++static constexpr float kExposureOptimal = kExposureBinsCount * 0.4;
+
+ /*
+  * This implements the hysteresis for the exposure adjustment.
   * It is small enough to have the exposure close to the optimal, and is big
   * enough to prevent the exposure from wobbling around the optimal value.
   */
@@ -9,7 +22,7 @@
 
  Agc::Agc()
  {
-@@ -47,7 +47,7 @@ void Agc::updateExposure(IPAContext &context, IPAFrameContext &frameContext, dou
+@@ -47,7 +49,7 @@
  	 * kExpDenominator of 10 gives ~10% increment/decrement;
  	 * kExpDenominator of 5 - about ~20%
  	 */
@@ -18,7 +31,7 @@
  	static constexpr uint8_t kExpNumeratorUp = kExpDenominator + 1;
  	static constexpr uint8_t kExpNumeratorDown = kExpDenominator - 1;
 
-@@ -163,7 +163,13 @@ void Agc::process(IPAContext &context,
+@@ -164,7 +166,13 @@
  	}
 
  	float exposureMSV = (denom == 0 ? 0 : static_cast<float>(num) / denom);
