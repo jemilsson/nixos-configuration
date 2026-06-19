@@ -18,7 +18,7 @@
   * enough to prevent the exposure from wobbling around the optimal value.
   */
 -static constexpr float kExposureSatisfactory = 0.2;
-+static constexpr float kExposureSatisfactory = 0.5;
++static constexpr float kExposureSatisfactory = 0.25;
 
  Agc::Agc()
  {
@@ -27,7 +27,7 @@
  	 * kExpDenominator of 5 - about ~20%
  	 */
 -	static constexpr uint8_t kExpDenominator = 10;
-+	static constexpr uint8_t kExpDenominator = 30;
++	static constexpr uint8_t kExpDenominator = 15;
  	static constexpr uint8_t kExpNumeratorUp = kExpDenominator + 1;
  	static constexpr uint8_t kExpNumeratorDown = kExpDenominator - 1;
 
@@ -41,7 +41,7 @@
 +	 * so the sensor pipeline settles between updates; otherwise stacked
 +	 * unobserved adjustments overshoot and oscillate (visible blink).
 +	 */
-+	if (frame % 3 == 0)
++	if (frame % 2 == 0)
 +		updateExposure(context, frameContext, exposureMSV);
  }
 
