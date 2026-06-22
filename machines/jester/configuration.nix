@@ -123,6 +123,9 @@ in
     CARGO_MEMORY_HIGH = "16G";
     CARGO_MEMORY_MAX = "20G";
     CARGO_CPU_QUOTA = "800%";
+    # Same cgroup-scope treatment for CBMC (base.nix cbmc wrapper): cap at ~8 of
+    # 12 cores so interactive work stays responsive while a model check runs.
+    CBMC_CPU_QUOTA = "800%";
     SCCACHE_BUCKET = "sccache-shared-723173433317";
     SCCACHE_REGION = "ap-southeast-7";
     SCCACHE_S3_KEY_PREFIX = "v0";

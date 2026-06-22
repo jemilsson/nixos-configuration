@@ -1,6 +1,43 @@
 { config, lib, pkgs, ... }:
-let 
+let
   nixPath = "/etc/nixPath";
+
+  # Resource-capped wrapper for a heavy interactive build/analysis tool. Shadows
+  # the real binary on PATH, then launches it nice'd + ionice'd into a transient
+  # systemd --user scope so the caps bind the whole process tree as one cgroup,
+  # not just the top process. base.nix stays machine-agnostic: a machine opts in
+  # by setting any of <PREFIX>_MEMORY_HIGH / <PREFIX>_MEMORY_MAX / <PREFIX>_CPU_QUOTA
+  # (systemd syntax, e.g. 16G, 20G, 800%). Falls back to the plain nice/ionice
+  # exec when no caps are requested or there is no user systemd manager (no
+  # $XDG_RUNTIME_DIR, e.g. nix build sandbox), keeping nix-built derivations
+  # unaffected.
+  cappedWrapper = name: envPrefix: pkgs.writeShellScriptBin name ''
+    self_dir="$(cd "$(dirname "$0")" && pwd)"
+    new_path=""
+    IFS=:
+    for d in $PATH; do
+      [ "$d" = "$self_dir" ] && continue
+      new_path="''${new_path:+$new_path:}$d"
+    done
+    unset IFS
+    export PATH="$new_path"
+    real_bin="$(command -v ${name})"
+    if [ -z "$real_bin" ]; then
+      echo "${name} wrapper: no real ${name} found on PATH" >&2
+      exit 127
+    fi
+
+    limit_args=""
+    [ -n "''${${envPrefix}_MEMORY_HIGH:-}" ] && limit_args="$limit_args -p MemoryHigh=${"$" + envPrefix}_MEMORY_HIGH"
+    [ -n "''${${envPrefix}_MEMORY_MAX:-}" ]  && limit_args="$limit_args -p MemoryMax=${"$" + envPrefix}_MEMORY_MAX"
+    [ -n "''${${envPrefix}_CPU_QUOTA:-}" ]   && limit_args="$limit_args -p CPUQuota=${"$" + envPrefix}_CPU_QUOTA"
+    if [ -n "$limit_args" ] && [ -n "''${XDG_RUNTIME_DIR:-}" ] && \
+       ${pkgs.systemd}/bin/systemctl --user show --property=Version >/dev/null 2>&1; then
+      exec ${pkgs.systemd}/bin/systemd-run --user --scope --quiet --collect $limit_args \
+        ${pkgs.coreutils}/bin/nice -n 19 ${pkgs.util-linux}/bin/ionice -c 3 "$real_bin" "$@"
+    fi
+    exec ${pkgs.coreutils}/bin/nice -n 19 ${pkgs.util-linux}/bin/ionice -c 3 "$real_bin" "$@"
+  '';
 in
 {
   imports = [
@@ -189,44 +226,12 @@ in
     #loginShellInit = "hostname | figlet -f big; fortune -a -s | cowsay";
 
     systemPackages = with pkgs; [
-      (writeShellScriptBin "cargo" ''
-        self_dir="$(cd "$(dirname "$0")" && pwd)"
-        new_path=""
-        IFS=:
-        for d in $PATH; do
-          [ "$d" = "$self_dir" ] && continue
-          new_path="''${new_path:+$new_path:}$d"
-        done
-        unset IFS
-        export PATH="$new_path"
-        real_cargo="$(command -v cargo)"
-        if [ -z "$real_cargo" ]; then
-          echo "cargo wrapper: no real cargo found on PATH" >&2
-          exit 127
-        fi
-
-        # Hard resource caps for interactive cargo/rustc. Driven by env vars so
-        # base.nix stays machine-agnostic; a machine opts in by setting any of
-        # CARGO_MEMORY_HIGH / CARGO_MEMORY_MAX / CARGO_CPU_QUOTA (systemd
-        # syntax, e.g. 16G, 20G, 800%). We launch into a transient systemd
-        # --user scope so the limits bind the whole cargo+rustc+linker process
-        # tree as one cgroup, not just the top cargo process. Only the env-var
-        # cargo (CARGO_BUILD_JOBS etc.) reaches the rustup/devenv cargos that
-        # shadow this wrapper; the scope caps apply when this wrapper is the
-        # one invoked. Falls back to the plain nice/ionice exec when no caps
-        # are requested or there is no user systemd manager (no $XDG_RUNTIME_DIR,
-        # e.g. nix build sandbox), keeping nix-built derivations unaffected.
-        limit_args=""
-        [ -n "''${CARGO_MEMORY_HIGH:-}" ] && limit_args="$limit_args -p MemoryHigh=$CARGO_MEMORY_HIGH"
-        [ -n "''${CARGO_MEMORY_MAX:-}" ]  && limit_args="$limit_args -p MemoryMax=$CARGO_MEMORY_MAX"
-        [ -n "''${CARGO_CPU_QUOTA:-}" ]   && limit_args="$limit_args -p CPUQuota=$CARGO_CPU_QUOTA"
-        if [ -n "$limit_args" ] && [ -n "''${XDG_RUNTIME_DIR:-}" ] && \
-           ${systemd}/bin/systemctl --user show --property=Version >/dev/null 2>&1; then
-          exec ${systemd}/bin/systemd-run --user --scope --quiet --collect $limit_args \
-            ${coreutils}/bin/nice -n 19 ${util-linux}/bin/ionice -c 3 "$real_cargo" "$@"
-        fi
-        exec ${coreutils}/bin/nice -n 19 ${util-linux}/bin/ionice -c 3 "$real_cargo" "$@"
-      '')
+      # Interactive cargo/rustc caps via CARGO_MEMORY_HIGH/MAX + CARGO_CPU_QUOTA.
+      # Note: only the env-var caps (CARGO_BUILD_JOBS etc.) reach the rustup/devenv
+      # cargos that shadow this wrapper; the scope caps apply when it is invoked.
+      (cappedWrapper "cargo" "CARGO")
+      # CBMC model checking is single-tool but very CPU-hungry; cap via CBMC_CPU_QUOTA.
+      (cappedWrapper "cbmc" "CBMC")
 
       #System tools
       ragenix
