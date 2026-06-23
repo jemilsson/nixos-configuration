@@ -69,6 +69,21 @@
     },
     "crane_2": {
       "locked": {
+        "lastModified": 1781825982,
+        "narHash": "sha256-SlXKwIRIhrOSAcTjCB3ftPLzJWZStQIPS7J1FlZPnKk=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "469fd08d0bcf6926321fa973c6777fbc87785dd7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
+    "crane_3": {
+      "locked": {
         "lastModified": 1777830388,
         "narHash": "sha256-2uoQAqUk2H0ijQtGiWAyNeQYGYc6yfAcRRLlJAz4Gp8=",
         "owner": "ipetkov",
@@ -561,18 +576,42 @@
         "type": "github"
       }
     },
+    "microvm": {
+      "inputs": {
+        "nixpkgs": [
+          "nix-build-router",
+          "nixpkgs"
+        ],
+        "spectrum": []
+      },
+      "locked": {
+        "lastModified": 1781738058,
+        "narHash": "sha256-wgKY6pbZbFpBXae+8bjvJtW1Z9qekZergGly44n2qZw=",
+        "owner": "astro",
+        "repo": "microvm.nix",
+        "rev": "225b35c204e29efb5bbe9b55b1a38b07b3fca2af",
+        "type": "github"
+      },
+      "original": {
+        "owner": "astro",
+        "repo": "microvm.nix",
+        "type": "github"
+      }
+    },
     "nix-build-router": {
       "inputs": {
+        "crane": "crane_2",
+        "microvm": "microvm",
         "nixpkgs": [
           "nixpkgs-unstable"
         ]
       },
       "locked": {
-        "lastModified": 1781741039,
-        "narHash": "sha256-UG7/gox2WMwO1RCO+rq9i7mT+CtCcGgeoxC64sGllqQ=",
+        "lastModified": 1782191534,
+        "narHash": "sha256-9vJnLxiOtTJOUg59BUPJsLzwj7+Y0oTMOxy/Zuem/fs=",
         "ref": "refs/heads/master",
-        "rev": "576898dc7446a8f71d734173c38307184a5df9f0",
-        "revCount": 135,
+        "rev": "3e3be81e96ce97eda080933909074cbeed359d67",
+        "revCount": 140,
         "type": "git",
         "url": "file:///home/jonas/workspace/nix-build-router"
       },
@@ -743,7 +782,7 @@
     },
     "syna": {
       "inputs": {
-        "crane": "crane_2",
+        "crane": "crane_3",
         "fenix": "fenix",
         "flake-utils": "flake-utils_3",
         "nixpkgs": [

@@ -31,6 +31,9 @@
     nix-build-router = {
       url = "git+file:///home/jonas/workspace/nix-build-router";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+      # microvm → spectrum → snix (git.snix.dev) is unreachable and unused here;
+      # drop it so nixos-rebuild doesn't need to fetch it.
+      inputs.microvm.inputs.spectrum.follows = "";
     };
     # bambu-studio = {
     #   url = "github:zhaofengli/nixpkgs/bambu-studio";
