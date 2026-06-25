@@ -8,17 +8,28 @@ let
   boto3-ide = pkgs.jemilsson.boto3-ide;
   tratex-font = pkgs.jemilsson.tratex-font;
 
-  # Chromium, wrapped in a bubblewrap namespace that gives it a fresh minimal
-  # /dev (no /dev/video*). The Intel IPU6 ISYS exposes 32 raw V4L2 capture nodes
-  # that hang on VIDIOC_QUERYCAP; Chromium's V4L2 device factory probes them and
-  # stalls navigator.mediaDevices.enumerateDevices() forever, which breaks the
+  # Chromium, wrapped in a bubblewrap namespace that masks only the /dev/video*
+  # nodes. The Intel IPU6 ISYS exposes 32 raw V4L2 capture nodes that hang on
+  # VIDIOC_QUERYCAP; Chromium's V4L2 device factory probes them and stalls
+  # navigator.mediaDevices.enumerateDevices() forever, which breaks the
   # microphone AND camera in web apps like Teams. There is no Chromium flag to
-  # skip the V4L2 factory, so we hide the nodes from Chromium only. The webcam
-  # still works because --enable-features=WebRtcPipeWireCamera (in
-  # commandLineArgs below) pulls it over the PipeWire camera portal,
-  # which needs no /dev/video access. /dev/dri and /dev/snd are re-bound for GPU
-  # and audio. Verified: enumerateDevices returns ~50ms and getUserMedia video
-  # yields "Built-in Front Camera".
+  # skip the V4L2 factory, so we neutralise the nodes for Chromium only: each
+  # /dev/video* is overmounted with /dev/null, so the QUERYCAP ioctl returns
+  # ENOTTY instantly instead of hanging. The webcam still works because
+  # --enable-features=WebRtcPipeWireCamera (in commandLineArgs below) pulls it
+  # over the PipeWire camera portal, which needs no /dev/video access.
+  #
+  # The rest of /dev is the host's real /dev (--dev-bind /dev /dev), NOT a fresh
+  # minimal one. An earlier version used `--dev /dev`, but that hid every other
+  # device node too - notably /dev/hidraw*, silently breaking WebAuthn/FIDO2
+  # security keys (physical YubiKeys and the fafnir TPM-backed virtual key). It
+  # also created a launch-order trap: nodes appearing after Chromium started
+  # (hidraw hotplug, a fafnir-passkey restart) never showed up in the frozen
+  # sandbox. Binding the real /dev makes all device nodes live, matching the
+  # nixpkgs default chromium's device exposure (no security regression; the
+  # bwrap layer exists solely for the V4L2 workaround). Verified: enumerateDevices
+  # returns ~50ms, getUserMedia video yields "Built-in Front Camera", and
+  # /dev/hidraw* (incl. a fafnir key started after Chromium) are visible.
   chromiumBase = pkgs.chromium.override {
     commandLineArgs = [
       "--remote-debugging-port=9222"
@@ -39,29 +50,24 @@ let
       "--force-dark-mode"
     ];
   };
-  # The fresh /dev above also hides every /dev/hidraw* node, which silently
-  # breaks WebAuthn/FIDO2 security keys in Chromium (both physical YubiKeys and
-  # the fafnir TPM-backed virtual key at hidraw*). Re-bind the hidraw nodes so
-  # Chromium's FidoHidDiscovery can open them; minor numbers are not stable
-  # across reboots, so bind a fixed range with --dev-bind-try (skips absent
-  # nodes instead of failing). /sys is already host-bound (--bind / /) so udev
-  # enumeration works; only the device nodes were missing.
-  hidrawBinds = lib.concatMapStringsSep " "
-    (n: "--dev-bind-try /dev/hidraw${toString n} /dev/hidraw${toString n}")
-    (lib.range 0 23);
   chromiumSandboxed = lib.hiPrio (pkgs.writeShellScriptBin "chromium" ''
     # The Hyprland security wrapper raises CAP_SYS_NICE into the ambient set so
     # the compositor can use realtime scheduling; ambient caps inherit into every
     # descendant, so this script inherits it too. bwrap refuses to start when it
     # holds capabilities while not setuid ("Unexpected capabilities but not
     # setuid"), which silently breaks Chromium. Drop ambient caps before exec.
+    #
+    # Mask each present /dev/video* with /dev/null (see chromiumBase comment).
+    # Built dynamically so it adapts to however many ISYS nodes exist at launch.
+    videomask=()
+    for v in /dev/video*; do
+      [ -e "$v" ] && videomask+=(--bind /dev/null "$v")
+    done
     exec ${pkgs.util-linux}/bin/setpriv --ambient-caps -all -- \
       ${pkgs.bubblewrap}/bin/bwrap \
       --bind / / \
-      --dev /dev \
-      --dev-bind /dev/dri /dev/dri \
-      --dev-bind /dev/snd /dev/snd \
-      ${hidrawBinds} \
+      --dev-bind /dev /dev \
+      "''${videomask[@]}" \
       ${chromiumBase}/bin/chromium "$@"
   '');
 
