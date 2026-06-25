@@ -8,28 +8,52 @@ let
   boto3-ide = pkgs.jemilsson.boto3-ide;
   tratex-font = pkgs.jemilsson.tratex-font;
 
-  # Chromium, wrapped in a bubblewrap namespace that masks only the /dev/video*
+  # mkVideoMaskedWrapper — bubblewrap shell wrapper that masks only the /dev/video*
   # nodes. The Intel IPU6 ISYS exposes 32 raw V4L2 capture nodes that hang on
-  # VIDIOC_QUERYCAP; Chromium's V4L2 device factory probes them and stalls
-  # navigator.mediaDevices.enumerateDevices() forever, which breaks the
-  # microphone AND camera in web apps like Teams. There is no Chromium flag to
-  # skip the V4L2 factory, so we neutralise the nodes for Chromium only: each
-  # /dev/video* is overmounted with /dev/null, so the QUERYCAP ioctl returns
-  # ENOTTY instantly instead of hanging. The webcam still works because
-  # --enable-features=WebRtcPipeWireCamera (in commandLineArgs below) pulls it
-  # over the PipeWire camera portal, which needs no /dev/video access.
+  # VIDIOC_QUERYCAP; Electron/Chromium's V4L2 device factory probes them and
+  # stalls navigator.mediaDevices.enumerateDevices() forever, which breaks the
+  # microphone AND camera in web apps. There is no flag to skip the V4L2 factory,
+  # so we neutralise the nodes: each /dev/video* is overmounted with /dev/null, so
+  # the QUERYCAP ioctl returns ENOTTY instantly instead of hanging. The webcam
+  # still works when --enable-features=WebRtcPipeWireCamera is active (baked into
+  # chromiumBase commandLineArgs; passed as a preArg for other Electron apps),
+  # which pulls the camera over the PipeWire camera portal, needing no /dev/video.
   #
   # The rest of /dev is the host's real /dev (--dev-bind /dev /dev), NOT a fresh
   # minimal one. An earlier version used `--dev /dev`, but that hid every other
   # device node too - notably /dev/hidraw*, silently breaking WebAuthn/FIDO2
   # security keys (physical YubiKeys and the fafnir TPM-backed virtual key). It
-  # also created a launch-order trap: nodes appearing after Chromium started
-  # (hidraw hotplug, a fafnir-passkey restart) never showed up in the frozen
-  # sandbox. Binding the real /dev makes all device nodes live, matching the
-  # nixpkgs default chromium's device exposure (no security regression; the
-  # bwrap layer exists solely for the V4L2 workaround). Verified: enumerateDevices
-  # returns ~50ms, getUserMedia video yields "Built-in Front Camera", and
-  # /dev/hidraw* (incl. a fafnir key started after Chromium) are visible.
+  # also created a launch-order trap: nodes appearing after launch (hidraw hotplug,
+  # a fafnir-passkey restart) never showed up in the frozen sandbox. Binding the
+  # real /dev makes all device nodes live, matching the nixpkgs default chromium's
+  # device exposure (no security regression; the bwrap layer exists solely for the
+  # V4L2 workaround). Verified: enumerateDevices returns ~50ms, getUserMedia video
+  # yields "Built-in Front Camera", and /dev/hidraw* (incl. a fafnir key started
+  # after Chromium) are visible.
+  mkVideoMaskedWrapper = { name, exe, preArgs ? [] }:
+    let
+      preArgsStr = builtins.concatStringsSep " " preArgs;
+    in
+    lib.hiPrio (pkgs.writeShellScriptBin name ''
+      # The Hyprland security wrapper raises CAP_SYS_NICE into the ambient set so
+      # the compositor can use realtime scheduling; ambient caps inherit into every
+      # descendant, so this script inherits it too. bwrap refuses to start when it
+      # holds capabilities while not setuid ("Unexpected capabilities but not
+      # setuid"), which silently breaks the app. Drop ambient caps before exec.
+      #
+      # Mask each present /dev/video* with /dev/null (see mkVideoMaskedWrapper comment).
+      # Built dynamically so it adapts to however many ISYS nodes exist at launch.
+      videomask=()
+      for v in /dev/video*; do
+        [ -e "$v" ] && videomask+=(--bind /dev/null "$v")
+      done
+      exec ${pkgs.util-linux}/bin/setpriv --ambient-caps -all -- \
+        ${pkgs.bubblewrap}/bin/bwrap \
+        --bind / / \
+        --dev-bind /dev /dev \
+        "''${videomask[@]}" \
+        ${exe} ${preArgsStr} "$@"
+    '');
   chromiumBase = pkgs.chromium.override {
     commandLineArgs = [
       "--remote-debugging-port=9222"
@@ -50,26 +74,16 @@ let
       "--force-dark-mode"
     ];
   };
-  chromiumSandboxed = lib.hiPrio (pkgs.writeShellScriptBin "chromium" ''
-    # The Hyprland security wrapper raises CAP_SYS_NICE into the ambient set so
-    # the compositor can use realtime scheduling; ambient caps inherit into every
-    # descendant, so this script inherits it too. bwrap refuses to start when it
-    # holds capabilities while not setuid ("Unexpected capabilities but not
-    # setuid"), which silently breaks Chromium. Drop ambient caps before exec.
-    #
-    # Mask each present /dev/video* with /dev/null (see chromiumBase comment).
-    # Built dynamically so it adapts to however many ISYS nodes exist at launch.
-    videomask=()
-    for v in /dev/video*; do
-      [ -e "$v" ] && videomask+=(--bind /dev/null "$v")
-    done
-    exec ${pkgs.util-linux}/bin/setpriv --ambient-caps -all -- \
-      ${pkgs.bubblewrap}/bin/bwrap \
-      --bind / / \
-      --dev-bind /dev /dev \
-      "''${videomask[@]}" \
-      ${chromiumBase}/bin/chromium "$@"
-  '');
+  chromiumSandboxed = mkVideoMaskedWrapper {
+    name = "chromium";
+    exe = "${chromiumBase}/bin/chromium";
+    # No preArgs: WebRtcPipeWireCamera is baked into chromiumBase commandLineArgs.
+  };
+  signalSandboxed = mkVideoMaskedWrapper {
+    name = "signal-desktop";
+    exe = "${pkgs.signal-desktop}/bin/signal-desktop";
+    preArgs = [ "--enable-features=WebRtcPipeWireCamera" ];
+  };
 
   vscode-extensions = (with pkgs.unstable.vscode-extensions; [
     vscode-claude-code
@@ -338,7 +352,9 @@ in
 
     #Communication
     pidgin
-    signal-desktop
+    signal-desktop      # provides .desktop entry, icons, mime; bin/signal-desktop
+    signalSandboxed     # shadowed by this bwrap wrapper (lib.hiPrio) — same
+                        # V4L2/PipeWire treatment as chromiumSandboxed.
     teams-for-linux
     discord
     #skype
