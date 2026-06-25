@@ -39,6 +39,16 @@ let
       "--force-dark-mode"
     ];
   };
+  # The fresh /dev above also hides every /dev/hidraw* node, which silently
+  # breaks WebAuthn/FIDO2 security keys in Chromium (both physical YubiKeys and
+  # the fafnir TPM-backed virtual key at hidraw*). Re-bind the hidraw nodes so
+  # Chromium's FidoHidDiscovery can open them; minor numbers are not stable
+  # across reboots, so bind a fixed range with --dev-bind-try (skips absent
+  # nodes instead of failing). /sys is already host-bound (--bind / /) so udev
+  # enumeration works; only the device nodes were missing.
+  hidrawBinds = lib.concatMapStringsSep " "
+    (n: "--dev-bind-try /dev/hidraw${toString n} /dev/hidraw${toString n}")
+    (lib.range 0 23);
   chromiumSandboxed = lib.hiPrio (pkgs.writeShellScriptBin "chromium" ''
     # The Hyprland security wrapper raises CAP_SYS_NICE into the ambient set so
     # the compositor can use realtime scheduling; ambient caps inherit into every
@@ -51,6 +61,7 @@ let
       --dev /dev \
       --dev-bind /dev/dri /dev/dri \
       --dev-bind /dev/snd /dev/snd \
+      ${hidrawBinds} \
       ${chromiumBase}/bin/chromium "$@"
   '');
 
