@@ -1042,6 +1042,11 @@ in
   # Pull from the closure-build Tigris cache (S3-compatible) using a read-only
   nix.settings.substituters = lib.mkAfter [
     "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
+    # delta-proxy (patch-only local-base reconstruction): resolves base from local
+    # nix store via nix-store --dump, fetches only the patch from Tigris — cheapest path.
+    # Falls back to :8765 (full castore reconstruction) on cache miss.
+    "http://127.0.0.1:8766"
+    # cache-daemon: full castore/NAR reconstruction from Tigris. Fallback if no local base.
     "http://127.0.0.1:8765"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
@@ -1078,6 +1083,32 @@ in
       PrivateTmp = true;
     };
   };
+  # delta-proxy: patch-only local-base NAR reconstruction from Tigris deltas.
+  # Reuses /etc/cache-daemon-env (same AWS read creds); no new secrets needed.
+  systemd.services.delta-proxy = {
+    description = "Nix delta-proxy (patch-only local-base reconstruction from Tigris)";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${nix-build-router.packages.x86_64-linux.delta-proxy}/bin/delta-proxy";
+      Restart = "always";
+      RestartSec = "5s";
+      EnvironmentFile = "/etc/cache-daemon-env";
+      Environment = [
+        "DELTA_PROXY_PORT=8766"
+        "DELTA_PROXY_UPSTREAM=http://127.0.0.1:8765"
+        "AWS_BUCKET=closure-build-cache"
+        "AWS_ENDPOINT_URL=https://fly.storage.tigris.dev"
+        "AWS_REGION=auto"
+      ];
+      NoNewPrivileges = true;
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      PrivateTmp = true;
+    };
+  };
+
   nix.settings.trusted-public-keys = lib.mkAfter [
     "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
     "closure-build-cache-1:ZU3pD3lmJ+xSdqrPJOJOUsVYiaHRcWk+A7+fX3kjS8c="
