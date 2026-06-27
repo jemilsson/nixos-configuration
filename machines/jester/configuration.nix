@@ -746,6 +746,21 @@ in
 
     nix-tcp-proxy
 
+    # Opt-in sizing path: routes builds through the closure-build-daemon unix socket
+    # so the gateway provisions a VM sized to the build's closure weight.
+    # Slow: the full closure is copied into the store-unix socket before building.
+    # Default builds still use the fast ssh-ng :2222 path via nix.buildMachines.
+    # PREREQUISITE: GATEWAY_CLIENT_WEIGHT_BYTE=1 must be set on closure-build-gateway
+    # before use; without it, sizing sessions corrupt the gateway protocol.
+    (writeShellScriptBin "nix-sized" ''
+      exec nix build \
+        --eval-store auto \
+        --store "unix:///run/closure-build-daemon/closure-build.sock" \
+        --builders "ssh-ng://builder@closure-build x86_64-linux - 8 1 big-parallel,benchmark" \
+        --max-jobs 0 \
+        "$@"
+    '')
+
     #devenv
 
 
@@ -1051,6 +1066,47 @@ in
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
   ];
+
+  # closure-build-daemon: client-side sizing daemon for the closure.build gateway.
+  # Classifies build weight and forwards sizing hints to the gateway so it can
+  # provision appropriately-sized VMs. The socket is exposed at
+  # /run/closure-build-daemon/closure-build.sock for the nix-sized wrapper below.
+  #
+  # MANUAL STEP (run once after switch, requires sudo):
+  #   sudo install -m600 -o root -g root <key-source> /root/.ssh/closure_build_client
+  # (same key used for ssh-ng :2222; no new credential needed if already placed)
+  #
+  # NOTE: Set GATEWAY_CLIENT_WEIGHT_BYTE=1 on the closure-build-gateway Fly app
+  # BEFORE using nix-sized, otherwise sizing sessions corrupt the gateway protocol.
+  systemd.services.closure-build-daemon = {
+    description = "closure.build client sizing daemon";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${nix-build-router.packages.x86_64-linux.client-daemon}/bin/closure-build-daemon";
+      Restart = "always";
+      RestartSec = "5s";
+      RuntimeDirectory = "closure-build-daemon";
+      RuntimeDirectoryMode = "0700";
+      Environment = [
+        "CLOSURE_BUILD_CLIENT_KEY=/root/.ssh/closure_build_client"
+        "CLOSURE_BUILD_SOCKET=/run/closure-build-daemon/closure-build.sock"
+        "CLOSURE_BUILD_GATEWAY_HOST=closure-build-gateway.fly.dev"
+        "CLOSURE_BUILD_GATEWAY_PORT=443"
+        "CLIENT_DAEMON_SIZING=1"
+        "RUST_LOG=info"
+      ];
+      # Security profile matching cache-daemon / delta-proxy siblings.
+      NoNewPrivileges = true;
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      PrivateTmp = true;
+      # Key is outside ProtectSystem's read-only overlay; runtime dir is writable.
+      ReadOnlyPaths = [ "/root/.ssh/closure_build_client" ];
+      ReadWritePaths = [ "/run/closure-build-daemon" ];
+    };
+  };
 
   # cache-daemon: local Nix binary-cache HTTP server reading castore from Tigris.
   # Secrets (AWS read creds) live in /etc/cache-daemon-env — root-only, not in git.
