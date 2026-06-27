@@ -746,18 +746,20 @@ in
 
     nix-tcp-proxy
 
-    # Opt-in sizing path: routes builds through the closure-build-daemon unix socket
-    # so the gateway provisions a VM sized to the build's closure weight.
-    # Slow: the full closure is copied into the store-unix socket before building.
+    # Opt-in sizing path: the closure-build-daemon unix socket is the BUILD STORE.
+    # Eval is local (--eval-store auto); the build op (BuildDerivation, op36) goes
+    # to the daemon, which peeks the inline derivation, classifies its weight, and
+    # signals the gateway so it provisions a VM sized to the build. The daemon then
+    # proxies the build to the gateway-provisioned builder.
+    # NO --builders / --max-jobs 0 here: those would shunt the build op to a
+    # separate ssh-ng builder, bypassing the daemon's peek (always Medium + the
+    # op31 peek-then-stop deadlock). The daemon IS the builder via its gateway proxy.
     # Default builds still use the fast ssh-ng :2222 path via nix.buildMachines.
-    # PREREQUISITE: GATEWAY_CLIENT_WEIGHT_BYTE=1 must be set on closure-build-gateway
-    # before use; without it, sizing sessions corrupt the gateway protocol.
+    # PREREQUISITE: GATEWAY_CLIENT_WEIGHT_BYTE=1 set on closure-build-gateway (done).
     (writeShellScriptBin "nix-sized" ''
       exec nix build \
         --eval-store auto \
         --store "unix:///run/closure-build-daemon/closure-build.sock" \
-        --builders "ssh-ng://builder@closure-build x86_64-linux - 8 1 big-parallel,benchmark" \
-        --max-jobs 0 \
         "$@"
     '')
 
