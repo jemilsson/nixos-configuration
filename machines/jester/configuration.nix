@@ -1089,8 +1089,14 @@ in
       RestartSec = "5s";
       RuntimeDirectory = "closure-build-daemon";
       RuntimeDirectoryMode = "0700";
+      # Key delivered via systemd credentials: loaded as root BEFORE the mount
+      # namespace is set up, then exposed read-only in $CREDENTIALS_DIRECTORY
+      # (/run/credentials/<unit>). This survives ProtectHome=true, which masks
+      # /root with a tmpfs and would otherwise hide the key (ReadOnlyPaths does
+      # not reliably re-expose a single file under a ProtectHome tmpfs).
+      LoadCredential = [ "clientkey:/root/.ssh/closure_build_client" ];
       Environment = [
-        "CLOSURE_BUILD_CLIENT_KEY=/root/.ssh/closure_build_client"
+        "CLOSURE_BUILD_CLIENT_KEY=/run/credentials/closure-build-daemon.service/clientkey"
         "CLOSURE_BUILD_SOCKET=/run/closure-build-daemon/closure-build.sock"
         "CLOSURE_BUILD_GATEWAY_HOST=closure-build-gateway.fly.dev"
         "CLOSURE_BUILD_GATEWAY_PORT=443"
@@ -1102,8 +1108,6 @@ in
       ProtectSystem = "strict";
       ProtectHome = true;
       PrivateTmp = true;
-      # Key is outside ProtectSystem's read-only overlay; runtime dir is writable.
-      ReadOnlyPaths = [ "/root/.ssh/closure_build_client" ];
       ReadWritePaths = [ "/run/closure-build-daemon" ];
     };
   };
