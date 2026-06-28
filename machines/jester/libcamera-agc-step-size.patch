@@ -1,48 +1,122 @@
---- a/src/ipa/simple/algorithms/agc.cpp
-+++ b/src/ipa/simple/algorithms/agc.cpp
-@@ -26,16 +26,18 @@
-
+--- a/src/ipa/simple/algorithms/agc.cpp	2026-06-28 17:25:56.877895858 +0700
++++ b/src/ipa/simple/algorithms/agc.cpp	2026-06-28 17:26:53.830733122 +0700
+@@ -26,63 +26,78 @@
+ 
  /*
   * The exposure is optimal when the mean sample value of the histogram is
 - * in the middle of the range.
 + * slightly below the middle of the range. The OV2740 + soft-ISP tends to
-+ * overexpose (washed-out / too-white image) when aiming for the exact
-+ * middle, so bias the target darker.
++ * overexpose (washed-out) aiming for the exact middle, so bias darker.
   */
 -static constexpr float kExposureOptimal = kExposureBinsCount / 2.0;
 +static constexpr float kExposureOptimal = kExposureBinsCount * 0.4;
-
+ 
  /*
-  * This implements the hysteresis for the exposure adjustment.
-  * It is small enough to have the exposure close to the optimal, and is big
-  * enough to prevent the exposure from wobbling around the optimal value.
+- * This implements the hysteresis for the exposure adjustment.
+- * It is small enough to have the exposure close to the optimal, and is big
+- * enough to prevent the exposure from wobbling around the optimal value.
++ * Deadband around the optimal MSV: inside it the exposure is held steady so
++ * sensor noise does not make the loop hunt around the target.
   */
--static constexpr float kExposureSatisfactory = 0.2;
-+static constexpr float kExposureSatisfactory = 0.25;
-
+ static constexpr float kExposureSatisfactory = 0.2;
+ 
++/*
++ * Proportional-control constants. The original loop applied a fixed-fraction
++ * step (kExpDenominator) whenever the MSV left the satisfactory band, which on
++ * the OV2740 soft-ISP pipeline (~2-frame exposure-apply latency) produced a
++ * limit-cycle oscillation: a visible brightness "blink". Replacing the fixed
++ * step with a proportional one whose magnitude shrinks to zero as the image
++ * approaches the target eliminates the oscillation while keeping convergence
++ * fast for large errors (the step saturates at kExposureMaxStep).
++ */
++static constexpr float kProportionalGain = 0.5;
++static constexpr float kExposureMaxStep = 0.25; /* cap at +/-25% per frame */
++
  Agc::Agc()
  {
-@@ -47,7 +49,7 @@
- 	 * kExpDenominator of 10 gives ~10% increment/decrement;
- 	 * kExpDenominator of 5 - about ~20%
- 	 */
--	static constexpr uint8_t kExpDenominator = 10;
-+	static constexpr uint8_t kExpDenominator = 15;
- 	static constexpr uint8_t kExpNumeratorUp = kExpDenominator + 1;
- 	static constexpr uint8_t kExpNumeratorDown = kExpDenominator - 1;
-
-@@ -164,7 +166,13 @@
- 	}
-
- 	float exposureMSV = (denom == 0 ? 0 : static_cast<float>(num) / denom);
--	updateExposure(context, frameContext, exposureMSV);
-+	/*
-+	 * OV2740 has ~2 frame exposure-apply latency. Throttle adjustments
-+	 * so the sensor pipeline settles between updates; otherwise stacked
-+	 * unobserved adjustments overshoot and oscillate (visible blink).
-+	 */
-+	if (frame % 2 == 0)
-+		updateExposure(context, frameContext, exposureMSV);
  }
-
- REGISTER_IPA_ALGORITHM(Agc, "Agc")
+ 
+ void Agc::updateExposure(IPAContext &context, IPAFrameContext &frameContext, double exposureMSV)
+ {
+-	/*
+-	 * kExpDenominator of 10 gives ~10% increment/decrement;
+-	 * kExpDenominator of 5 - about ~20%
+-	 */
+-	static constexpr uint8_t kExpDenominator = 10;
+-	static constexpr uint8_t kExpNumeratorUp = kExpDenominator + 1;
+-	static constexpr uint8_t kExpNumeratorDown = kExpDenominator - 1;
+-
+ 	int32_t &exposure = frameContext.sensor.exposure;
+ 	double &again = frameContext.sensor.gain;
+ 
+-	if (exposureMSV < kExposureOptimal - kExposureSatisfactory) {
+-		if (exposure < context.configuration.agc.exposureMax) {
+-			int32_t next = exposure * kExpNumeratorUp / kExpDenominator;
+-			if (next - exposure < 1)
+-				exposure += 1;
+-			else
+-				exposure = next;
+-		} else {
+-			double next = again * kExpNumeratorUp / kExpDenominator;
+-			if (next - again < context.configuration.agc.againMinStep)
+-				again += context.configuration.agc.againMinStep;
+-			else
+-				again = next;
+-		}
+-	}
++	/*
++	 * Proportional step toward the target. error < 0 means the image is too
++	 * dark (need more light, factor > 1); error > 0 means too bright
++	 * (factor < 1). Normalising by kExposureOptimal keeps the gain in
++	 * fractional-exposure units; the step is capped so a large error still
++	 * converges in a few frames without overshooting.
++	 */
++	const float error = static_cast<float>(exposureMSV) - kExposureOptimal;
++	const float absError = error < 0 ? -error : error;
+ 
+-	if (exposureMSV > kExposureOptimal + kExposureSatisfactory) {
+-		if (again > context.configuration.agc.again10) {
+-			double next = again * kExpNumeratorDown / kExpDenominator;
+-			if (again - next < context.configuration.agc.againMinStep)
+-				again -= context.configuration.agc.againMinStep;
+-			else
+-				again = next;
+-		} else {
+-			int32_t next = exposure * kExpNumeratorDown / kExpDenominator;
+-			if (exposure - next < 1)
+-				exposure -= 1;
+-			else
+-				exposure = next;
++	/* Hold steady inside the deadband (no hunting on noise). */
++	if (absError > kExposureSatisfactory) {
++		float factor = 1.0f - kProportionalGain * error / kExposureOptimal;
++		factor = std::clamp(factor, 1.0f - kExposureMaxStep,
++				    1.0f + kExposureMaxStep);
++
++		if (factor > 1.0f) {
++			/* Brighten: raise exposure first, then gain. */
++			if (exposure < context.configuration.agc.exposureMax) {
++				int32_t next = static_cast<int32_t>(exposure * factor);
++				exposure = next <= exposure ? exposure + 1 : next;
++			} else {
++				double next = again * factor;
++				if (next - again < context.configuration.agc.againMinStep)
++					again += context.configuration.agc.againMinStep;
++				else
++					again = next;
++			}
++		} else if (factor < 1.0f) {
++			/* Darken: lower gain first, then exposure. */
++			if (again > context.configuration.agc.again10) {
++				double next = again * factor;
++				if (again - next < context.configuration.agc.againMinStep)
++					again -= context.configuration.agc.againMinStep;
++				else
++					again = next;
++			} else {
++				int32_t next = static_cast<int32_t>(exposure * factor);
++				exposure = next >= exposure ? exposure - 1 : next;
++			}
+ 		}
+ 	}
+ 
