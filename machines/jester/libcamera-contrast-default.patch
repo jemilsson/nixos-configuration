@@ -1,0 +1,18 @@
+--- a/src/ipa/simple/algorithms/adjust.cpp	2026-07-02 17:08:10.867446148 +0700
++++ b/src/ipa/simple/algorithms/adjust.cpp	2026-07-02 17:08:10.927446099 +0700
+@@ -19,7 +19,14 @@
+ 
+ namespace ipa::soft::algorithms {
+ 
+-constexpr float kDefaultContrast = 1.0f;
++/*
++ * OV2740 soft-ISP runs at high analog gain in typical lighting, which lifts
++ * the black floor and yields a washed-out, low-contrast ("milky") image.
++ * A contrast default > 1.0 applies an S-curve (contrastExp = tan(contrast*pi/4))
++ * that deepens shadows and restores apparent contrast, with no exposure, gain,
++ * or frame-rate cost. 1.0 is fully linear (no curve).
++ */
++constexpr float kDefaultContrast = 1.3f;
+ constexpr float kDefaultSaturation = 1.0f;
+ 
+ LOG_DEFINE_CATEGORY(IPASoftAdjust)

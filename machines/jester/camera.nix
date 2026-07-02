@@ -6,7 +6,10 @@ let
   # WirePlumber's libcamera.so accepts this IPA: both are signed with the
   # same static nixpkgs private key, so signature verification passes.
   libcamera-patched = pkgs.libcamera.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [ ./libcamera-agc-step-size.patch ];
+    patches = (old.patches or []) ++ [
+      ./libcamera-agc-step-size.patch
+      ./libcamera-contrast-default.patch
+    ];
   });
 in
 {
