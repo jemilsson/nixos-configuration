@@ -5,6 +5,16 @@ let
   # to eliminate the gain oscillation loop on the OV2740 sensor.
   # WirePlumber's libcamera.so accepts this IPA: both are signed with the
   # same static nixpkgs private key, so signature verification passes.
+  #
+  # TODO(camera color): the OV2740 runs on libcamera's UNCALIBRATED soft-ISP
+  # tuning (no ov2740.yaml -> uncalibrated.yaml, which has NO CCM). AWB is
+  # grey-world and neutralises the white point correctly, but with no colour
+  # correction matrix the raw sensor primaries are never mapped to sRGB, so
+  # non-neutral regions carry a green/desaturated cast ("washed out"). The
+  # contrast-default patch mitigates the flatness; the green cast needs a
+  # tuned CCM (enable the `Ccm:` block in a proper ov2740 tuning yaml). That
+  # requires colour-target calibration for this sensor; not a code guess.
+  # Root cause verified against src/ipa/simple/algorithms/{awb,adjust,blc}.cpp.
   libcamera-patched = pkgs.libcamera.overrideAttrs (old: {
     patches = (old.patches or []) ++ [
       ./libcamera-agc-step-size.patch
