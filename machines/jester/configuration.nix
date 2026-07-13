@@ -1057,14 +1057,16 @@ in
   # Pull from somchai's S3 binary cache using a read-only IAM credential.
   # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
   # Pull from the closure-build Tigris cache (S3-compatible) using a read-only
+  # Tigris-backed paths first: the datapath goes through Tigris whenever it can
+  # (gateway-off-datapath doctrine); somchai and cachix are fallbacks.
   nix.settings.substituters = lib.mkAfter [
-    "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
     # delta-proxy (patch-only local-base reconstruction): resolves base from local
     # nix store via nix-store --dump, fetches only the patch from Tigris — cheapest path.
     # Falls back to :8765 (full castore reconstruction) on cache miss.
     "http://127.0.0.1:8766"
     # cache-daemon: full castore/NAR reconstruction from Tigris. Fallback if no local base.
     "http://127.0.0.1:8765"
+    "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
   ];
@@ -1090,7 +1092,11 @@ in
       Restart = "always";
       RestartSec = "5s";
       RuntimeDirectory = "closure-build-daemon";
-      RuntimeDirectoryMode = "0700";
+      # 0750 + group-owned socket (0660) so the unprivileged nix-sized wrapper
+      # can connect. Trust boundary: members of `users` can dispatch remote
+      # builds with root's gateway key — acceptable on this single-user box.
+      RuntimeDirectoryMode = "0750";
+      Group = "users";
       # Key delivered via systemd credentials: loaded as root BEFORE the mount
       # namespace is set up, then exposed read-only in $CREDENTIALS_DIRECTORY
       # (/run/credentials/<unit>). This survives ProtectHome=true, which masks
@@ -1103,6 +1109,8 @@ in
         "CLOSURE_BUILD_GATEWAY_HOST=closure-build-gateway.fly.dev"
         "CLOSURE_BUILD_GATEWAY_PORT=443"
         "CLIENT_DAEMON_SIZING=1"
+        "CLOSURE_BUILD_SOCKET_MODE=0660"
+        "CLOSURE_BUILD_SOCKET_GROUP=users"
         "RUST_LOG=info"
       ];
       # Security profile matching cache-daemon / delta-proxy siblings.
