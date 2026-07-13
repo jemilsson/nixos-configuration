@@ -247,6 +247,7 @@ in
       jq
 
       #Network tools
+      eternal-terminal # roaming shell to the Fly devbox (`et devbox`)
       tcpdump
       whois
       inetutils
