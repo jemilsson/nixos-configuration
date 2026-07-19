@@ -2,14 +2,13 @@
 # shellcheck disable=SC2154  # $real / $RETRY_KIND come from the sourcing scope
 # Core dispatch + transient-retry logic shared by the `nix` and `nixos-rebuild`
 # retry wrappers (nix-retry.nix), factored out so the hermetic test
-# (retry-body.test.sh) exercises the EXACT code the deployed wrappers run
-# (mirrors the somchai reaper-lib.sh pattern).
+# (retry-body.test.sh) exercises the EXACT code the deployed wrappers run.
 #
 # Why two wrappers share one body:
-#   jester offloads ALL builds to somchai (AWS spot builder on a Stockholm<->
-#   Bangkok link). The long-haul ssh-ng ControlMaster mux drops mid-build and
-#   nix has NO built-in retry, so transient remote-builder failures crash
-#   builds outright. `nix build`/`nix flake check` (jonas's interactive builds;
+#   jester offloads ALL builds to a remote builder (closure.build's Fly.io
+#   gateway). The long-haul ssh-ng mux drops mid-build and nix has NO
+#   built-in retry, so transient remote-builder failures crash builds
+#   outright. `nix build`/`nix flake check` (jonas's interactive builds;
 #   ~/.config/nix max-jobs=0 force-offloads with no local fallback) AND
 #   `nixos-rebuild switch` (system deploys) both hit this. nixos-rebuild-ng runs
 #   its OWN bundled `nix` (prepended to PATH) via PATH lookup, so wrapping `nix`
@@ -90,7 +89,7 @@ retry_wraps_nix() {
 }
 
 # Predicate: is this `nixos-rebuild` invocation one that BUILDS (and thus
-# offloads to somchai)? Allowlist the building actions; everything else (repl,
+# offloads to a remote builder)? Allowlist the building actions; everything else (repl,
 # edit, list-generations, ...) is passed straight through with exec so its
 # TTY/stdin/interactivity is preserved. Like the nix predicate we scan all args
 # because the action can follow global flags (e.g. `--flake .#x switch`); a flag
@@ -102,7 +101,7 @@ retry_wraps_nixos_rebuild() {
     case "$a" in
       switch|boot|test|build|dry-build|dry-run|dry-activate|build-vm|build-vm-with-bootloader|build-image)
         # dry-run is a deprecated alias nixos-rebuild-ng rewrites to dry-build;
-        # it still offloads the build to somchai, so it must be retried too.
+        # it still offloads the build to the remote builder, so it must be retried too.
         return 0 ;;
     esac
   done

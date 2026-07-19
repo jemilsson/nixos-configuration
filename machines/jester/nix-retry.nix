@@ -1,18 +1,19 @@
 # Transparent retry wrappers for `nix` (build / flake check) and `nixos-rebuild`
 # (switch / boot / test / build / ...).
 #
-# jester offloads ALL builds to somchai (AWS spot builder on a Stockholm<->
-# Bangkok link). The long-haul ssh-ng ControlMaster mux drops mid-build and nix
-# has NO built-in retry, so two transient failure classes crash builds outright:
+# jester offloads ALL builds to a remote builder (closure.build's Fly.io
+# gateway; previously also somchai, an AWS spot builder on a Stockholm<->
+# Bangkok link). The long-haul ssh-ng mux drops mid-build and nix has NO
+# built-in retry, so two transient failure classes crash builds outright:
 #   1. Mid-build mux drop: a TCP drop on the persistent master EPIPEs every
 #      multiplexed channel at once ("error: writing to file: Broken pipe" /
 #      "Nix daemon disconnected unexpectedly" was the single most common crash
 #      across 12k+ build invocations; also Connection reset/closed/timed out,
 #      ssh_exchange_identification).
-#   2. Cold-box wake race: the first SSH to a just-woken somchai fails, nix drops
-#      it from the builder set, then "failed to start SSH connection" -> "Failed
-#      to find a machine for remote build" -> "Unable to start any build". A
-#      re-run succeeds because the box is awake by attempt 2.
+#   2. Cold-start race: the first SSH to a just-provisioned remote builder
+#      fails, nix drops it from the builder set, then "failed to start SSH
+#      connection" -> "Failed to find a machine for remote build" -> "Unable
+#      to start any build". A re-run succeeds once the builder is up.
 # jonas's ~/.config/nix sets max-jobs=0 (force-offload), so when the only builder
 # is ejected there is NO local fallback and the build hard-fails. The wrappers
 # retry ONLY the transient signatures (shared allowlist in retry-body.sh) and

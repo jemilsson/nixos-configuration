@@ -85,7 +85,7 @@ check "always-transient capped at max attempts" 4 "$(calls always_transient)"
 # 4. Cold-box wake race signature -> retried then succeeds.
 make_fake wake_race '
 if [ "$n" -lt 2 ]; then
-  echo "error: failed to start SSH connection to '"'"'somchai.jonasem.com'"'"'" >&2
+  echo "error: failed to start SSH connection to '"'"'closure-build-gateway.fly.dev'"'"'" >&2
   echo "Failed to find a machine for remote build!" >&2
   echo "error: Unable to start any build; remote machines may not have all required system features." >&2
   exit 1

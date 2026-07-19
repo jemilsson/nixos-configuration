@@ -100,7 +100,7 @@ in
     #WLR_BACKEND = "vulkan";
     # Interactive cargo only (nix-build sandbox scrubs env, so determinism
     # of nix-built derivations is unaffected). sccache caches rustc output
-    # to S3 (shared with somchai); mold cuts link time on big Rust workspaces.
+    # to S3; mold cuts link time on big Rust workspaces.
     RUSTC_WRAPPER = "sccache";
     CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS = "-C link-arg=-fuse-ld=mold";
     # Cap cargo parallelism at 8 of 12 cores so interactive work stays
@@ -221,7 +221,7 @@ in
     OOMScoreAdjust = 500;
     # Hard ceiling on LOCAL nix builds: the nix-daemon cgroup (where local
     # build jobs run) may never exceed 6 of 12 cores nor 16 GiB RAM, regardless
-    # of any --cores/--max-jobs/-j flag a build passes. somchai does the heavy
+    # of any --cores/--max-jobs/-j flag a build passes. remote builders do the heavy
     # lifting; this keeps a local fallback (or a flag-forced build that slips
     # the hook) from saturating the box and starving the interactive session.
     # Memory: SOFT throttle only. MemoryHigh applies reclaim pressure around
@@ -238,7 +238,7 @@ in
     # interactive session. CPUWeight is the cgroup-v2 lever (default 100; 10
     # gives builds ~1/10 of contended share); idle IO class keeps disk
     # responsive. The daemon already runs SCHED_IDLE (see base config), so no
-    # Nice= is needed. somchai does the heavy lifting; these only bound a
+    # Nice= is needed. remote builders do the heavy lifting; these only bound a
     # local fallback or a flag-forced build that slips the hook.
     CPUQuota = "600%";
     CPUWeight = 10;
@@ -336,66 +336,6 @@ in
       OnBootSec = "1min";
       OnUnitActiveSec = "20s";
       AccuracySec = "5s";
-    };
-  };
-
-  # Reaper for orphaned `ssh nix-builder@somchai.jonasem.com` sessions.
-  #
-  # When `nix build` runs against the somchai remote builder, the local
-  # nix-daemon spawns a child `ssh nix-builder@somchai ... nix-daemon --stdio`
-  # per build. If the parent `nix build` dies abnormally (SIGKILL, terminal
-  # closed without `ssh -O exit`, agent crash), the SSH process is reparented
-  # to nix-daemon (the system service) and never reaped: nix-daemon is still
-  # alive, and SSH's ServerAliveInterval does not fire while the remote end
-  # is healthy. The orphan keeps the per-builder upload lock, so all
-  # subsequent `nix build` invocations queue forever behind it.
-  #
-  # This is the jester-side mirror of the `nix-daemon-stdio-reaper` unit that
-  # runs on somchai itself (which handles the remote-side `nix-daemon --stdio`
-  # zombies). Together they bound the lifetime of abandoned builder sessions.
-  #
-  # Logic: only kill ssh-nix-builder PIDs if the nix-daemon has no active
-  # temproots entries (the daemon creates these during any build or copy, so
-  # their presence means a legitimate build is in flight), and only after the
-  # SSH process has been alive for >30 minutes.
-  systemd.services.nix-ssh-builder-reaper = {
-    description = "Reap orphaned ssh nix-builder@somchai sessions";
-    path = [ pkgs.coreutils pkgs.procps pkgs.util-linux ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      MAX_IDLE_S=1800   # 30 min
-      LOG=/var/log/nix-ssh-builder-reaper.log
-      ts=$(date -Iseconds)
-      killed=0
-      for pid in $(pgrep -f 'ssh nix-builder@somchai\.jonasem\.com' || true); do
-        [ -d "/proc/$pid" ] || continue
-
-        # Active build: nix-daemon holds temproots entries during any build/copy.
-        # Checking these is more reliable than matching client process names.
-        if [ -d /nix/var/nix/temproots ] && [ "$(ls -A /nix/var/nix/temproots 2>/dev/null)" ]; then
-          continue
-        fi
-
-        etime=$(ps -o etimes= -p "$pid" 2>/dev/null | tr -d ' ')
-        [ -n "$etime" ] || continue
-        [ "$etime" -gt "$MAX_IDLE_S" ] || continue
-
-        echo "$ts ORPHAN ssh-nix-builder pid=$pid etime=''${etime}s -> SIGKILL" >>"$LOG"
-        kill -9 "$pid" 2>/dev/null || true
-        killed=$((killed+1))
-      done
-      [ "$killed" -gt 0 ] && echo "$ts reaped $killed orphan ssh session(s)" >>"$LOG"
-      exit 0
-    '';
-  };
-
-  systemd.timers.nix-ssh-builder-reaper = {
-    description = "Periodic reap of orphaned ssh nix-builder@somchai sessions";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "10min";
-      OnUnitActiveSec = "10min";
-      Unit = "nix-ssh-builder-reaper.service";
     };
   };
 
@@ -940,39 +880,6 @@ in
   # scdaemon passthrough, and fafnir's main agent forwards to it.
   programs.ssh.extraConfig = ''
 
-    Host somchai.jonasem.com
-      User nix-builder
-      IdentitiesOnly yes
-      IdentityAgent none
-      IdentityFile /etc/ssh/ssh_host_ed25519_key
-      ProxyCommand /home/jonas/workspace/private-nixos-configuration/machines/somchai/somchai-proxy.sh %h %p
-      # ControlMaster with a SHORT persist. The earlier failure was
-      # ControlPersist 8h: somchai idle-shuts-down after ~5min idle
-      # (idle-shutdown.service: IDLE_CONSECUTIVE=5 × 1min timer), so an 8h
-      # master vastly outlived the box. When the box slept the master TCP
-      # died but the local socket lingered; new channels reused the stale
-      # socket, bypassed the ProxyCommand, and never fired the wake Lambda
-      # ("ControlSocket already exists" / "Broken pipe" / "unexpected
-      # end-of-file"). Removing mux entirely fixed that but regressed the
-      # wake path: with no master, EVERY nix ssh channel (build + each
-      # substitution) re-runs the full ProxyCommand, so a cold-box build
-      # storms the wake Lambda + prefill in parallel, starving the aws CLI
-      # ("Lambda invoke failed") and slowing the boot.
-      #
-      # ControlPersist 120s is the fix: one master serves all of a build's
-      # channels (wake + prefill run once per build, not per channel), and
-      # 120s « the 5min idle window means the master always dies before the
-      # box can sleep, so it can never go stale. Mux idle masters are
-      # explicitly ignored by somchai's idle-shutdown, so a lingering master
-      # never holds the box awake either.
-      ControlMaster auto
-      ControlPath /tmp/nix-ssh-%r@%h:%p
-      ControlPersist 120
-      ConnectTimeout 120
-      ServerAliveInterval 60
-      ServerAliveCountMax 10
-      TCPKeepAlive yes
-
     Host eu.nixbuild.net
       User root
       PubkeyAcceptedKeyTypes ssh-ed25519
@@ -1002,9 +909,6 @@ in
       ConnectTimeout 30
   '';
 
-  # Use somchai (AWS EC2 c7i in ap-southeast-7) as a remote nix builder.
-  # Root SSHes via the host ed25519 key (jester-tpm), authorized for jonas
-  # on somchai via the shared ssh-keys.nix.
   # Prevent nix-daemon crash on boot: Settings static initializer dereferences
   # HOME before nscd is ready. Setting HOME explicitly avoids the race.
   systemd.services.nix-daemon.environment.HOME = "/root";
@@ -1014,11 +918,10 @@ in
   # Cap per-build parallelism for the local fallback path. The default
   # (cores = 0) means "all 12"; SCHED_IDLE keeps the CPU polite but 12-wide
   # compile memory can still push the session into MemoryHigh throttling.
-  # Halved from 8 to reduce resource pressure; somchai does the heavy lifting.
+  # Halved from 8 to reduce resource pressure; remote builders do the heavy lifting.
   nix.settings.cores = 4;
-  # somchai is an EC2 spot instance woken on demand via Lambda from the
-  # ProxyCommand; cold boot is 60-90s. Keep this generous so nix-daemon
-  # doesn't yank the SSH handshake before the wake completes.
+  # closure-build provisions a fresh Fly VM per build (cold start); keep this
+  # generous so nix-daemon doesn't yank the SSH handshake before it's up.
   nix.settings.connect-timeout = 360;
   # Buffer for NAR downloads from remote builder / S3 cache.
   # 256 MiB: large enough to stream the biggest store paths (compiled APK,
@@ -1026,27 +929,27 @@ in
   # to avoid the SIGABRT that 1 GiB caused (4 concurrent jobs × 1 GiB = 4 GiB
   # allocation → nix-daemon abort() on internal assertion with Nix 2.31.4).
   nix.settings.download-buffer-size = 256 * 1024 * 1024; # 256 MiB
-  # Limit substituter parallelism so substituting paths back from
-  # somchai/cache.nixos.org doesn't exhaust SSH channel slots and starve
+  # Limit substituter parallelism so substituting paths back from a remote
+  # builder/cache.nixos.org doesn't exhaust SSH channel slots and starve
   # the build itself. Default 16 is way too aggressive for our link.
   nix.settings.max-substitution-jobs = 2;
-  # Fall back to local build when somchai is unreachable instead of failing.
+  # Fall back to local build when a remote builder is unreachable instead of failing.
   nix.settings.fallback = true;
-  # Self-heal the somchai upload-lock deadlock. A build dispatched to somchai
-  # holds an exclusive flock on <builder>.upload-lock for its whole upload
-  # phase; if that build's hook chain (nix __build-remote -> ssh ->
+  # Self-heal a remote-builder upload-lock deadlock. A build dispatched to a
+  # remote builder holds an exclusive flock on <builder>.upload-lock for its
+  # whole upload phase; if that build's hook chain (nix __build-remote -> ssh ->
   # nix-tcp-proxy) wedges mid-upload (client SIGKILL'd by nix-build-retry,
-  # cold-boot blip, somchai-side stdio worker stall), the lock is never
+  # cold-start blip, remote-side stdio worker stall), the lock is never
   # released and EVERY later build blocks forever at "waiting for the upload
-  # lock to ssh-ng://...somchai" — with max-jobs=0 there is no local escape.
+  # lock to ssh-ng://..." — with max-jobs=0 there is no local escape.
   # max-silent-time bounds that: a build (incl. the stuck lock-holder) emitting
   # no log output for this long is aborted, which unwinds the hook and releases
   # the lock automatically. 1800s is generous enough for a legitimately silent
   # large-NAR upload / heavy compile (BoringSSL .a) yet recovers the deadlock
   # without manual `systemctl restart nix-daemon`. (2026-06-15 incident.)
   nix.settings.max-silent-time = 1800;
-  # Larger TCP backoff on remote-build SSH so the link survives the
-  # post-build-hook S3 push hiccup that briefly blocks somchai's
+  # Larger TCP backoff on remote-build SSH so the link survives a
+  # post-build-hook cache-push hiccup that briefly blocks the remote
   # nix-daemon write side.
   nix.settings.stalled-download-timeout = 300;
   # Expose /etc/gai.conf to the build sandbox so fixed-output fetchurl
@@ -1054,11 +957,12 @@ in
   # this, glibc inside the sandbox uses RFC 3484 default precedence (v6
   # preferred), and big VSIX/etc fetches over a slow IPv6 path crawl.
   nix.settings.extra-sandbox-paths = [ "/etc/gai.conf" ];
-  # Pull from somchai's S3 binary cache using a read-only IAM credential.
-  # somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket only.
-  # Pull from the closure-build Tigris cache (S3-compatible) using a read-only
+  # Pull from somchai's old S3 binary cache using a read-only IAM credential
+  # (somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket
+  # only). somchai itself is retired as a builder, but artifacts it built
+  # still live in this cache, so keep it as a substituter.
   # Tigris-backed paths first: the datapath goes through Tigris whenever it can
-  # (gateway-off-datapath doctrine); somchai and cachix are fallbacks.
+  # (gateway-off-datapath doctrine); the somchai S3 cache and cachix are fallbacks.
   nix.settings.substituters = lib.mkAfter [
     # delta-proxy (patch-only local-base reconstruction): resolves base from local
     # nix store via nix-store --dump, fetches only the patch from Tigris — cheapest path.
@@ -1193,44 +1097,12 @@ in
   programs.hyprland.package = lib.mkForce hyprland.packages.${pkgs.system}.hyprland;
   programs.hyprland.portalPackage = lib.mkForce hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   nix.buildMachines = [
-    # nixbuild.net remote builder temporarily disabled; somchai and closure.build
-    # below are the active remote builders.
-    {
-      hostName = "somchai.jonasem.com";
-      sshUser = "nix-builder";
-      sshKey = "/etc/ssh/ssh_host_ed25519_key";
-      systems = [ "x86_64-linux" ];
-      # This is the DISPATCH cap (how many builds jester hands to somchai), NOT
-      # somchai's local concurrency. somchai's own nix max-jobs=4 (private-nixos-
-      # configuration/machines/somchai/configuration.nix) governs how many it
-      # actually runs at once; surplus dispatched here simply queues on somchai's
-      # daemon. We intentionally dispatch MORE than somchai runs (12 > 4) so that
-      # during somchai's ~20s cold-boot wake, derivations 5-12 queue on somchai
-      # instead of overflowing to eu.nixbuild.net. nix's build-remote scheduler
-      # has no "wait for a warming machine" logic: once somchai's dispatch slots
-      # are full of cold-blocked jobs, every further derivation lands on the
-      # always-on nixbuild.net (speedFactor 1) and stays there, so a cold build
-      # floods the fallback. A larger dispatch cap keeps work stuck to somchai.
-      # somchai sizing for reference: 16 physical cores / 32 vCPU (HT); its local
-      # 4 jobs x 8 cores = 32 threads = exactly the vCPU count (no HT oversub).
-      maxJobs = 12;
-      speedFactor = 4;
-      # No "kvm": somchai is an EC2 spot instance with no hardware
-      # virtualization (no /dev/kvm). It CAN still run NixOS VM tests via
-      # software-emulated QEMU (TCG), so "nixos-test" stays. But NixOS test
-      # derivations carry requiredSystemFeatures = [ "kvm" "nixos-test" ], so
-      # any real VM test needs "kvm" and is therefore pinned to jester (the
-      # only machine here with hardware KVM). Advertising "kvm" on somchai
-      # would let nix dispatch those tests onto a box that can't accelerate
-      # them. Bare "nixos-test" work without a kvm requirement may still run
-      # on somchai under software emulation.
-      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
-      protocol = "ssh-ng";
-    }
+    # nixbuild.net remote builder temporarily disabled; closure.build below is
+    # the active remote builder.
     # {
     #   # nixbuild.net: managed remote builder, used as overflow/fallback.
-    #   # speedFactor 1 (« somchai's 4) so nix always prefers somchai and only
-    #   # dispatches here when somchai's job slots are full or it's unreachable.
+    #   # speedFactor 1 (« closure.build's 10) so nix prefers closure.build and
+    #   # only dispatches here when it's full or unreachable.
     #   # Auth: jester's host ed25519 key must be registered on the nixbuild.net
     #   # account (https://docs.nixbuild.net -> SSH keys). No "kvm"/"nixos-test"
     #   # feature: nixbuild.net doesn't run NixOS VM tests.
@@ -1247,10 +1119,10 @@ in
       # closure.build remote builder via Fly.io gateway (ssh-ng over port 2222).
       # "closure-build" resolves via the Host alias in programs.ssh.extraConfig above.
       # The gateway provisions on-demand Fly performance-4x machines (x86_64-linux).
-      # highest priority: prefer closure.build over somchai(4)/nixbuild(1).
-      # Trade-off: closure.build provisions a fresh VM per build (~9-17s cold start)
-      # vs always-on somchai; top priority means every eligible build pays that
-      # cold-start latency — this is the user's explicit choice.
+      # highest priority: prefer closure.build over nixbuild(1) when both are configured.
+      # Trade-off: closure.build provisions a fresh VM per build (~9-17s cold start);
+      # top priority means every eligible build pays that cold-start latency —
+      # this is the user's explicit choice.
       hostName = "closure-build";
       sshUser = "builder";
       sshKey = "/root/.ssh/closure_build_client";
@@ -1263,7 +1135,7 @@ in
       # on closure-build-gateway to accommodate 32 (default 5 would livelock with
       # "provision rate limit exceeded; rejecting without VM").
       maxJobs = 32; # up to 32 parallel ephemeral builders (1 VM per job, scale-to-zero)
-      speedFactor = 10; # highest priority: prefer closure.build over somchai(4)/nixbuild(1)
+      speedFactor = 10; # highest priority: prefer closure.build over nixbuild(1)
       # kvm intentionally absent: the Fly builder VM does not expose /dev/kvm;
       # advertising it caused routing failures for kvm-requiring derivations.
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" ];
@@ -1275,10 +1147,6 @@ in
     # Obtained via: ssh-keyscan -p 2222 closure-build-gateway.fly.dev
     hostNames = [ "[closure-build-gateway.fly.dev]:2222" ];
     publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILiy2Sjb0ZBEXv9tS6LLJ59IZ6bhpKcXw9RB522nC5yJ";
-  };
-  programs.ssh.knownHosts.somchai = {
-    hostNames = [ "somchai.jonasem.com" "2406:da14:8b88:b701:ce5e:831b:b719:c940" ];
-    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEsY31lwQd6bxClPwdH3kGDfKjSEcBmTUoxeP+7aaXMY";
   };
   programs.ssh.knownHosts.nixbuild = {
     hostNames = [ "eu.nixbuild.net" ];
