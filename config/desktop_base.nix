@@ -383,6 +383,28 @@ in
     #kdeApplications.kleopatra
 
     pass
+    # gpg-agent sometimes loses the YubiKey card-key mapping ("decryption
+    # failed: No secret key" with the card present); re-LEARN and retry once.
+    (lib.hiPrio (writeShellScriptBin "pass" ''
+      err=$(mktemp)
+      trap 'rm -f "$err"' EXIT
+      # tee stderr (not buffer) so interactive prompts stay visible
+      { ${pass}/bin/pass "$@" 2>&1 1>&3 | tee "$err" >&2; } 3>&1
+      rc=''${PIPESTATUS[0]}
+      if [ "$rc" -ne 0 ] && grep -q 'No secret key' "$err"; then
+        # retry only non-mutating commands: a replay of insert/edit/generate/...
+        # could re-run with drained stdin or partially applied state
+        case "''${1-}" in
+          init|insert|edit|generate|rm|mv|cp|git) ;;
+          *)
+            ${gnupg}/bin/gpg-connect-agent 'scd serialno' 'learn --force' /bye >/dev/null 2>&1
+            rm -f "$err"  # exec skips the EXIT trap
+            exec ${pass}/bin/pass "$@"
+            ;;
+        esac
+      fi
+      exit "$rc"
+    ''))
     passage
     age
     age-plugin-fido2-hmac
