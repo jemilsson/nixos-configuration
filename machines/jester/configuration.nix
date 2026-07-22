@@ -628,6 +628,15 @@ in
 
   };
 
+  # Captive-portal login browser: isolated Chromium bound to the Wi-Fi
+  # interface, resolving via the portal's own DHCP DNS, so login pages load
+  # even when wg2 routes, the prefer-IPv4 script, or the main browser profile
+  # would break them. Launched by the dispatcher in laptop_base.nix.
+  programs.captive-browser = {
+    enable = true;
+    interface = "wlp0s20f3";
+  };
+
   networking.firewall.extraCommands = ''
     # Allow IPv6 forwarding for clatd
     ip6tables -I FORWARD -i clat -j ACCEPT

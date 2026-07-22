@@ -107,10 +107,16 @@
           ${pkgs.systemd}/bin/systemd-run --user --machine="$user@" --quiet --collect --pipe -- "$@" || true
         }
 
-        # neverssl.com is reliably intercepted by captive portals (no HSTS, plain HTTP).
         run_as_user ${pkgs.libnotify}/bin/notify-send -u critical \
           "Captive portal detected" "Opening login page..."
-        run_as_user ${pkgs.xdg-utils}/bin/xdg-open "http://neverssl.com"
+        ${if config.programs.captive-browser.enable then ''
+          # captive-browser: isolated Chromium on the Wi-Fi interface using the
+          # portal's own DHCP DNS, immune to VPN routes and DNS overrides.
+          run_as_user /run/current-system/sw/bin/captive-browser
+        '' else ''
+          # neverssl.com is reliably intercepted by captive portals (no HSTS, plain HTTP).
+          run_as_user ${pkgs.xdg-utils}/bin/xdg-open "http://neverssl.com"
+        ''}
       '';
     }
   ];
