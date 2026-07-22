@@ -61,6 +61,7 @@ in
     #./mcpo.nix
     ./camera.nix
     ./netns-claude-glecom.nix
+    ./portal-netns.nix
     ./pi-lens.nix
     ./nix-retry.nix
     ../../config/mx-debounce.nix
