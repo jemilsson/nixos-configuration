@@ -97,23 +97,6 @@
         [ "''${2:-}" = "connectivity-change" ] || exit 0
         [ "''${CONNECTIVITY_STATE:-}" = "PORTAL" ] || exit 0
 
-        # Prefer the netns-isolated portal browser (portal-netns.nix): it
-        # routes only through the Wi-Fi interface, so it works even when wg2's
-        # blanket routes black-hole the portal's RFC1918 login server. This
-        # dispatcher already runs as root, so no run_as_user wrapping is
-        # needed for systemctl.
-        if systemctl cat portal-browser.service >/dev/null 2>&1; then
-          systemctl start portal-browser.service
-          user=$(${pkgs.systemd}/bin/loginctl list-sessions --no-legend \
-            | ${pkgs.gawk}/bin/awk '$3 != "" && $3 != "root" { print $3; exit }')
-          if [ -n "''${user:-}" ]; then
-            ${pkgs.systemd}/bin/systemd-run --user --machine="$user@" --quiet --collect --pipe -- \
-              ${pkgs.libnotify}/bin/notify-send -u critical \
-                "Captive portal detected" "Opening login page..." || true
-          fi
-          exit 0
-        fi
-
         # Find an active graphical user session to send the notification / open browser into.
         user=$(${pkgs.systemd}/bin/loginctl list-sessions --no-legend \
           | ${pkgs.gawk}/bin/awk '$3 != "" && $3 != "root" { print $3; exit }')

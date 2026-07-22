@@ -61,7 +61,6 @@ in
     #./mcpo.nix
     ./camera.nix
     ./netns-claude-glecom.nix
-    ./portal-netns.nix
     ./pi-lens.nix
     ./nix-retry.nix
     ../../config/mx-debounce.nix
@@ -599,6 +598,23 @@ in
         iputils = pkgs.iputils;
       };
     }
+    {
+      type = "basic";
+      source = pkgs.writeShellScript "wg2-portal-pause" ''
+        [ "''${2:-}" = "connectivity-change" ] || exit 0
+        case "''${CONNECTIVITY_STATE:-}" in
+          # Units are not PartOf the target, so stop them by glob; the link
+          # deletion in wireguard-wg2.service's ExecStop removes the routes.
+          PORTAL) systemctl stop 'wireguard-wg2*.service' ;;
+          # Restarting the target pulls both services back in via WantedBy.
+          # Guard on the link so routine FULL transitions don't churn wg2.
+          FULL)
+            ${pkgs.iproute2}/bin/ip link show wg2 >/dev/null 2>&1 \
+              || systemctl restart wireguard-wg2.target
+            ;;
+        esac
+      '';
+    }
   ];
 
   };
@@ -628,6 +644,16 @@ in
     };
 
   };
+
+  # Pause wg2 while a captive portal is unauthenticated. wg2 blanket-routes
+  # RFC1918 (10/8, 172.16/12, 192.168/16) and an IPv6 default into the tunnel,
+  # so on a portal network numbered from those ranges the portal's own login
+  # servers are routed into a tunnel that cannot handshake yet (confirmed via
+  # pcap 2026-07-22: every SYN encapsulated to the wg2 endpoint, zero replies).
+  # Stopping the target deletes the wg2 link and with it those routes; FULL
+  # restores it (start on an active target is a no-op). Claude-netns traffic
+  # via table 200 pauses with it, which is moot while the portal blocks it.
+  # Script merged into networking.networkmanager.dispatcherScripts below.
 
   # Captive-portal login browser: isolated Chromium bound to the Wi-Fi
   # interface, resolving via the portal's own DHCP DNS, so login pages load
