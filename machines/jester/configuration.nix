@@ -616,6 +616,25 @@ in
         esac
       '';
     }
+    {
+      type = "basic";
+      # wg2 blanket-routes RFC1918, which swallows the local network's own
+      # DHCP DNS servers when they sit outside the on-link subnet (seen at
+      # TheUrbanCoWorking: DNS 10.3.1.100 behind gateway 10.3.170.1, so all
+      # name resolution died into the tunnel while wg2 was up). Pin /32
+      # exception routes for the DHCP DNS servers via the interface gateway.
+      source = pkgs.writeShellScript "dns-route-exceptions" ''
+        [ "''${1:-}" = "wlp0s20f3" ] || exit 0
+        case "''${2:-}" in up|dhcp4-change) ;; *) exit 0 ;; esac
+        gw="''${DHCP4_ROUTERS%% *}"
+        [ -n "$gw" ] || gw="''${IP4_GATEWAY:-}"
+        [ -n "$gw" ] || exit 0
+        for ns in ''${IP4_NAMESERVERS:-}; do
+          # Skip nameservers already on-link; the kernel route covers them.
+          ${pkgs.iproute2}/bin/ip route replace "$ns/32" via "$gw" dev wlp0s20f3 metric 50 2>/dev/null || true
+        done
+      '';
+    }
   ];
 
   };
