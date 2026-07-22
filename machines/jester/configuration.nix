@@ -1073,6 +1073,9 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+    # nix-store must be on PATH: the base resolver shells out to `nix-store
+    # --dump`; without it every request silently falls back to the full NAR.
+    path = [ config.nix.package ];
     serviceConfig = {
       ExecStart = "${nix-build-router.packages.x86_64-linux.delta-proxy}/bin/delta-proxy";
       Restart = "always";
