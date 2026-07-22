@@ -20,7 +20,7 @@ else
   # The next RA from the upstream router will re-add it; the dispatcher
   # re-runs on NM connectivity-change and re-evaluates.
   ip -6 route show default 2>/dev/null \
-    | awk '/proto ra/ {sub(/ pref [a-z]+$/, ""); print}' \
+    | @gawk@/bin/awk '/proto ra/ {sub(/ pref [a-z]+$/, ""); print}' \
     | while read -r r; do ip -6 route del $r 2>/dev/null || true; done
   cat > /etc/gai.conf <<EOF
 # No working native IPv6, prefer IPv4-mapped addresses

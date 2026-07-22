@@ -596,6 +596,7 @@ in
       type = "basic";
       source = pkgs.replaceVars ./prefer-ipv4-fallback.sh {
         iputils = pkgs.iputils;
+        gawk = pkgs.gawk;
       };
     }
     {
