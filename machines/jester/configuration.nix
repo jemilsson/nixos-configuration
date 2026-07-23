@@ -1193,11 +1193,9 @@ in
       # maxJobs = parallel nix-daemon connections jester opens to the gateway, and
       # EACH connection triggers one gateway provision. nix reuses each connection
       # across many derivations, so total provisions ≈ maxJobs, not the derivation
-      # count. The gateway's per-identity provision cap (GATEWAY_RATE_LIMIT_PROVISIONS;
-      # gateway/src/rate_limit.rs) must therefore exceed this; it is set high enough
-      # on closure-build-gateway to accommodate 32 (default 5 would livelock with
-      # "provision rate limit exceeded; rejecting without VM").
-      maxJobs = 32; # up to 32 parallel ephemeral builders (1 VM per job, scale-to-zero)
+      # count. Must stay <= GATEWAY_MAX_CONCURRENT on closure-build-gateway (64),
+      # or excess connections queue for slots.
+      maxJobs = 64; # up to 64 parallel ephemeral builders (1 VM per job, scale-to-zero)
       speedFactor = 10; # highest priority: prefer closure.build over nixbuild(1)
       # kvm intentionally absent: the Fly builder VM does not expose /dev/kvm;
       # advertising it caused routing failures for kvm-requiring derivations.
