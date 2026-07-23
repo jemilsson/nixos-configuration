@@ -81,7 +81,12 @@ def fetch(gw, url, data=None):
 def main():
     gw = gateway()
     cred_file = Path.home() / ".config" / "portal-login"
-    stored = cred_file.read_text().splitlines() if cred_file.exists() else []
+    stored = []
+    if cred_file.exists():
+        if cred_file.stat().st_mode & 0o077:
+            print(f"warning: {cred_file} is readable by others; "
+                  "run: chmod 600 " + str(cred_file), file=sys.stderr)
+        stored = cred_file.read_text().splitlines()
     user = sys.argv[1] if len(sys.argv) > 1 else (
         stored[0] if stored else input("username: "))
     password = stored[1] if len(stored) > 1 else getpass.getpass("password: ")
@@ -112,16 +117,20 @@ def main():
         sys.exit(f"no username field found in form (fields: {list(fields)})")
     fields[user_field] = user
 
-    action = urllib.parse.urljoin(
-        base.replace(gw, PORTAL_HOST, 1), form["action"] or login_url)
+    # base came back with the gateway IP as host; restore the portal
+    # hostname before resolving the form action against it.
+    parts = urllib.parse.urlsplit(base)
+    base = urllib.parse.urlunsplit(parts._replace(netloc=PORTAL_HOST))
+    action = urllib.parse.urljoin(base, str(form["action"] or login_url))
     print(f"POST {action} ({user_field}={user})")
     with fetch(gw, action, urllib.parse.urlencode(fields).encode()) as resp:
         body = resp.read().decode(errors="replace")
 
     if re.search(r"invalid|incorrect|failed|error", body, re.I):
         snippet = re.sub(r"<[^>]+>|\s+", " ", body).strip()
-        sys.exit(f"login may have failed; portal said: {snippet[:300]}")
-    print("credentials accepted; asking NetworkManager to re-check...")
+        print(f"warning: portal response mentions an error: {snippet[:300]}",
+              file=sys.stderr)
+    print("asking NetworkManager to re-check connectivity...")
     subprocess.run(["nmcli", "networking", "check"], check=False)
     print(subprocess.run(["nmcli", "networking", "connectivity"],
                          capture_output=True, text=True).stdout.strip())
