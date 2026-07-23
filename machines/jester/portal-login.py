@@ -1,28 +1,34 @@
-"""Log in to a captive portal from the command line.
+"""Log in to the ANTlabs captive portal at The Urban Office from the CLI.
 
-Built for the ANTlabs gateway at The Urban Office (Summer Point), whose
-pre-auth firewall blocks both the DHCP-advertised DNS server and the login
-server's own IP; only the default gateway answers DNS and serves the login
-page. So: talk HTTP straight to the gateway IP with the portal's Host
-header, parse whatever <form> the page serves, fill in the credentials,
-and POST it back the same way.
+The gateway's pre-auth firewall blocks both the DHCP-advertised DNS server
+and the login server's IP; only the default gateway answers HTTP. So all
+requests go straight to the gateway IP with the portal's Host header.
+
+Protocol (reverse-engineered from the live portal, 2026-07-23):
+1. GET /login/index.ant -> meta-refresh to /login.acs/<token>/index.ant
+2. GET that (registers the client; session is keyed on MAC/IP, the
+   secure-flagged PHPSESSID cookie is never sent back over http)
+3. POST p=local&uid=..&pwd=.. to /login/main.ant?c=proc
+4. Success = 302 whose Location contains page=success
+
+Post-auth the gateway stops answering port 80 entirely, so a connect
+timeout on step 1 means "already logged in".
 
 Usage: portal-login [username]   (prompts for anything missing)
 Credentials can be stored in ~/.config/portal-login as two lines
-(username, then password).
+(username, then password); chmod 600 it.
 """
 import getpass
 import re
 import subprocess
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
-from html.parser import HTMLParser
 from pathlib import Path
 
 IFACE = "wlp0s20f3"
 PORTAL_HOST = "ezxcess.antlabs.com"
-LOGIN_PATH = "/login/index.ant?url=http%3A%2F%2Fneverssl%2Ecom%2F"
 
 
 def gateway():
@@ -36,50 +42,12 @@ def gateway():
     return m.group(1)
 
 
-class FormParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.forms = []  # (action, method, fields, password_field, text_fields)
-        self._cur = None
-
-    def handle_starttag(self, tag, attrs):
-        a = dict(attrs)
-        if tag == "form":
-            self._cur = {"action": a.get("action") or "",
-                         "method": (a.get("method") or "get").lower(),
-                         "fields": {}, "password": None, "texts": []}
-            self.forms.append(self._cur)
-        elif tag == "input" and self._cur is not None:
-            name = a.get("name")
-            if not name:
-                return
-            typ = (a.get("type") or "text").lower()
-            self._cur["fields"][name] = a.get("value") or ""
-            if typ == "password":
-                self._cur["password"] = name
-            elif typ in ("text", "email"):
-                self._cur["texts"].append(name)
-
-    def handle_endtag(self, tag):
-        if tag == "form":
-            self._cur = None
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None
 
 
-def fetch(gw, url, data=None):
-    # DNS for the portal host is firewalled pre-auth, so connect to the
-    # gateway IP and present the portal hostname in Host/URL ourselves.
-    parsed = urllib.parse.urlsplit(url)
-    ip_url = urllib.parse.urlunsplit(
-        (parsed.scheme or "http", gw, parsed.path, parsed.query, ""))
-    req = urllib.request.Request(
-        ip_url, data=data,
-        headers={"Host": parsed.hostname or PORTAL_HOST,
-                 "User-Agent": "Mozilla/5.0"})
-    return urllib.request.urlopen(req, timeout=15)
-
-
-def main():
-    gw = gateway()
+def credentials():
     cred_file = Path.home() / ".config" / "portal-login"
     stored = []
     if cred_file.exists():
@@ -90,50 +58,63 @@ def main():
     user = sys.argv[1] if len(sys.argv) > 1 else (
         stored[0] if stored else input("username: "))
     password = stored[1] if len(stored) > 1 else getpass.getpass("password: ")
+    return user, password
 
-    login_url = f"http://{PORTAL_HOST}{LOGIN_PATH}"
+
+def main():
+    gw = gateway()
+    user, password = credentials()
+
+    # Host must be set per-Request: opener.addheaders loses to the
+    # auto-generated Host header, and the gateway 404s on a wrong Host.
+    headers = {"Host": PORTAL_HOST, "User-Agent": "Mozilla/5.0"}
+
+    def request(path, data=None):
+        return urllib.request.Request(
+            f"http://{gw}{path}", data=data, headers=headers)
+
+    def get(path):
+        return urllib.request.urlopen(request(path), timeout=15)
+
     try:
-        with fetch(gw, login_url) as resp:
-            page = resp.read().decode(errors="replace")
-            base = resp.geturl()
+        with get("/login/index.ant") as resp:
+            m = re.search(r"login\.acs/[0-9a-f]+", resp.read().decode(
+                errors="replace"))
     except OSError as e:
-        sys.exit(f"portal at gateway {gw} did not serve the login page ({e}); "
-                 "if you are already authenticated this is expected")
+        sys.exit(f"gateway {gw} did not serve the portal page ({e}); "
+                 "post-auth it drops port 80, so you are likely already "
+                 "logged in")
+    if not m:
+        sys.exit("portal page had no login.acs session token; "
+                 "page format changed?")
 
-    parser = FormParser()
-    parser.feed(page)
-    form = next((f for f in parser.forms if f["password"]), None)
-    if form is None:
-        sys.exit("no login form with a password field found; "
-                 "are you already logged in?")
+    # Registers the client and 302s through to the login form.
+    with get(f"/{m.group(0)}/index.ant?page=login"):
+        pass
 
-    fields = form["fields"]
-    fields[form["password"]] = password
-    user_field = next(
-        (n for n in form["texts"]
-         if re.search(r"user|login|email|name", n, re.I)),
-        form["texts"][0] if form["texts"] else None)
-    if user_field is None:
-        sys.exit(f"no username field found in form (fields: {list(fields)})")
-    fields[user_field] = user
+    data = urllib.parse.urlencode(
+        {"p": "local", "uid": user, "pwd": password,
+         "button-label": "Connect"}).encode()
+    # Don't follow the resulting redirect: it points at the portal hostname,
+    # which needs real DNS; the Location header alone tells us the outcome.
+    poster = urllib.request.build_opener(NoRedirect())
+    location, body = "", ""
+    try:
+        with poster.open(request("/login/main.ant?c=proc", data),
+                         timeout=15) as resp:
+            body = resp.read().decode(errors="replace")
+    except urllib.error.HTTPError as e:
+        location = e.headers.get("Location", "")
 
-    # base came back with the gateway IP as host; restore the portal
-    # hostname before resolving the form action against it.
-    parts = urllib.parse.urlsplit(base)
-    base = urllib.parse.urlunsplit(parts._replace(netloc=PORTAL_HOST))
-    action = urllib.parse.urljoin(base, str(form["action"] or login_url))
-    print(f"POST {action} ({user_field}={user})")
-    with fetch(gw, action, urllib.parse.urlencode(fields).encode()) as resp:
-        body = resp.read().decode(errors="replace")
-
-    if re.search(r"invalid|incorrect|failed|error", body, re.I):
-        snippet = re.sub(r"<[^>]+>|\s+", " ", body).strip()
-        print(f"warning: portal response mentions an error: {snippet[:300]}",
-              file=sys.stderr)
-    print("asking NetworkManager to re-check connectivity...")
-    subprocess.run(["nmcli", "networking", "check"], check=False)
-    print(subprocess.run(["nmcli", "networking", "connectivity"],
-                         capture_output=True, text=True).stdout.strip())
+    if "page=success" in location:
+        print("login accepted")
+    else:
+        snippet = re.sub(r"<[^>]+>|\s+", " ", body).strip()[:300]
+        sys.exit("login not confirmed; portal answered "
+                 f"Location={location!r} body={snippet!r}")
+    print("connectivity:", subprocess.run(
+        ["nmcli", "networking", "connectivity", "check"],
+        capture_output=True, text=True).stdout.strip())
 
 
 if __name__ == "__main__":
