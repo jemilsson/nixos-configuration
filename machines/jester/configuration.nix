@@ -691,6 +691,11 @@ in
   '';
 
   environment.systemPackages = with pkgs; [
+    # CLI login for the ANTlabs portal at The Urban Office (blocks its own
+    # DNS and login server pre-auth; only the gateway works). Credentials in
+    # ~/.config/portal-login (username line, password line) or prompted.
+    (pkgs.writers.writePython3Bin "portal-login" { flakeIgnore = [ "E501" ]; }
+      (builtins.readFile ./portal-login.py))
     cargo-sweep
     # Wrapper scopes AWS_PROFILE=sccache-shared to sccache invocations only
     # so it doesn't bleed into other AWS-aware tools in the shell.
