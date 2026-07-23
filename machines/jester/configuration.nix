@@ -970,7 +970,10 @@ in
       IdentityAgent none
       IdentityFile /root/.ssh/closure_build_client
       StrictHostKeyChecking yes
-      ServerAliveInterval 60
+      # 15s: deployed builder sshd reaps idle sessions at ClientAliveInterval
+      # 10s x3; client keepalives must arrive inside that 30s window or
+      # inter-derivation stalls kill the session (Broken pipe mid-upload).
+      ServerAliveInterval 15
       ServerAliveCountMax 5
       ConnectTimeout 30
   '';
