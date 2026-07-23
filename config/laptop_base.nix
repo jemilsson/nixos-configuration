@@ -107,13 +107,18 @@
           ${pkgs.systemd}/bin/systemd-run --user --machine="$user@" --quiet --collect --pipe -- "$@" || true
         }
 
-        # Headless auto-login first: if a portal-login helper is installed and
-        # the user has stored credentials, log in without opening a browser.
-        # run_as_user swallows exit status (|| true), so probe connectivity
-        # afterwards instead. Falls through to the browser on any failure.
+        # Headless auto-login first: if a portal-login helper is installed, the
+        # user has stored credentials, and we're on the one network those
+        # credentials belong to, log in without opening a browser. connectivity-change
+        # is a global event with no connection in env, so match the active
+        # connection at runtime. run_as_user swallows exit status (|| true), so
+        # probe connectivity afterwards. Falls through to the browser on any failure.
+        portalConn="TheUrbanCoWorking"
         home=$(${pkgs.coreutils}/bin/getent passwd "$user" | ${pkgs.coreutils}/bin/cut -d: -f6)
         if [ -x /run/current-system/sw/bin/portal-login ] \
-           && [ -f "$home/.config/portal-login" ]; then
+           && [ -f "$home/.config/portal-login" ] \
+           && ${pkgs.networkmanager}/bin/nmcli -t -f NAME connection show --active \
+              | ${pkgs.gnugrep}/bin/grep -qxF "$portalConn"; then
           run_as_user /run/current-system/sw/bin/portal-login
           ${pkgs.networkmanager}/bin/nmcli networking connectivity check >/dev/null 2>&1 || true
           [ "$(${pkgs.networkmanager}/bin/nmcli networking connectivity)" = full ] && exit 0
