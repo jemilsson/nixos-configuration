@@ -425,12 +425,19 @@ in
   # the shared bluetooth settings from desktop_base.nix.
   hardware.bluetooth.settings.General.FastConnectable = true;
 
-  # HUAWEI FreeBuds 6: mSBC (wideband HFP) negotiation crashes the SCO
-  # transport ("Failure in Bluetooth audio transport", bluetoothd
-  # getpeername ENOTCONN) and the buds drop the whole connection, so the
-  # mic is dead in meetings. Disable mSBC so HFP falls back to CVSD,
-  # which the buds handle. SBC-XQ improves A2DP quality (the buds were
-  # negotiating plain SBC despite advertising AAC).
+  # HUAWEI FreeBuds 6 (LE Audio capable) broke the whole bluetooth audio
+  # stack: wireplumber offered BAP/LC3 ("trying to set invalid profile 3,
+  # codec 256") but bluez without Experimental cannot create ISO
+  # transports (kernel ISO sockets stay unregistered, errno 93), and the
+  # failed negotiation tore down the classic bearer too - HFP RFCOMM
+  # flapped every 3s (bluetoothd getpeername ENOTCONN) and no bluez card
+  # appeared. Enabling bluez experimental D-Bus interfaces plus the
+  # kernel ISO-socket feature fixes classic audio (A2DP AAC + HFP CVSD
+  # mic, both verified live) and unlocks LE Audio; LC3 additionally
+  # needs the buds re-paired over LE. The AX211 supports cis-central/
+  # cis-peripheral. mSBC stays disabled: the buds negotiate CVSD anyway.
+  hardware.bluetooth.settings.General.Experimental = true;
+  hardware.bluetooth.settings.General.KernelExperimental = true;
   services.pipewire.wireplumber.extraConfig."51-bluez" = {
     "monitor.bluez.properties" = {
       "bluez5.enable-msbc" = false;
