@@ -1014,7 +1014,7 @@ in
   # Limit substituter parallelism so substituting paths back from a remote
   # builder/cache.nixos.org doesn't exhaust SSH channel slots and starve
   # the build itself. Default 16 is way too aggressive for our link.
-  nix.settings.max-substitution-jobs = 2;
+  nix.settings.max-substitution-jobs = 8;
   # Fall back to local build when a remote builder is unreachable instead of failing.
   nix.settings.fallback = true;
   # Self-heal a remote-builder upload-lock deadlock. A build dispatched to a
