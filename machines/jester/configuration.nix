@@ -1018,12 +1018,8 @@ in
   # this, glibc inside the sandbox uses RFC 3484 default precedence (v6
   # preferred), and big VSIX/etc fetches over a slow IPv6 path crawl.
   nix.settings.extra-sandbox-paths = [ "/etc/gai.conf" ];
-  # Pull from somchai's old S3 binary cache using a read-only IAM credential
-  # (somchai-nix-read in /root/.aws/credentials: s3:GetObject + s3:ListBucket
-  # only). somchai itself is retired as a builder, but artifacts it built
-  # still live in this cache, so keep it as a substituter.
   # Tigris-backed paths first: the datapath goes through Tigris whenever it can
-  # (gateway-off-datapath doctrine); the somchai S3 cache and cachix are fallbacks.
+  # (gateway-off-datapath doctrine); cachix is the fallback.
   nix.settings.substituters = lib.mkAfter [
     # delta-proxy (patch-only local-base reconstruction): resolves base from local
     # nix store via nix-store --dump, fetches only the patch from Tigris — cheapest path.
@@ -1031,7 +1027,6 @@ in
     "http://127.0.0.1:8766"
     # cache-daemon: full castore/NAR reconstruction from Tigris. Fallback if no local base.
     "http://127.0.0.1:8765"
-    "s3://somchai-nix-cache-723173433317?region=ap-southeast-7&profile=somchai-nix-read"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
   ];
@@ -1148,7 +1143,6 @@ in
   };
 
   nix.settings.trusted-public-keys = lib.mkAfter [
-    "somchai-cache-1:NBIJCnDzlLzG9mNpHf4iEv17xZ+9ceF5+NBBdYxambc="
     "closure-build-cache-1:ZU3pD3lmJ+xSdqrPJOJOUsVYiaHRcWk+A7+fX3kjS8c="
     "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
   ];
