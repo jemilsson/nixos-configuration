@@ -107,6 +107,18 @@
           ${pkgs.systemd}/bin/systemd-run --user --machine="$user@" --quiet --collect --pipe -- "$@" || true
         }
 
+        # Headless auto-login first: if a portal-login helper is installed and
+        # the user has stored credentials, log in without opening a browser.
+        # run_as_user swallows exit status (|| true), so probe connectivity
+        # afterwards instead. Falls through to the browser on any failure.
+        home=$(${pkgs.coreutils}/bin/getent passwd "$user" | ${pkgs.coreutils}/bin/cut -d: -f6)
+        if [ -x /run/current-system/sw/bin/portal-login ] \
+           && [ -f "$home/.config/portal-login" ]; then
+          run_as_user /run/current-system/sw/bin/portal-login
+          ${pkgs.networkmanager}/bin/nmcli networking connectivity check >/dev/null 2>&1 || true
+          [ "$(${pkgs.networkmanager}/bin/nmcli networking connectivity)" = full ] && exit 0
+        fi
+
         run_as_user ${pkgs.libnotify}/bin/notify-send -u critical \
           "Captive portal detected" "Opening login page..."
         ${if config.programs.captive-browser.enable then ''
