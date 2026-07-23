@@ -288,6 +288,11 @@ in
   # re-handshakes on first packet, and the rest are happy to start degraded.
   systemd.services.NetworkManager-wait-online.enable = false;
 
+  # A WiFi flap storm restarts nscd once per resolvconf update; the default
+  # start limit (5 in 10s) then latches nsncd off permanently, killing all
+  # glibc name resolution until a manual restart (happened 2026-07-22).
+  systemd.services.nscd.unitConfig.StartLimitIntervalSec = 0;
+
   # DPTF-aware thermal management (INT3400 zone present, policy was the crude
   # step_wise governor): thermald clamps via RAPL proactively, sustaining
   # turbo longer during compile bursts instead of frequency-cliff throttling.
