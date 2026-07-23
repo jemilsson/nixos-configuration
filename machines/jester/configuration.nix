@@ -425,6 +425,19 @@ in
   # the shared bluetooth settings from desktop_base.nix.
   hardware.bluetooth.settings.General.FastConnectable = true;
 
+  # HUAWEI FreeBuds 6: mSBC (wideband HFP) negotiation crashes the SCO
+  # transport ("Failure in Bluetooth audio transport", bluetoothd
+  # getpeername ENOTCONN) and the buds drop the whole connection, so the
+  # mic is dead in meetings. Disable mSBC so HFP falls back to CVSD,
+  # which the buds handle. SBC-XQ improves A2DP quality (the buds were
+  # negotiating plain SBC despite advertising AAC).
+  services.pipewire.wireplumber.extraConfig."51-bluez" = {
+    "monitor.bluez.properties" = {
+      "bluez5.enable-msbc" = false;
+      "bluez5.enable-sbc-xq" = true;
+    };
+  };
+
   # Disambiguate the two RTK USB-C panels (they ship with identical EDID
   # serials, which confuses wlroots/Hyprland and prevents distinct
   # per-output position rules). The kernel-assigned DP connector names
