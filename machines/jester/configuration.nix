@@ -404,6 +404,11 @@ in
       # reversible first-line mitigation. Only cost is slightly higher idle
       # power. Remove if it does not help.
       "i915.enable_psr=0"
+      # The f2fs root has its "needs fsck" checkpoint flag set (crashes Jul
+      # 2026), so fsck.f2fs escalates to a full multi-hour scan every boot.
+      # Skip it until a full check can run to completion overnight; kernel
+      # mount-time crash recovery still runs. Remove after a clean full fsck.
+      "fsck.mode=skip"
     ];
     loader = {
       systemd-boot =
