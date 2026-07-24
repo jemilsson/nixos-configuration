@@ -1106,9 +1106,9 @@ in
     # delta-proxy (patch-only local-base reconstruction): resolves base from local
     # nix store via nix-store --dump, fetches only the patch from Tigris — cheapest path.
     # Falls back to :8765 (full castore reconstruction) on cache miss.
-    "http://127.0.0.1:8766"
+    "http://localhost:8766"
     # cache-daemon: full castore/NAR reconstruction from Tigris. Fallback if no local base.
-    "http://127.0.0.1:8765"
+    "http://localhost:8765"
     # Prebuilt upstream Hyprland (jester runs the hyprwm/Hyprland flake build).
     "https://hyprland.cachix.org"
   ];
@@ -1183,7 +1183,7 @@ in
       RestartSec = "5s";
       EnvironmentFile = "/etc/cache-daemon-env";
       Environment = [
-        "CACHE_BIND=127.0.0.1:8765"
+        "CACHE_BIND=localhost:8765"
         "AWS_BUCKET=closure-build-cache"
         "AWS_ENDPOINT_URL=https://fly.storage.tigris.dev"
         "AWS_REGION=auto"
@@ -1212,7 +1212,7 @@ in
       EnvironmentFile = "/etc/cache-daemon-env";
       Environment = [
         "DELTA_PROXY_PORT=8766"
-        "DELTA_PROXY_UPSTREAM=http://127.0.0.1:8765"
+        "DELTA_PROXY_UPSTREAM=http://localhost:8765"
         "AWS_BUCKET=closure-build-cache"
         "AWS_ENDPOINT_URL=https://fly.storage.tigris.dev"
         "AWS_REGION=auto"
