@@ -436,8 +436,44 @@ in
   # mic, both verified live) and unlocks LE Audio; LC3 additionally
   # needs the buds re-paired over LE. The AX211 supports cis-central/
   # cis-peripheral. mSBC stays disabled: the buds negotiate CVSD anyway.
+  # Wear-detection media auto-pause daemon (protocol notes in the
+  # script). Restarts on failure; idles retrying while buds are away.
+  systemd.user.services.freebuds-autopause = {
+    description = "FreeBuds 6 in-ear auto-pause";
+    wantedBy = [ "default.target" ];
+    path = [ pkgs.playerctl ];
+    serviceConfig = {
+      ExecStart = "/run/current-system/sw/bin/freebuds-autopause";
+      Restart = "on-failure";
+      RestartSec = 10;
+    };
+  };
+
   hardware.bluetooth.settings.General.Experimental = true;
   hardware.bluetooth.settings.General.KernelExperimental = true;
+  # bluez 5.87: adds Device1.PreferredBearer (experimental), needed to
+  # force the LE bearer on dual-mode devices like the FreeBuds 6 -
+  # without it every connection lands on BR/EDR and BAP/LC3 is
+  # unreachable. Drop the override once nixpkgs ships >= 5.87.
+  hardware.bluetooth.package = pkgs.bluez.overrideAttrs (old: {
+    version = "5.87";
+    src = pkgs.fetchurl {
+      url = "https://www.kernel.org/pub/linux/bluetooth/bluez-5.87.tar.xz";
+      sha256 = "0pxk6960ri929p2yn236zqawbw3y0dmn0l48b5phqcfpxcnczg96";
+    };
+    # btctl-noninteractive: merged upstream in 5.87.
+    # lreadline: hunks fail on 5.87's Makefile.tools; NIX_LDFLAGS below
+    # replaces it (with --as-needed the extra linkage is free).
+    patches = builtins.filter (
+      p:
+      !(pkgs.lib.hasInfix "btctl-noninteractive" (baseNameOf p))
+      && !(pkgs.lib.hasInfix "lreadline" (baseNameOf p))
+    ) (old.patches or [ ]);
+    NIX_LDFLAGS = (old.NIX_LDFLAGS or "") + " -lreadline";
+    # test-textfile's delete assertion fails on the remote builder's
+    # overlayfs; upstream tests, not our code - skip for this override.
+    doCheck = false;
+  });
   services.pipewire.wireplumber.extraConfig."51-bluez" = {
     "monitor.bluez.properties" = {
       "bluez5.enable-msbc" = false;
@@ -716,6 +752,24 @@ in
   '';
 
   environment.systemPackages = with pkgs; [
+    # FreeBuds control (ANC, battery, gestures, quality preference) over
+    # SPP. Two fixes pending upstream: the wrapper misses the `packaging`
+    # dep (openfreebuds#93-style packaging bug), and FreeBuds 6 is not in
+    # the model registry - the 6i driver speaks its protocol fine
+    # (verified: battery/ANC/gestures/quality all work on BTFT0020).
+    (openfreebuds.overridePythonAttrs (old: {
+      dependencies = old.dependencies ++ [ python3Packages.packaging ];
+      postPatch = (old.postPatch or "") + ''
+        substituteInPlace openfreebuds/driver/constants.py \
+          --replace-fail '"HUAWEI FreeBuds 6i": OfbDriverHuawei6I,' \
+            '"HUAWEI FreeBuds 6i": OfbDriverHuawei6I,
+    "HUAWEI FreeBuds 6": OfbDriverHuawei6I,'
+      '';
+    }))
+    # In-ear wear detection -> media auto-pause for the FreeBuds 6
+    # (reverse-engineered SPP protocol; see freebuds-autopause.py).
+    (pkgs.writers.writePython3Bin "freebuds-autopause" { flakeIgnore = [ "E501" ]; }
+      (builtins.readFile ./freebuds-autopause.py))
     # CLI login for the ANTlabs portal at The Urban Office (blocks its own
     # DNS and login server pre-auth; only the gateway works). Credentials in
     # ~/.config/portal-login (username line, password line) or prompted.

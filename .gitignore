@@ -2,3 +2,4 @@ config/secrets.nix
 machines/brody/secrets.nix
 result
 dbgmd-*
+__pycache__/
