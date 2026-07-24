@@ -1183,7 +1183,7 @@ in
       RestartSec = "5s";
       EnvironmentFile = "/etc/cache-daemon-env";
       Environment = [
-        "CACHE_BIND=localhost:8765"
+        "CACHE_BIND=127.0.0.1:8765"
         "AWS_BUCKET=closure-build-cache"
         "AWS_ENDPOINT_URL=https://fly.storage.tigris.dev"
         "AWS_REGION=auto"
