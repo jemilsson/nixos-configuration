@@ -531,6 +531,7 @@ in
         "naepdomgkenhinolocfifgehidddafch" # Browserpass
         "edibdbjcniadpccecjdfdjjppcpchdlm" # I still don't care about cookies
         "oboonakemofpalcgghocfoadofidjkkk" # KeePassXC-Browser (bridges to fafnir-keepassxc-bridge)
+        "fcoeoabgfenejglbffodgkkbkcdhcgfn" # Claude in Chrome
 
 
       ];
