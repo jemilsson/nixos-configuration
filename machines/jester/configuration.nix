@@ -346,6 +346,14 @@ in
 
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+    # Seed portal-login's SSID -> pass-entry mapping on first boot only ("C"
+    # copies just the once, unlike "L+"): the user is meant to edit this
+    # in place afterwards without a rebuild overwriting it.
+    "C     /home/jonas/.config/captive-portals.conf   0600   jonas   users   -   ${pkgs.writeText "captive-portals.conf" ''
+      # SSID=pass-entry-name, one mapping per line. portal-login looks up
+      # the currently connected SSID here, then runs `pass show <entry>`.
+      TheUrbanCoWorking=wifi/TheUrbanCoWorking
+    ''}"
   ];
 
   hardware.graphics.extraPackages = with pkgs; [
@@ -776,10 +784,14 @@ in
     (pkgs.writers.writePython3Bin "freebuds-autopause" { flakeIgnore = [ "E501" ]; }
       (builtins.readFile ./freebuds-autopause.py))
     # CLI login for the ANTlabs portal at The Urban Office (blocks its own
-    # DNS and login server pre-auth; only the gateway works). Credentials in
-    # ~/.config/portal-login (username line, password line) or prompted.
+    # DNS and login server pre-auth; only the gateway works). Looks up the
+    # active SSID in ~/.config/captive-portals.conf (seeded below) to find a
+    # pass(1) entry, then reads the username/password from the password
+    # store -- see portal-login.py's docstring for the assumed entry format.
     (pkgs.writers.writePython3Bin "portal-login" { flakeIgnore = [ "E501" ]; }
       (builtins.readFile ./portal-login.py))
+    # Credential store read by portal-login; not otherwise on PATH.
+    pass
     cargo-sweep
     # Wrapper scopes AWS_PROFILE=sccache-shared to sccache invocations only
     # so it doesn't bleed into other AWS-aware tools in the shell.

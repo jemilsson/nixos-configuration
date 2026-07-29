@@ -107,18 +107,16 @@
           ${pkgs.systemd}/bin/systemd-run --user --machine="$user@" --quiet --collect --pipe -- "$@" || true
         }
 
-        # Headless auto-login first: if a portal-login helper is installed, the
-        # user has stored credentials, and we're on the one network those
-        # credentials belong to, log in without opening a browser. connectivity-change
-        # is a global event with no connection in env, so match the active
-        # connection at runtime. run_as_user swallows exit status (|| true), so
-        # probe connectivity afterwards. Falls through to the browser on any failure.
-        portalConn="TheUrbanCoWorking"
+        # Headless auto-login first: if a portal-login helper is installed and
+        # the user has an SSID->pass-entry mapping file, try it before opening
+        # a browser. portal-login itself matches the active SSID against that
+        # mapping and exits non-zero (no browser opened by it) on no match,
+        # unknown pass entry, or a non-ANTlabs portal. run_as_user swallows
+        # exit status (|| true), so probe connectivity afterwards. Falls
+        # through to the browser on any failure.
         home=$(${pkgs.coreutils}/bin/getent passwd "$user" | ${pkgs.coreutils}/bin/cut -d: -f6)
         if [ -x /run/current-system/sw/bin/portal-login ] \
-           && [ -f "$home/.config/portal-login" ] \
-           && ${pkgs.networkmanager}/bin/nmcli -t -f NAME connection show --active \
-              | ${pkgs.gnugrep}/bin/grep -qxF "$portalConn"; then
+           && [ -f "$home/.config/captive-portals.conf" ]; then
           run_as_user /run/current-system/sw/bin/portal-login
           ${pkgs.networkmanager}/bin/nmcli networking connectivity check >/dev/null 2>&1 || true
           [ "$(${pkgs.networkmanager}/bin/nmcli networking connectivity)" = full ] && exit 0

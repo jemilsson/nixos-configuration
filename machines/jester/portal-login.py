@@ -14,11 +14,24 @@ Protocol (reverse-engineered from the live portal, 2026-07-23):
 Post-auth the gateway stops answering port 80 entirely, so a connect
 timeout on step 1 means "already logged in".
 
-Usage: portal-login [username]   (prompts for anything missing)
-Credentials can be stored in ~/.config/portal-login as two lines
-(username, then password); chmod 600 it.
+Only this ANTlabs login flow is handled. Non-ANTlabs and JS-heavy captive
+portals are not recognized or driven by this script; that is an inherent
+scope limit, not a bug. The caller (captive-portal-opener in
+config/laptop_base.nix) falls back to captive-browser when this script
+exits non-zero, so the user finishes login manually in the opened browser
+window.
+
+Usage: portal-login   (no args; run by the NM dispatcher, unattended)
+
+Credentials come from `pass` (password-store), looked up by the currently
+connected SSID via a mapping in ~/.config/captive-portals.conf
+(SSID=pass-entry-name, one per line, '#' comments allowed). The assumed
+`pass show <entry>` output format, since we cannot inspect the real store:
+    <password>
+    login: <username>
+i.e. standard pass convention -- password on line 1, a `login:` or
+`username:` line anywhere after it holding the username.
 """
-import getpass
 import re
 import subprocess
 import sys
@@ -47,18 +60,65 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def credentials():
-    cred_file = Path.home() / ".config" / "portal-login"
-    stored = []
-    if cred_file.exists():
-        if cred_file.stat().st_mode & 0o077:
-            print(f"warning: {cred_file} is readable by others; "
-                  "run: chmod 600 " + str(cred_file), file=sys.stderr)
-        stored = cred_file.read_text().splitlines()
-    user = sys.argv[1] if len(sys.argv) > 1 else (
-        stored[0] if stored else input("username: "))
-    password = stored[1] if len(stored) > 1 else getpass.getpass("password: ")
+def active_ssid():
+    # -t: terse/colon-separated. Only the currently-active AP has "yes" in
+    # the first field; nmcli lists every scanned network otherwise.
+    out = subprocess.run(
+        ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"],
+        capture_output=True, text=True,
+    ).stdout
+    for line in out.splitlines():
+        if line.startswith("yes:"):
+            return line[len("yes:"):]
+    return None
+
+
+def portal_map():
+    path = Path.home() / ".config" / "captive-portals.conf"
+    mapping = {}
+    if not path.exists():
+        return mapping
+    for line in path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        ssid, _, entry = line.partition("=")
+        mapping[ssid.strip()] = entry.strip()
+    return mapping
+
+
+def pass_credentials(entry):
+    try:
+        out = subprocess.run(
+            ["pass", "show", entry], capture_output=True, text=True, check=True,
+        ).stdout
+    except subprocess.CalledProcessError:
+        # pass's own stderr (e.g. "not in the password store") holds no
+        # secret, but we don't relay it anyway to keep this path simple.
+        sys.exit(f"pass entry {entry!r} not found or unreadable")
+    lines = out.splitlines()
+    if not lines:
+        sys.exit(f"pass entry {entry!r} is empty")
+    password = lines[0]
+    user = None
+    for line in lines[1:]:
+        m = re.match(r"\s*(?:login|username)\s*:\s*(.+)", line, re.IGNORECASE)
+        if m:
+            user = m.group(1).strip()
+            break
+    if user is None:
+        sys.exit(f"pass entry {entry!r} has no login:/username: line")
     return user, password
+
+
+def credentials():
+    ssid = active_ssid()
+    if not ssid:
+        sys.exit("no active Wi-Fi connection found")
+    entry = portal_map().get(ssid)
+    if not entry:
+        sys.exit(f"no captive-portals.conf mapping for SSID {ssid!r}")
+    return pass_credentials(entry)
 
 
 def main():
