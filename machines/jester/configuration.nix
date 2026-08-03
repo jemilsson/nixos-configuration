@@ -1088,11 +1088,19 @@ in
   # BoringSSL .a) without hitting "download buffer is full", but small enough
   # to avoid the SIGABRT that 1 GiB caused (4 concurrent jobs × 1 GiB = 4 GiB
   # allocation → nix-daemon abort() on internal assertion with Nix 2.31.4).
-  nix.settings.download-buffer-size = 256 * 1024 * 1024; # 256 MiB
-  # Limit substituter parallelism so substituting paths back from a remote
-  # builder/cache.nixos.org doesn't exhaust SSH channel slots and starve
-  # the build itself. Default 16 is way too aggressive for our link.
-  nix.settings.max-substitution-jobs = 8;
+  nix.settings.download-buffer-size = 128 * 1024 * 1024; # 128 MiB
+  # Substituter parallelism, paired with download-buffer-size above: what
+  # aborted the daemon before was the PRODUCT (1 GiB × 4 jobs = 4 GiB), so
+  # doubling jobs while halving the buffer holds peak at the same 2 GiB that
+  # 256 MiB × 8 has been running safely.
+  #
+  # Measured 2026-08-03 on this link, downloading real NARs from
+  # cache.nixos.org: 6 concurrent → 30 Mbit/s, 24 concurrent → 36 Mbit/s.
+  # Parallelism past ~6 buys little; the link itself tops out near 36 Mbit/s.
+  # So this is a modest win, not a fix for slow rebuilds — an observed rebuild
+  # averaged 11 Mbit/s because it interleaves CPU-bound NAR decompression and
+  # actual builds, not because it ran out of download slots.
+  nix.settings.max-substitution-jobs = 16;
   # Fall back to local build when a remote builder is unreachable instead of failing.
   nix.settings.fallback = true;
   # Self-heal a remote-builder upload-lock deadlock. A build dispatched to a
