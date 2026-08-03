@@ -1295,27 +1295,9 @@ in
       # maxJobs = parallel nix-daemon connections jester opens to the gateway, and
       # EACH connection triggers one gateway provision. nix reuses each connection
       # across many derivations, so total provisions ≈ maxJobs, not the derivation
-      # count.
-      #
-      # MITIGATION, not a fix. Measured 2026-08-03 against the live gateway
-      # (closure-build-gateway machine 286d09ef9e4238, shared-cpu-1x / 1024MB):
-      #   1 concurrent session  -> passes
-      #   2 concurrent sessions -> passes
-      #   5 concurrent sessions -> gateway OOM-killed, exit_code 137, every
-      #                            in-flight connection dies as "Broken pipe"
-      # Fly Machines API confirms the kill (oom_killed: true) at the same second
-      # as the failing run's exit. So the real ceiling is somewhere in 3..5, far
-      # below the old value.
-      #
-      # The previous comment claimed this must stay <= GATEWAY_MAX_CONCURRENT
-      # "(64)". That was wrong twice over: fly.toml sets it to 32, and the
-      # machine dies long before either number. Admission control does not save
-      # you from running out of memory.
-      #
-      # Raise this only after the 1 GB consumer is identified and fixed (see
-      # DECISIONS.md in nix-build-router); it is not the peek accumulators,
-      # russh buffers, or the NAR body path, and remains unattributed.
-      maxJobs = 2; # measured safe; 5 kills the gateway
+      # count. Must stay <= GATEWAY_MAX_CONCURRENT on closure-build-gateway (64),
+      # or excess connections queue for slots.
+      maxJobs = 64; # up to 64 parallel ephemeral builders (1 VM per job, scale-to-zero)
       speedFactor = 10; # highest priority: prefer closure.build over nixbuild(1)
       # kvm intentionally absent: the Fly builder VM does not expose /dev/kvm;
       # advertising it caused routing failures for kvm-requiring derivations.
