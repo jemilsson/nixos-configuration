@@ -18,12 +18,12 @@ jobs:
       env:
         NIX_CONFIG: |
           experimental-features = nix-command flakes
-          # 15 GB hosts: default max-jobs (= nproc = 16) OOM-kills the runner
-          # service mid-build; two concurrent derivations fit. cores bounds
-          # intra-derivation parallelism too: cargo builds (fafnir-deps) spawn
-          # NIX_BUILD_CORES rustc processes and OOM at 16.
-          max-jobs = 2
-          cores = 4
+          # 15 GB hosts: nix defaults (16 jobs x 16 cores) OOM-kill the runner
+          # service mid-build (fafnir-deps cargo build). Serialize derivations
+          # so peak memory is one build's, not a sum; 8 cores keeps the single
+          # job fast without stacking rustc spikes.
+          max-jobs = 1
+          cores = 8
           extra-substituters = https://cache.nixos.org/ https://hyprland.cachix.org
           extra-trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
     
@@ -54,11 +54,11 @@ jobs:
       env:
         NIX_CONFIG: |
           experimental-features = nix-command flakes
-          # 15 GB hosts: default max-jobs (= nproc = 16) OOM-kills the runner
-          # service mid-build; two concurrent derivations fit. cores bounds
-          # intra-derivation parallelism too: cargo builds (fafnir-deps) spawn
-          # NIX_BUILD_CORES rustc processes and OOM at 16.
-          max-jobs = 2
-          cores = 4
+          # 15 GB hosts: nix defaults (16 jobs x 16 cores) OOM-kill the runner
+          # service mid-build (fafnir-deps cargo build). Serialize derivations
+          # so peak memory is one build's, not a sum; 8 cores keeps the single
+          # job fast without stacking rustc spikes.
+          max-jobs = 1
+          cores = 8
           extra-substituters = https://cache.nixos.org/ https://hyprland.cachix.org
           extra-trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=
