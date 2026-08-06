@@ -591,11 +591,11 @@
         "rev": "d659c3ee83bcee30a249026e1bb2135006595ef5",
         "revCount": 346,
         "type": "git",
-        "url": "ssh://git@github.com/jemilsson/closure-build"
+        "url": "ssh://git@github.com/jemilsson-org/closure-build"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/jemilsson/closure-build"
+        "url": "ssh://git@github.com/jemilsson-org/closure-build"
       }
     },
     "nixpkgs": {
