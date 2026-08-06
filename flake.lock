@@ -585,11 +585,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785831693,
-        "narHash": "sha256-MxKQ3T8dmalTJQmtyyOJ8kcDX7PNtyZg0SZJBNAQCsg=",
+        "lastModified": 1785927364,
+        "narHash": "sha256-TzSNKKeWumLio63LBqfaxW0a6VAJeYUdaPivMkFpAKI=",
         "ref": "refs/heads/master",
-        "rev": "3e835fd1ebe8c156806a20c6fe618cf6a56e49a4",
-        "revCount": 332,
+        "rev": "522583efceb2986bd17c09d1b6405b495d6c1234",
+        "revCount": 344,
         "type": "git",
         "url": "file:///home/jonas/workspace/nix-build-router"
       },
