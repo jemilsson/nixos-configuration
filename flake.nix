@@ -29,7 +29,7 @@
       url = "github:hyprwm/Hyprland";
     };
     nix-build-router = {
-      url = "git+file:///home/jonas/workspace/nix-build-router";
+      url = "git+ssh://git@github.com/jemilsson/closure-build";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       # microvm → spectrum → snix (git.snix.dev) is unreachable and unused here;
       # drop it so nixos-rebuild doesn't need to fetch it.

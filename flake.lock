@@ -585,17 +585,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1785927364,
-        "narHash": "sha256-TzSNKKeWumLio63LBqfaxW0a6VAJeYUdaPivMkFpAKI=",
+        "lastModified": 1785929310,
+        "narHash": "sha256-mvZsLkGKihEocp2iNlXBeZIjU1oEhBopOb0pLVV8Ch4=",
         "ref": "refs/heads/master",
-        "rev": "522583efceb2986bd17c09d1b6405b495d6c1234",
-        "revCount": 344,
+        "rev": "d659c3ee83bcee30a249026e1bb2135006595ef5",
+        "revCount": 346,
         "type": "git",
-        "url": "file:///home/jonas/workspace/nix-build-router"
+        "url": "ssh://git@github.com/jemilsson/closure-build"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/jonas/workspace/nix-build-router"
+        "url": "ssh://git@github.com/jemilsson/closure-build"
       }
     },
     "nixpkgs": {
