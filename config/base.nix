@@ -248,6 +248,7 @@ in
 
       #Network tools
       eternal-terminal # roaming shell to the Fly devbox (`et devbox`)
+      flyctl
       tcpdump
       whois
       inetutils
