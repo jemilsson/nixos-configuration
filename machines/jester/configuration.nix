@@ -60,6 +60,7 @@ in
     #./graphiti.nix
     #./mcpo.nix
     ./camera.nix
+    ./room-watch.nix
     ./netns-claude-glecom.nix
     ./pi-lens.nix
     ./nix-retry.nix
