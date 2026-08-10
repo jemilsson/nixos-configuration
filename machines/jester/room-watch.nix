@@ -40,13 +40,17 @@ let
         print(64)
   '';
   saveHash = pkgs.writeText "snapshot-save-hash.py" ''
+    import os
     import sys
     import imagehash
     from PIL import Image
 
     img_path, hash_path = sys.argv[1], sys.argv[2]
-    with open(hash_path, "w") as f:
+    # Atomic write: a crash mid-write must not leave a corrupt state file.
+    tmp = hash_path + ".tmp"
+    with open(tmp, "w") as f:
         f.write(str(imagehash.dhash(Image.open(img_path))))
+    os.replace(tmp, hash_path)
   '';
 
   # Telegram alert with an AI one-liner. Vision via the local
