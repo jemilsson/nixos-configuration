@@ -37,7 +37,7 @@ let
     post_capture 30
 
     movie_output on
-    movie_container mkv
+    movie_codec mkv
     movie_quality 60
     picture_output first
     text_left ROOM %Y-%m-%d %T
