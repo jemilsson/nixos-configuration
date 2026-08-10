@@ -20,8 +20,8 @@ let
 
   motionConf = pkgs.writeText "room-watch-motion.conf" ''
     video_device ${loopbackDev}
-    width 1280
-    height 720
+    width 640
+    height 480
     framerate 15
 
     target_dir /home/jonas/Videos/room-watch
@@ -59,16 +59,21 @@ in
     requires = [ "pipewire.service" ];
     after = [ "pipewire.service" "wireplumber.service" ];
     serviceConfig = {
+      # target-object: the libcamera node name for the built-in camera; the
+      # soft-ISP delivers 640x480, converted to YUY2 for motion's sake.
       ExecStart = ''
         ${gst.gstreamer}/bin/gst-launch-1.0 -e \
-          pipewiresrc ! videoconvert ! video/x-raw,format=YUY2,width=1280,height=720 \
+          pipewiresrc target-object=libcamera_input.__SB_.PC00.LNK1 \
+          ! videoconvert ! video/x-raw,format=YUY2,width=640,height=480 \
           ! v4l2sink device=${loopbackDev} sync=false
       '';
       Restart = "on-failure";
       RestartSec = 3;
     };
+    # .out explicitly: the default gstreamer output is "bin", which lacks the
+    # core plugins (capsfilter etc.); without them caps-filter syntax fails.
     environment.GST_PLUGIN_SYSTEM_PATH_1_0 = lib.makeSearchPath "lib/gstreamer-1.0" [
-      gst.gstreamer gst.gst-plugins-base gst.gst-plugins-good pkgs.pipewire
+      gst.gstreamer.out gst.gst-plugins-base gst.gst-plugins-good pkgs.pipewire
     ];
   };
 
