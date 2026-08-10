@@ -18,6 +18,36 @@ let
   gst = pkgs.gst_all_1;
   loopbackDev = "/dev/video42";
 
+  # Telegram alert with an AI one-liner. Vision via the local
+  # venice-subscription-api (port 8000); falls back to a bare caption if the
+  # description fails so the photo still arrives. Credentials (not in repo):
+  # ~/.config/room-watch/telegram.env with TELEGRAM_BOT_TOKEN and
+  # TELEGRAM_CHAT_ID. Missing env file = hook exits quietly (feature off).
+  notifyScript = pkgs.writeShellScript "room-watch-notify" ''
+    img="$1"
+    [ -f /home/jonas/.config/room-watch/telegram.env ] || exit 0
+    . /home/jonas/.config/room-watch/telegram.env
+    [ -n "$TELEGRAM_BOT_TOKEN" ] || exit 0
+
+    desc=$(${pkgs.coreutils}/bin/timeout 60 ${pkgs.bash}/bin/bash -c '
+      b64=$(${pkgs.coreutils}/bin/base64 -w0 "'"$img"'")
+      ${pkgs.curl}/bin/curl -s -m 55 localhost:8000/v1/chat/completions \
+        -H "Content-Type: application/json" \
+        --data-binary @<(printf %s "{\"model\":\"qwen3-vl-235b-a22b\",\"max_tokens\":100,
+          \"messages\":[{\"role\":\"user\",\"content\":[
+            {\"type\":\"text\",\"text\":\"One factual sentence: what is happening in this hotel-room security snapshot? Note any person or change.\"},
+            {\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/jpeg;base64,$b64\"}}]}]}") \
+      | ${pkgs.jq}/bin/jq -r ".choices[0].message.content // empty"
+    ') || desc=""
+    [ -n "$desc" ] || desc="Motion detected"
+
+    ${pkgs.curl}/bin/curl -s -m 30 \
+      "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendPhoto" \
+      -F "chat_id=$TELEGRAM_CHAT_ID" -F "photo=@$img" \
+      -F "caption=$desc" >/dev/null \
+      || ${pkgs.coreutils}/bin/echo "telegram send failed for $img" >&2
+  '';
+
   motionConf = pkgs.writeText "room-watch-motion.conf" ''
     video_device ${loopbackDev}
     width 640
@@ -36,6 +66,7 @@ let
     pre_capture 15
     post_capture 30
 
+    on_picture_save ${notifyScript} %f
     movie_output on
     movie_codec mkv
     movie_quality 60
