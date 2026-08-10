@@ -69,6 +69,15 @@ let
     # Tune up if AC/heater flicker still gets through, down if real changes
     # are missed. Recording is unaffected; this only gates the Telegram send.
     hashfile=/home/jonas/Videos/room-watch/.last-sent-dhash
+
+    # Cooldown: with picture_output on, motion fires this hook per frame; a
+    # person moving continuously can beat the dhash threshold repeatedly, so
+    # cap sends to one per 15s regardless of distance. Activities the user
+    # cares to distinguish span minutes; 15s loses nothing.
+    now=$(${pkgs.coreutils}/bin/date +%s)
+    last=$(${pkgs.coreutils}/bin/stat -c %Y "$hashfile" 2>/dev/null || ${pkgs.coreutils}/bin/echo 0)
+    [ $((now - last)) -ge 15 ] || exit 0
+
     dist=$(${dedupPython}/bin/python3 ${snapshotDistance} "$img" "$hashfile")
     if [ "$dist" -lt 10 ]; then
       ${pkgs.coreutils}/bin/echo "skipping near-duplicate snapshot (dhash distance $dist): $img"
@@ -128,7 +137,10 @@ let
     movie_output on
     movie_codec mkv
     movie_quality 60
-    picture_output first
+    # Save snapshots throughout the event, not just the first frame: the
+    # notify hook's dhash gate + cooldown picks out distinct activities
+    # (making the bed vs. at the desk) and drops near-duplicates.
+    picture_output on
     text_left ROOM %Y-%m-%d %T
 
     webcontrol_port 0
