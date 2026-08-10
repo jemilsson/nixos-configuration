@@ -18,6 +18,37 @@ let
   gst = pkgs.gst_all_1;
   loopbackDev = "/dev/video42";
 
+  # Perceptual-hash dedup: venice has no image-embedding API, and dhash is the
+  # right tool anyway for "same scene, did anything change" on a fixed camera
+  # (robust to noise/lighting, milliseconds, no network). Prints the Hamming
+  # distance (0-64) between the snapshot and the last-sent snapshot's hash;
+  # prints 64 (max) when there is no previous hash or on any error, so a
+  # failure sends rather than silently drops.
+  dedupPython = pkgs.python3.withPackages (p: [ p.imagehash p.pillow ]);
+  snapshotDistance = pkgs.writeText "snapshot-distance.py" ''
+    import sys
+    import imagehash
+    from PIL import Image
+
+    img_path, hash_path = sys.argv[1], sys.argv[2]
+    try:
+        h = imagehash.dhash(Image.open(img_path))
+        with open(hash_path) as f:
+            prev = imagehash.hex_to_hash(f.read().strip())
+        print(h - prev)
+    except Exception:
+        print(64)
+  '';
+  saveHash = pkgs.writeText "snapshot-save-hash.py" ''
+    import sys
+    import imagehash
+    from PIL import Image
+
+    img_path, hash_path = sys.argv[1], sys.argv[2]
+    with open(hash_path, "w") as f:
+        f.write(str(imagehash.dhash(Image.open(img_path))))
+  '';
+
   # Telegram alert with an AI one-liner. Vision via the local
   # venice-subscription-api (port 8000); falls back to a bare caption if the
   # description fails so the photo still arrives. Credentials (not in repo):
@@ -28,6 +59,17 @@ let
     [ -f /home/jonas/.config/room-watch/telegram.env ] || exit 0
     . /home/jonas/.config/room-watch/telegram.env
     [ -n "$TELEGRAM_BOT_TOKEN" ] || exit 0
+
+    # Skip near-duplicate snapshots: only alert when the scene differs enough
+    # (dhash Hamming distance >= 10 of 64) from the last snapshot we sent.
+    # Tune up if AC/heater flicker still gets through, down if real changes
+    # are missed. Recording is unaffected; this only gates the Telegram send.
+    hashfile=/home/jonas/Videos/room-watch/.last-sent-dhash
+    dist=$(${dedupPython}/bin/python3 ${snapshotDistance} "$img" "$hashfile")
+    if [ "$dist" -lt 10 ]; then
+      ${pkgs.coreutils}/bin/echo "skipping near-duplicate snapshot (dhash distance $dist): $img"
+      exit 0
+    fi
 
     # venice.ai intermittently drops the attachment (same request, ~1 in 4
     # replies "NO IMAGE" in testing); one retry covers it.
@@ -56,6 +98,7 @@ let
       "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendPhoto" \
       -F "chat_id=$TELEGRAM_CHAT_ID" -F "photo=@$img" \
       -F "caption=$desc" >/dev/null \
+      && ${dedupPython}/bin/python3 ${saveHash} "$img" "$hashfile" \
       || ${pkgs.coreutils}/bin/echo "telegram send failed for $img" >&2
   '';
 
