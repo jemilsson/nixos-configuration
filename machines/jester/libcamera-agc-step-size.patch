@@ -1,6 +1,6 @@
 --- a/src/ipa/simple/algorithms/agc.cpp	2026-06-28 17:25:56.877895858 +0700
 +++ b/src/ipa/simple/algorithms/agc.cpp	2026-06-28 17:26:53.830733122 +0700
-@@ -26,63 +26,78 @@
+@@ -26,63 +26,97 @@
  
  /*
   * The exposure is optimal when the mean sample value of the histogram is
@@ -29,8 +29,17 @@
 + * approaches the target eliminates the oscillation while keeping convergence
 + * fast for large errors (the step saturates at kExposureMaxStep).
 + */
-+static constexpr float kProportionalGain = 0.5;
-+static constexpr float kExposureMaxStep = 0.25; /* cap at +/-25% per frame */
++static constexpr float kProportionalGain = 0.25;
++static constexpr float kExposureMaxStep = 0.12; /* cap at +/-12% per frame */
++
++/*
++ * EMA smoothing of the raw MSV. A saturating highlight (e.g. a lit lamp in
++ * frame at the full 16:9 FOV) flips the raw MSV discontinuously by far more
++ * than any deadband, which no gain damping can stabilise: the loop becomes a
++ * relay and limit-cycles (observed as a 47<->137 luma square wave). Smoothing
++ * turns the cliff into a slope the proportional loop can track.
++ */
++static constexpr double kMSVAlpha = 0.35;
 +
  Agc::Agc()
  {
@@ -71,7 +80,17 @@
 +	 * fractional-exposure units; the step is capped so a large error still
 +	 * converges in a few frames without overshooting.
 +	 */
-+	const float error = static_cast<float>(exposureMSV) - kExposureOptimal;
++	/*
++	 * Function-local static is acceptable here: this machine has a single
++	 * camera. A second sensor would need per-instance state in the Agc
++	 * class instead.
++	 */
++	static double msvSmoothed = 0.0;
++	if (msvSmoothed == 0.0)
++		msvSmoothed = exposureMSV;
++	msvSmoothed = kMSVAlpha * exposureMSV + (1.0 - kMSVAlpha) * msvSmoothed;
++
++	const float error = static_cast<float>(msvSmoothed) - kExposureOptimal;
 +	const float absError = error < 0 ? -error : error;
  
 -	if (exposureMSV > kExposureOptimal + kExposureSatisfactory) {
