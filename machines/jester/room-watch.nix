@@ -50,8 +50,8 @@ let
 
   motionConf = pkgs.writeText "room-watch-motion.conf" ''
     video_device ${loopbackDev}
-    width 640
-    height 480
+    width 1280
+    height 720
     framerate 15
 
     target_dir /home/jonas/Videos/room-watch
@@ -90,12 +90,13 @@ in
     requires = [ "pipewire.service" ];
     after = [ "pipewire.service" "wireplumber.service" ];
     serviceConfig = {
-      # target-object: the libcamera node name for the built-in camera; the
-      # soft-ISP delivers 640x480, converted to YUY2 for motion's sake.
+      # target-object: the libcamera node name for the built-in camera.
+      # 1280x720 matches the 16:9 sensor (1932x1092): 4:3 modes crop the
+      # sides and look zoomed in. Converted to YUY2 for motion's sake.
       ExecStart = ''
         ${gst.gstreamer}/bin/gst-launch-1.0 -e \
           pipewiresrc target-object=libcamera_input.__SB_.PC00.LNK1 \
-          ! videoconvert ! video/x-raw,format=YUY2,width=640,height=480 \
+          ! videoconvert ! video/x-raw,format=YUY2,width=1280,height=720 \
           ! v4l2sink device=${loopbackDev} sync=false
       '';
       Restart = "on-failure";
