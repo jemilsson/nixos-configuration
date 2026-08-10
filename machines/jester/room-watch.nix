@@ -159,6 +159,9 @@ in
     description = "PipeWire camera feed into v4l2loopback for room-watch";
     requires = [ "pipewire.service" ];
     after = [ "pipewire.service" "wireplumber.service" ];
+    # PartOf: `systemctl --user stop room-watch` must take the camera feed
+    # down too (Requires= only propagates stop in the other direction).
+    partOf = [ "room-watch.service" ];
     serviceConfig = {
       # target-object: the libcamera node name for the built-in camera.
       # 1280x720 matches the 16:9 sensor (1932x1092): 4:3 modes crop the
@@ -186,6 +189,7 @@ in
   #   AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY from `fly storage create`.
   systemd.user.services.room-watch-sync = {
     description = "Upload room-watch recordings to Tigris";
+    partOf = [ "room-watch.service" ];
     serviceConfig = {
       EnvironmentFile = "/home/jonas/.config/room-watch/tigris.env";
       ExecStart = pkgs.writeShellScript "room-watch-sync" ''
