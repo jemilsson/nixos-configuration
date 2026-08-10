@@ -29,6 +29,7 @@ let
     # Sensitivity: pixels changed to count as motion; tune up if the
     # aircon curtain-flutter false-triggers.
     threshold 1500
+    lightswitch_percent 10
     despeckle_filter EedDl
     minimum_motion_frames 2
     event_gap 10
@@ -79,11 +80,11 @@ in
   systemd.user.services.room-watch-sync = {
     description = "Upload room-watch recordings to Tigris";
     serviceConfig = {
-      EnvironmentFile = "%h/.config/room-watch/tigris.env";
+      EnvironmentFile = "/home/jonas/.config/room-watch/tigris.env";
       ExecStart = pkgs.writeShellScript "room-watch-sync" ''
         while true; do
           ${pkgs.rclone}/bin/rclone copy /home/jonas/Videos/room-watch \
-            :s3,provider=Other,env_auth,endpoint='https://fly.storage.tigris.dev':room-watch \
+            ":s3,provider=Other,env_auth,endpoint='https://fly.storage.tigris.dev':room-watch" \
             || echo "sync failed, retrying in 60s"
           sleep 60
         done
