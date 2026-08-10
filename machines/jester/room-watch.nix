@@ -29,6 +29,9 @@ let
     . /home/jonas/.config/room-watch/telegram.env
     [ -n "$TELEGRAM_BOT_TOKEN" ] || exit 0
 
+    # venice.ai intermittently drops the attachment (same request, ~1 in 4
+    # replies "NO IMAGE" in testing); one retry covers it.
+    for attempt in 1 2; do
     desc=$(${pkgs.coreutils}/bin/timeout 60 ${pkgs.bash}/bin/bash -c '
       b64=$(${pkgs.coreutils}/bin/base64 -w0 "'"$img"'")
       ${pkgs.curl}/bin/curl -s -m 55 localhost:8000/v1/chat/completions \
@@ -39,6 +42,14 @@ let
             {\"type\":\"image_url\",\"image_url\":{\"url\":\"data:image/jpeg;base64,$b64\"}}]}]}") \
       | ${pkgs.jq}/bin/jq -r ".choices[0].message.content // empty"
     ') || desc=""
+      case "$desc" in
+        ""|*"NO IMAGE"*|*"cannot see"*|*"can't see"*) continue ;;
+        *) break ;;
+      esac
+    done
+    case "$desc" in
+      *"NO IMAGE"*|*"cannot see"*|*"can't see"*) desc="" ;;
+    esac
     [ -n "$desc" ] || desc="Motion detected"
 
     ${pkgs.curl}/bin/curl -s -m 30 \
