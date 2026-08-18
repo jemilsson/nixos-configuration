@@ -833,6 +833,14 @@ in
     # store -- see portal-login.py's docstring for the assumed entry format.
     (pkgs.writers.writePython3Bin "portal-login" { flakeIgnore = [ "E501" ]; }
       (builtins.readFile ./portal-login.py))
+
+    # Hyprland monitor hotplug pipeline (repo-managed copies; hyprland.conf
+    # exec-once runs these by name). setup regenerates monitors.conf/.lua and
+    # reloads only when the layout changed; events debounces hotplug bursts.
+    (pkgs.writers.writePython3Bin "hypr-monitor-setup" { flakeIgnore = [ "E501" "W503" "W504" ]; }
+      (builtins.readFile ./hypr/monitor-setup.py))
+    (pkgs.writeShellScriptBin "hypr-monitor-events"
+      (builtins.readFile ./hypr/handle-monitor-events.sh))
     # Credential store read by portal-login; not otherwise on PATH.
     pass
     cargo-sweep
