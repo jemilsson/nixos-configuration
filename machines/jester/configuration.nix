@@ -519,8 +519,8 @@ in
   # 4a 8b 60 25) trains DP alt mode at 2 of 4 lanes even though sink and
   # port support 4, halving MST bandwidth so the second panel falls back
   # to 1080p. When its EDID is present, force 4 lanes on the i915 DP base
-  # connectors and retrain; restore auto negotiation when it disconnects
-  # so docks and other monitors keep normal link training. Workaround
+  # connectors and retrain; restore auto negotiation when another DP sink
+  # appears so docks and other monitors keep normal link training. Workaround
   # pending an i915 sink quirk. If the monitor was attached at boot it may
   # need one cable replug: the compositor rejects the full mode until a
   # fresh connect on the already-forced link.
@@ -528,22 +528,27 @@ in
     let
       ehomewei-lanes = pkgs.writeShellScript "ehomewei-lanes" ''
         export PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.gnugrep ]}
-        present=0
+        rtk=0 other=0
         for edid in /sys/class/drm/card*-DP-*/edid; do
-          [ -e "$edid" ] || continue
+          [ -s "$edid" ] || continue
           id=$(od -A n -t x1 -j 8 -N 4 "$edid" 2>/dev/null | tr -d ' \n')
-          [ "$id" = "4a8b6025" ] && present=1
+          if [ "$id" = "4a8b6025" ]; then rtk=1; else other=1; fi
         done
+        # Keep the 4-lane force armed while nothing else is connected, so
+        # the X1 Pro's next attach trains 4-lane directly (no retrain
+        # cycle, ~1-2 s faster). Restore auto (with retrain) only when a
+        # different DP sink appears.
         for dbg in /sys/kernel/debug/dri/*/DP-*; do
           f="$dbg/i915_dp_force_lane_count"
           [ -e "$f" ] || continue
-          if [ "$present" = 1 ]; then
+          if [ "$rtk" = 1 ]; then
             if ! grep -q '\[4' "$f"; then
               printf 4 > "$f"
               printf 1 > "$dbg/i915_dp_force_link_retrain" 2>/dev/null || true
             fi
-          else
-            grep -q '\[auto' "$f" || printf auto > "$f"
+          elif [ "$other" = 1 ] && ! grep -q '\[auto' "$f"; then
+            printf auto > "$f"
+            printf 1 > "$dbg/i915_dp_force_link_retrain" 2>/dev/null || true
           fi
         done
       '';
