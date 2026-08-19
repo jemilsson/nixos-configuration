@@ -1,0 +1,15 @@
+Add the OV9234 IR sensor (ThinkPad, ACPI OVTI9234) to the ipu-bridge
+sensor table so the fwnode graph links it to the IVSC/IPU6 pipeline.
+1 lane / 180 MHz matching the ov9734 sibling whose mode table the
+out-of-tree ov9234 driver reuses.
+--- a/drivers/media/pci/intel/ipu-bridge.c
++++ b/drivers/media/pci/intel/ipu-bridge.c
+@@ -96,6 +96,8 @@ static const struct ipu_sensor_config ipu_supported_sensors[] = {
+ 	IPU_SENSOR_CONFIG("OVTI5675", 1, 450000000),
+ 	/* Omnivision OV8856 */
+ 	IPU_SENSOR_CONFIG("OVTI8856", 3, 180000000, 360000000, 720000000),
++	/* Omnivision OV9234 */
++	IPU_SENSOR_CONFIG("OVTI9234", 1, 180000000),
+ 	/* Sony IMX471 */
+ 	IPU_SENSOR_CONFIG("SONY471A", 1, 200000000),
+ 	/* Toshiba T4KA3 */

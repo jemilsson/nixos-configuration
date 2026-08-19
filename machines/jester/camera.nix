@@ -34,7 +34,21 @@ in
 
   # Intel IPU6 MIPI camera (OV2740 sensor, Raptor Lake).
   # kernel ipu6-isys -> libcamera "simple" pipeline -> wireplumber -> apps.
-  boot.extraModulePackages = with config.boot.kernelPackages; [ ipu6-drivers ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    ipu6-drivers
+    # IR sensor (ACPI OVTI9234, \_SB_.PC00.LNK0, behind LJCA/IVSC): no
+    # upstream driver exists; local port of mainline ov9734.c. Built via
+    # config.boot.kernelPackages so it targets the PATCHED kernel below.
+    (callPackage ./ov9234 { })
+    # ipu-bridge only links sensors from its static HID table; shadow the
+    # in-tree module with one carrying the OVTI9234 entry (updates/ wins
+    # in depmod order) instead of patching the kernel, since the remote
+    # builder cannot fit kernel rebuilds.
+    (callPackage ./ipu-bridge-shadow { })
+  ];
+  # The IVSC chain (sensor ownership handoff) does not autoload on this
+  # machine; without it the IR sensor stays owned by the VSC.
+  boot.kernelModules = [ "mei_vsc" "ivsc_ace" "ivsc_csi" ];
   hardware.firmware = with pkgs; [ ipu6-camera-bins ivsc-firmware ];
 
   environment.systemPackages = with pkgs; [ libcamera ];
