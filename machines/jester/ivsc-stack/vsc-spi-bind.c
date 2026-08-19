@@ -73,6 +73,11 @@ static struct spi_device *vsc_spi;
 static struct acpi_device *vsc_adev;
 static struct delayed_work retry_work;
 static int retries;
+/* After the _CRS path has deferred VSC_BIND_RETRIES times, stop trusting the
+ * SPI core's controller lookup (its silent failure is why boot enumeration
+ * skipped the device in the first place) and build the device by hand.
+ */
+static bool force_manual;
 
 #define VSC_BIND_RETRIES	10
 #define VSC_BIND_DELAY_MS	1000
@@ -168,11 +173,12 @@ static int vsc_spi_bind(void)
 		return 0;
 	}
 
-	spi = acpi_spi_device_alloc(NULL, adev, 0);
+	spi = force_manual ? ERR_PTR(-ENODEV) : acpi_spi_device_alloc(NULL, adev, 0);
 	if (IS_ERR(spi)) {
 		ret = PTR_ERR(spi);
-		pr_warn("vsc-spi-bind: _CRS SPI lookup for %s failed (%d)\n",
-			dev_name(&adev->dev), ret);
+		if (!force_manual)
+			pr_warn("vsc-spi-bind: _CRS SPI lookup for %s failed (%d)\n",
+				dev_name(&adev->dev), ret);
 		if (ret == -EPROBE_DEFER) {
 			acpi_dev_put(adev);
 			return ret;
@@ -225,11 +231,16 @@ static void vsc_spi_retry(struct work_struct *work)
 {
 	int ret = vsc_spi_bind();
 
-	if (ret == -EPROBE_DEFER && retries++ < VSC_BIND_RETRIES)
+	if (ret == -EPROBE_DEFER && retries++ < VSC_BIND_RETRIES) {
+		if (retries == VSC_BIND_RETRIES) {
+			pr_info("vsc-spi-bind: _CRS path keeps deferring, switching to manual construction\n");
+			force_manual = true;
+		}
 		schedule_delayed_work(&retry_work,
 				      msecs_to_jiffies(VSC_BIND_DELAY_MS));
-	else if (ret && ret != -ENODEV)
+	} else if (ret && ret != -ENODEV) {
 		pr_err("vsc-spi-bind: giving up (%d)\n", ret);
+	}
 }
 
 static int __init vsc_spi_bind_init(void)
