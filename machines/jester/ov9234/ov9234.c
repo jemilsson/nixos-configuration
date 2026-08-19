@@ -993,6 +993,7 @@ static int ov9234_probe(struct i2c_client *client)
 	 * and failing probe on that would block bring-up for no gain.
 	 */
 	freq = clk_get_rate(ov9234->clk);
+	dev_info(ov9234->dev, "external clock rate %lu\n", freq);
 	if (freq && freq != OV9234_MCLK)
 		return dev_err_probe(ov9234->dev, -EINVAL,
 				     "external clock %lu is not supported",

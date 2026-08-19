@@ -19,6 +19,11 @@ let
     patches = (old.patches or []) ++ [
       ./libcamera-agc-step-size.patch
       ./libcamera-contrast-default.patch
+      # 10-bit mono (Y10 / Y10P) input for the soft ISP: the OV9234 IR
+      # sensor only produces Y10_1X10, which debayer_cpu rejected
+      # ("Unsupported input format R10"). Adds an R10/R10_CSI2P -> R8
+      # line copy and reuses the existing bayer stats path so AGC works.
+      ./libcamera-mono-r10.patch
     ];
     # Sensor tuning file: enables the Ccm block (generic saturation-boost
     # matrix, see ov2740-tuning.yaml) instead of the CCM-less uncalibrated

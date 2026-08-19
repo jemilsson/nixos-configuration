@@ -1,0 +1,178 @@
+--- a/src/libcamera/software_isp/debayer_cpu.cpp
++++ b/src/libcamera/software_isp/debayer_cpu.cpp
+@@ -289,6 +289,52 @@
+ }
+ 
+ /*
++ * 10-bit mono (Y10 / Y10P) is not Bayer data: there is nothing to
++ * interpolate, so each line is a straight copy to 8-bit grey. The
++ * unpacked variant drops the 2 least-significant bits; the CSI-2 packed
++ * variant keeps the 4 most-significant-bit bytes of every 5-byte group
++ * and skips the 5th byte holding the 4 x 2 least-significant bits, the
++ * same layout the debayer10P_* functions walk.
++ *
++ * green_ carries the gain + gamma lookup built by updateLookupTables()
++ * when no CCM is active; with a CCM the per-channel tables are unused
++ * and gammaLut_ is the only populated 8-bit lookup, so use that instead.
++ * A CCM is meaningless for mono input either way.
++ */
++#define STORE_MONO(value_)                             \
++	if constexpr (ccmEnabled)                      \
++		*dst++ = gammaLut_[value_];            \
++	else                                           \
++		*dst++ = green_[value_];
++
++template<bool addAlphaByte, bool ccmEnabled>
++void DebayerCpu::debayer10_MONO_R8(uint8_t *dst, const uint8_t *src[])
++{
++	const uint16_t *curr = (const uint16_t *)src[1];
++
++	for (unsigned int x = 0; x < window_.width; x++) {
++		/* shift by 2 for 10 -> 8 bpp value */
++		STORE_MONO(curr[x] >> 2)
++	}
++}
++
++template<bool addAlphaByte, bool ccmEnabled>
++void DebayerCpu::debayer10P_MONO_R8(uint8_t *dst, const uint8_t *src[])
++{
++	const unsigned int widthInBytes = window_.width * 5 / 4;
++	const uint8_t *curr = src[1];
++
++	for (unsigned int x = 0; x < widthInBytes; x += 5) {
++		/* The 4 most-significant-bit bytes are already 8 bpp */
++		STORE_MONO(curr[x])
++		STORE_MONO(curr[x + 1])
++		STORE_MONO(curr[x + 2])
++		STORE_MONO(curr[x + 3])
++		/* Skip 5th src byte with 4 x 2 least-significant-bits */
++	}
++}
++
++/*
+  * Setup the Debayer object according to the passed in parameters.
+  * Return 0 on success, a negative errno value on failure
+  * (unsupported parameters).
+@@ -298,6 +344,28 @@
+ 	BayerFormat bayerFormat =
+ 		BayerFormat::fromPixelFormat(inputFormat);
+ 
++	if (bayerFormat.order == BayerFormat::MONO &&
++	    bayerFormat.bitDepth == 10) {
++		/*
++		 * Keep a 2-line pattern height so the process2() /
++		 * SwStatsCpu two-line machinery is reused unchanged.
++		 */
++		config.patternSize.height = 2;
++		config.outputFormats = std::vector<PixelFormat>({ formats::R8 });
++
++		if (bayerFormat.packing == BayerFormat::Packing::None) {
++			config.bpp = 16;
++			config.patternSize.width = 2;
++			return 0;
++		}
++
++		if (bayerFormat.packing == BayerFormat::Packing::CSI2) {
++			config.bpp = 10;
++			config.patternSize.width = 4; /* 5 bytes per *4* pixels */
++			return 0;
++		}
++	}
++
+ 	if ((bayerFormat.bitDepth == 8 || bayerFormat.bitDepth == 10 || bayerFormat.bitDepth == 12) &&
+ 	    bayerFormat.packing == BayerFormat::Packing::None &&
+ 	    isStandardBayerOrder(bayerFormat.order)) {
+@@ -346,6 +414,12 @@
+ 		return 0;
+ 	}
+ 
++	/* 8-bit grey, the only output for mono input */
++	if (outputFormat == formats::R8) {
++		config.bpp = 8;
++		return 0;
++	}
++
+ 	LOG(Debayer, Info)
+ 		<< "Unsupported output format " << outputFormat.toString();
+ 	return -EINVAL;
+@@ -401,6 +475,28 @@
+ 		return -EINVAL;
+ 	};
+ 
++	/*
++	 * Mono input: no Bayer order to fix up, no red/blue swap, a single
++	 * line function used for both even and odd lines.
++	 */
++	if (outputFormat == formats::R8) {
++		if (bayerFormat.order != BayerFormat::MONO ||
++		    bayerFormat.bitDepth != 10)
++			return invalidFmt();
++
++		if (bayerFormat.packing == BayerFormat::Packing::None) {
++			SET_DEBAYER_METHODS(debayer10_MONO_R8, debayer10_MONO_R8)
++			return 0;
++		}
++
++		if (bayerFormat.packing == BayerFormat::Packing::CSI2) {
++			SET_DEBAYER_METHODS(debayer10P_MONO_R8, debayer10P_MONO_R8)
++			return 0;
++		}
++
++		return invalidFmt();
++	}
++
+ 	switch (outputFormat) {
+ 	case formats::XRGB8888:
+ 	case formats::ARGB8888:
+--- a/src/libcamera/software_isp/debayer_cpu.h
++++ b/src/libcamera/software_isp/debayer_cpu.h
+@@ -98,6 +98,12 @@
+ 	void debayer10P_GBGB_BGR888(uint8_t *dst, const uint8_t *src[]);
+ 	template<bool addAlphaByte, bool ccmEnabled>
+ 	void debayer10P_RGRG_BGR888(uint8_t *dst, const uint8_t *src[]);
++	/* unpacked 10-bit raw mono format */
++	template<bool addAlphaByte, bool ccmEnabled>
++	void debayer10_MONO_R8(uint8_t *dst, const uint8_t *src[]);
++	/* CSI-2 packed 10-bit raw mono format */
++	template<bool addAlphaByte, bool ccmEnabled>
++	void debayer10P_MONO_R8(uint8_t *dst, const uint8_t *src[]);
+ 
+ 	static int getInputConfig(PixelFormat inputFormat, DebayerInputConfig &config);
+ 	static int getOutputConfig(PixelFormat outputFormat, DebayerOutputConfig &config);
+--- a/src/libcamera/software_isp/swstats_cpu.cpp
++++ b/src/libcamera/software_isp/swstats_cpu.cpp
+@@ -399,6 +399,34 @@
+ 	BayerFormat bayerFormat =
+ 		BayerFormat::fromPixelFormat(inputCfg.pixelFormat);
+ 
++	/*
++	 * 10-bit mono (Y10 / Y10P). Every sample is luma, so the Bayer line
++	 * functions give the right answer unchanged: the 4 samples of a 2x2
++	 * block are averaged into r/g/b, the fixed 0.299/0.587/0.114 weights
++	 * sum to 1 and yield the luma back, and the equal r/g/b sums keep the
++	 * grey-world AWB gains at unity. Only the pattern bookkeeping differs.
++	 */
++	if (bayerFormat.order == BayerFormat::MONO &&
++	    bayerFormat.bitDepth == 10) {
++		patternSize_.height = 2;
++		ySkipMask_ = 0x02; /* Skip every 3th and 4th line */
++		xShift_ = 0;
++		swapLines_ = false;
++		processFrame_ = &SwStatsCpu::processBayerFrame2;
++
++		if (bayerFormat.packing == BayerFormat::Packing::None) {
++			patternSize_.width = 2;
++			stats0_ = &SwStatsCpu::statsBGGR10Line0;
++			return 0;
++		}
++
++		if (bayerFormat.packing == BayerFormat::Packing::CSI2) {
++			patternSize_.width = 4; /* 5 bytes per *4* pixels */
++			stats0_ = &SwStatsCpu::statsBGGR10PLine0;
++			return 0;
++		}
++	}
++
+ 	if (bayerFormat.packing == BayerFormat::Packing::None &&
+ 	    setupStandardBayerOrder(bayerFormat.order) == 0) {
+ 		processFrame_ = &SwStatsCpu::processBayerFrame2;
