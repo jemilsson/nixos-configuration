@@ -39,6 +39,9 @@
 #include <linux/acpi.h>
 #include <linux/delay.h>
 #include <linux/device.h>
+#include <linux/gpio/consumer.h>
+#include <linux/gpio/driver.h>
+#include <linux/gpio/machine.h>
 #include <linux/module.h>
 #include <linux/spi/spi.h>
 #include <linux/workqueue.h>
@@ -81,6 +84,88 @@ static bool force_manual;
 
 #define VSC_BIND_RETRIES	10
 #define VSC_BIND_DELAY_MS	1000
+
+static int gpiochip_match_acpi_dev(struct gpio_chip *chip, const void *data);
+
+/* Context for the _CRS GPIO walk: capture the first GpioInt's pin + source. */
+struct vsc_gpioint {
+	acpi_handle handle;
+	unsigned short pin;
+	bool found;
+};
+
+static acpi_status vsc_crs_find_gpioint(struct acpi_resource *ares, void *data)
+{
+	struct vsc_gpioint *gi = data;
+	struct acpi_resource_gpio *g;
+
+	if (ares->type != ACPI_RESOURCE_TYPE_GPIO)
+		return AE_OK;
+
+	g = &ares->data.gpio;
+	if (g->connection_type != ACPI_RESOURCE_GPIO_TYPE_INT || gi->found)
+		return AE_OK;
+
+	if (ACPI_FAILURE(acpi_get_handle(NULL, g->resource_source.string_ptr,
+					 &gi->handle)))
+		return AE_OK;
+
+	gi->pin = g->pin_table[0];
+	gi->found = true;
+
+	return AE_OK;
+}
+
+/*
+ * Resolve the interrupt for the GpioInt descriptor in adev's _CRS: locate the
+ * gpiochip named by its ResourceSource, request the pin as an input (so the
+ * pin leaves any output state its GpioIo sibling implied), take the Linux IRQ,
+ * and release the descriptor for the real driver to re-request by name.
+ */
+static int vsc_find_gpioint_irq(struct acpi_device *adev)
+{
+	struct vsc_gpioint gi = {};
+	struct gpio_device *gdev;
+	struct gpio_desc *desc;
+	struct gpio_chip *chip;
+	struct acpi_device *gpio_adev;
+	int irq;
+
+	acpi_walk_resources(adev->handle, METHOD_NAME__CRS,
+			    vsc_crs_find_gpioint, &gi);
+	if (!gi.found)
+		return -ENOENT;
+
+	gpio_adev = acpi_fetch_acpi_dev(gi.handle);
+	if (!gpio_adev)
+		return -ENODEV;
+
+	gdev = gpio_device_find(gpio_adev, gpiochip_match_acpi_dev);
+	if (!gdev)
+		return -EPROBE_DEFER;
+
+	chip = gpio_device_get_chip(gdev);
+	desc = gpiochip_request_own_desc(chip, gi.pin, "vsc-int",
+					 GPIO_ACTIVE_HIGH, GPIOD_IN);
+	if (IS_ERR(desc)) {
+		gpio_device_put(gdev);
+		return PTR_ERR(desc);
+	}
+
+	irq = gpiod_to_irq(desc);
+	gpiochip_free_own_desc(desc);
+	gpio_device_put(gdev);
+
+	pr_info("vsc-spi-bind: GpioInt pin %u on %s -> irq %d\n",
+		gi.pin, acpi_device_hid(gpio_adev), irq);
+
+	return irq;
+}
+
+static int gpiochip_match_acpi_dev(struct gpio_chip *chip, const void *data)
+{
+	return chip->parent && ACPI_COMPANION(chip->parent) == data;
+}
 
 static struct acpi_device *vsc_find_adev(const char * const *hids, size_t n)
 {
@@ -196,27 +281,24 @@ static int vsc_spi_bind(void)
 
 	/*
 	 * vsc-tp requests spi->irq as the wakeup-host interrupt AND separately
-	 * claims the four named GPIOs (wakeuphost/wakeuphostint/resetfw/
-	 * wakeupfw) from the same _CRS. The interrupt must come from the
-	 * dedicated host-interrupt line "wakeuphostint" (GPIO index 1); index 0
-	 * ("wakeuphost") is an output and flagging it as an IRQ collides with
-	 * the driver's own gpiod_get (observed: "tried to flag a GPIO set as
-	 * output for IRQ", probe -EIO). Try index 1 first, then fall back.
+	 * claims four named GPIOs from the same _CRS. On this firmware the
+	 * interrupt line (wakeuphostint, a GpioInt) and an output line
+	 * (wakeuphost, a GpioIo) sit on the SAME PCH pin 23 as two descriptors,
+	 * with the GpioIo FIRST. Normal SPI enumeration resolves the GpioInt
+	 * during device creation, which puts pin 23 in input+IRQ mode before
+	 * any output request. Our helpers instead grabbed the GpioIo
+	 * (acpi_dev_gpio_irq_get index 0) or failed, leaving pin 23 as an
+	 * output, so gpiochip_lock_as_irq() later refused it (probe -EIO).
+	 *
+	 * Walk _CRS explicitly, find the GpioInt descriptor, acquire its pin as
+	 * an input via its ResourceSource gpiochip (which sets input mode),
+	 * take gpiod_to_irq(), then release the desc so vsc-tp re-requests it by
+	 * name. The pin is now input-configured and the IRQ lock succeeds.
 	 */
+	if (spi->irq <= 0)
+		spi->irq = vsc_find_gpioint_irq(adev);
 	if (spi->irq <= 0) {
-		int idx;
-
-		for (idx = 1; idx >= 0; idx--) {
-			spi->irq = acpi_dev_gpio_irq_get(adev, idx);
-			if (spi->irq > 0) {
-				pr_info("vsc-spi-bind: irq from GPIO index %d = %d\n",
-					idx, spi->irq);
-				break;
-			}
-		}
-	}
-	if (spi->irq <= 0) {
-		pr_err("vsc-spi-bind: no usable GpioInt for %s (%d)\n",
+		pr_err("vsc-spi-bind: no usable interrupt GPIO for %s (%d)\n",
 		       dev_name(&adev->dev), spi->irq);
 		spi_dev_put(spi);
 		acpi_dev_put(adev);
