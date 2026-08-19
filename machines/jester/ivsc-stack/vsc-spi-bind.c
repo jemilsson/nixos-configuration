@@ -194,15 +194,33 @@ static int vsc_spi_bind(void)
 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
 			  sizeof(spi->modalias));
 
-	/* GpioInt in _CRS: vsc-tp uses spi->irq as the wakeup-host interrupt. */
-	if (spi->irq < 0)
-		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-	if (spi->irq < 0) {
-		pr_err("vsc-spi-bind: no GpioInt for %s (%d)\n",
+	/*
+	 * vsc-tp requests spi->irq as the wakeup-host interrupt AND separately
+	 * claims the four named GPIOs (wakeuphost/wakeuphostint/resetfw/
+	 * wakeupfw) from the same _CRS. The interrupt must come from the
+	 * dedicated host-interrupt line "wakeuphostint" (GPIO index 1); index 0
+	 * ("wakeuphost") is an output and flagging it as an IRQ collides with
+	 * the driver's own gpiod_get (observed: "tried to flag a GPIO set as
+	 * output for IRQ", probe -EIO). Try index 1 first, then fall back.
+	 */
+	if (spi->irq <= 0) {
+		int idx;
+
+		for (idx = 1; idx >= 0; idx--) {
+			spi->irq = acpi_dev_gpio_irq_get(adev, idx);
+			if (spi->irq > 0) {
+				pr_info("vsc-spi-bind: irq from GPIO index %d = %d\n",
+					idx, spi->irq);
+				break;
+			}
+		}
+	}
+	if (spi->irq <= 0) {
+		pr_err("vsc-spi-bind: no usable GpioInt for %s (%d)\n",
 		       dev_name(&adev->dev), spi->irq);
 		spi_dev_put(spi);
 		acpi_dev_put(adev);
-		return spi->irq;
+		return spi->irq ? spi->irq : -ENODEV;
 	}
 
 	acpi_device_set_enumerated(adev);
