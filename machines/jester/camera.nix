@@ -20,6 +20,12 @@ let
       ./libcamera-agc-step-size.patch
       ./libcamera-contrast-default.patch
     ];
+    # Sensor tuning file: enables the Ccm block (generic saturation-boost
+    # matrix, see ov2740-tuning.yaml) instead of the CCM-less uncalibrated
+    # fallback. Note: the soft-ISP Ccm costs extra CPU per frame.
+    postInstall = (old.postInstall or "") + ''
+      cp ${./ov2740-tuning.yaml} $out/share/libcamera/ipa/simple/ov2740.yaml
+    '';
   });
 in
 {
@@ -61,6 +67,10 @@ in
   # ipa_soft_simple.so wins without rebuilding WirePlumber.
   systemd.user.services.wireplumber.environment = {
     LIBCAMERA_IPA_MODULE_PATH = "${libcamera-patched}/lib/libcamera/ipa";
+    # Tuning files are searched in LIBCAMERA_IPA_CONFIG_PATH (or the linked
+    # libcamera's own share dir), NOT in the module path above, so point it
+    # at the patched package for ov2740.yaml to be found.
+    LIBCAMERA_IPA_CONFIG_PATH = "${libcamera-patched}/share/libcamera/ipa";
   };
 
   # Thunderbolt: prevent runtime-suspend which drops DP tunnels

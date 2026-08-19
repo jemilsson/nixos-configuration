@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: CC0-1.0
+# OV2740 soft-ISP tuning for jester. Same algorithm chain as
+# uncalibrated.yaml plus a Ccm block. Matrix calibrated 2026-08-19 by
+# photographing a 24-patch ColorChecker grid displayed on the EHOMEWEI
+# X1 Pro (sRGB), homography patch extraction with local-background
+# normalisation, constrained least squares in linear space (19 usable
+# patches, mean residual 4.5%), then a diagonal white-balance fix from a
+# known-white reference so neutrals stay neutral. Caveat: fitted against
+# emissive narrowband monitor primaries, so slight hue bias is possible
+# for reflective scenes; redo with a physical colour target for better.
+%YAML 1.1
+---
+version: 1
+algorithms:
+  - BlackLevel:
+  - Awb:
+  - Ccm:
+      ccms:
+        - ct: 6500
+          ccm: [ 1.7554, -0.6098, 0.1673,
+                 0.0651, 0.5728, 0.1793,
+                 0.0903, -0.5001, 1.3954 ]
+  - Adjust:
+  - Agc:
+...
