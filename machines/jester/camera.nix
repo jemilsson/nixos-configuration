@@ -50,10 +50,20 @@ in
     # in depmod order) instead of patching the kernel, since the remote
     # builder cannot fit kernel rebuilds.
     (callPackage ./ipu-bridge-shadow { })
+    # The in-kernel IVSC stack (vsc-tp/platform-vsc/ivsc-ace/ivsc-csi) is
+    # complete on 7.x but never probes here: no spi_device is created for
+    # \_SB.PC00.SPI1.SPFD (INTC1009) on the LJCA SPI controller, so the VSC
+    # firmware is never loaded and CSI-2 lane ownership is never handed to
+    # the IPU6. This registers that one missing device.
+    (callPackage ./ivsc-stack { })
   ];
-  # The IVSC chain (sensor ownership handoff) does not autoload on this
-  # machine; without it the IR sensor stays owned by the VSC.
-  boot.kernelModules = [ "mei_vsc" "ivsc_ace" "ivsc_csi" ];
+  # Load order at runtime: vsc-spi-bind creates the SPI device, vsc-tp
+  # (mei-vsc-hw) probes it and spawns the intel_vsc platform device, mei_vsc
+  # brings up the MEI link, then the ivsc_ace/ivsc_csi MEI clients appear and
+  # ivsc_csi joins the media graph in front of ov9234. Only vsc-spi-bind needs
+  # forcing; the rest autoload on their bus/ACPI aliases once it succeeds.
+  # Keep the explicit list anyway: this machine has shown no autoload for them.
+  boot.kernelModules = [ "spi_ljca" "vsc_spi_bind" "mei_vsc" "ivsc_ace" "ivsc_csi" ];
   hardware.firmware = with pkgs; [ ipu6-camera-bins ivsc-firmware ];
 
   environment.systemPackages = with pkgs; [ libcamera ];
