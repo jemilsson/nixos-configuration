@@ -258,7 +258,29 @@ static int vsc_spi_bind(void)
 		return 0;
 	}
 
-	spi = force_manual ? ERR_PTR(-ENODEV) : acpi_spi_device_alloc(NULL, adev, 0);
+	/*
+	 * Prefer acpi_spi_device_alloc with the LJCA controller passed
+	 * explicitly. With a NULL controller it resolves the controller from
+	 * the SpiSerialBus ResourceSource and kept deferring on this board;
+	 * passing the controller we already located skips that lookup while
+	 * still letting the ACPI SPI helper set the fwnode, modalias, SPI
+	 * timing AND spi->irq from the GpioInt exactly as boot enumeration
+	 * would. That correct fwnode is what makes vsc-tp's named-GPIO lookups
+	 * (wakeuphostint/resetfw/wakeupfw) resolve to the right pins, which the
+	 * fully hand-built device got wrong (resetfw/wakeupfw grabbed the
+	 * interrupt pin and forced it to output, breaking request_threaded_irq).
+	 */
+	if (force_manual) {
+		spi = ERR_PTR(-ENODEV);
+	} else {
+		struct spi_controller *ctlr = vsc_find_ljca_controller();
+
+		if (!ctlr) {
+			acpi_dev_put(adev);
+			return -EPROBE_DEFER;
+		}
+		spi = acpi_spi_device_alloc(ctlr, adev, 0);
+	}
 	if (IS_ERR(spi)) {
 		ret = PTR_ERR(spi);
 		if (!force_manual)
