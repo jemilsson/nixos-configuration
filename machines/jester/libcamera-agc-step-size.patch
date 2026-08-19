@@ -1,6 +1,6 @@
---- a/src/ipa/simple/algorithms/agc.cpp	2026-06-28 17:25:56.877895858 +0700
-+++ b/src/ipa/simple/algorithms/agc.cpp	2026-06-28 17:26:53.830733122 +0700
-@@ -26,63 +26,97 @@
+--- a/src/ipa/simple/algorithms/agc.cpp	2026-08-19 08:02:05.743062343 +0200
++++ b/src/ipa/simple/algorithms/agc.cpp	2026-08-19 08:07:19.135621484 +0200
+@@ -26,63 +26,126 @@
  
  /*
   * The exposure is optimal when the mean sample value of the histogram is
@@ -9,7 +9,7 @@
 + * overexpose (washed-out) aiming for the exact middle, so bias darker.
   */
 -static constexpr float kExposureOptimal = kExposureBinsCount / 2.0;
-+static constexpr float kExposureOptimal = kExposureBinsCount * 0.4;
++static constexpr float kExposureOptimal = kExposureBinsCount * 0.45;
  
  /*
 - * This implements the hysteresis for the exposure adjustment.
@@ -71,8 +71,48 @@
 -				again += context.configuration.agc.againMinStep;
 -			else
 -				again = next;
--		}
--	}
++	/*
++	 * Latency gate. The sensor applies a commanded exposure only several
++	 * frames later (~4 on the OV2740/IPU6 pipeline), so stats arriving
++	 * before then were metered under the previous command; adjusting on
++	 * them compounds several steps blind and the loop relay-oscillates
++	 * (observed as a 96<->125 luma square wave with an 8-frame period).
++	 * Hold until the observed values match the last command. While
++	 * holding, re-assert the command: processStats() overwrites the
++	 * frameContext with the observed (stale) values and always sends the
++	 * frameContext back to the sensor, which would otherwise revert the
++	 * pending command. The held-frame cap resyncs after mode switches or
++	 * control quantisation the equality check cannot absorb.
++	 */
++	static int32_t cmdExposure = -1;
++	static double cmdGain = -1.0;
++	static int heldFrames = 0;
++	const double gainDiff = again > cmdGain ? again - cmdGain
++						: cmdGain - again;
++	if (cmdExposure >= 0 &&
++	    (exposure != cmdExposure ||
++	     gainDiff > context.configuration.agc.againMinStep / 2.0)) {
++		if (++heldFrames <= 8) {
++			exposure = cmdExposure;
++			again = cmdGain;
++			return;
+ 		}
+ 	}
++	heldFrames = 0;
+ 
+-	if (exposureMSV > kExposureOptimal + kExposureSatisfactory) {
+-		if (again > context.configuration.agc.again10) {
+-			double next = again * kExpNumeratorDown / kExpDenominator;
+-			if (again - next < context.configuration.agc.againMinStep)
+-				again -= context.configuration.agc.againMinStep;
+-			else
+-				again = next;
+-		} else {
+-			int32_t next = exposure * kExpNumeratorDown / kExpDenominator;
+-			if (exposure - next < 1)
+-				exposure -= 1;
+-			else
+-				exposure = next;
 +	/*
 +	 * Proportional step toward the target. error < 0 means the image is too
 +	 * dark (need more light, factor > 1); error > 0 means too bright
@@ -92,20 +132,7 @@
 +
 +	const float error = static_cast<float>(msvSmoothed) - kExposureOptimal;
 +	const float absError = error < 0 ? -error : error;
- 
--	if (exposureMSV > kExposureOptimal + kExposureSatisfactory) {
--		if (again > context.configuration.agc.again10) {
--			double next = again * kExpNumeratorDown / kExpDenominator;
--			if (again - next < context.configuration.agc.againMinStep)
--				again -= context.configuration.agc.againMinStep;
--			else
--				again = next;
--		} else {
--			int32_t next = exposure * kExpNumeratorDown / kExpDenominator;
--			if (exposure - next < 1)
--				exposure -= 1;
--			else
--				exposure = next;
++
 +	/* Hold steady inside the deadband (no hunting on noise). */
 +	if (absError > kExposureSatisfactory) {
 +		float factor = 1.0f - kProportionalGain * error / kExposureOptimal;
@@ -138,4 +165,14 @@
 +			}
  		}
  	}
+ 
+@@ -91,6 +154,9 @@
+ 	again = std::clamp(again, context.configuration.agc.againMin,
+ 			   context.configuration.agc.againMax);
+ 
++	cmdExposure = exposure;
++	cmdGain = again;
++
+ 	context.activeState.agc.exposure = exposure;
+ 	context.activeState.agc.again = again;
  
