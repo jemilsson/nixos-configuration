@@ -61,6 +61,7 @@ in
     #./mcpo.nix
     ./camera.nix
     ./room-watch.nix
+    ./presence-lock.nix
     ./netns-claude-glecom.nix
     ./pi-lens.nix
     ./nix-retry.nix
