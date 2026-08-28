@@ -603,6 +603,18 @@ in
   };
 
 
+  # avahi.nssmdns puts mdns_minimal before files, so every lookup of the local
+  # hostname blocks ~5s on mDNS when DNS/network is down (10s zsh startup).
+  # files/myhostname first; mdns still precedes dns so .local never hits DNS.
+  system.nssDatabases.hosts = lib.mkForce [
+    "files"
+    "mymachines"
+    "myhostname"
+    "mdns_minimal [NOTFOUND=return]"
+    "dns"
+    "mdns"
+  ];
+
   services = {
     samba = {
       enable = false;
