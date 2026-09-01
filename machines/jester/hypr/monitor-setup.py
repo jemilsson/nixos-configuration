@@ -194,8 +194,14 @@ class HyprlandMonitorSetup:
         # fit and Hyprland's ladder drops one panel to 1080p; a clean 4-lane
         # train fits both. Software cannot do better; reseat the cable or
         # use the other USB-C port for full resolution on both.
-        self.apply_config(f"{rtk_orig},2560x1600@60,{laptop_width}x0,1")
-        self.apply_config(f"{rtk_mod},2560x1600@60,{laptop_width}x{external_height},1")
+        # EXPERIMENT: 30 Hz CVT-RB (integer divisor of the panel's fixed
+        # 60 Hz TCON, so frame-doubling avoids the structural buffer drift
+        # that desynced 50 Hz). Two streams = ~720 PBN, fits 2-lane HBR2
+        # (1260). If the scaler still desyncs, revert to 2560x1600@60.
+        rb30 = ("modeline 134.32 2560 2608 2640 2720 "
+                "1600 1603 1609 1646 +hsync -vsync")
+        self.apply_config(f"{rtk_orig},{rb30},{laptop_width}x0,1")
+        self.apply_config(f"{rtk_mod},{rb30},{laptop_width}x{external_height},1")
 
     def setup_triple_monitor_office(self, mon1: Monitor, mon2: Monitor) -> None:
         """Configure office setup with two 4K monitors in horizontal layout."""
