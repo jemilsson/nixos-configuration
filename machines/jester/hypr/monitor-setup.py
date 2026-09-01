@@ -187,14 +187,16 @@ class HyprlandMonitorSetup:
         # bottom), laptop to their left at 0,0 (Hyprland anchors eDP-1 there),
         # top-aligned with the top panel.
         self.apply_config(f"{self.LAPTOP_MONITOR},{self.LAPTOP_RESOLUTION},0x0,1")
-        # 50 Hz + 8-bit, not 60 Hz at default depth: both panels share one
-        # DP link that often trains at 2 lanes (worn USB-C port); two
-        # 2560x1600@60 10-bit streams exceed its bandwidth and the kernel
-        # rejects the second modeset (ENOSPC), dropping one panel to 1080p.
-        # Two 50 Hz 8-bit streams fit. Revert to @60 without bitdepth if
-        # the port is ever repaired.
-        self.apply_config(f"{rtk_orig},2560x1600@50,{laptop_width}x0,1,bitdepth,8")
-        self.apply_config(f"{rtk_mod},2560x1600@50,{laptop_width}x{external_height},1,bitdepth,8")
+        # Explicit CVT-RB 50 Hz modeline, no bitdepth pin: the link often
+        # trains at 2xHBR2 (worn USB-C port) = 1260 PBN; two RB streams
+        # @50 at the kernel's 6bpc floor need 1198 PBN and fit, but
+        # Hyprland's auto-generated "@50" uses full CVT blanking (~290MHz
+        # pixel clock, ~1554 PBN pair) and pinning bitdepth blocks the
+        # 6bpc fallback, so both previously hit ENOSPC. Ceiling ~54 Hz.
+        rb50 = ("modeline 223.86 2560 2608 2640 2720 "
+                "1600 1603 1609 1646 +hsync -vsync")
+        self.apply_config(f"{rtk_orig},{rb50},{laptop_width}x0,1")
+        self.apply_config(f"{rtk_mod},{rb50},{laptop_width}x{external_height},1")
 
     def setup_triple_monitor_office(self, mon1: Monitor, mon2: Monitor) -> None:
         """Configure office setup with two 4K monitors in horizontal layout."""
