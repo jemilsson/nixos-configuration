@@ -183,8 +183,13 @@ class HyprlandMonitorSetup:
         # bottom), laptop to their left at 0,0 (Hyprland anchors eDP-1 there),
         # top-aligned with the top panel.
         self.apply_config(f"{self.LAPTOP_MONITOR},{self.LAPTOP_RESOLUTION},0x0,1")
-        self.apply_config(f"{rtk_orig},2560x1600@60,{laptop_width}x0,1")
-        self.apply_config(f"{rtk_mod},2560x1600@60,{laptop_width}x{external_height},1")
+        # 50 Hz, not 60: both panels share one 2-lane DP link over the
+        # USB-C cable; two 2560x1600@60 streams exceed its bandwidth and
+        # the kernel rejects the second modeset (ENOSPC), dropping one
+        # panel to 1080p. Two 50 Hz CVT-RB streams fit. Revert to @60 if
+        # the link ever trains at 4 lanes (full-featured cable).
+        self.apply_config(f"{rtk_orig},2560x1600@50,{laptop_width}x0,1")
+        self.apply_config(f"{rtk_mod},2560x1600@50,{laptop_width}x{external_height},1")
 
     def setup_triple_monitor_office(self, mon1: Monitor, mon2: Monitor) -> None:
         """Configure office setup with two 4K monitors in horizontal layout."""
