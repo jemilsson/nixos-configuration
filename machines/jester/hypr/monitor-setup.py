@@ -97,7 +97,10 @@ class HyprlandMonitorSetup:
 
     @staticmethod
     def _lua_monitor(config: str) -> str:
-        """Convert 'output,mode,position,scale' into an hl.monitor() call."""
+        """Convert 'output,mode,position,scale[,bitdepth,N]' into an hl.monitor() call."""
+        bitdepth = None
+        if ",bitdepth," in config:
+            config, bitdepth = config.split(",bitdepth,")
         output, mode, position, scale = config.rsplit(",", 3)
 
         def lit(value: str) -> str:
@@ -106,10 +109,11 @@ class HyprlandMonitorSetup:
             except ValueError:
                 return '"%s"' % value.replace("\\", "\\\\").replace('"', '\\"')
 
-        return (
-            "hl.monitor({ output = %s, mode = %s, position = %s, scale = %s })"
-            % (lit(output), lit(mode), lit(position), lit(scale))
-        )
+        fields = "output = %s, mode = %s, position = %s, scale = %s" % (
+            lit(output), lit(mode), lit(position), lit(scale))
+        if bitdepth is not None:
+            fields += ", bitdepth = %s" % lit(bitdepth)
+        return "hl.monitor({ %s })" % fields
 
     def flush_configs(self) -> bool:
         """Write queued configs and reload Hyprland. Returns True if the
@@ -183,13 +187,14 @@ class HyprlandMonitorSetup:
         # bottom), laptop to their left at 0,0 (Hyprland anchors eDP-1 there),
         # top-aligned with the top panel.
         self.apply_config(f"{self.LAPTOP_MONITOR},{self.LAPTOP_RESOLUTION},0x0,1")
-        # 50 Hz, not 60: both panels share one 2-lane DP link over the
-        # USB-C cable; two 2560x1600@60 streams exceed its bandwidth and
-        # the kernel rejects the second modeset (ENOSPC), dropping one
-        # panel to 1080p. Two 50 Hz CVT-RB streams fit. Revert to @60 if
-        # the link ever trains at 4 lanes (full-featured cable).
-        self.apply_config(f"{rtk_orig},2560x1600@50,{laptop_width}x0,1")
-        self.apply_config(f"{rtk_mod},2560x1600@50,{laptop_width}x{external_height},1")
+        # 50 Hz + 8-bit, not 60 Hz at default depth: both panels share one
+        # DP link that often trains at 2 lanes (worn USB-C port); two
+        # 2560x1600@60 10-bit streams exceed its bandwidth and the kernel
+        # rejects the second modeset (ENOSPC), dropping one panel to 1080p.
+        # Two 50 Hz 8-bit streams fit. Revert to @60 without bitdepth if
+        # the port is ever repaired.
+        self.apply_config(f"{rtk_orig},2560x1600@50,{laptop_width}x0,1,bitdepth,8")
+        self.apply_config(f"{rtk_mod},2560x1600@50,{laptop_width}x{external_height},1,bitdepth,8")
 
     def setup_triple_monitor_office(self, mon1: Monitor, mon2: Monitor) -> None:
         """Configure office setup with two 4K monitors in horizontal layout."""
